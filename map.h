@@ -5,16 +5,10 @@
 
 class map
 {
-	private:
-		// struct map {
-		char *c_block;
-		unsigned int c_tailleX;
-		unsigned int c_tailleY;
-		//}
-
 	public:
 		// A quoi correspond un block
 		enum type {
+			inconnu,// BUG !!!
 			vide,
 			// MUR
 			Mur_destrucible,
@@ -34,10 +28,21 @@ class map
 			bombe_poser_AVEC_plusieurs_joueurs
 		};
 
+	// Variables
+	private:
+		// struct map {
+		type *c_block;
+		unsigned int c_tailleX;
+		unsigned int c_tailleY;
+		//}
+
+	// Fonctions
+	public:
 		map();
 		map(unsigned int tailleX, unsigned int tailleY);
 		~map();
-		char getBlock(unsigned int X, unsigned int Y);
+		type getBlock(unsigned int X, unsigned int Y);
+		void setBlock(unsigned int X, unsigned int Y, type what);
 };
 
 #endif
