@@ -6,9 +6,9 @@ perso::perso()
 }
 
 
-perso::perso(string nom, unsigned int Xpos, unsigned int Ypos)
+perso::perso(std::string nom, unsigned int Xpos, unsigned int Ypos)
 {
-	c_nom = nom
+	c_nom = nom;
 	c_X_pos = Xpos;
 	c_Y_pos = Ypos;
 }
