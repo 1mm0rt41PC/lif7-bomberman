@@ -43,6 +43,10 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="map.cpp" />
 		<Unit filename="map.h" />
+		<Unit filename="moteur_ncurses.cpp" />
+		<Unit filename="moteur_ncurses.h" />
+		<Unit filename="partie.cpp" />
+		<Unit filename="partie.h" />
 		<Unit filename="perso.cpp" />
 		<Unit filename="perso.h" />
 		<Extensions>
