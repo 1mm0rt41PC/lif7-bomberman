@@ -1,5 +1,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include "partie.h"
 using namespace sf;
 
 
@@ -8,7 +9,9 @@ using namespace sf;
 * Toutes les variables d'une class doivent commencer par "c_"
 *
 *
-*
+* A FAIRE
+* Partie.h.cpp
+*	MODE c_mode
 *
 */
 
@@ -16,6 +19,7 @@ using namespace sf;
 
 int main()
 {
+	/*
     // Create the main window
     RenderWindow App(VideoMode(800, 600), "SFML window");
 
@@ -39,6 +43,10 @@ int main()
         // Update the window
         App.Display();
     }
+*/
+
+	partie* nouvelle_partie = new partie();
+
 
     return EXIT_SUCCESS;
 }
