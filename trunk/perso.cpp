@@ -1,5 +1,4 @@
 #include "perso.h"
-#include "clavier.h"
 
 /*******************************************************************************
 *
@@ -74,14 +73,3 @@ bool perso::estVivant()
 {
 	return c_est_vivant;
 }
-
-
-/*******************************************************************************
-*
-*/
-bool perso::estAppuyer( SYS_CLAVIER t )
-{
-	return c_Touches.estAppuyer( t );
-}
-
-
