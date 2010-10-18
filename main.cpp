@@ -1,52 +1,32 @@
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-#include "partie.h"
-using namespace sf;
-
+#include "moteur_ncurses.h"
+#include "options.h"
 
 /*******************************************************************************
 * CONVENTION DE PROGRAMATION !
 * Toutes les variables d'une class doivent commencer par "c_"
+* Toutes les variables globales doivent commencer par "G_" et être écrites en MAJ
 *
 *
 * A FAIRE
-* Partie.h.cpp
-*	MODE c_mode
+* Mettre des const la où il faut dans les *.h
 *
+* TODO or NOT
+* Mode singleton pour options
 */
+
+// Variables globales
+options G_OPTIONS;// On peut pas avoir plusieurs instance d'options
 
 
 
 int main()
 {
-	/*
-    // Create the main window
-    RenderWindow App(VideoMode(800, 600), "SFML window");
-
-	// Start the game loop
-    while (App.IsOpened())
-    {
-        // Process events
-        Event Event;
-        while (App.GetEvent(Event))
-        {
-            // Close window : exit
-            if (Event.Type == Event::Closed)
-                App.Close();
-        }
-
-        // Clear screen
-        App.Clear(Color(255, 255, 255));
-
-		// ICI on dÃ©ssine
-
-        // Update the window
-        App.Display();
-    }
-*/
-
-	partie* nouvelle_partie = new partie();
+	// Init Moteur d'affichage
+	moteur_ncurses m;
 
 
-    return EXIT_SUCCESS;
+	m.main();
+
+
+	return EXIT_SUCCESS;
 }

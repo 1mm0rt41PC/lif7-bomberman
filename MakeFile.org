@@ -1,0 +1,93 @@
+# CHOIX DE L'OS !!! ( win, linux )
+OS = win
+# CHOIX DE L'AFFICHAGE !!! ( ncurses, sdl, sfml )
+LIB_AFF = ncurses
+# Compilateur
+CC = g++
+# Flags de Compilation
+CFLAGS = -Wall
+
+# Fichiers contenant les dépendances
+DEP = .depend
+# Fichiers .cpp
+SRC = main.cpp map.cpp perso.cpp partie.cpp moteur_ncurses.cpp clavier.cpp options.cpp
+# Fichier de sortie final
+EXEC_NAME = bomberman.exe
+
+# Zones de sorties ( NON FONCTIONNEL ! )
+BIN_DIR = bin
+OBJ_DIR = obj
+
+
+################################################################################
+# v NE PAS TOUCHER A CE BLOCK v
+# Commandes Spé aux OS
+ifeq ($(OS),linux)
+	CMD_DEL = /bin/rm -f
+	CMD_CLEAR = clear
+else
+	CMD_DEL = del /F
+	CMD_CLEAR = cls
+endif
+
+# Lib a utiliser ( /!\ Peut changer en fonction de l'OS OU du système d'affichage /!\ )
+ifeq ($(LIB_AFF), ncurses)
+#	NCURSES
+	LIBS = -lpanel -lpdcurses
+else
+	ifeq ($(LIB_AFF), sdl)
+#		SDL
+		LIBS =
+	else
+#		SFML
+		LIBS =
+	endif
+endif
+# ^ NE PAS TOUCHER A CE BLOCK ^
+################################################################################
+
+
+# Fichiers Objets ( *.o )
+OBJ_FILES = $(SRC:.cpp=.o)
+
+
+# Simple Make
+all: $(EXEC_NAME)
+$(EXEC_NAME): $(OBJ_FILES)
+	@echo Creation de l'executable
+	$(CC) -o $(EXEC_NAME) $(CFLAGS) $(OBJ_FILES) $(LIBS)
+# Suppression des dépendances ( pour être sur d'avoir la dernière version -> rebuild à chaque compilation )
+	@$(CMD_DEL) $(DEP) 2>NUL
+
+
+# Génère et inclut les dépendances
+-include $(DEP)
+
+
+# Génération des fichier .o
+%.o: %.cpp
+	@echo .
+	@echo Generation de $@
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+
+# Système de génération des dépendances
+$(DEP): $(SRC)
+	$(CMD_CLEAR)
+	@echo Generation des dependances
+	$(CC) $(CFLAGS) -MM $(SRC) > $(DEP)
+	@echo .
+
+
+# Make depend ( régénération manuel des dep )
+.PHONY: depend dep
+depend: $(DEP)
+dep: $(DEP)
+
+
+# Make clean
+.PHONY: clean
+clean:
+	$(CMD_CLEAR)
+	@echo Suppression des fichiers .o, de l'executable et du fichier de dependances
+	$(CMD_DEL) *.o $(EXEC_NAME) $(DEP)
