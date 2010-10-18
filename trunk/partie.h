@@ -8,28 +8,35 @@ class partie
 {
 	public:
 		enum MODE {
-			local,
-			en_ligne
+			Combat_Libre,		// Free For All 	( F4A )
+			Attrape_drapeau		// Capture the Flag	( CTF )
 		};
 
 
 	private:
 		// struct {
+			map* 			c_map;// SIMPLE POINTEUR !
 			unsigned char	c_nb_joueurs;
+			unsigned char	c_nb_MAX_joueurs;
 			perso*			c_joueurs;// Tableau
-			map* 			c_map;
-			MODE			c_mode;// <- AF
+			MODE			c_mode;
 		// }
 
 
 	public:
 		partie();
 		~partie();
+		// Modificateurs
+		void genMap();
+		void def_nbJoueurs( unsigned char nb );
+		void def_nbMAX_joueurs( unsigned char nb );
+		void def_modeJeu( MODE m );
 
-
-	private:
-
-
+		
+		// Accesseurs
+		unsigned char nbJoueurs() const;
+		unsigned char nbMAX_joueurs() const;
+		MODE modeJeu() const;
 };
 
 #endif

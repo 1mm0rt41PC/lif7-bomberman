@@ -24,3 +24,61 @@ partie::~partie()
 /*******************************************************************************
 *
 */
+void partie::genMap()
+{
+/* NOT IMPLANTED */
+}
+
+
+/*******************************************************************************
+*
+*/
+void partie::def_nbJoueurs( unsigned char nb )
+{
+	c_nb_joueurs = nb;
+}
+
+
+/*******************************************************************************
+*
+*/
+void partie::def_nbMAX_joueurs( unsigned char nb )
+{
+	c_nb_MAX_joueurs = nb;
+}
+
+
+/*******************************************************************************
+*
+*/
+void partie::def_modeJeu( partie::MODE m )
+{
+	c_mode = m;
+}
+
+
+/*******************************************************************************
+*
+*/
+unsigned char partie::nbJoueurs() const
+{
+	return c_nb_joueurs;
+}
+
+
+/*******************************************************************************
+*
+*/
+unsigned char partie::nbMAX_joueurs() const
+{
+	return c_nb_MAX_joueurs;
+}
+
+
+/*******************************************************************************
+*
+*/
+partie::MODE partie::modeJeu() const
+{
+	return c_mode;
+}
