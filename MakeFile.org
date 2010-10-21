@@ -25,9 +25,13 @@ OBJ_DIR = obj
 ifeq ($(OS),linux)
 	CMD_DEL = /bin/rm -f
 	CMD_CLEAR = clear
+	CMD_LINEFEED = @echo \n
+	CMD_SED = sed
 else
 	CMD_DEL = del /F
 	CMD_CLEAR = cls
+	CMD_LINEFEED = @echo. && @echo . > NUL
+	CMD_SED = "%CD%\.tools\sed.exe"
 endif
 
 # Lib a utiliser ( /!\ Peut changer en fonction de l'OS OU du système d'affichage /!\ )
@@ -47,15 +51,18 @@ endif
 ################################################################################
 
 
-# Fichiers Objets ( *.o )
-OBJ_FILES = $(SRC:.cpp=.o)
+# Fichiers Objets ( *.o ) dans un dossier obj/
+OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(SRC:.cpp=.o))
 
 
 # Simple Make
 all: $(EXEC_NAME)
-$(EXEC_NAME): $(OBJ_FILES)
+# La ligne ci dessous, permet d'éviter les bug avec la commande {make exec}
+$(BIN_DIR)/$(EXEC_NAME): $(EXEC_NAME)
+$(EXEC_NAME): $(BIN_DIR) $(OBJ_DIR) $(DEP) $(OBJ_FILES)
+	$(CMD_LINEFEED)
 	@echo Creation de l'executable
-	$(CC) -o $(EXEC_NAME) $(CFLAGS) $(OBJ_FILES) $(LIBS)
+	$(CC) -o $(BIN_DIR)/$(EXEC_NAME) $(CFLAGS) $(OBJ_FILES) $(LIBS)
 # Suppression des dépendances ( pour être sur d'avoir la dernière version -> rebuild à chaque compilation )
 	@$(CMD_DEL) $(DEP) 2>NUL
 
@@ -64,9 +71,9 @@ $(EXEC_NAME): $(OBJ_FILES)
 -include $(DEP)
 
 
-# Génération des fichier .o
-%.o: %.cpp
-	@echo .
+# Génération des fichier .o ( dans le repertoire $(OBJ_DIR) )
+$(OBJ_DIR)/%.o: %.cpp
+	$(CMD_LINEFEED)
 	@echo Generation de $@
 	$(CC) $(CFLAGS) -o $@ -c $<
 
@@ -75,19 +82,90 @@ $(EXEC_NAME): $(OBJ_FILES)
 $(DEP): $(SRC)
 	$(CMD_CLEAR)
 	@echo Generation des dependances
-	$(CC) $(CFLAGS) -MM $(SRC) > $(DEP)
-	@echo .
+# Le sed est la pour permettre de mofidier les regles main.o:... --> obj/main.o:...
+	$(CC) $(CFLAGS) -MM $(SRC) | $(CMD_SED) -r "s/([^.]*)\.o:/$(OBJ_DIR)\/\1.o:/" > $(DEP)
 
+
+# Auto création du dossier BIN_DIR
+$(BIN_DIR):
+	@echo Creation du dossier "$(BIN_DIR)"
+	mkdir $(BIN_DIR)
+
+
+# Auto création du dossier OBJ_DIR
+$(OBJ_DIR):
+	@echo Creation du dossier "$(OBJ_DIR)"
+	mkdir $(OBJ_DIR)
+
+
+################################################################################
+# Règles utilisable par appel externe ( make XXX )
+################################################################################
 
 # Make depend ( régénération manuel des dep )
-.PHONY: depend dep
+.PHONY: depend dep exec valgrind clean clean_dep pfiles help
 depend: $(DEP)
 dep: $(DEP)
 
 
+# Lancer le prog
+exec: $(BIN_DIR)/$(EXEC_NAME)
+	$(BIN_DIR)/$(EXEC_NAME)
+
+# Valgrind
+valgrind: $(BIN_DIR)/$(EXEC_NAME)
+	@echo Lancement de Valgrind
+	valgrind --tool=memcheck $(BIN_DIR)/$(EXEC_NAME)
+
+
 # Make clean
-.PHONY: clean
 clean:
 	$(CMD_CLEAR)
-	@echo Suppression des fichiers .o, de l'executable et du fichier de dependances
-	$(CMD_DEL) *.o $(EXEC_NAME) $(DEP)
+	@echo Suppression des fichiers .o, de l'executable et du fichier des dependances
+	$(CMD_DEL) $(DEP)
+# Pour supprimer les .o dans le dossier obj ( bizari de windows ... )
+	cd $(OBJ_DIR) && $(CMD_DEL) *.o
+# Pour supprimer les .exe dans le dossier obj ( bizari de windows ... )
+	cd $(BIN_DIR) && $(CMD_DEL) *.exe
+
+
+# Make clean dep
+clean_dep:
+	$(CMD_CLEAR)
+	@echo Suppression du fichier de dependances
+	$(CMD_DEL) $(DEP)
+
+
+# Affiche les fichiers utilisés
+pfiles:
+	$(CMD_CLEAR)
+	@echo =================================== Bomberman ==================================
+	@echo Sources:
+	@echo 	$(SRC)
+	@echo Dependances:
+	@$(CC) $(CFLAGS) -MM $(SRC) | $(CMD_SED) -e "s/^/	/"
+	@echo Executable obtenu:
+	@echo 	$(BIN_DIR)/$(EXEC_NAME)
+
+
+# Affichage de l'aide
+help:
+	$(CMD_CLEAR)
+	@echo Aide du MakeFile de Bomberman
+	$(CMD_LINEFEED)
+	@echo make ARG
+	@echo 	all:		Construit tout le projet.
+	@echo 	clean:		Supprime les fichiers .o, l'executable et le fichier de
+	@echo				dependances.
+	@echo 	clean_dep:	Supprime le fichier des dependances.
+	@echo 	depend:		Construit le fichier des dependances ( le fichier est
+	@echo				supprime a chaque fin de compilations et est donc auto
+	@echo				regenere a chaque compilation )
+	@echo 	dep:		IDEM {make depend}.
+	@echo 	valgrind:	Compil le projet puis lance valgrind sur le projet.
+	@echo 	doxygen:	Execute doxygen sur le projet.
+	@echo 	exec:		{make all} et execute l'executable obtenu.
+	@echo 	pfiles:		Affiche les fichiers utilises
+	@echo 	help:		Affiche cette aide.
+	$(CMD_LINEFEED)
+	@echo 	/!\ Si MAKE n'a pas d'ARG alors IDEM a {make all}.
