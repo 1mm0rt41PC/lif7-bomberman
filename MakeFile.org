@@ -21,23 +21,14 @@ OBJ_DIR = obj
 
 ################################################################################
 # v NE PAS TOUCHER A CE BLOCK v
-# Commandes Spé aux OS
-ifeq ($(OS),linux)
-	CMD_DEL = /bin/rm -f
-	CMD_CLEAR = clear
-	CMD_LINEFEED = @echo \n
-	CMD_SED = sed
-else
-	CMD_DEL = del /F
-	CMD_CLEAR = cls
-	CMD_LINEFEED = @echo. && @echo . > NUL
-	CMD_SED = "%CD%\.tools\sed.exe"
-endif
-
 # Lib a utiliser ( /!\ Peut changer en fonction de l'OS OU du système d'affichage /!\ )
 ifeq ($(LIB_AFF), ncurses)
 #	NCURSES
-	LIBS = -lpanel -lpdcurses
+	ifeq ($(OS),win)
+		LIBS = -lpanel -lpdcurses
+	else
+		LIBS = -lncurses
+	endif
 else
 	ifeq ($(LIB_AFF), sdl)
 #		SDL
@@ -61,11 +52,14 @@ all: $(EXEC_NAME)
 $(BIN_DIR)/$(EXEC_NAME): $(EXEC_NAME)
 $(EXEC_NAME): $(BIN_DIR) $(OBJ_DIR) $(DEP) $(OBJ_FILES)
 	$(CMD_LINEFEED)
-	@echo Creation de l'executable
+	@echo Creation de l executable
 	$(CC) -o $(BIN_DIR)/$(EXEC_NAME) $(CFLAGS) $(OBJ_FILES) $(LIBS)
 # Suppression des dépendances ( pour être sur d'avoir la dernière version -> rebuild à chaque compilation )
 	@$(CMD_DEL) $(DEP) 2>NUL
 
+
+# Inclut les spécificité des OS
+-include MakeFile.$(OS)
 
 # Génère et inclut les dépendances
 -include $(DEP)
@@ -110,7 +104,7 @@ dep: $(DEP)
 
 # Lancer le prog
 exec: $(BIN_DIR)/$(EXEC_NAME)
-	$(BIN_DIR)/$(EXEC_NAME)
+	cd $(BIN_DIR) && $(EXEC_NAME)
 
 # Valgrind
 valgrind: $(BIN_DIR)/$(EXEC_NAME)
@@ -121,7 +115,7 @@ valgrind: $(BIN_DIR)/$(EXEC_NAME)
 # Make clean
 clean:
 	$(CMD_CLEAR)
-	@echo Suppression des fichiers .o, de l'executable et du fichier des dependances
+	@echo Suppression des fichiers .o, de l executable et du fichier des dependances
 	$(CMD_DEL) $(DEP)
 # Pour supprimer les .o dans le dossier obj ( bizari de windows ... )
 	cd $(OBJ_DIR) && $(CMD_DEL) *.o
@@ -135,37 +129,4 @@ clean_dep:
 	@echo Suppression du fichier de dependances
 	$(CMD_DEL) $(DEP)
 
-
-# Affiche les fichiers utilisés
-pfiles:
-	$(CMD_CLEAR)
-	@echo =================================== Bomberman ==================================
-	@echo Sources:
-	@echo 	$(SRC)
-	@echo Dependances:
-	@$(CC) $(CFLAGS) -MM $(SRC) | $(CMD_SED) -e "s/^/	/"
-	@echo Executable obtenu:
-	@echo 	$(BIN_DIR)/$(EXEC_NAME)
-
-
-# Affichage de l'aide
-help:
-	$(CMD_CLEAR)
-	@echo Aide du MakeFile de Bomberman
-	$(CMD_LINEFEED)
-	@echo make ARG
-	@echo 	all:		Construit tout le projet.
-	@echo 	clean:		Supprime les fichiers .o, l'executable et le fichier de
-	@echo				dependances.
-	@echo 	clean_dep:	Supprime le fichier des dependances.
-	@echo 	depend:		Construit le fichier des dependances ( le fichier est
-	@echo				supprime a chaque fin de compilations et est donc auto
-	@echo				regenere a chaque compilation )
-	@echo 	dep:		IDEM {make depend}.
-	@echo 	valgrind:	Compil le projet puis lance valgrind sur le projet.
-	@echo 	doxygen:	Execute doxygen sur le projet.
-	@echo 	exec:		{make all} et execute l'executable obtenu.
-	@echo 	pfiles:		Affiche les fichiers utilises
-	@echo 	help:		Affiche cette aide.
-	$(CMD_LINEFEED)
-	@echo 	/!\ Si MAKE n'a pas d'ARG alors IDEM a {make all}.
+#pfiles && help cf MakeFile.{os}
