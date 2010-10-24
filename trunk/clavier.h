@@ -35,6 +35,7 @@ class clavier
 		// Accesseurs
 		bool estAppuyer( SYS_CLAVIER tsys ) const;
 		unsigned int nb_touches() const;
+		SYS_CLAVIER touche( t_touche t ) const;
 
 		// Autre
 		bool enregistrerConfig( FILE* fp );
