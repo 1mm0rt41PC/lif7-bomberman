@@ -10,16 +10,16 @@ options::options()
 	FILE *fp=0;
 	// Si on trouve notre fichier de configuration on le charge.
 	// Sinon on prend la config par défaut
-	if((fp=fopen("CONFIG_FILE", "rb"))){
+	if((fp=fopen(CONFIG_FILE, "rb"))){
 		unsigned int nb_touches=0;
 
 		/***********************************************************************
 		* On récup le port
 		*/
-		if( fread( &c_port, sizeof(unsigned int), 1, fp ) < sizeof(unsigned int) ){
+		if( fread( &c_port, sizeof(unsigned int), 1, fp ) != 1 ){
 			// Si un bug lors de la lecture
 			fclose(fp);
-			perror("Erreur lors de la lecture du fichier CONFIG_FILE {port}");
+			fprintf(stderr, "Erreur lors de la lecture du fichier %s {port}\n", CONFIG_FILE);
 			// On charge la config par défaut
 			configParDefaut();
 			return ;
@@ -28,10 +28,10 @@ options::options()
 		/***********************************************************************
 		* On récup le nombre de touches
 		*/
-		if( fread( &nb_touches, sizeof(unsigned int), 1, fp ) < sizeof(unsigned int) ){
+		if( fread( &nb_touches, sizeof(unsigned int), 1, fp ) != 1 ){
 			// Si un bug lors de la lecture
 			fclose(fp);
-			perror("Erreur lors de la lecture du fichier CONFIG_FILE {nb_touches}");
+			fprintf(stderr, "Erreur lors de la lecture du fichier %s {nb_touches}\n", CONFIG_FILE);
 			// On charge la config par défaut
 			configParDefaut();
 			return ;
@@ -40,7 +40,7 @@ options::options()
 		// Si nb_touches = 0 => BUG => reset_config !
 		if( nb_touches == 0 ){
 			fclose(fp);
-			perror("Erreur lors de la lecture du fichier CONFIG_FILE {nb_touches == 0 !?} => resetData()");
+			fprintf(stderr, "Erreur lors de la lecture du fichier %s {nb_touches == 0 !?} => resetData()\n", CONFIG_FILE);
 			remise_a_zero();
 			return ;
 		}
@@ -49,8 +49,9 @@ options::options()
 		/***********************************************************************
 		* On charge les touches dans les claviers
 		*/
-		for(unsigned int i=0; i<nb_touches; i++){
+		for(unsigned int i=0; i<4; i++){
 			if(!c_ClavierJoueur[i].chargerConfig( fp, nb_touches )){
+				fprintf(stderr, "Erreur sur le clavier %d\n", i);
 				// Si un bug lors de la lecture
 				fclose(fp);
 				// On charge la config par defaut
@@ -118,11 +119,11 @@ void options::configParDefaut()
 */
 void options::remise_a_zero()
 {
-	if(fichierExiste("CONFIG_FILE")){
-		if( remove("CONFIG_FILE") != 0 ){
+	if(fichierExiste(CONFIG_FILE)){
+		if( remove(CONFIG_FILE) != 0 ){
 			// On envoie un message sur le cannal
 			// d'erreur si on a un problème
-			perror("Erreur lors de la suppression du fichier CONFIG_FILE");
+			fprintf(stderr, "Erreur lors de la suppression du fichier %s\n", CONFIG_FILE);
 		}
 	}
 
@@ -190,14 +191,20 @@ void options::enregistrerConfig()
 	FILE *fp=0;
 	// Si on trouve notre fichier de configuration on le charge.
 	// Sinon on prend la config par défaut
-	if((fp=fopen("CONFIG_FILE", "wb"))){
+	if((fp=fopen(CONFIG_FILE, "wb"))){
 		/***********************************************************************
 		* Ecriture du port
 		*/
-		if( fwrite( &c_port, sizeof(unsigned int), 1, fp) < sizeof(unsigned int) ){
+		if( fwrite( &c_port, sizeof(unsigned int), 1, fp) != 1 ){
 			// Si bug d'écriture on le signal et on stop tout !
 			fclose(fp);
-			perror("Erreur lors de l'enregistrement du fichier CONFIG_FILE {port}");
+			fprintf(stderr, "Erreur lors de l'enregistrement du fichier %s {c_port=%d} => resetData()\n", CONFIG_FILE, c_port);
+			// On remet à zéro la config du fichier => del All !
+			if( remove(CONFIG_FILE) != 0 ){
+				// On envoie un message sur le cannal
+				// d'erreur si on a un problème
+				fprintf(stderr, "Erreur lors de la suppression du fichier %s\n", CONFIG_FILE);
+			}
 			return ;
 		}
 
@@ -205,11 +212,11 @@ void options::enregistrerConfig()
 		unsigned int nb_touches = c_ClavierJoueur[0].nb_touches();// On a au minimum le joueur 1
 		if(nb_touches == 0){// ON PEUT PAS AVOIR 0 TOUCHES !
 			fclose(fp);
-			perror("Erreur lors de l'enregistrement du fichier CONFIG_FILE {nb_touches == 0 !?} => resetData()");
-			if( remove("CONFIG_FILE") != 0 ){
+			fprintf(stderr, "Erreur lors de l'enregistrement du fichier %s {nb_touches == 0 !?} => resetData()\n", CONFIG_FILE);
+			if( remove(CONFIG_FILE) != 0 ){
 				// On envoie un message sur le cannal
 				// d'erreur si on a un problème
-				perror("Erreur lors de la suppression du fichier CONFIG_FILE");
+				fprintf(stderr, "Erreur lors de la suppression du fichier %s\n", CONFIG_FILE);
 			}
 			return ;
 		}
@@ -217,26 +224,33 @@ void options::enregistrerConfig()
 		/***********************************************************************
 		* Ecriture du nombre de touches
 		*/
-		if( fwrite( &nb_touches , sizeof(unsigned int), 1, fp) < sizeof(unsigned int) ){
+		if( fwrite( &nb_touches , sizeof(unsigned int), 1, fp) != 1 ){
 			// Si bug d'écriture on le signal et on stop tout !
 			fclose(fp);
-			perror("Erreur lors de l'enregistrement du fichier CONFIG_FILE {nb_touches}");
+			fprintf(stderr, "Erreur lors de l'enregistrement du fichier %s {nb_touches=%d;}\n", CONFIG_FILE, nb_touches);
+			// On remet à zéro la config du fichier => del All !
+			if( remove(CONFIG_FILE) != 0 ){
+				// On envoie un message sur le cannal
+				// d'erreur si on a un problème
+				fprintf(stderr, "Erreur lors de la suppression du fichier %s\n", CONFIG_FILE);
+			}
 			return ;
 		}
 
 
 		/***********************************************************************
-		* Ecriture des touches des claviers
+		* Ecriture des claviers
 		*/
-		for(unsigned int i=0; i<nb_touches; i++){
+		for(unsigned char i=0; i<4; i++){
 			if(!c_ClavierJoueur[i].enregistrerConfig( fp )){
+				fprintf(stderr, "Erreur sur le clavier %d\n", i);
 				// Si un bug lors de l'écriture
 				fclose(fp);
 				// On remet à zéro la config du fichier => del All !
-				if( remove("CONFIG_FILE") != 0 ){
+				if( remove(CONFIG_FILE) != 0 ){
 					// On envoie un message sur le cannal
 					// d'erreur si on a un problème
-					perror("Erreur lors de la suppression du fichier CONFIG_FILE");
+					fprintf(stderr, "Erreur lors de la suppression du fichier %s\n", CONFIG_FILE);
 				}
 				return ;// On arrête tout
 			}

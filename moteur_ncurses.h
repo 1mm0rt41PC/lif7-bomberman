@@ -32,9 +32,11 @@ extern options G_OPTIONS;// Variable globale
 	15 = blanc
 */
 #define COLOR_LIGHT_YELLOW 14
+#define COLOR_LIGHT_RED 12
 
 // Couleurs Multiplexées
 #define MU_YELLOW_BLACK 1
+#define MU_RED_BLACK 2
 
 // Touches
 #define KEY_ESCAP 27
@@ -47,6 +49,8 @@ class moteur_ncurses
 
 		void menuAccueil( int highlight );
 		void cadre();
+		void affichageTouche( WINDOW *win, int y, int x, int key );
+		int obtenirNombre( char titre[], int valeurParDefaut, int ValeurMin, int ValeurMax );
 
 	public:
 		moteur_ncurses();
@@ -54,10 +58,7 @@ class moteur_ncurses
 
 		void main();
 		unsigned int menu( char titre[], char *choix[], unsigned int nb_choix );
-		int getKey( char titre[], char touche[] );
-
-		void ncursBcl();
-		//void ncursAff( WINDOW *win, pJeu);
+		void afficherConfigurationClavier( unsigned char joueur );
 };
 
 #endif

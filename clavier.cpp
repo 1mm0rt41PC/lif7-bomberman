@@ -53,7 +53,7 @@ void clavier::defTouche(clavier::t_touche t, SYS_CLAVIER tsys )
 bool clavier::chargerConfig( FILE* fp, unsigned int nb_touches )
 {
 	if(!fp || !nb_touches){
-		perror("Erreur lors du chargement de la configuration du clavier !");
+		fprintf(stderr, "Erreur lors du chargement de la configuration du clavier ! {fp=%d; nb_touches=%d}\n", (int)fp, nb_touches);
 		return 0;
 	}
 
@@ -61,13 +61,13 @@ bool clavier::chargerConfig( FILE* fp, unsigned int nb_touches )
 	c_nb_touches = nb_touches;
 	c_touches = new SYS_CLAVIER[nb_touches];
 
-	if( fread( c_touches, sizeof(SYS_CLAVIER), nb_touches, fp ) < sizeof(SYS_CLAVIER) ){
+	if( fread( c_touches, sizeof(SYS_CLAVIER), nb_touches, fp ) != nb_touches ){
 		// Remise à 0 des varriables
 		c_nb_touches = 0;
 		delete[] c_touches;
 		c_touches = 0;
 
-		perror("Erreur lors de la lecture du fichier de configuration pour {clavier[i]}");
+		fprintf(stderr, "Erreur lors de la lecture du fichier de configuration pour {clavier[i]}\n");
 		return 0;
 	}
 	return 1;
@@ -96,6 +96,19 @@ unsigned int clavier::nb_touches() const
 
 
 /*******************************************************************************
+* @fn SYS_CLAVIER* clavier::touche( t_touche t );
+*
+* Renvoie la touche affecté pour une action
+* @param Action t_touche
+* @return Touche affecté à l'action
+*/
+SYS_CLAVIER clavier::touche( t_touche t ) const
+{
+	return c_touches[t];
+}
+
+
+/*******************************************************************************
 * Charge la configuration du clavier depuis un fichier ( déjà ouvert ! )
 * Retour:	1 si tout OK
 *			0 si BUG
@@ -103,11 +116,11 @@ unsigned int clavier::nb_touches() const
 bool clavier::enregistrerConfig( FILE* fp )
 {
 	if(!c_touches || !c_nb_touches){
-		perror("Erreur lors de l'enregistrement de la configuration du clavier !");
+		fprintf(stderr, "Erreur lors de l'enregistrement de la configuration du clavier ! {c_touches=%d; c_nb_touches=%d}\n", (int)c_touches, c_nb_touches);
 		return 0;
 	}
-	if( fwrite( c_touches, sizeof(SYS_CLAVIER), c_nb_touches, fp ) < sizeof(SYS_CLAVIER) ){
-		perror("Erreur lors de l'écriture du fichier de configuration pour {clavier[i]}");
+	if( fwrite( c_touches, sizeof(SYS_CLAVIER), c_nb_touches, fp ) != c_nb_touches ){
+		fprintf(stderr, "Erreur lors de l'écriture du fichier de configuration pour {clavier[i]}\n");
 		return 0;
 	}
 	return 1;
