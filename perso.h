@@ -1,32 +1,50 @@
 #ifndef PERSO_h
 #define PERSO_h
+
+#include "bonus.h"
+#include "debug.h"
 #include <string>
 
+
+/*!
+* @class perso
+* @brief Gère un personnage.
+*
+* Info :
+* - Pour mettre un perso sur en état: mort -> defArmements(0)<br />
+*   Pas d'arme OU plus de vie -> mort<br />
+*   Pour definir une partie avec un nombre de vie illimité : quantite_MAX_Ramassable = 0 => SANS VIE<br />
+*/
 class perso
 {
 	private:
 		// struct {
 		std::string c_nom;
-		unsigned int c_X_pos;
-		unsigned int c_Y_pos;
-		bool c_est_vivant;
+		unsigned int	c_X_pos,
+						c_Y_pos;
+		bonus* c_armements;
 		//clavier c_Touches; <- CLAVIER géré en global ( options général )
 		// }
 
 	public:
 		// Init & UnInit
 		perso();
-		perso(std::string nom, unsigned int Xpos, unsigned int Ypos);
+		perso( std::string nom, unsigned int Xpos, unsigned int Ypos );
 		~perso();
 
 		// Modificateurs
-		void defPos(unsigned int Xpos, unsigned int Ypos);
-		void defVivant( bool v );
+		void defNom( std::string nom );
+		void defPos( unsigned int Xpos, unsigned int Ypos );
+		void defX( unsigned int Xpos );
+		void defY( unsigned int Ypos );
+		void defArmements( bonus* a );
 
 		// Accesseurs
-		unsigned int X();
-		unsigned int Y();
-		bool estVivant();
+		std::string nom() const;
+		unsigned int X() const;
+		unsigned int Y() const;
+		bool estVivant() const;
+		bonus* armements() const;
 };
 
 #endif

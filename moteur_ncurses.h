@@ -1,14 +1,10 @@
 #ifndef MOTEUR_NCURSES_h
 #define MOTEUR_NCURSES_h
+
 #include "config.h"
 #include "options.h"
-#include <stdlib.h>// Pour exit()
+#include "partie.h"
 #include <string.h>// Pour strlen()
-
-//#define WINDOW_HEIGHT 50
-#define WINDOW_HEIGHT 7
-//#define WINDOW_WIDTH 110
-#define WINDOW_WIDTH 30
 
 extern options G_OPTIONS;// Variable globale
 
@@ -37,28 +33,44 @@ extern options G_OPTIONS;// Variable globale
 // Couleurs Multiplexées
 #define MU_YELLOW_BLACK 1
 #define MU_RED_BLACK 2
+#define MU_BLUE_BLACK 3
+#define MU_GREEN_BLACK 4
+#define MU_WHITE_BLACK 5
 
-// Touches
-#define KEY_ESCAP 27
-#define KEY_ENTER_bis 10
+// Couleur des joueurs
+#define MU_JOUEUR1 3
+#define MU_JOUEUR2 2
+#define MU_JOUEUR3 4
+#define MU_JOUEUR4 1
+
 
 class moteur_ncurses
 {
 	private:
-		//WINDOW *c_win;
-
-		void menuAccueil( int highlight );
 		void cadre();
+		unsigned int menu( const char titre[], const char *choix[], unsigned int nb_choix );
+		void menuAccueil( int highlight );
+		int obtenirNombre( const char titre[], int valeurParDefaut, int ValeurMin, int ValeurMax );
+		void afficherConfigurationClavier( unsigned char joueur );
 		void affichageTouche( WINDOW *win, int y, int x, int key );
-		int obtenirNombre( char titre[], int valeurParDefaut, int ValeurMin, int ValeurMax );
+		int getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* returnValue );
+		int getTexte( const char titre[], char texteRetour[21] );
+		void cleanline( WINDOW *win, int y, int x_begin, int x_end );
+		inline void cleanline( WINDOW *win, int y ){ cleanline( win, y, 1, getmaxx(win)-2 ); }
 
 	public:
 		moteur_ncurses();
 		~moteur_ncurses();
 
+		// Autre
 		void main();
-		unsigned int menu( char titre[], char *choix[], unsigned int nb_choix );
-		void afficherConfigurationClavier( unsigned char joueur );
+		static SYS_CLAVIER afficherMapEtEvent( const partie* p );
+
+
+		static chtype getCouleurJoueur( unsigned char joueur );
+		static unsigned char getTailleNombre( int nb );
+		static unsigned char getTailleNombre( unsigned int nb );
+		static char* trimString( char texte[] );
 };
 
 #endif

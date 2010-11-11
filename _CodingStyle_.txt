@@ -1,0 +1,117 @@
+1. Les parenthèse ()
+	// CORRECT
+	if( /*test*/ )
+	for( /*test*/ )
+	while( /*test*/ )
+
+	// INCORRECT
+	if (/*test*/)
+	for (/*test*/)
+	while (/*test*/)
+
+	----------------------------------------------------------------------------
+	// EXEPTIONS
+	L'appel aux fonction
+	printf("toto");
+
+2. Les accolades
+	// CORRECT
+	if( /*test*/ ){
+		/*code*/
+	}
+
+	for( /*test*/ )
+	{
+		/*code*/
+	}
+
+	while( /*test*/ )
+	{
+		/*code*/
+	}
+
+	do{
+		/*code*/
+	}while( /*test*/ )
+
+	void myFunction()
+	{
+		/*code*/
+	}
+
+	----------------------------------------------------------------------------
+	// EXEPTIONS ( uniline )
+
+	if( /*test*/ )
+		// result line
+
+	for( /*test*/ )
+		// result line
+
+	while( /*test*/ )
+		// result line
+
+
+3. Tabs & Spaces
+	On utilise des tab ( \t ) pour indenter ( taille d'affichage 4 )
+	PAS D'ESPACES !
+
+
+4. Les Variables
+	Les nom de types:
+		- Class: 1ere lettre en Maj puis tout le reste en min
+		- Struct: DOIT Commencer par "s_"
+		- Enum: DOIT Commencer par "t_"
+	
+	Les variables:
+		- dans une class TOUTES les varaibles commencent par "c_" ou "C_" si en mode static
+		- les variables globales doivent commencer par "G_" et être écrites en MAJ
+
+
+5. Doxygen format
+	La majorité de la documentation doit être dans les fichier .cpp juste avant la fonction.
+	Sauf pour les struct, enum, class qui sont documenté dans le .h
+
+DANS UN .CPP
+/***************************************************************************//*!
+* @_TYPE_ ->fn,class,...
+* @brief
+* @param[in] 1
+* @param[in,out] 2
+* @return
+*
+* LONGUE DESCRIPTION
+*
+*/
+
+DANS UN .H
+/*!
+* @_TYPE_ ->fn,class,...
+* @brief
+* @param[in] 1
+* @param[in,out] 2
+* @return
+*
+* LONGUE DESCRIPTION
+*
+*/
+
+Exemple:
+/***************************************************************************//*!
+* @fn bonus::s_bonus_proprieter* bonus::bonusProp( int nbBonus )
+* @brief Renvoie le pointeur des bonus généraux
+* @param[in] nbBonus nombre de bonus
+* @return un pointeur vers les bonus généraux
+*
+* Si non initialisé alors on initalise les bonus utilisables pour la partie en cours<br />
+* Les valeurs probabiliter_pop et quantite_MAX_Ramassable peuvent être modifiées<br />
+* Via les fonction defQuantiteMAX_Ramassable() et defProbabiliter()<br />
+* <br />
+* A utiliser au minimum debut de chaque partie !<br />
+*
+*/
+bonus::s_bonus_proprieter* bonus::bonusProp( int nbBonus )
+{
+	...
+	return ...;
+}

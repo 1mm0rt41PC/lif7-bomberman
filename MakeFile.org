@@ -1,65 +1,100 @@
-# CHOIX DE L'OS !!! ( win, linux )
-OS = win
 # CHOIX DE L'AFFICHAGE !!! ( ncurses, sdl, sfml )
 LIB_AFF = ncurses
 # Compilateur
-CC = g++
+CXX = g++
 # Flags de Compilation
-CFLAGS = -Wall
+CFLAGS := -Wall -D__LIB_${LIB_AFF}__
+#Flags pour le linker
+LDFLAGS :=
+# Mode Debug (décommenter cette ligne pour activer le mode debug forcé)
+#DEBUG = 1
+# Lancer automatiquement gdb après chaque compilation en mode debug ( make exec ! )
+DEBUG_AUTO_EXEC_GDB = oui
 
 # Fichiers contenant les dépendances
 DEP = .depend
 # Fichiers .cpp
-SRC = main.cpp map.cpp perso.cpp partie.cpp moteur_ncurses.cpp clavier.cpp options.cpp
+SRC = main.cpp map.cpp perso.cpp partie.cpp moteur_ncurses.cpp clavier.cpp options.cpp bonus.cpp
 # Fichier de sortie final
 EXEC_NAME = bomberman.exe
 
-# Zones de sorties ( NON FONCTIONNEL ! )
+# Zones de sorties
 BIN_DIR = bin
 OBJ_DIR = obj
+DOXYGEN_DIR = doc
 
 
 ################################################################################
 # v NE PAS TOUCHER A CE BLOCK v
+# Determine l'OS sur lequel on tourne
+ifeq ($(SHELL), sh.exe)
+	OS = win
+	# Commandes Spé aux OS
+	CMD_DEL = del /F
+	CMD_CLEAR = cls
+	CMD_LINEFEED = @echo. && @echo . > NUL
+	CMD_SED = "%CD%\.tools\sed.exe"
+	ECHO=@echo $(1)$(if $(2),$(ECHO_,)$(2))$(if $(3),$(ECHO_,)$(3))$(if $(4),$(ECHO_,)$(4))$(if $(5),$(ECHO_,)$(5))
+	NULL = NUL
+else
+	OS = linux
+	# Commandes Spé aux OS
+	CMD_DEL = /bin/rm -f
+	CMD_CLEAR = clear
+	CMD_LINEFEED = @echo ""
+	CMD_SED = /bin/sed
+	ECHO=@echo "$(1)$(if $(2),$(ECHO_,)$(2))$(if $(3),$(ECHO_,)$(3))$(if $(4),$(ECHO_,)$(4))$(if $(5),$(ECHO_,)$(5))"
+	NULL = /dev/null
+endif
+# La règle no_clear permet de supprimer la commande d'effacement d'écran
+ifneq ($(findstring no_clear,$(MAKECMDGOALS)),)
+	CMD_CLEAR =
+endif
+# Les ECHO_XXX sont là pour permettre le passage de certains caractères (dans des fonctions) qui ne passent pas sinon
+ECHO_,=,
+ECHO_)=)
+ECHO_(=(
+# Met en mode debug ou non
+USE_DEBUG = $(if $(or $(findstring debug,$(MAKECMDGOALS)),$(DEBUG)) ,-ggdb)
+ifneq ($(USE_DEBUG),)
+	CFLAGS += $(USE_DEBUG)
+endif
+
+# Fichiers Objets ( *.o ) dans un dossier obj/
+OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(SRC:.cpp=.o))
+
 # Lib a utiliser ( /!\ Peut changer en fonction de l'OS OU du système d'affichage /!\ )
 ifeq ($(LIB_AFF), ncurses)
 #	NCURSES
 	ifeq ($(OS),win)
-		LIBS = -lpanel -lpdcurses
+		LDFLAGS += -lpdcurses
 	else
-		LIBS = -lncurses
+		LDFLAGS += -lncurses
 	endif
 else
 	ifeq ($(LIB_AFF), sdl)
 #		SDL
-		LIBS =
+		LDFLAGS +=
 	else
 #		SFML
-		LIBS =
+		LDFLAGS +=
 	endif
 endif
 # ^ NE PAS TOUCHER A CE BLOCK ^
 ################################################################################
 
 
-# Fichiers Objets ( *.o ) dans un dossier obj/
-OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(SRC:.cpp=.o))
-
-
 # Simple Make
 all: $(EXEC_NAME)
 # La ligne ci dessous, permet d'éviter les bug avec la commande {make exec}
 $(BIN_DIR)/$(EXEC_NAME): $(EXEC_NAME)
-$(EXEC_NAME): $(BIN_DIR) $(OBJ_DIR) $(DEP) $(OBJ_FILES)
+$(EXEC_NAME): $(BIN_DIR) $(OBJ_DIR) $(if $(USE_DEBUG) ,$(OBJ_DIR)/config_debug, $(OBJ_DIR)/config_release) $(DEP) $(OBJ_FILES)
 	$(CMD_LINEFEED)
-	@echo Creation de l executable
-	$(CC) -o $(BIN_DIR)/$(EXEC_NAME) $(CFLAGS) $(OBJ_FILES) $(LIBS)
+	@echo Creation de l executable $(if $(USE_DEBUG) ,en mode Debug)
+	$(CXX) -o $(BIN_DIR)/$(EXEC_NAME) $(OBJ_FILES) $(LDFLAGS)
 # Suppression des dépendances ( pour être sur d'avoir la dernière version -> rebuild à chaque compilation )
-	@$(CMD_DEL) $(DEP) 2>NUL
+	@$(CMD_DEL) $(DEP) 2> $(NULL)
 
-
-# Inclut les spécificité des OS
--include MakeFile.$(OS)
 
 # Génère et inclut les dépendances
 -include $(DEP)
@@ -68,8 +103,8 @@ $(EXEC_NAME): $(BIN_DIR) $(OBJ_DIR) $(DEP) $(OBJ_FILES)
 # Génération des fichier .o ( dans le repertoire $(OBJ_DIR) )
 $(OBJ_DIR)/%.o: %.cpp
 	$(CMD_LINEFEED)
-	@echo Generation de $@
-	$(CC) $(CFLAGS) -o $@ -c $<
+	@echo Generation de $@ $(if $(USE_DEBUG) ,en mode Debug)
+	$(CXX) $(CFLAGS) -o $@ -c $<
 
 
 # Système de génération des dépendances
@@ -77,7 +112,7 @@ $(DEP): $(SRC)
 	$(CMD_CLEAR)
 	@echo Generation des dependances
 # Le sed est la pour permettre de mofidier les regles main.o:... --> obj/main.o:...
-	$(CC) $(CFLAGS) -MM $(SRC) | $(CMD_SED) -r "s/([^.]*)\.o:/$(OBJ_DIR)\/\1.o:/" > $(DEP)
+	$(CXX) $(CFLAGS) -MM $(SRC) | $(CMD_SED) -r "s/([^.]*)\.o:/$(OBJ_DIR)\/\1.o:/" > $(DEP)
 
 
 # Auto création du dossier BIN_DIR
@@ -97,19 +132,64 @@ $(OBJ_DIR):
 ################################################################################
 
 # Make depend ( régénération manuel des dep )
-.PHONY: depend dep exec valgrind clean clean_dep pfiles help
+.PHONY: depend dep exec valgrind clean clean_dep pfiles help debug $(DOXYGEN_DIR) $(DOXYGEN_DIR)/Doxyfile doxygen $(OBJ_DIR)/config.release $(OBJ_DIR)/config.debug no_clear
 depend: $(DEP)
 dep: $(DEP)
 
 
+# Désactive la commande $(CMD_CLEAR)
+no_clear:
+
+
 # Lancer le prog
 exec: $(BIN_DIR)/$(EXEC_NAME)
-	cd $(BIN_DIR) && $(EXEC_NAME)
+ifeq ($(OS), linux)
+	cd $(BIN_DIR) && $(if $(and $(USE_DEBUG),$(DEBUG_AUTO_EXEC_GDB)), gdb $(EXEC_NAME), ./$(EXEC_NAME))
+else
+	cd $(BIN_DIR) && $(if $(and $(USE_DEBUG),$(DEBUG_AUTO_EXEC_GDB)), gdb $(EXEC_NAME), $(EXEC_NAME))
+endif
+
+# Regle pour le mode debug
+debug: $(EXEC_NAME)
+
+
+# Cette règle permet de savoir si on était en mode debug ou pas
+# Si on était en release et qu'on passe en debug -> clean all
+# Si on était en debug et qu'on passe en release -> clean all
+$(OBJ_DIR)/config_%:
+	$(CMD_LINEFEED)
+	@echo "Changement de type de compilation Debug <-> Release"
+	@$(MAKE) --silent --no-print-directory --makefile=MakeFile.org clean no_clear
+	@echo .>$@
+
+
+# Permet de vérifier la présence de la commande sed
+$(CMD_SED):
+	$(warning Veuillez installer sed sur votre machine)
+
 
 # Valgrind
 valgrind: $(BIN_DIR)/$(EXEC_NAME)
 	@echo Lancement de Valgrind
-	valgrind --tool=memcheck $(BIN_DIR)/$(EXEC_NAME)
+	cd $(BIN_DIR) && valgrind --tool=memcheck --leak-check=full ./$(EXEC_NAME)
+
+
+# Doxygen
+doxygen: $(DOXYGEN_DIR)/Doxyfile
+	@echo Lancement de Doxygen
+	cd $(DOXYGEN_DIR) && doxygen
+	
+	
+# Pour créer une archive tar bz2
+tar:
+	$(CMD_DEL) bomberman.tar.bz2
+	tar -jcvf bomberman.tar.bz2 *.cpp *.h MakeFile.org makefile $(DOXYGEN_DIR)/Doxyfile TODO.txt _CodingStyle_.txt
+
+
+# Si pas de doxygen -> OUT
+$(DOXYGEN_DIR)/Doxyfile:
+	$(CMD_CLEAR)
+#	$(error Veuillez  Creer le dossier $(DOXYGEN_DIR) et le fichier de configuration $(DOXYGEN_DIR)/Doxyfile)
 
 
 # Make clean
@@ -117,16 +197,51 @@ clean:
 	$(CMD_CLEAR)
 	@echo Suppression des fichiers .o, de l executable et du fichier des dependances
 	$(CMD_DEL) $(DEP)
-# Pour supprimer les .o dans le dossier obj ( bizari de windows ... )
-	cd $(OBJ_DIR) && $(CMD_DEL) *.o
-# Pour supprimer les .exe dans le dossier obj ( bizari de windows ... )
-	cd $(BIN_DIR) && $(CMD_DEL) *.exe
+# Pour supprimer les .o, .exe dans le dossier obj ( bizari de windows ... )
+	cd $(OBJ_DIR) && $(CMD_DEL) *.o *.exe config_*
 
 
 # Make clean dep
 clean_dep:
 	$(CMD_CLEAR)
 	@echo Suppression du fichier de dependances
-	$(CMD_DEL) $(DEP)
+	$(CMD_DEL) $(DEP)	$(call ECHO ,	doxygen:	Execute doxygen sur le projet.)
 
-#pfiles && help cf MakeFile.{os}
+
+# Affiche les fichiers utilisés
+pfiles:
+	$(CMD_CLEAR)
+	$(call ECHO ,=================================== Bomberman ==================================)
+	$(call ECHO ,Sources:)
+	$(call ECHO ,	$(SRC))
+	$(call ECHO ,Dependances:)
+	@$(CXX) $(CFLAGS) -MM $(SRC) | $(CMD_SED) -e "s/^/	/"
+	$(call ECHO ,Executable obtenu:)
+	$(call ECHO ,	$(BIN_DIR)/$(EXEC_NAME))
+
+
+# Affichage de l'aide
+help:
+	$(CMD_CLEAR)
+	$(call ECHO ,Aide du MakeFile de Bomberman)
+	$(CMD_LINEFEED)
+	$(call ECHO ,make ARG [no_clear])
+	$(call ECHO ,	all:		Construit tout le projet.)
+	$(call ECHO ,	debug:		Construit tout le projet en debug (gdb).)
+	$(call ECHO ,	clean:		Supprime les fichiers .o, l'executable et le fichier de)
+	$(call ECHO ,			dependances.)
+	$(call ECHO ,	clean_dep:	Supprime le fichier des dependances.)
+	$(call ECHO ,	depend:		Construit le fichier des dependances - Le fichier est :)
+	$(call ECHO ,			supprime a chaque fin de compilations et est donc auto)
+	$(call ECHO ,			regenere a chaque compilation)
+	$(call ECHO , 	dep:		IDEM {make depend}.)
+	$(call ECHO ,	valgrind:	Compil le projet puis lance valgrind sur le projet.)
+	$(call ECHO ,	tar:		Archive les fichiers dans un fichier tar.bz2)
+	$(call ECHO ,	doxygen:	Execute doxygen sur le projet.)
+	$(call ECHO ,	no_clear:	Annule tous les effacements d'écran)
+	$(call ECHO ,	exec:		{make all} et execute l'executable obtenu.)
+	$(call ECHO ,	pfiles:		Affiche les fichiers utilises)
+	$(call ECHO ,	help:		Affiche cette aide.)
+	$(CMD_LINEFEED)
+	$(call ECHO ,/!\ Si MAKE n'a pas d'ARG alors IDEM a {make all}.)
+	$(call ECHO ,/!\ L'outil sed est utilise par ce makefile pour la generation des dependances !)

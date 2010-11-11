@@ -2,9 +2,21 @@
 #define CLAVIER_h
 
 #include "config.h"
-#include <stdio.h> // Pour fread, fwrite et perror ( pour les erreurs )
+#include "debug.h"
+#include <stdio.h> // Pour fread, fwrite
 
 
+/*!
+* @class clavier
+* @brief Gère les claviers.
+*
+* Cette class a été consu pour éviter les problèmes de portablilité vers des systèmes<br />
+* / des lib qui pourraient gérer les claviers d'une autre façon<br />
+* La class permet :<br />
+*	- de définir des touches
+*	- d'enregistrer / de charger la configuration d'un clavier
+*
+*/
 class clavier
 {
 	private:
@@ -14,7 +26,12 @@ class clavier
 		// }
 
 	public:
-		typedef enum t_touche {
+		/*!
+		* @enum t_touche
+		* @brief Les actions possibles avec les touches
+		*/
+		enum t_touche {
+			NUL = -1,
 			haut = 0,
 			bas,
 			droite,
@@ -33,9 +50,10 @@ class clavier
 		bool chargerConfig( FILE* fp, unsigned int nb_touches );
 
 		// Accesseurs
-		bool estAppuyer( SYS_CLAVIER tsys ) const;
+		bool estDansClavier( SYS_CLAVIER tsys ) const;
 		unsigned int nb_touches() const;
 		SYS_CLAVIER touche( t_touche t ) const;
+		t_touche obtenirTouche( SYS_CLAVIER tsys ) const;
 
 		// Autre
 		bool enregistrerConfig( FILE* fp );
