@@ -3,48 +3,54 @@
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="LIF7_Projet" />
+		<Option makefile="makefile" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/LIF7_Projet" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
+				<Option output="bin\bomberman" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin\" />
+				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
+				<Linker>
+					<Add option="-lpdcurses -ggdb" />
+				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/LIF7_Projet" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
-				<Option type="0" />
+				<Option output="bin\bomberman" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="\bin" />
+				<Option object_output="obj\Release\" />
+				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-lpdcurses" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="/tmp/SFML-1.6/include/" />
-			<Add directory="/tmp/SFML-1.6/include/SFML" />
-			<Add directory="/tmp/SFML-1.6/include" />
 		</Compiler>
-		<Linker>
-			<Add library="/tmp/SFML-1.6/lib/libsfml-graphics.so.1.6" />
-			<Add library="/tmp/SFML-1.6/lib/libsfml-system.so.1.6" />
-			<Add library="/tmp/SFML-1.6/lib/libsfml-window.so.1.6" />
-			<Add directory="/tmp/SFML-1.6/lib" />
-		</Linker>
+		<Unit filename="bonus.cpp" />
+		<Unit filename="bonus.h" />
+		<Unit filename="clavier.cpp" />
+		<Unit filename="clavier.h" />
+		<Unit filename="config.h" />
+		<Unit filename="debug.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="map.cpp" />
 		<Unit filename="map.h" />
 		<Unit filename="moteur_ncurses.cpp" />
 		<Unit filename="moteur_ncurses.h" />
+		<Unit filename="options.cpp" />
+		<Unit filename="options.h" />
 		<Unit filename="partie.cpp" />
 		<Unit filename="partie.h" />
 		<Unit filename="perso.cpp" />
