@@ -1,9 +1,10 @@
 #include "moteur_ncurses.h"
 
-//subwin(stdscr,y,x,begin_y,begin_x);
-
-/*******************************************************************************
-* Constructeur
+/***************************************************************************//*!
+* @fn moteur_ncurses::moteur_ncurses()
+* @brief Initialise la class moteur_ncurses
+*
+* Initialise l'écran ncurses et prépare le "terrain" pour les traitements future
 */
 moteur_ncurses::moteur_ncurses()
 {
@@ -51,8 +52,14 @@ moteur_ncurses::moteur_ncurses()
 }
 
 
-/*******************************************************************************
-* Destructeur
+/***************************************************************************//*!
+* @fn moteur_ncurses::~moteur_ncurses()
+* @brief Désinitialise la class moteur_ncurses
+*
+* -# Rétablis le cursor orginel
+* -# Nétoie l'écran
+* -# Supprime l'écran NCurses
+* -# Désactive NCurses
 */
 moteur_ncurses::~moteur_ncurses()
 {
@@ -66,7 +73,7 @@ moteur_ncurses::~moteur_ncurses()
 
 /***************************************************************************//*!
 * @fn void moteur_ncurses::cadre()
-* @brief Affiche un cadre le long de la fenêtre
+* @brief Affiche un cadre au tour (interieur) de la fenêtre
 */
 void moteur_ncurses::cadre()
 {
@@ -89,14 +96,15 @@ void moteur_ncurses::cadre()
 *
 * Appeler cette fonction pour lancer l'interface ncurses.<br />
 * C'est dans cette fonction que l'on gère les menu
+* @todo Déplacer cette fonction et la mettre en commun avec toutes les lib d'affichage
 */
 void moteur_ncurses::main()
 {
-	const char* menu_main[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
-		"Jouer",			// NE PAS OUBLIER de modifier le for !
-		"Options",
-		"Quitter"
-	};
+const char* menu_main[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
+	"Jouer",			// NE PAS OUBLIER de modifier le for !
+	"Options",
+	"Quitter"
+};
 	const char* menu_options[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
 		"Port",					// NE PAS OUBLIER de modifier le for !
 		"Clavier",
@@ -124,18 +132,21 @@ void moteur_ncurses::main()
 		/***********************************************************************
 		* Menu d'accueil
 		*/
-		switch( entry = menu( "", menu_main, 3 ) ){
+		switch( entry = menu("", menu_main, 3) )
+		{
 			/*******************************************************************
 			* Jouer :: Type de partie
 			*/
 			case 1:{
 				do{
-					switch( entry = menu( "Type de partie", menu_jeu, 3 ) ){
+					switch( entry = menu("Type de partie", menu_jeu, 3) )
+					{
 						/*******************************************************
 						* Offline
 						*/
 						case 1:{// Offline
-							while( getNombre( "Entrez le nombre de joueur", 2, 2, 4, &nombreDeJoueur ) != 3 ){
+							while( getNombre("Entrez le nombre de joueur", 2, 2, 4, &nombreDeJoueur) != 3 )
+							{
 								// Menu suivant
 								partie jeu;
 								jeu.def_nbJoueurs(nombreDeJoueur);
@@ -173,7 +184,7 @@ void moteur_ncurses::main()
 							break;
 						}
 					}
-				}while(entry != 3);
+				}while( entry != 3 );
 				entry = 0;
 				break;
 			}
@@ -182,7 +193,8 @@ void moteur_ncurses::main()
 			*/
 			case 2:{// Options
 				do{
-					switch( entry = menu( "Options", menu_options, 3 ) ){
+					switch( entry = menu("Options", menu_options, 3) )
+					{
 						/*******************************************************
 						* Menu des options
 						*/
@@ -198,7 +210,8 @@ void moteur_ncurses::main()
 							* Menu des claviers
 							*/
 							do{
-								switch( entry = menu( "Options des Claviers", menu_options_claviers, 5 ) ){
+								switch( entry = menu("Options des Claviers", menu_options_claviers, 5) )
+								{
 									/*******************************************************
 									* Config d'un clavier
 									*/
@@ -213,7 +226,7 @@ void moteur_ncurses::main()
 										break;
 									}
 								}
-							}while(entry != 5);
+							}while( entry != 5 );
 							entry=0;
 							break;
 						}
@@ -225,7 +238,7 @@ void moteur_ncurses::main()
 							break;
 						}
 					}
-				}while(entry != 3);
+				}while( entry != 3 );
 				entry=0;
 				break;
 			}
@@ -234,7 +247,7 @@ void moteur_ncurses::main()
 				break;
 			}
 		}
-	}while(entry != 3);
+	}while( entry != 3 );
 	//entry = menu( menu_options, 3 );
 }
 
@@ -338,8 +351,8 @@ unsigned int moteur_ncurses::menu( const char titre[], const char *choix[], unsi
 
 /***************************************************************************//*!
 * @fn void moteur_ncurses::afficherConfigurationClavier( unsigned char joueur )
-* @brief Menu permettant d'afficher et de modifier la configuration du clavier
-* d'un joueur
+* @brief Menu permettant d'afficher et de modifier la configuration du clavier d'un joueur
+* @param[in] joueur		Le numéro du joueur ( de 1 à ... )
 */
 void moteur_ncurses::afficherConfigurationClavier( unsigned char joueur )
 {
@@ -352,8 +365,11 @@ void moteur_ncurses::afficherConfigurationClavier( unsigned char joueur )
 
 	WINDOW* win_menu = 0;
 
+	if( joueur == 0 )
+		stdErrorE("void moteur_ncurses::afficherConfigurationClavier( 0 ) INTERDIT !");
+
 	// On récupère la config du joueur
-	clavier* cl = G_OPTIONS.clavierJoueur( joueur-1 );
+	clavier* cl = options::getInstance()->clavierJoueur( joueur-1 );
 
 	const char* texte[] = {						// ATTENTION ! Si ajout / suppresion d'un menu,
 		"Haut :					",				// NE PAS OUBLIER de modifier { nbLiens } !
@@ -455,7 +471,7 @@ void moteur_ncurses::afficherConfigurationClavier( unsigned char joueur )
 
 					if( key != KEY_ESCAP ){// Toutes les touches sont accèpté SAUF ECHAP !
 						cl->defTouche((clavier::t_touche)(clavier::haut+highLight-1), key);
-						G_OPTIONS.enregistrerConfig();
+						options::getInstance()->enregistrerConfig();
 					}else{// Touche ECHAP pressée
 						key = 0;// pas envie d'exit completement
 					}
@@ -497,7 +513,8 @@ void moteur_ncurses::affichageTouche( WINDOW* win, int y, int x, int key )
 	};
 
 	// Affichage spécial pour les flèches directionnelles
-	switch( key ){
+	switch( key )
+	{
 		case KEY_UP:
 			mvwaddch(win, y, x, ACS_UARROW);
 			mvwaddstr(win, y, x+1, "(Fleche directionnelle)");
@@ -523,7 +540,8 @@ void moteur_ncurses::affichageTouche( WINDOW* win, int y, int x, int key )
 	}
 
 	// On parcours les touches non affichables
-	for( unsigned char i=0; i<nbTouches; i++ ){
+	for( unsigned char i=0; i<nbTouches; i++ )
+	{
 		if( touches[i] == key ){
 			mvwaddstr(win, y, x, affichage[i]);
 			return ;
@@ -543,6 +561,11 @@ void moteur_ncurses::affichageTouche( WINDOW* win, int y, int x, int key )
 /***************************************************************************//*!
 * @fn int moteur_ncurses::getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* returnValue )
 * @brief Créer un menu pour récupérer un nombre entré par un utilisateur
+* @param[in] titre			 Le titre du menu
+* @param[in] valeurParDefaut La valeur par défaut
+* @param[in] valeurMin		 La valeur minimum
+* @param[in] valeurMax		 La valeur maximum
+* @param[out] returnValue	 Dans cette variable sera stocké, le nombre obtenu a la fin de la fonction
 * @return
 *	- 2 : Nombre validé et accèpté
 *	- 3 : Action annulée
@@ -732,7 +755,8 @@ int moteur_ncurses::getNombre( const char titre[], int valeurParDefaut, int vale
 /***************************************************************************//*!
 * @fn int moteur_ncurses::getTexte( const char titre[], char texteRetour[21] )
 * @brief Permet d'obtenir du texte
-* @param[in,out] texteRetour
+* @param[in] titre				Le titre du menu
+* @param[out] texteRetour		Dans cette variable sera stocké, le texte obtenu a la fin de la fonction
 * @return
 *	- 2 : Texte validé et accèpté
 *	- 3 : Action annulée
@@ -764,7 +788,7 @@ int moteur_ncurses::getTexte( const char titre[], char texteRetour[21] )
 		mvwaddstr(win_menu, 1, (getmaxx(win_menu)-titre_taille)/2, titre);
 
 		// Affichage erreur
-		if(erreurTexteVide){
+		if( erreurTexteVide ){
 			wattron(win_menu, COLOR_PAIR(MU_RED_BLACK));
 			mvwaddstr(win_menu, 2, (getmaxx(win_menu)-35)/2, "Le texte dois avoir 1 caractere min");
 			wattroff(win_menu, COLOR_PAIR(MU_RED_BLACK));
@@ -898,7 +922,7 @@ int moteur_ncurses::getTexte( const char titre[], char texteRetour[21] )
 * @fn void moteur_ncurses::cleanline( WINDOW* win, int y, int x_begin, int x_end )
 * @brief Permet d'effacer une ligne
 * @fn void moteur_ncurses::cleanline( WINDOW* win, int y );
-* @brief Equivalent a cleanline( win, y, 1, getmaxx(win) );
+* @brief Alias de cleanline( win, y, 1, getmaxx(win)-2 );
 */
 void moteur_ncurses::cleanline( WINDOW* win, int y, int x_begin, int x_end )
 {
@@ -913,9 +937,10 @@ void moteur_ncurses::cleanline( WINDOW* win, int y, int x_begin, int x_end )
 /***************************************************************************//*!
 * @fn unsigned char moteur_ncurses::getTailleNombre( int nb )
 * @brief Calcule la longueur d'un nombre.
+* @param[in] nb Le nombre dont on veut savoir la taille
+* @return Renvoie le nombre de chiffre qui compose le nombre
 *
 * Exemple getTailleNombre(-10) => 3<br />
-* Simple alias de moteur_ncurses::getTailleNombre( unsigned int nb )
 */
 unsigned char moteur_ncurses::getTailleNombre( int nb )
 {
@@ -929,6 +954,8 @@ unsigned char moteur_ncurses::getTailleNombre( int nb )
 /***************************************************************************//*!
 * @fn unsigned char moteur_ncurses::getTailleNombre( unsigned int nb )
 * @brief Calcule la longueur d'un nombre.
+* @param[in] nb Le nombre dont on veut savoir la taille
+* @return Renvoie le nombre de chiffre qui compose le nombre
 *
 * Exemple getTailleNombre(122) => 3
 */
@@ -945,6 +972,8 @@ unsigned char moteur_ncurses::getTailleNombre( unsigned int nb )
 /***************************************************************************//*!
 * @fn char* moteur_ncurses::trimString( char texte[] )
 * @brief Vire les espaces avant et après une chaine de caractère
+* @param[in,out] texte Le texte a trim. Le texte est directement modifié
+* @return Renvoie le pointeur @e texte
 *
 * Exemple : "  toto " => "toto"
 */
@@ -971,10 +1000,22 @@ char* moteur_ncurses::trimString( char texte[] )
 /***************************************************************************//*!
 * @fn chtype moteur_ncurses::getCouleurJoueur( unsigned char joueur )
 * @brief Renvoie la couleur d'un joueur
+* @param[in] Numéro du joueur de 1 à ...
+* @return Renvoie la couleur à utiliser ( couleur directement utilisable dans wattron() )
+*
+* Exemple:
+* @code
+* wattron(win, getCouleurJoueur( 1 ));
+* @endcode
+*
+* @note Si le numéro de joueur n'a pas de correspondance, alors :
+* - un message d'erreur ( sur le cannal d'erreur ) est envoyé
+* - La couleur blanche sera utilisée
 */
 chtype moteur_ncurses::getCouleurJoueur( unsigned char joueur )
 {
-	switch( joueur ){
+	switch( joueur )
+	{
 		case 1:
 			return COLOR_PAIR(MU_JOUEUR1);
 		case 2:
@@ -993,47 +1034,22 @@ chtype moteur_ncurses::getCouleurJoueur( unsigned char joueur )
 
 
 /***************************************************************************//*!
-* @fn void moteur_ncurses::afficherMap( partie* p )
+* @fn SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 * @brief Affiche une map
-*
-*/
-/*
-enum type {
-	inconnu,// BUG
-	vide,
-	// MUR
-	Mur_destrucible,
-	Mur_INdestrucible,
-	// Armes
-	flamme,
-	bombe_poser,
-	// Bonus
-	gain_bombe,
-	gain_puissance_flamme,
-	gain_declancheur_manuel,
-	// Player
-	UN_joueur,
-	plusieurs_joueurs,
-	// Combinaison
-	bombe_poser_AVEC_UN_joueur,
-	bombe_poser_AVEC_plusieurs_joueurs,
-	// Points de départ
-	point_de_depart_j1,
-	point_de_depart_j2,
-	point_de_depart_j3,
-	point_de_depart_j4
-};
+* @param[in] p	La partie en cours a afficher
+* @return La touche actuellement appuyé
 */
 SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 {
+	map* l_map = p->getMap();// l_map pour local variable map
 	// Décalage
-	unsigned int	xpos=(getmaxx(stdscr)-p->getMap()->X())/2,
-					ypos=(getmaxy(stdscr)-p->getMap()->Y())/2;
+	unsigned int	xpos=(getmaxx(stdscr)-l_map->X())/2,
+					ypos=(getmaxy(stdscr)-l_map->Y())/2;
 	// Fenetre d'affichage
 	WINDOW* win = stdscr;
 
-	if((unsigned int)getmaxx(stdscr) < p->getMap()->X() || (unsigned int)getmaxy(stdscr) < p->getMap()->Y())
-		stdErrorVarE("La map est trop grande pour l'affichage ! SCREEN:(Xmax=%d, Ymax=%d), MAP:(Xmax=%u, Ymax=%u)", getmaxx(stdscr), getmaxy(stdscr), p->getMap()->X(), p->getMap()->Y());
+	if( (unsigned int)getmaxx(stdscr) < l_map->X() || (unsigned int)getmaxy(stdscr) < l_map->Y() )
+		stdErrorVarE("La map est trop grande pour l'affichage ! SCREEN:(Xmax=%d, Ymax=%d), MAP:(Xmax=%u, Ymax=%u)", getmaxx(stdscr), getmaxy(stdscr), l_map->X(), l_map->Y());
 
 	//halfdelay( 2 );
 	//notimeout( c_win, true );
@@ -1049,9 +1065,12 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 	// Sert à afficher les couleurs pour les joueurs
 	chtype couleur;
 
-	for( unsigned int x,y=0; y<p->getMap()->Y(); y++ ){
-		for(x=0; x<p->getMap()->X(); x++){
-			switch(p->getMap()->getBlock(x,y).element){
+	for( unsigned int x,y=0; y<l_map->Y(); y++ )
+	{
+		for( x=0; x<l_map->X(); x++ )
+		{
+			switch( l_map->getBlock(x,y)->element )
+			{
 				case map::vide: {
 					mvwaddch( win, ypos+y, xpos+x, ' ');
 					break;
@@ -1068,11 +1087,12 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 					mvwaddch( win, ypos+y, xpos+x, '*');
 					break;
 				}
-				case map::UN_joueur: {
-					if(!p->getMap()->getBlock(x,y).joueur)
-						stdErrorVarE("POINTEUR NULL !X=%u, Y=%u, p->getMap()->getBlock(x,y).joueur=0", x, y);
+				case map::UN_joueur:
+				case map::plusieurs_joueurs: {
+					if( !l_map->getBlock(x,y)->joueur )
+						stdErrorVarE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y)->joueur=0", x, y);
 
-					couleur = getCouleurJoueur( p->getMap()->getBlock(x,y).joueur->at(0) );
+					couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
 					wattron(win, couleur);
 					mvwaddch( win, ypos+y, xpos+x, '@');
 					wattroff(win, couleur);
@@ -1080,17 +1100,17 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 					break;
 				}
 				case map::bombe_poser: {
-					couleur = getCouleurJoueur( p->getMap()->getBlock(x,y).joueur->at(0) );
+					couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
 					wattron(win, couleur);
 					mvwaddch( win, ypos+y, xpos+x, '¤');
 					wattroff(win, couleur);
 					break;
 				}
 				case map::bombe_poser_AVEC_UN_joueur: {
-					if(!p->getMap()->getBlock(x,y).joueur)
-						stdErrorVarE("POINTEUR NULL !X=%u, Y=%u, p->getMap()->getBlock(x,y).joueur=0", x, y);
+					if( !l_map->getBlock(x,y)->joueur )
+						stdErrorVarE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y).joueur=0", x, y);
 
-					couleur = getCouleurJoueur( p->getMap()->getBlock(x,y).joueur->at(0) );
+					couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
 					wattron(win, couleur);
 					mvwaddch( win, ypos+y, xpos+x, 'à');
 					wattroff(win, couleur);
@@ -1098,7 +1118,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 					break;
 				}
 				default:{
-					stdErrorVar("Erreur lors de la lecture de la map, Objet inconu <%d>", (int)p->getMap()->getBlock(x,y).element);
+					stdErrorVar("Erreur lors de la lecture de la map, Objet inconu <%d>", (int)l_map->getBlock(x,y)->element);
 					break;
 				}
 			}

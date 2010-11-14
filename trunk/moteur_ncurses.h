@@ -6,7 +6,6 @@
 #include "partie.h"
 #include <string.h>// Pour strlen()
 
-extern options G_OPTIONS;// Variable globale
 
 /* curses.h
 	COLOR_BLACK		0
@@ -44,19 +43,27 @@ extern options G_OPTIONS;// Variable globale
 #define MU_JOUEUR4 1
 
 
+/*!
+* @class moteur_ncurses
+* @brief Gère l'affichage via le moteur "graphique" NCurses
+*
+* @note Aucune variable n'est membre de ce module
+* @todo Déplacer moteur_ncurses::trimString( char texte[] ) vers un endroit plus approprié
+*/
 class moteur_ncurses
 {
 	private:
 		void cadre();
-		unsigned int menu( const char titre[], const char *choix[], unsigned int nb_choix );
-		void menuAccueil( int highlight );
-		int obtenirNombre( const char titre[], int valeurParDefaut, int ValeurMin, int ValeurMax );
-		void afficherConfigurationClavier( unsigned char joueur );
 		void affichageTouche( WINDOW *win, int y, int x, int key );
-		int getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* returnValue );
-		int getTexte( const char titre[], char texteRetour[21] );
 		void cleanline( WINDOW *win, int y, int x_begin, int x_end );
 		inline void cleanline( WINDOW *win, int y ){ cleanline( win, y, 1, getmaxx(win)-2 ); }
+
+		// Fonction d'affichage de menu
+		unsigned int menu( const char titre[], const char *choix[], unsigned int nb_choix );
+		void afficherConfigurationClavier( unsigned char joueur );
+		int getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* returnValue );
+		int getTexte( const char titre[], char texteRetour[21] );
+
 
 	public:
 		moteur_ncurses();
@@ -65,7 +72,6 @@ class moteur_ncurses
 		// Autre
 		void main();
 		static SYS_CLAVIER afficherMapEtEvent( const partie* p );
-
 
 		static chtype getCouleurJoueur( unsigned char joueur );
 		static unsigned char getTailleNombre( int nb );

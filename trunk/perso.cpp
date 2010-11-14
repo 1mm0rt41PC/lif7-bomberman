@@ -7,8 +7,8 @@ using namespace std;
 */
 perso::perso()
 {
-	c_X_pos = 0;
-	c_Y_pos = 0;
+	c_pos.x = 0;
+	c_pos.y = 0;
 	c_armements = 0;
 }
 
@@ -20,8 +20,8 @@ perso::perso()
 perso::perso( string nom, unsigned int Xpos, unsigned int Ypos )
 {
 	c_nom = nom;
-	c_X_pos = Xpos;
-	c_Y_pos = Ypos;
+	c_pos.x = Xpos;
+	c_pos.y = Ypos;
 	c_armements = 0;
 }
 
@@ -52,8 +52,18 @@ void perso::defNom( string nom )
 */
 void perso::defPos( unsigned int Xpos, unsigned int Ypos )
 {
-	c_X_pos = Xpos;
-	c_Y_pos = Ypos;
+	c_pos.x = Xpos;
+	c_pos.y = Ypos;
+}
+
+
+/***************************************************************************//*!
+* @fn void perso::defPos( s_Coordonnees pos )
+* @brief Modifie la position du personnage
+*/
+void perso::defPos( s_Coordonnees pos )
+{
+	c_pos = pos;
 }
 
 
@@ -63,7 +73,7 @@ void perso::defPos( unsigned int Xpos, unsigned int Ypos )
 */
 void perso::defY( unsigned int Ypos )
 {
-	c_Y_pos = Ypos;
+	c_pos.y = Ypos;
 }
 
 
@@ -73,7 +83,7 @@ void perso::defY( unsigned int Ypos )
 */
 void perso::defX( unsigned int Xpos )
 {
-	c_X_pos = Xpos;
+	c_pos.x = Xpos;
 }
 
 
@@ -107,7 +117,7 @@ string perso::nom() const
 */
 unsigned int perso::X() const
 {
-	return c_X_pos;
+	return c_pos.x;
 }
 
 
@@ -117,7 +127,7 @@ unsigned int perso::X() const
 */
 unsigned int perso::Y() const
 {
-	return c_Y_pos;
+	return c_pos.y;
 }
 
 

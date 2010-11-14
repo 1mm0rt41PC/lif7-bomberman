@@ -20,8 +20,7 @@ class perso
 	private:
 		// struct {
 		std::string c_nom;
-		unsigned int	c_X_pos,
-						c_Y_pos;
+		s_Coordonnees c_pos;
 		bonus* c_armements;
 		//clavier c_Touches; <- CLAVIER géré en global ( options général )
 		// }
@@ -35,6 +34,7 @@ class perso
 		// Modificateurs
 		void defNom( std::string nom );
 		void defPos( unsigned int Xpos, unsigned int Ypos );
+		void defPos( s_Coordonnees pos );
 		void defX( unsigned int Xpos );
 		void defY( unsigned int Ypos );
 		void defArmements( bonus* a );

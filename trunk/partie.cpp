@@ -42,8 +42,9 @@ void partie::genMap()
 	c_map = new map();
 	c_map->chargerMap();
 
-	map::s_Pos p;
-	for( unsigned char i=0; i<c_nb_joueurs; i++ ){
+	s_Coordonnees p;
+	for( unsigned char i=0; i<c_nb_joueurs; i++ )
+	{
 		p = c_map->mettreJoueurA_sa_PositionInitial( i+1 );
 		c_joueurs[i].defPos(p.x, p.y);
 	}
@@ -114,7 +115,7 @@ unsigned char partie::nbMAX_joueurs() const
 */
 perso* partie::joueur( unsigned int joueur_numero ) const
 {
-	if(joueur_numero >= c_nb_joueurs || !c_joueurs){
+	if( joueur_numero >= c_nb_joueurs || !c_joueurs ){
 		stdErrorVar("joueur_numero(%u) >= c_nb_joueurs(%u) || !c_joueurs(%X)", (unsigned int)joueur_numero, (unsigned int)c_nb_joueurs, (unsigned int)c_joueurs);
 		return 0;
 	}
@@ -149,8 +150,9 @@ map* partie::getMap() const
 unsigned char partie::nbJoueurVivant() const
 {
 	unsigned char nbJoueurVivant = 0;
-	for(unsigned char i=0; i<c_nb_joueurs; i++){
-		if(c_joueurs[i].armements() && (c_joueurs[i].armements()->quantiteUtilisable(bonus::vie) > 0 || c_joueurs[i].armements()->quantiteMAX_Ramassable(bonus::vie) == 0))
+	for( unsigned char i=0; i<c_nb_joueurs; i++ )
+	{
+		if( c_joueurs[i].armements() && (c_joueurs[i].armements()->quantiteUtilisable(bonus::vie) > 0 || c_joueurs[i].armements()->quantiteMAX_Ramassable(bonus::vie) == 0) )
 			nbJoueurVivant++;
 	}
 	return nbJoueurVivant;
@@ -163,13 +165,14 @@ unsigned char partie::nbJoueurVivant() const
 */
 void partie::main( libAff* afficherMapEtEvent )
 {
-	if(!afficherMapEtEvent)
+	if( !afficherMapEtEvent )
 		stdErrorE("Fonction d'affichage incorrect ! (afficherMapEtEvent=0)");
 
 	// On initialise les bonus utilisables pour cette partie
 	bonus::bonusProp();
 	// On initialise les bonus pour les joueurs
-	for(unsigned char i=0; i<c_nb_joueurs; i++){
+	for( unsigned char i=0; i<c_nb_joueurs; i++ )
+	{
 		c_joueurs[i].defArmements( new bonus() );
 		c_joueurs[i].armements()->param_Par_Defaut();
 	}
@@ -180,6 +183,7 @@ void partie::main( libAff* afficherMapEtEvent )
 	SYS_CLAVIER key;
 	int i=0;
 	bool continuerScanClavier=1;
+	options* opt = options::getInstance();
 
 	// Commencement de la partie
 	do{
@@ -189,61 +193,75 @@ void partie::main( libAff* afficherMapEtEvent )
 		/***********************************************************************
 		* Scan du clavier pour les joueurs
 		*/
-		for( i=0; i<c_nb_joueurs && continuerScanClavier == 1; i++ ){
-			switch( G_OPTIONS.clavierJoueur(i)->obtenirTouche(key) ){
-				case clavier::NUL:{
+		for( i=0; i<c_nb_joueurs && continuerScanClavier == 1; i++ )
+		{
+			switch( opt->clavierJoueur(i)->obtenirTouche(key) )
+			{
+				case clavier::NUL: {
 					continuerScanClavier = 1;
 					break;
 				}
-				case clavier::haut:{
+				case clavier::haut: {
 					deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()-1, i );
 					continuerScanClavier = 0;
 					break;
 				}
-				case clavier::bas:{
+				case clavier::bas: {
 					deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()+1, i );
 					continuerScanClavier = 0;
 					break;
 				}
-				case clavier::droite:{
+				case clavier::droite: {
 					deplacer_le_Perso_A( c_joueurs[i].X()+1, c_joueurs[i].Y(), i );
 					continuerScanClavier = 0;
 					break;
 				}
-				case clavier::gauche:{
+				case clavier::gauche: {
 					deplacer_le_Perso_A( c_joueurs[i].X()-1, c_joueurs[i].Y(), i );
 					continuerScanClavier = 0;
 					break;
 				}
-				case clavier::lancerBombe:{
-					if(!c_joueurs[i].armements()->quantiteUtilisable( bonus::bombe ))
-						break;/*IL NE RESTE PAS DE BOMBE EN STOCK*/
-
-					switch(c_map->getBlock( c_joueurs[i].X(), c_joueurs[i].Y()).element ){
-						case map::UN_joueur:{
-							c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_UN_joueur, i+1 );// id_joueur = 0 => on ne met pas le joueur dans les meta données
+				/***************************************************************
+				* On veux poser une bombe
+				*/
+				case clavier::lancerBombe: {
+					/***********************************************************
+					* IL NE RESTE PAS DE BOMBE EN STOCK
+					*/
+					if( !c_joueurs[i].armements()->quantiteUtilisable(bonus::bombe) )
+						break;
+					/***********************************************************
+					* Il reste des bombes à poser ->
+					* 2 Posibilités:
+					* 1) Il n'y a que le joueur qui veut poser la bombe
+					* 2) Il y a plusieurs joueurs
+					*/
+					switch( c_map->getBlock( c_joueurs[i].X(), c_joueurs[i].Y())->element )// Utilisation d'un switch pour la rapidité ( en asm ebx modifié une fois => plus rapide )
+					{
+						/*******************************************************
+						* Cas 1 et 2:
+						*/
+						case map::UN_joueur:
+						case map::plusieurs_joueurs: {
+							c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_UN_joueur );
+							c_map->ajouterInfoJoueur( c_joueurs[i].X(), c_joueurs[i].Y(), i+1, 1 );// Ajout de l'info > Mais qui a donc posé la bombe ...
 							c_joueurs[i].armements()->decQuantiteUtilisable( bonus::bombe );
 							break;
 						}
-						case map::plusieurs_joueurs:{
-							c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_UN_joueur, i+1 );// id_joueur = 0 => on ne met pas le joueur dans les meta données
-							c_joueurs[i].armements()->decQuantiteUtilisable( bonus::bombe );
-							break;
-						}
-						default:{
+						default: {// On ne pose pas la bombe ! On a pas les conditions réuni
 							break;
 						}
 					}
 					continuerScanClavier = 0;
 					break;
 				}
-				case clavier::declancheur:{
+				case clavier::declancheur: {
 					// A FAIRE
 					continuerScanClavier = 0;
 					break;
 				}
-				default:{
-					stdErrorVarE("Touche envoyé par le joueur %d est inconnue : %d", (int)G_OPTIONS.clavierJoueur(i)->obtenirTouche(key), (int)key);
+				default: {
+					stdErrorVarE("Touche envoyé par le joueur %d est inconnue : %d", (int)opt->clavierJoueur(i)->obtenirTouche(key), (int)key);
 					break;
 				}
 			}
@@ -255,7 +273,9 @@ void partie::main( libAff* afficherMapEtEvent )
 		* Scan des compteurs
 		*/
 
-	}while(key != KEY_ESCAP);
+	}while( key != KEY_ESCAP );
+
+	delete c_map;
 
 
 	// On désinitialise les bonus utilisables pour cette partie
@@ -280,66 +300,107 @@ void partie::main( libAff* afficherMapEtEvent )
 */
 void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned char joueur )
 {
-	if(!c_map)
+	map::t_type elementNouvellePosition;
+
+	if( !c_map )
 		stdErrorE("Initialiser la map avant !");
 
-	if(!c_joueurs)
+	if( !c_joueurs )
 		stdErrorE("Initialiser les joueurs avant !");
 
-	if(joueur >= c_nb_joueurs)
+	if( joueur >= c_nb_joueurs )
 		stdErrorVarE("Le joueur %d n'existe pas ! Impossible de déplacer le joueur !", joueur);
 
-	if(		0 <= newX && newX < c_map->X()// On vérif si on ne dépasse pas la
+	// Ce qui a sur la nouvelle case
+	elementNouvellePosition = c_map->getBlock(newX, newY)->element;
+
+	/***********************************************************************
+	* Toutes les condition nécéssaire pour pouvoir bouger
+	* Si l'une d'elle pas bonne => return void;
+	*/
+	if( !(	0 <= newX && newX < c_map->X()// On vérif si on ne dépasse pas la
 		&&	0 <= newY && newY < c_map->Y()// taille de la map
-		&&	c_map->getBlock(newX, newY).element != map::Mur_destrucible		// On vérif s'il n'y a pas
-		&&	c_map->getBlock(newX, newY).element != map::Mur_INdestrucible	// d'objet solid
-		&&	c_map->getBlock(newX, newY).element != map::bombe_poser
-		&&	c_map->getBlock(newX, newY).element != map::bombe_poser_AVEC_UN_joueur
-		&&	c_map->getBlock(newX, newY).element != map::bombe_poser_AVEC_plusieurs_joueurs)
+		&&	elementNouvellePosition != map::Mur_destrucible		// On vérif s'il n'y a pas
+		&&	elementNouvellePosition != map::Mur_INdestrucible	// d'objet solid
+		&&	elementNouvellePosition != map::bombe_poser
+		&&	elementNouvellePosition != map::bombe_poser_AVEC_UN_joueur
+		&&	elementNouvellePosition != map::bombe_poser_AVEC_plusieurs_joueurs))
 	{
-		// On ne tombe pas sur un objet inconnu
-		if(c_map->getBlock(newX, newY).element == map::inconnu)
-			stdErrorVarE("Objet inconnu dans la map à X=%d, Y=%d !", newX, newY);
+		return ;
+	}
 
-		// Tout est Ok, on déplace le perso
+	/***********************************************************************
+	* On ne tombe pas sur un objet inconnu
+	* Anti bug
+	*/
+	if( elementNouvellePosition == map::inconnu )
+		stdErrorVarE("Objet inconnu dans la map à X=%d, Y=%d !", newX, newY);
 
-		/***********************************************************************
-		* On enlève le perso de son ancienne position.
-		* ( Et remise en état de la case )
-		*/
-		// On regarde le nombre de joueur sur la case actuel
-		if(c_map->getNbJoueur_SurBlock( c_joueurs[joueur].X(), c_joueurs[joueur].Y() ) > 1){stdError("zarb");
-			// Il reste plus de 1 joueurs sur la case
-			switch(c_map->getBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y()).element){
-				case map::bombe_poser_AVEC_UN_joueur:{
-					// On enlève le perso de son ancienne position
-					c_map->setBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y(), map::bombe_poser, 0);// id_joueur = 0 => on ne met pas le joueur dans les meta données
-					c_map->rmInfoJoueur( c_joueurs[joueur].X(), c_joueurs[joueur].Y(), joueur+1, 0 );// NE PAS OUBLIER QUE {joueur} va ICI de [0 à 255] OR LA FONCTION VEUT [1 à 255]
-					break;
-				}
+	// Tout est Ok, on déplace le perso
 
-				case map::plusieurs_joueurs:{
-					break;
-				}
-
-				case map::bombe_poser_AVEC_plusieurs_joueurs:{
-					break;
-				}
-
-				default:{
-					break;
-				}
+	/***********************************************************************
+	* On enlève le perso de son ancienne position.
+	* ( Et remise en état de la case )
+	*/
+	// On regarde le nombre d'info joueur(meta données) sur la case actuel
+	if( c_map->nb_InfoJoueur(c_joueurs[joueur].X(), c_joueurs[joueur].Y()) > 1 ){
+		// Il reste plus de 1 joueurs sur la case
+		switch( c_map->getBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y())->element )
+		{
+			case map::bombe_poser_AVEC_UN_joueur: {
+				// On enlève le perso de son ancienne position
+				c_map->setBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y(), map::bombe_poser);
+				c_map->rmInfoJoueur( c_joueurs[joueur].X(), c_joueurs[joueur].Y(), joueur+1, 0 );
+				break;
 			}
-		}else{// Suppression total -> case toute propre
-			// On enlève le perso de son ancienne position
-			c_map->setBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y(), map::vide, joueur+1);// NE PAS OUBLIER QUE {joueur} va ICI de [0 à 255] OR LA FONCTION VEUT [1 à 255]
-			c_map->rmInfoJoueur(c_joueurs[joueur].X(), c_joueurs[joueur].Y(), joueur+1, 1);// NE PAS OUBLIER QUE {joueur} va ICI de [0 à 255] OR LA FONCTION VEUT [1 à 255]
-		}
 
-		/***********************************************************************
-		* On place le perso a sa nouvelle position
-		*/
-		c_map->setBlock(newX, newY, map::UN_joueur, joueur+1);
-		c_joueurs[joueur].defPos(newX, newY);
+			case map::plusieurs_joueurs: {
+				// On enlève le perso de son ancienne position et S'il n'y avait plus que 2 joueurs => il ne restera q'un joueur
+				if( c_map->nb_InfoJoueur(c_joueurs[joueur].X(), c_joueurs[joueur].Y()) == 2 )
+					c_map->setBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y(), map::UN_joueur);
+
+				c_map->rmInfoJoueur(c_joueurs[joueur].X(), c_joueurs[joueur].Y(), joueur+1, 1);
+				break;
+			}
+
+			case map::bombe_poser_AVEC_plusieurs_joueurs: {
+				break;
+			}
+
+			default: {
+				break;
+			}
+		}
+	}else{// Suppression total -> case toute propre
+		// On enlève le perso de son ancienne position
+		c_map->setBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y(), map::vide);
+	}
+
+	/***********************************************************************
+	* On place le perso a sa nouvelle position
+	*/
+	switch( elementNouvellePosition )
+	{
+		case map::vide: {
+			c_map->setBlock(newX, newY, map::UN_joueur);
+			c_map->ajouterInfoJoueur(newX, newY, joueur+1);
+			c_joueurs[joueur].defPos(newX, newY);
+			break;
+		}
+		case map::UN_joueur:
+		case map::plusieurs_joueurs: {
+			c_map->setBlock(newX, newY, map::plusieurs_joueurs);
+			c_map->ajouterInfoJoueur(newX, newY, joueur+1);
+			c_joueurs[joueur].defPos(newX, newY);
+			break;
+		}
+		case map::flamme:
+		case map::flamme_origine: {
+			// Viens d'aller dans le feu -> Boulet ?
+			break;
+		}
+		default: {
+			stdErrorVarE("Cas non pris en charge c_map->getBlock(%u, %u).element=%d", newX, newY, elementNouvellePosition);
+		}
 	}
 }

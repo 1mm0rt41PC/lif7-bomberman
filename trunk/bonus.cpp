@@ -13,15 +13,16 @@ bonus::bonus()
 {
 	c_liste = 0;
 	c_nb = 0;
+	c_bombePosees.clear();
 
-	if(!C_bonusProp)
+	if( !C_bonusProp )
 		stdErrorE("Veuillez initialiser la partie général des bonus avant de quoi que se soit ! -> bonus::bonusProp()");
 }
 
 
 /***************************************************************************//*!
 * @fn bonus::~bonus()
-* @brief Déinisitalise la class bonus et supprime tous les bonus qui ont pu être chargés
+* @brief Désinitialise la class bonus et supprime tous les bonus qui ont pu être chargés
 */
 bonus::~bonus()
 {
@@ -30,31 +31,33 @@ bonus::~bonus()
 		c_liste = 0;
 		c_nb = 0;
 	}
+	c_bombePosees.clear();
 }
 
 
 /***************************************************************************//*!
 * @fn bonus::s_bonus_proprieter* bonus::bonusProp()
 * @brief  Renvoie le pointeur des bonus généraux
+* @return un pointeur vers les bonus généraux
 *
 * Si non initialisé alors on initalise les bonus utilisables pour la partie en cours<br />
 * Les valeurs probabiliter_pop et quantite_MAX_Ramassable peuvent être modifiées<br />
 * Via les fonction defQuantiteMAX_Ramassable() et defProbabiliter()<br />
 * <br />
 * A utiliser au minimum debut de chaque partie !<br />
-* @return un pointeur vers les bonus généraux
 */
 bonus::s_bonus_proprieter* bonus::bonusProp()
 {
 	char nb_elmement = (char)(bonus::t_Bonus(bonus::t_Bonus(bombe*0)-1))+1; // Donne le nombre d'element
 
-	if(C_bonusProp)// Si déjà initialisé => on retourne le tableau
+	if( C_bonusProp )// Si déjà initialisé => on retourne le tableau
 		return C_bonusProp;
 
 	C_bonusProp = new s_bonus_proprieter[nb_elmement];
 
 	C_bonusProp[bombe].probabiliter_pop = 40;// 40% de pop
 	C_bonusProp[bombe].quantite_MAX_Ramassable = 20;
+//	C_bonusProp[bombe].duree = ;
 
 	C_bonusProp[puissance_flamme].probabiliter_pop = 60;// 60% de pop
 	C_bonusProp[puissance_flamme].quantite_MAX_Ramassable = 10;
@@ -77,11 +80,10 @@ bonus::s_bonus_proprieter* bonus::bonusProp()
 * @brief Détruit les bonus qui étaient utilisables durant la partie.
 *
 * <b>A utiliser à la fin de chaque partie !</b>
-*
 */
 void bonus::unInitBonusProp()
 {
-	if(!C_bonusProp)// Si PAS encore initialisé => out
+	if( !C_bonusProp )// Si PAS encore initialisé => out
 		stdErrorE("C_bonusProp PAS encore initialisé.");
 
 	delete[] C_bonusProp;
@@ -94,7 +96,6 @@ void bonus::unInitBonusProp()
 *
 * Charge les paramètres par defaut pour une partie F4A et supprime les anciens<br />
 * paramètres si besoin.
-*
 */
 void bonus::param_Par_Defaut()// Pour une partie classique ( F4A )
 {
@@ -125,13 +126,12 @@ void bonus::param_Par_Defaut()// Pour une partie classique ( F4A )
 * @fn bool bonus::aDeja( t_Bonus b ) const
 * @brief Premet de savoir si un bonus est déjà dans la liste des donus chargé
 * @return Vrais si le bonus a été trouvé dans la liste
-*
 */
 bool bonus::aDeja( t_Bonus b ) const
 {
-	for(unsigned char i=0; i<c_nb; i++)
+	for( unsigned char i=0; i<c_nb; i++ )
 	{
-		if(b == c_liste[i].type && c_liste[i].quantite_utilisable)
+		if( b == c_liste[i].type && c_liste[i].quantite_utilisable )
 			return 1;
 	}
 	return 0;
@@ -142,13 +142,12 @@ bool bonus::aDeja( t_Bonus b ) const
 * @fn int bonus::est_Dans_La_Liste( t_Bonus b ) const
 * @brief Permet de savoir si un bonus est déjà dans la liste
 * @return La position de l'élement dans la liste
-*
 */
 int bonus::est_Dans_La_Liste( t_Bonus b ) const
 {
-	for(unsigned char i=0; i<c_nb; i++)
+	for( unsigned char i=0; i<c_nb; i++ )
 	{
-		if(b == c_liste[i].type)
+		if( b == c_liste[i].type )
 			return (int)i;// Convertion en int pour avoir la possibilité d'envoyer -1 (cf plus bas)
 	}
 	return -1;
@@ -162,7 +161,7 @@ int bonus::est_Dans_La_Liste( t_Bonus b ) const
 unsigned char bonus::quantiteUtilisable( t_Bonus b ) const
 {
 	int pos=0;
-	if((pos=est_Dans_La_Liste( b )) == -1 || pos >= c_nb){
+	if( (pos=est_Dans_La_Liste( b )) == -1 || pos >= c_nb ){
 		stdErrorVar("Bonus non trouvé ou erreur > bonus=%d, pos=%d", b, pos);
 		return 0;
 	}
@@ -178,12 +177,11 @@ unsigned char bonus::quantiteUtilisable( t_Bonus b ) const
 * ie: 5 bombes sur 8 sur 20 -> On a 5 bombes que l'on peut encore posé<br />
 * et on en a posé 8-5=3, de plus on peut ramasser un maximum de 20-8=12 bombes<br />
 * suplémentaire.
-*
 */
 unsigned char bonus::quantiteMAX( t_Bonus b ) const
 {
 	int pos=0;
-	if((pos=est_Dans_La_Liste( b )) == -1 || pos >= c_nb){
+	if( (pos=est_Dans_La_Liste( b )) == -1 || pos >= c_nb ){
 		stdErrorVar("Bonus non trouvé ou erreur > bonus=%d, pos=%d", b, pos);
 		return 0;
 	}
@@ -195,7 +193,6 @@ unsigned char bonus::quantiteMAX( t_Bonus b ) const
 /***************************************************************************//*!
 * @fn unsigned char bonus::quantiteMAX_Ramassable( t_Bonus b ) const
 * @brief Renvoie la quantité Max que l'on peut ramasser d'un objet
-*
 */
 unsigned char bonus::quantiteMAX_Ramassable( t_Bonus b ) const
 {
@@ -206,11 +203,10 @@ unsigned char bonus::quantiteMAX_Ramassable( t_Bonus b ) const
 /***************************************************************************//*!
 * @fn unsigned char bonus::probabiliter( t_Bonus b ) const
 * @brief Incrémente quantite_utilisable
-*
 */
 unsigned char bonus::probabiliter( t_Bonus b ) const
 {
-	if(C_bonusProp[b].quantite_MAX_Ramassable == 0)
+	if( C_bonusProp[b].quantite_MAX_Ramassable == 0 )
 		return 0;
 
 	return C_bonusProp[b].probabiliter_pop;
@@ -221,17 +217,16 @@ unsigned char bonus::probabiliter( t_Bonus b ) const
 * @fn bool bonus::incQuantiteUtilisable( t_Bonus b )
 * @brief Incrémente quantite_utilisable
 * @return Renvoie vrais si on a pu incrémenter la valeur
-*
 */
 bool bonus::incQuantiteUtilisable( t_Bonus b )
 {
 	int pos=0;
-	if((pos=est_Dans_La_Liste( b )) == -1 || pos >= c_nb){
+	if( (pos=est_Dans_La_Liste( b )) == -1 || pos >= c_nb ){
 		stdErrorVar("Bonus non trouvé ou erreur > bonus=%d, pos=%d", b, pos);
 		return false;
 	}
 
-	if(c_liste[pos].quantite_utilisable+1 <= c_liste[pos].quantite_MAX_en_stock){
+	if( c_liste[pos].quantite_utilisable+1 <= c_liste[pos].quantite_MAX_en_stock ){
 		c_liste[pos].quantite_utilisable++;
 		return true;
 	}
@@ -243,17 +238,16 @@ bool bonus::incQuantiteUtilisable( t_Bonus b )
 * @fn bool bonus::incQuantiteMAX_en_stock( t_Bonus b )
 * @brief Incrémente quantite_MAX_en_stock
 * @return Renvoie vrais si on a pu incrémenter la valeur
-*
 */
 bool bonus::incQuantiteMAX_en_stock( t_Bonus b )
 {
 	int pos=0;
-	if((pos=est_Dans_La_Liste( b )) == -1 || pos >= c_nb){
+	if( (pos=est_Dans_La_Liste( b )) == -1 || pos >= c_nb ){
 		stdErrorVar("Bonus non trouvé ou erreur > bonus=%d, pos=%d", b, pos);
 		return false;
 	}
 
-	if(c_liste[pos].quantite_MAX_en_stock+1 <= C_bonusProp[b].quantite_MAX_Ramassable){
+	if( c_liste[pos].quantite_MAX_en_stock+1 <= C_bonusProp[b].quantite_MAX_Ramassable ){
 		c_liste[pos].quantite_utilisable++;
 		c_liste[pos].quantite_MAX_en_stock++;
 		return true;
@@ -266,17 +260,16 @@ bool bonus::incQuantiteMAX_en_stock( t_Bonus b )
 * @fn bool bonus::decQuantiteUtilisable( t_Bonus b )
 * @brief Décrémente quantite_utilisable
 * @return Renvoie vrais si on a pu décrémenté la valeur
-*
 */
 bool bonus::decQuantiteUtilisable( t_Bonus b )
 {
 	int pos=0;
-	if((pos=est_Dans_La_Liste( b )) == -1 || pos >= c_nb){
+	if( (pos=est_Dans_La_Liste( b )) == -1 || pos >= c_nb ){
 		stdErrorVar("Bonus non trouvé ou erreur > bonus=%d, pos=%d", b, pos);
 		return false;
 	}
 
-	if(c_liste[pos].quantite_utilisable-1 >= 0 && (unsigned char)(c_liste[pos].quantite_utilisable-1) <= c_liste[pos].quantite_MAX_en_stock){
+	if( c_liste[pos].quantite_utilisable-1 >= 0 && (unsigned char)(c_liste[pos].quantite_utilisable-1) <= c_liste[pos].quantite_MAX_en_stock ){
 		c_liste[pos].quantite_utilisable--;
 		return true;
 	}
@@ -288,19 +281,18 @@ bool bonus::decQuantiteUtilisable( t_Bonus b )
 * @fn bool bonus::decQuantiteMAX_en_stock( t_Bonus b )
 * @brief Décrémente quantite_MAX_en_stock
 * @return Renvoie vrais si on a pu décrémenté la valeur
-*
 */
 bool bonus::decQuantiteMAX_en_stock( t_Bonus b )
 {
 	int pos=0;
-	if((pos=est_Dans_La_Liste( b )) == -1 || pos >= c_nb){
+	if( (pos=est_Dans_La_Liste( b )) == -1 || pos >= c_nb ){
 		stdErrorVar("Bonus non trouvé ou erreur > bonus=%d, pos=%d", b, pos);
 		return false;
 	}
 
-	if(c_liste[pos].quantite_MAX_en_stock-1 >=0 && (unsigned char)(c_liste[pos].quantite_MAX_en_stock-1) <= C_bonusProp[b].quantite_MAX_Ramassable){
+	if( c_liste[pos].quantite_MAX_en_stock-1 >=0 && (unsigned char)(c_liste[pos].quantite_MAX_en_stock-1) <= C_bonusProp[b].quantite_MAX_Ramassable ){
 		c_liste[pos].quantite_MAX_en_stock--;
-		if(c_liste[pos].quantite_utilisable > c_liste[pos].quantite_MAX_en_stock){
+		if( c_liste[pos].quantite_utilisable > c_liste[pos].quantite_MAX_en_stock ){
 			c_liste[pos].quantite_utilisable--;
 		}
 		return true;
@@ -315,19 +307,18 @@ bool bonus::decQuantiteMAX_en_stock( t_Bonus b )
 *
 * Si quantite_utilisable > quantite_MAX_en_stock => quantite_utilisable = quantite_MAX_en_stock<br />
 * <b>/!\\quantite_MAX_Ramassable >= quantite_utilisable/!\\</b>
-*
 */
 void bonus::defQuantiteUtilisable( t_Bonus b, unsigned char quantite_utilisable )
 {
 	int pos = est_Dans_La_Liste( b );
-	if(pos >= c_nb || pos == -1 || C_bonusProp[b].quantite_MAX_Ramassable >= quantite_utilisable){
+	if( pos >= c_nb || pos == -1 || C_bonusProp[b].quantite_MAX_Ramassable >= quantite_utilisable ){
 		stdErrorVar("Bonus non trouvé ou erreur > bonus=%d, pos=%d, C_bonusProp[%d].quantite_MAX_Ramassable=%d, quantite_utilisable=%d", b, pos, b, (int)C_bonusProp[b].quantite_MAX_Ramassable, (int)quantite_utilisable);
 		return ;
 	}
 
 	c_liste[pos].quantite_utilisable = quantite_utilisable;
 
-	if(quantite_utilisable > c_liste[pos].quantite_MAX_en_stock){
+	if( quantite_utilisable > c_liste[pos].quantite_MAX_en_stock ){
 		c_liste[pos].quantite_MAX_en_stock = quantite_utilisable;
 	}
 }
@@ -338,12 +329,12 @@ void bonus::defQuantiteUtilisable( t_Bonus b, unsigned char quantite_utilisable 
 * @brief Modifie la quantité MAX en stock. (quantite_MAX_en_stock)
 *
 * <b>/!\\quantite_MAX_Ramassable >= quantite_MAX_en_stock/!\\</b>
-*
+* @see @ref aide
 */
 void bonus::defQuantiteMAX( t_Bonus b, unsigned char quantite_MAX_en_stock )
 {
 	int pos = est_Dans_La_Liste( b );
-	if(pos >= c_nb || pos == -1 || C_bonusProp[b].quantite_MAX_Ramassable >= quantite_MAX_en_stock){
+	if( pos >= c_nb || pos == -1 || C_bonusProp[b].quantite_MAX_Ramassable >= quantite_MAX_en_stock ){
 		stdErrorVar("Bonus non trouvé ou erreur > bonus=%d, pos=%d, C_bonusProp[%d].quantite_MAX_Ramassable=%d, quantite_MAX_en_stock=%d", b, pos, b, (int)C_bonusProp[b].quantite_MAX_Ramassable, (int)quantite_MAX_en_stock);
 		return ;
 	}
@@ -353,9 +344,36 @@ void bonus::defQuantiteMAX( t_Bonus b, unsigned char quantite_MAX_en_stock )
 
 
 /***************************************************************************//*!
+* @fn void bonus::defQuantiteMAX_Ramassable( t_Bonus b, unsigned char quantite_MAX_Ramassable )
+* @brief Modifie la quantité MAX ramassable. (quantite_MAX_en_stock)
+* @see @link bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock, unsigned char quantite_MAX_Ramassable, unsigned char probabiliter_pop ) bonus::defBonus()@endlink
+*/
+void bonus::defQuantiteMAX_Ramassable( t_Bonus b, unsigned char quantite_MAX_Ramassable )
+{
+	C_bonusProp[b].quantite_MAX_Ramassable = quantite_MAX_Ramassable;
+}
+
+
+/***************************************************************************//*!
+* @fn void bonus::defProbabiliter( t_Bonus b, unsigned char probabiliter_pop )
+* @brief Modifie la probabilité d'un bonus de pop
+* @param[in] b					Le bonus dont on veut definir la probabilité
+* @param[in] probabiliter_pop	La probabilité de pop après une destruction de case (valeur: entre [0 et 100 au max])
+* @see @link bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock, unsigned char quantite_MAX_Ramassable, unsigned char probabiliter_pop ) bonus::defBonus()@endlink
+*/
+void bonus::defProbabiliter( t_Bonus b, unsigned char probabiliter_pop )
+{
+	if( probabiliter_pop > 100 )
+		stdErrorVarE("probabiliter_pop doit avoir une valeur comprise entre [0 et 100] ! bonus(b)=%d, probabiliter_pop=%d", (int)b, (int)probabiliter_pop);
+
+	C_bonusProp[b].probabiliter_pop = probabiliter_pop;
+}
+
+
+/***************************************************************************//*!
 * @fn void bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock )
 * @brief Modifie (ou créer un bonus si celui-ci n'est pas encore en mémoire)
-*
+* @see @link bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock, unsigned char quantite_MAX_Ramassable, unsigned char probabiliter_pop ) bonus::defBonus()@endlink
 */
 void bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock )
 {
@@ -365,10 +383,10 @@ void bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned cha
 	if( quantite_utilisable > quantite_MAX_en_stock || C_bonusProp[b].quantite_MAX_Ramassable < quantite_MAX_en_stock )
 		stdErrorVarE("Les données ont des valeurs incorrectes : bonus::defBonus( %d, %u, %u ) et C_bonusProp[b].quantite_MAX_Ramassable = %u", (int)b, (unsigned int)quantite_utilisable, (unsigned int)quantite_MAX_en_stock, (unsigned int)C_bonusProp[b].quantite_MAX_Ramassable);
 
-	if(pos >= c_nb || pos == -1){// Ajout d'un nouveau bonus
+	if( pos >= c_nb || pos == -1 ){// Ajout d'un nouveau bonus
 		// Création d'une nouvelle liste pouvant comprendre le nouveau bonus
 		s_bonus* tmpList = new s_bonus[c_nb+1];
-		for(unsigned char i=0; i<c_nb; i++)// Copie des elements
+		for( unsigned char i=0; i<c_nb; i++ )// Copie des elements
 			tmpList[i] = c_liste[i];
 
 		delete[] c_liste;// On vire la vieille liste
@@ -387,13 +405,72 @@ void bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned cha
 /***************************************************************************//*!
 * @fn void bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock, unsigned char quantite_MAX_Ramassable, unsigned char probabiliter_pop )
 * @brief Modifie (ou créer un bonus si celui-ci n'est pas encore en mémoire)
+* @param[in] b							Le bonus dont on veut definir la probabilité
+* @param[in] quantite_utilisable		La quantité que l'on a actuellement et qui est utilisable. (J'ai 3 bombes au maximum mais 1 est posée donc il m'en reste 2 utilisables (quantite_utilisable))
+* @param[in] quantite_MAX_en_stock		La quantité que le joueur peux utiliser. (J'ai 3 bombes au maximum (quantite_MAX_en_stock) mais 1 est posée donc il m'en reste 2 utilisables)
+* @param[in] quantite_MAX_Ramassable	(Général) La quantité que le joueur peux au maximum ramasser. (Je peux mettre 5 bombes dans mon sac à bombes)
+* @param[in] probabiliter_pop			(Général) La probabilité de pop après une destruction de case (valeur: entre [0 et 100 au max])
+* (Général): Propriétés communes à toutes les instances.
+*
+* Exemple:<br />
+*	- Soit un perso bomberman.
+*	- Le perso est capable de porter 10 bombes s'il y a le sac adéquate. ( quantite_MAX_Ramassable = 10 )
+*	- Notre perso a un sac pouvant contenir 5 bombes maximum. ( quantite_MAX_en_stock = 5 )
+*	- Le sac contient actuellement 3 bombes.( quantite_utilisable = 3)
+*	- J'ai donc 2 bombes posées.
 */
 void bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock, unsigned char quantite_MAX_Ramassable, unsigned char probabiliter_pop )
 {
+	if( probabiliter_pop > 100 )
+		stdErrorVarE("probabiliter_pop doit avoir une valeur comprise entre [0 et 100] ! bonus(b)=%d, probabiliter_pop=%d", (int)b, (int)probabiliter_pop);
+
 	// Modification du bonus ( Relatif a TOUTES les instances )
 	C_bonusProp[b].probabiliter_pop = probabiliter_pop;
 	C_bonusProp[b].quantite_MAX_Ramassable = quantite_MAX_Ramassable;
 
 	// PUIS modification du bonus
 	defBonus( b, quantite_utilisable, quantite_MAX_en_stock );
+}
+
+
+/***************************************************************************//*!
+* @fn s_Coordonnees* bonus::checkBombEvent( s_Coordonnees* pos )
+* @brief Vérifit que le si le temps est écoulé pour une bombe posé
+* @param[in,out] pos	Cette variables contiendra la position X,Y de la bombe qui a explosé.
+* @return Renvoie le pointeur pos si une bombe a explosé, NULL sinon.
+*
+* Si le temps est écoulé, alors on renvoie sa position et on dit la vire de la<br />
+* file d'attente. De plus on rajoute cette bombe au nombre de bombe quantite_utilisable<br />
+* @warning Cette fonction doit être utilisé en boucle !<br />
+* Elle renvoie les bombes qui ont explosées une à une.<br />
+* Cette fonction <b>doit être à couplée avec un tanque</b> jusqu'a NULL
+*
+* Utilisation:
+* @code
+* // Plus haut on a bonus* joueur; qui a été instancié et correctement defini
+* s_Coordonnees pos = {0};
+* // La on check toutes les bombes
+* while( joueur->checkBombEvent(&pos) != NULL )
+* {
+*	// Cette boucle est exécutée autant de fois qu'il y a de bombes qui ont explosées.
+*	// Exemple, en cas d'utilisation d'un déclancheur => toutes les bombes posées par le joueur vont exploser
+*	// Traitement pour la bombe
+*	printf("La bombe a la position X=%u, Y=%u à explosé !\n", pos.x, pos.y);
+*	printf("De plus elle est de nouveau disponnible dans les bombes pouvant être lancées ! (quantite_utilisable)")
+* }
+* @endcode
+*/
+s_Coordonnees* bonus::checkBombEvent( s_Coordonnees* pos )
+{
+	for( unsigned int i=0; i<c_bombePosees.size(); i++ )
+	{
+		if( c_bombePosees.at(i).finEvent <= clock() ){// Si timeout
+			*pos = c_bombePosees.at(i).pos;
+			c_bombePosees.erase(c_bombePosees.begin()+i);// On supprime la bombe qui était posée
+			incQuantiteUtilisable( bombe );// On redonne la bombe au joueur
+			return pos;
+		}
+	}
+
+	return NULL;
 }

@@ -2,6 +2,8 @@
 #define BONUS_h
 
 #include "debug.h"
+#include "coordonnees.h"
+#include <vector>
 #include <time.h>
 
 /*!
@@ -10,11 +12,23 @@
 *
 * Cette classe possède 2 couches de fonctionnement:
 * -# La couche général, qui regroupe les bonus disponibles pour la partie.<br />
-* (En commum avec toutes les instances de cette class)
-* <b>A initialiser en 1er !via bonus::bonusProp()</b>
-* -# La couche instanciable, unique a chaque instance.
+*	(En commum avec toutes les instances de cette class)<br />
+*	<b>A initialiser en 1er !via bonus::bonusProp()</b><br />
+*	> Cette couche contient les probabilités de chaque objets et la quantité Maximum ramassables par joueur.
+* -# La couche instanciable, unique a chaque instance.<br />
+*	> Cette couche contient la quatité max en stock et la quantité utilisable.
 *
 * @todo Meilleur système de gestion des bonus
+*
+* @section aide Aide sur les variables
+* Mais c'est quoi la différence entre: quantite_utilisable, quantite_MAX_en_stock, quantite_MAX_Ramassable, probabiliter_pop ?<br />
+*
+* Prenons un exemple:<br />
+*	- Soit un perso bomberman.
+*	- Le perso est capable de porter 10 bombes s'il y a le sac adéquate. ( quantite_MAX_Ramassable = 10 )
+*	- Notre perso a un sac pouvant contenir 5 bombes maximum. ( quantite_MAX_en_stock = 5 )
+*	- Le sac contient actuellement 3 bombes.( quantite_utilisable = 3)
+*	- J'ai donc 2 bombes posées. Ces 2 bombes sont dans la variable @link bonus::c_bombePosees c_bombePosees@endlink en attandant qu'elles explosent ^^
 */
 class bonus
 {
@@ -23,7 +37,7 @@ class bonus
 		* @enum t_Bonus
 		* @brief Les types de bonus possible dans le jeu
 		*/
-		enum t_Bonus{
+		enum t_Bonus {
 			bombe=0,
 			puissance_flamme,
 			declancheur,
@@ -34,24 +48,22 @@ class bonus
 		/*!
 		* @struct s_bonus_proprieter
 		* @brief Cette structure accueil la propriété des bonus
-		* @var probabiliter_pop	Pourcentage q'un bonus pop (valeur: entre 0 et 100 au max)
-		* @var probabiliter_pop	Pourcentage q'un bonus pop (valeur: entre 0 et 100 au max)
 		*/
 		typedef struct {
 			//t_Bonus type; // <- Le type est stocké dans le numéro du tableau [0] -> [t_Bonus::bombe]
-			unsigned char probabiliter_pop;
-			unsigned char quantite_MAX_Ramassable;
-			/*
-			* La durée peut avoir 3 status
-			* -1 => L'objet est utilisé sans limite de temps (Durée Illimité)
-			*  0 => L'objet est utilisé directement (Durée instantané)
-			* >0 => L'objet est utilisé au bout de "XXX" (valeur dans la variable)
+			unsigned char probabiliter_pop;//!< Pourcentage q'un bonus pop (valeur: entre 0 et 100 au max)
+			unsigned char quantite_MAX_Ramassable;//!< Quantité max qu'un joueur peut avoir d'un objet
+			/**
+			* @var duree
+			* La durée peut avoir 3 status<br />
+			* - -1 => L'objet est utilisé sans limite de temps (Durée Illimité)
+			* - +0 => L'objet est utilisé directement (Durée instantané)
+			* - >0 => L'objet est utilisé au bout de "XXX" sec (valeur dans la variable)
 			*/
-			int duree;
+			int duree;//!< Durée d'utilisation
 		} s_bonus_proprieter;
 
 	private:
-		// Cette sturcture accueil un bonus d'un joueur ( un tableau de cette structure forme l'ensemble des bonus d'un joueur )
 		/*!
 		* @struct s_bonus
 		* @brief Cette sturcture accueil un bonus d'un joueur.
@@ -61,16 +73,29 @@ class bonus
 		* quantite_MAX_en_stock: Quantité Maxi d'un objet ( ex: 5 bonus de type bombe => 5 Bombes max en stock ! )
 		*/
 		typedef struct {
-			t_Bonus type;
-			unsigned char quantite_utilisable;// Nombre d'objet possédé actuellement et utilisable
-			unsigned char quantite_MAX_en_stock;// Quantité Maxi d'un objet
+			t_Bonus type;//!< Le bonus
+			unsigned char quantite_utilisable;//!< Nombre d'objet possédé actuellement et utilisable
+			unsigned char quantite_MAX_en_stock;//!< Quantité Maxi d'un objet
 		} s_bonus;
 
-		static s_bonus_proprieter *C_bonusProp;// Liste des bonus chargé et utilisables sur la map ( cette var n'est remplis q'une fois ! (static) )
-		s_bonus* c_liste;// Liste des bonus attrapé par un player. ( bonus utilisable )
-		unsigned char c_nb;// Nombre de bonus obtenu par un player
+		/*!
+		* @struct s_Event
+		* @brief Cette sturcture accueil les Events posées
+		*
+		* Exemple: C'est par elle que l'on sait quand une bombe explose.<br />
+		* Elle fourni, le Où  et Quand.<br />
+		*/
+		typedef struct {
+			s_Coordonnees pos;//!< Position de la bombe posé
+			clock_t finEvent;// endwait = clock () + seconds * CLOCKS_PER_SEC ;
+		} s_Event;
 
-		static clock_t calcFinEvent();
+		// Varaible Générale ( Variables global à toutes les class )
+		static s_bonus_proprieter *C_bonusProp;//!< Liste des bonus chargé et utilisables sur la map ( cette var n'est remplis q'une fois ! (static) )
+		// Varaibles Local à la class ( à l'instance de chaque class )
+		s_bonus* c_liste;//!< Liste des bonus attrapé par un player. ( bonus utilisable )
+		unsigned char c_nb;//!< Nombre de bonus obtenu par un player
+		std::vector<s_Event> c_bombePosees;//!< Tableau contenant les bombes posées
 
 
 	public:
@@ -95,10 +120,13 @@ class bonus
 		void param_Par_Defaut();
 		void defQuantiteUtilisable( t_Bonus b, unsigned char quantite_utilisable );
 		void defQuantiteMAX( t_Bonus b, unsigned char quantite_MAX_en_stock );
-		void defQuantiteMAX_Ramassable( t_Bonus b, unsigned char quantite_MAX_Ramassable );
-		void defProbabiliter( t_Bonus b, unsigned char probabiliter_pop );
+		static void defQuantiteMAX_Ramassable( t_Bonus b, unsigned char quantite_MAX_Ramassable );
+		static void defProbabiliter( t_Bonus b, unsigned char probabiliter_pop );
 		void defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock );
 		void defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock, unsigned char quantite_MAX_Ramassable, unsigned char probabiliter_pop );
+
+		// Autres
+		s_Coordonnees* checkBombEvent( s_Coordonnees* pos );
 };
 
 #endif
