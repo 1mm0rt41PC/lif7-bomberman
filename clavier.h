@@ -15,14 +15,13 @@
 * La class permet :<br />
 *	- de définir des touches
 *	- d'enregistrer / de charger la configuration d'un clavier
-*
 */
 class clavier
 {
 	private:
 		// struct {
-		SYS_CLAVIER *c_touches;
-		unsigned int c_nb_touches;
+		SYS_CLAVIER *c_touches;//!< Tableau des touches qui sont affecté à une action
+		unsigned int c_nb_touches;//!< Nombre de touche dans notre tableau
 		// }
 
 	public:
@@ -41,7 +40,7 @@ class clavier
 		};
 
 		clavier();
-		inline clavier( unsigned int nb_touches ){ initClavier( nb_touches ); }
+		inline clavier( unsigned int nb_touches ){ initClavier( nb_touches ); }//!< Alias de initClavier( nb_touches );
 		~clavier();
 
 		// Modificateurs

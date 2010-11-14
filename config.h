@@ -2,13 +2,19 @@
 
 #define __LIB_ncurses__ 1
 
+/*******************************************************************************
+* Lib SFML
+*/
 #ifdef __LIB_SFML__
 	#include <SFML/...>
 	#define SYS_CLAVIER
 
+
+/*******************************************************************************
+* Lib NCruses
+*/
 #elif __LIB_ncurses__
 	#if defined(WIN32) || defined(WIN64)
-		//#include <curses.h>
 		#include <Ncurses/curses.h>
 	#else
 		#include <ncurses.h>
@@ -21,17 +27,25 @@
 	#define KEY_BACKSPACE_bis 8
 
 	#ifndef PADPLUS
-	#define PADPLUS '+'
+		#define PADPLUS '+'
 	#endif
 
 	#ifndef PADMINUS
-	#define PADMINUS '-'
+		#define PADMINUS '-'
 	#endif
 
+
+/*******************************************************************************
+* Lib SDL
+*/
 #elif __LIB_SDL__
 	#include <SDL/SDL.h>
-	#define SYS_CLAVIER SDL_keysym // || SDLKey
+	#define SYS_CLAVIER Uint8 // || SDLKey
 
+
+/*******************************************************************************
+* BUG
+*/
 #else
 	#error "Veuillez definir la lib d'affichage ! ( __LIB_ncurses__, __LIB_SDL__, __LIB_SFML__ ) !"
 #endif

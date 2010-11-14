@@ -3,6 +3,7 @@
 /***************************************************************************//*!
 * @fn clavier::clavier()
 * @brief Initialisation du système de gestion du clavier
+* @see clavier::clavier( unsigned int nb_touches )
 */
 clavier::clavier()
 {
@@ -95,7 +96,8 @@ bool clavier::chargerConfig( FILE* fp, unsigned int nb_touches )
 */
 clavier::t_touche clavier::obtenirTouche( SYS_CLAVIER tsys ) const
 {
-	for( unsigned int i=0; i<c_nb_touches; i++ ){
+	for( unsigned int i=0; i<c_nb_touches; i++ )
+	{
 		if( c_touches[(clavier::t_touche)i] == tsys )
 			return (clavier::t_touche)i;
 	}
@@ -133,7 +135,7 @@ SYS_CLAVIER clavier::touche( t_touche t ) const
 * @fn bool clavier::enregistrerConfig( FILE* fp )
 * @brief Charge la configuration du clavier depuis un fichier ( déjà ouvert ! )
 * @param[in,out] fp Un pointeur sur un fichier déjà ouvert ( mode binaire )
-* @return true si tout s'est bien passé
+* @return true si l'enregistrement de la configuation s'est bien passé
 * @todo Mettre un champs optionel permettant de laisser le choix quand à l'enregistrement du nombre de touches
 */
 bool clavier::enregistrerConfig( FILE* fp )

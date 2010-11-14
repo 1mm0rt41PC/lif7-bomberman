@@ -2,8 +2,12 @@
 
 using namespace std;
 
-/*******************************************************************************
-* Constructeur
+/***************************************************************************//*!
+* @fn map::map()
+* @brief Constructeur :: Initialise juste les variables. NE Créer PAS de map !
+*
+* Taille de la map = 0<br />
+* Pas de points de départ<br />
 */
 map::map()
 {
@@ -36,8 +40,14 @@ map::map( unsigned int tailleX, unsigned int tailleY )
 }
 
 
-/*******************************************************************************
-* Destructeur
+/***************************************************************************//*!
+* @fn map::~map()
+* @brief Désinitialise la class map
+*
+* - Supprime la map chargé
+* - Supprime toutes les Info Joueurs (meta données)
+* - Supprime les points de départ
+* - Met toutes les variables à 0
 */
 map::~map()
 {
@@ -62,48 +72,55 @@ map::~map()
 
 
 /***************************************************************************//*!
-* @fn void map::setBlock( unsigned int X, unsigned int Y, map::t_type what, unsigned char id_du_JoueurQuiAAjouterWhat )
+* @fn void map::setBlock( unsigned int X, unsigned int Y, map::t_type what )
 * @brief Modifie le block qui est à la position X, Y
 *
-* Si l'id du joueur==0 => on n'enregistre pas les meta-données<br />
-* <b>/!\\ATTENTION: si what = vide => rmInfoJoueur( X, Y, id_du_JoueurQuiAAjouterWhat, 0 ) /!\\</b>
+* Ne modifie en aucun cas les Info joueurs ( meta données )<br />
+* <b>/!\\ATTENTION EXCEPTION: si what = vide => nétoyage de toutes les meta données /!\\</b>
 */
-void map::setBlock( unsigned int X, unsigned int Y, map::t_type what, unsigned char id_du_JoueurQuiAAjouterWhat )
+void map::setBlock( unsigned int X, unsigned int Y, map::t_type what )
 {
 	if( !c_block || X >= c_taille.x || Y >= c_taille.y )
-		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, what=%d, id_du_JoueurQuiAAjouterWhat=%u", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, what, id_du_JoueurQuiAAjouterWhat);
+		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, what=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, what);
 
 	c_block[X * c_taille.x + Y].element = what;
 
-	switch( what )
-	{
-		case vide:{
-			rmInfoJoueur(X, Y, id_du_JoueurQuiAAjouterWhat, 1);
-			return ;
-		}
-		case UN_joueur:{
-			if( id_du_JoueurQuiAAjouterWhat == 0 )
-				return ;
+	// Nétoyage des méta données si le block est vide
+	if( what == vide && c_block[X * c_taille.x + Y].joueur )
+		c_block[X * c_taille.x + Y].joueur->clear();
+}
 
-			if( !c_block[X * c_taille.x + Y].joueur )
-				c_block[X * c_taille.x + Y].joueur = new vector<unsigned char>;
 
-			c_block[X * c_taille.x + Y].joueur->push_back( id_du_JoueurQuiAAjouterWhat );
-			return ;
-		}
-		default:{
-			stdErrorVarE("Cas non géré par setBlock() what=%d", (int)what);
-		}
-	}
+/***************************************************************************//*!
+* @fn void map::ajouterInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierePosition )
+* @brief Ajoute des meta donnée ( ou info joueurs ) dans le block (X, Y)
+* @param[in] premierePosition Placer l'id du joueur en 1ère position ?
+*
+* NOTE: Pour certain map::type comme bombe_poser, le 1er element représente l'id du joueur qui a posé l'objet
+*/
+void map::ajouterInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierePosition )
+{
+	if( !c_block || X >= c_taille.x || Y >= c_taille.y || !id_Joueur )
+		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, id_Joueur=%d, premierePosition=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, (int)id_Joueur, (int)premierePosition);
+
+	s_Case* c = c_block + (X * c_taille.x + Y);
+
+	if( !c->joueur )
+		c->joueur = new vector<unsigned char>;
+
+	if( premierePosition )
+		c->joueur->insert( c->joueur->begin(), id_Joueur );
+	else
+		c->joueur->push_back( id_Joueur );
 }
 
 
 /***************************************************************************//*!
 * @fn void map::rmInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierEltInclu )
 * @brief Supprime les info du joueur du block (X, Y)
-* @param[in] premierEltInclu Si le premier elemnt dela liste est l'id du joueur => SUPPRIMER ?
+* @param[in] premierEltInclu Si le premier element dela liste est l'id du joueur => SUPPRIMER ?
 *
-* NOTE: Pour certain map::type comme bombe_poser, le 1er element représente l'id du joueur qui a posé l'objet
+* NOTE: Pour certain map::t_type comme @e bombe_poser, le 1er element représente l'id du joueur qui a posé l'objet
 */
 void map::rmInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierEltInclu )
 {
@@ -145,7 +162,6 @@ void map::setTaille( unsigned int tailleX, unsigned int tailleY )
 	// Suppression des points de départ s'ils existent
 	if( c_PointDeDepartJoueur )
 		delete[] c_PointDeDepartJoueur;
-
 
 	c_taille.x = tailleX;
 	c_taille.y = tailleY;
@@ -207,7 +223,7 @@ int map::chargerMap( const char fichier[] )
 		stdErrorVarE("Erreur lors de l'allocation de la mémoire ! c_taille=(%u,%u)", c_taille.x, c_taille.y);
 
 	// Allocation des points de départ
-	if( !(c_PointDeDepartJoueur = new s_Pos[ c_nb_PointDeDepartJoueur ]) )
+	if( !(c_PointDeDepartJoueur = new s_Coordonnees[ c_nb_PointDeDepartJoueur ]) )
 		stdErrorVarE("Erreur lors de l'allocation de la mémoire ! c_taille=(%u,%u)", c_taille.x, c_taille.y);
 
 
@@ -265,21 +281,19 @@ int map::chargerMap( const char fichier[] )
 
 
 /***************************************************************************//*!
-* @fn map::s_Pos map::mettreJoueurA_sa_PositionInitial( unsigned char joueur )
+* @fn s_Coordonnees map::mettreJoueurA_sa_PositionInitial( unsigned char joueur )
 * @brief Met le perso {joueur} a sa place initial
 * @param[in] joueur	Joueur que l'on veut déplacer à sa position initial ( un nombre entre 1 et 255 )
 * @return Renvoie la position initial du joueur.
 *
 * <b>Vous devez vous même supprimer le perso de son ancienne position, si il y en avait une</b><br />
 * Si le joueur n'est pas trouvé => Erreur FATAL !
-* @todo
-*	- Permettre le positionnement à la place init au millieu d'une partie<br />
-*	- Vérification de ce qui a à la position initial avant de positionner le perso
+* @warning Le positionnement ne tiens pas compte des obstacles, comme le feu, une bombe, ...
 */
-map::s_Pos map::mettreJoueurA_sa_PositionInitial( unsigned char joueur )
+s_Coordonnees map::mettreJoueurA_sa_PositionInitial( unsigned char joueur )
 {
 	if( joueur == 0 || joueur > c_nb_PointDeDepartJoueur )
-		stdErrorVarE("Le numéro de joueur Doit être entre 1 et %d ! mettreJoueurA_sa_PositionInitial( %d )", (int)joueur, (int)c_nb_PointDeDepartJoueur);
+		stdErrorVarE("Le numéro de joueur Doit être entre 1 et %d ! mettreJoueurA_sa_PositionInitial( %d )", (int)c_nb_PointDeDepartJoueur, (int)joueur);
 
 	if( !c_block || c_PointDeDepartJoueur[joueur-1].x >= c_taille.x || c_PointDeDepartJoueur[joueur-1].y >= c_taille.y )
 		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, Joueur=%u", (unsigned int)c_block, c_taille.x, c_taille.y, c_PointDeDepartJoueur[joueur-1].x, c_PointDeDepartJoueur[joueur-1].y, (unsigned int)joueur);
@@ -295,15 +309,15 @@ map::s_Pos map::mettreJoueurA_sa_PositionInitial( unsigned char joueur )
 
 
 /***************************************************************************//*!
-* @fn map::s_Case map::getBlock( unsigned int X, unsigned int Y ) const
+* @fn const map::s_Case* map::getBlock( unsigned int X, unsigned int Y ) const
 * @brief Retourn le block qui est à la position X, Y
 */
-map::s_Case map::getBlock( unsigned int X, unsigned int Y ) const
+const map::s_Case* map::getBlock( unsigned int X, unsigned int Y ) const
 {
 	if( !c_block || X >= c_taille.x || Y >= c_taille.y )
 		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y);
 
-	return c_block[X * c_taille.x + Y];
+	return c_block+(X * c_taille.x + Y);
 }
 
 
@@ -328,13 +342,13 @@ unsigned int map::Y() const
 
 
 /***************************************************************************//*!
-* @fn map::s_Pos map::positionInitialJoueur( unsigned char joueur ) const
+* @fn s_Coordonnees map::positionInitialJoueur( unsigned char joueur ) const
 * @brief Renvoie la position initial du joueur.
 * @param[in] joueur	Joueur dont on veut avoir sa position initial ( un nombre entre 1 et 255 )
 *
 * Si une position initial n'est pas trouvé pour le joueur => Erreur FATAL !
 */
-map::s_Pos map::positionInitialJoueur( unsigned char joueur ) const
+s_Coordonnees map::positionInitialJoueur( unsigned char joueur ) const
 {
 	if( joueur == 0 )
 		stdErrorE("positionInitialJoueur( 0 ) INTERDIT !");
@@ -350,6 +364,10 @@ map::s_Pos map::positionInitialJoueur( unsigned char joueur ) const
 
 
 /***************************************************************************//*!
+** Liste des alias
+* @fn unsigned char nb_MAX_Joueur() const
+* @brief Alias de map::nb_PointDeDepartJoueur()
+** La Fonction
 * @fn unsigned char map::nb_PointDeDepartJoueur() const
 * @brief Renvoie le nombre de joueur maximum sur la carte en cours.
 */
@@ -360,36 +378,20 @@ unsigned char map::nb_PointDeDepartJoueur() const
 
 
 /***************************************************************************//*!
-* @fn unsigned int map::getNbJoueur_SurBlock( unsigned int X, unsigned int Y ) const
-* @brief Renvoie le nombre de joueurs dans le block (X, Y)
+* @fn unsigned int map::nb_InfoJoueur( unsigned int X, unsigned int Y ) const
+* @brief Renvoie le nombre d'info joueurs dans le block (X, Y) (meta données)
 */
-unsigned int map::getNbJoueur_SurBlock( unsigned int X, unsigned int Y ) const
+unsigned int map::nb_InfoJoueur( unsigned int X, unsigned int Y ) const
 {
 	if( !c_block || X >= c_taille.x || Y >= c_taille.y )
 		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y);
 
-	s_Case* c = &c_block[X * c_taille.x + Y];
+	s_Case* c = c_block+(X * c_taille.x + Y);
 
-	if( !c->joueur || !c->joueur->size() )
+	if( !c->joueur )
 		return 0;
 
-	switch( c->element )
-	{
-		case UN_joueur:
-		case plusieurs_joueurs:{
-			return c->joueur->size();
-		}
-		case vide:{
-			stdErrorVarE("Système erroné ! Sur une case vide, il y a %u joueur resensé", c->joueur->size());
-		}
-		case bombe_poser_AVEC_UN_joueur:
-		case bombe_poser_AVEC_plusieurs_joueurs:{
-			return c->joueur->size()-1;
-		}
-		default:{
-			stdErrorVarE("getNbJoueur_SurBlock() :: Cas non traité ! c->element=%d", (int)c->element);
-		}
-	}
+	return c->joueur->size();
 }
 
 

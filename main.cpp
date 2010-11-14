@@ -8,29 +8,24 @@
 *
 *
 * A FAIRE
-* Mettre des const la où il faut dans les *.h
-* rand !!!!
-* Backspace mal géré par linux !?
-* Bug dans getTexte()
+*	- Mettre des const la où il faut dans les *.h
 *
-* TODO or NOT
-* Mode singleton pour options
 */
-
-// Variables globales
-options G_OPTIONS;// On peut pas avoir plusieurs instance d'options
 
 
 
 int main()
 {
-	freopen("bug.txt", "w", stderr);
+	freopen("bug.txt", "w", stderr);// Redirection du flux d'erreur dans un fichier
 	srand(time(NULL));// Make random
+
+	// Initialisation des options général
+	options::getInstance();
 
 	// Init Moteur d'affichage
 	moteur_ncurses m;
 
-
+	// Appel des menus
 	m.main();
 
 	/* Ce truc très basic, ne passe pas Valgrind
@@ -39,6 +34,9 @@ int main()
 	delwin(stdscr);
 	endwin();
 	*/
+
+	// Désinitialisation des options général
+	options::uInit();
 
 	fclose(stderr);
 	return EXIT_SUCCESS;

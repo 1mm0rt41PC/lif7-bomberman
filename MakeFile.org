@@ -238,7 +238,7 @@ help:
 	$(call ECHO ,	valgrind:	Compil le projet puis lance valgrind sur le projet.)
 	$(call ECHO ,	tar:		Archive les fichiers dans un fichier tar.bz2)
 	$(call ECHO ,	doxygen:	Execute doxygen sur le projet.)
-	$(call ECHO ,	no_clear:	Annule tous les effacements d'écran)
+	$(call ECHO ,	no_clear:	Annule tous les effacements d'ecran)
 	$(call ECHO ,	exec:		{make all} et execute l'executable obtenu.)
 	$(call ECHO ,	pfiles:		Affiche les fichiers utilises)
 	$(call ECHO ,	help:		Affiche cette aide.)
