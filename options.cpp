@@ -188,7 +188,7 @@ void options::remise_a_zero()
 */
 bool options::defPort( unsigned int port )
 {
-	if( port > 9999 ){// Il existe 65 536 mais pour l'affichage, on limite à 9999
+	if( 0 == port || port > 9999 ){// Il existe 65 536 mais pour l'affichage, on limite à 9999
 		return 0;// On a un num > 9999 donc on le prend pas !
 	}
 

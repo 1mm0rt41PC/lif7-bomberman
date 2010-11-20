@@ -1,5 +1,7 @@
 #include "moteur_ncurses.h"
 
+extern SCREEN* SP;// <- Salté de NCurses ( Compiler NCurses avec NO_LEAK ! )
+
 /***************************************************************************//*!
 * @fn moteur_ncurses::moteur_ncurses()
 * @brief Initialise la class moteur_ncurses
@@ -8,8 +10,7 @@
 */
 moteur_ncurses::moteur_ncurses()
 {
-	stdscr = initscr();		/* Passe l'écran texte en mode NCurses */
-	if( !stdscr )
+	if( !initscr() )// Passe l'écran texte en mode NCurses
 		stdErrorE("Erreur lors de l'initialisation de ncurses !");
 
 	clear();		/* Efface l'écran */
@@ -20,7 +21,7 @@ moteur_ncurses::moteur_ncurses()
 	keypad(stdscr, TRUE);		/* Pour que les flèches, F1, ... soient traitées (il faut le faire après création de la fenêtre) */
 
 	if( !has_colors() ){
-		endwin();
+		this->~moteur_ncurses();
 		stdErrorE("Votre terminal ne supporte pas les couleurs ! STOP ALL...");
 	}
 	start_color();
@@ -68,6 +69,7 @@ moteur_ncurses::~moteur_ncurses()
 	refresh(); /* Print it on to the real screen */
 	delwin(stdscr);
 	endwin();/* End curses mode */
+	delscreen(SP);// <- Salté de NCurses ( Compiler NCurses avec NO_LEAK ! )
 }
 
 
@@ -100,24 +102,24 @@ void moteur_ncurses::cadre()
 */
 void moteur_ncurses::main()
 {
-const char* menu_main[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
-	"Jouer",			// NE PAS OUBLIER de modifier le for !
-	"Options",
-	"Quitter"
-};
-	const char* menu_options[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
+	static const char* menu_main[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
+		"Jouer",			// NE PAS OUBLIER de modifier le for !
+		"Options",
+		"Quitter"
+	};
+	static const char* menu_options[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
 		"Port",					// NE PAS OUBLIER de modifier le for !
 		"Clavier",
 		"Retour"
 	};
-	const char* menu_options_claviers[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
+	static const char* menu_options_claviers[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
 		"Clavier Joueur 1",				// NE PAS OUBLIER de modifier le for !
 		"Clavier Joueur 2",
 		"Clavier Joueur 3",
 		"Clavier Joueur 4",
 		"Retour"
 	};
-	const char* menu_jeu[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
+	static const char* menu_jeu[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
 		"Offline",			// NE PAS OUBLIER de modifier le for !
 		"Online",
 		"Retour"
@@ -126,7 +128,7 @@ const char* menu_main[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
 	char nomJoueurNumI[21] = {0};
 
 	unsigned int entry = 0;
-	int nombreDeJoueur = 0;
+	int tmp = 0;
 	bool retourMenuAudessus = 0;
 	do{
 		/***********************************************************************
@@ -145,14 +147,14 @@ const char* menu_main[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
 						* Offline
 						*/
 						case 1:{// Offline
-							while( getNombre("Entrez le nombre de joueur", 2, 2, 4, &nombreDeJoueur) != 3 )
+							while( getNombre("Entrez le nombre de joueur", 2, 2, 4, &tmp) != 3 )
 							{
 								// Menu suivant
 								partie jeu;
-								jeu.def_nbJoueurs(nombreDeJoueur);
+								jeu.def_nbJoueurs(tmp);
 
 								nomJoueurNumI[0] = 0;
-								for( int i=0; i<nombreDeJoueur; i++ )
+								for( int i=0; i<tmp; i++ )
 								{
 									sprintf(titreNomJoueurNumI, "Joueur %d entrez votre nom", i+1);
 									if( getTexte( titreNomJoueurNumI, nomJoueurNumI ) == 3 ){
@@ -165,7 +167,9 @@ const char* menu_main[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
 								}
 
 								if( !retourMenuAudessus ){
+									nodelay( stdscr, true );
 									jeu.main( afficherMapEtEvent );
+									nodelay( stdscr, false );
 								}
 								retourMenuAudessus = 0;
 							}
@@ -199,6 +203,10 @@ const char* menu_main[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
 						* Menu des options
 						*/
 						case 1:{// Port
+								if( getNombre("Port pour le serveur", options::getInstance()->port(), 1, 9999, &tmp ) == 2 ){
+									options::getInstance()->defPort( tmp );
+									options::getInstance()->enregistrerConfig();
+								}
 							break;
 						}
 

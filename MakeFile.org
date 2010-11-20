@@ -73,8 +73,11 @@ ifeq ($(LIB_AFF), ncurses)
 	endif
 else
 	ifeq ($(LIB_AFF), sdl)
-#		SDL
-		LDFLAGS +=
+# 		SDL
+		ifeq ($(OS), win)
+			LDFLAGS += -lSDLmain -lmingw32
+		endif
+		LDFLAGS += -lSDL
 	else
 #		SFML
 		LDFLAGS +=

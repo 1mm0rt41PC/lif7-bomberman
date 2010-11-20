@@ -97,9 +97,7 @@ unsigned char partie::nbJoueurs() const
 
 /***************************************************************************//*!
 * @fn unsigned char partie::nbMAX_joueurs() const
-*
 * @brief Retourne le nombre de joueur maximum
-*
 */
 unsigned char partie::nbMAX_joueurs() const
 {
@@ -109,7 +107,6 @@ unsigned char partie::nbMAX_joueurs() const
 
 /***************************************************************************//*!
 * @fn perso* partie::joueur( unsigned int joueur_numero )
-*
 * @brief Renvoie un joueur
 * @return 0 en cas de bug ! Un pointeur vers le joueur demandé sinon.
 */
@@ -134,7 +131,6 @@ partie::MODE partie::modeJeu() const
 /***************************************************************************//*!
 * @fn map* partie::getMap() const
 * @brief Renvoie la map actuel
-*
 */
 map* partie::getMap() const
 {
@@ -145,7 +141,6 @@ map* partie::getMap() const
 /***************************************************************************//*!
 * @fn unsigned char partie::nbJoueurVivant() const
 * @brief Renvoie le nombre de joueur en vie
-*
 */
 unsigned char partie::nbJoueurVivant() const
 {
@@ -160,8 +155,14 @@ unsigned char partie::nbJoueurVivant() const
 
 
 /***************************************************************************//*!
-* @fn void partie::main()
+* @fn void partie::main( libAff* afficherMapEtEvent )
 * @brief Lance le jeu
+* @param[in] afficherMapEtEvent La fonction qui va servir à afficher la map
+*
+* Veuillez initialiser les variables :<br />
+* - c_nb_joueurs
+*
+* @warning Toutes les variables doivent être correctement initialisées !
 */
 void partie::main( libAff* afficherMapEtEvent )
 {
@@ -184,17 +185,42 @@ void partie::main( libAff* afficherMapEtEvent )
 	int i=0;
 	bool continuerScanClavier=1;
 	options* opt = options::getInstance();
+	s_Coordonnees pos={0};
+	s_Event e;
 
 	// Commencement de la partie
 	do{
 		// Affichage de la map et récéption des Event
 		key = afficherMapEtEvent( this );
 
+
 		/***********************************************************************
-		* Scan du clavier pour les joueurs
+		* On parcours les joueurs
 		*/
-		for( i=0; i<c_nb_joueurs && continuerScanClavier == 1; i++ )
+		for( i=0; i<c_nb_joueurs; i++ )
 		{
+			/*******************************************************************
+			* Scan des Events bonus de chaques joueurs
+			*/
+			if( c_joueurs[i].armements() ){
+				while( c_joueurs[i].armements()->isEvent(&pos) )// Tanqu'il y a des event on tourne
+				{
+					c_map->setBlock(pos.x, pos.y, map::vide);
+					/*
+					e.b = bonus::bombe;
+					e.joueur = i+1;
+					e.Nb_Repetition = 0;
+					e.pos = pos;
+					//e.repetionSuivante = ;
+					c_listEvent.push_back( e );
+					*/
+				}
+			}
+
+			/*******************************************************************
+			* Scan du clavier pour les joueurs
+			*/
+			if( continuerScanClavier == 1 )
 			switch( opt->clavierJoueur(i)->obtenirTouche(key) )
 			{
 				case clavier::NUL: {
@@ -245,7 +271,7 @@ void partie::main( libAff* afficherMapEtEvent )
 						case map::plusieurs_joueurs: {
 							c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_UN_joueur );
 							c_map->ajouterInfoJoueur( c_joueurs[i].X(), c_joueurs[i].Y(), i+1, 1 );// Ajout de l'info > Mais qui a donc posé la bombe ...
-							c_joueurs[i].armements()->decQuantiteUtilisable( bonus::bombe );
+							c_joueurs[i].armements()->decQuantiteUtilisable( bonus::bombe, c_joueurs[i].X(), c_joueurs[i].Y() );
 							break;
 						}
 						default: {// On ne pose pas la bombe ! On a pas les conditions réuni
@@ -285,7 +311,6 @@ void partie::main( libAff* afficherMapEtEvent )
 
 /***************************************************************************//*!
 * @fn void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY )
-*
 * @brief Test si un personnage peut se déplacer à un endroit.
 * Si on peut déplacer le perso dans la zone demandé => on déplace le perso
 * SINON rien.
@@ -401,6 +426,29 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 		}
 		default: {
 			stdErrorVarE("Cas non pris en charge c_map->getBlock(%u, %u).element=%d", newX, newY, elementNouvellePosition);
+		}
+	}
+}
+
+
+
+/***************************************************************************//*!
+* @fn void partie::checkInternalEvent()
+* @brief Analyse et traite les Event internes
+*/
+void partie::checkInternalEvent()
+{
+	for( unsigned int i=0; i<c_listEvent.size(); i++ )
+	{
+		switch( c_listEvent.at(i).type )
+		{
+			case bonus::bombe:{
+
+				break;
+			}
+			default:{
+				break;
+			}
 		}
 	}
 }

@@ -13,7 +13,7 @@ bonus::bonus()
 {
 	c_liste = 0;
 	c_nb = 0;
-	c_bombePosees.clear();
+	c_listEvent.clear();
 
 	if( !C_bonusProp )
 		stdErrorE("Veuillez initialiser la partie général des bonus avant de quoi que se soit ! -> bonus::bonusProp()");
@@ -31,7 +31,7 @@ bonus::~bonus()
 		c_liste = 0;
 		c_nb = 0;
 	}
-	c_bombePosees.clear();
+	c_listEvent.clear();
 }
 
 
@@ -48,28 +48,29 @@ bonus::~bonus()
 */
 bonus::s_bonus_proprieter* bonus::bonusProp()
 {
-	char nb_elmement = (char)(bonus::t_Bonus(bonus::t_Bonus(bombe*0)-1))+1; // Donne le nombre d'element
-
 	if( C_bonusProp )// Si déjà initialisé => on retourne le tableau
 		return C_bonusProp;
 
-	C_bonusProp = new s_bonus_proprieter[nb_elmement];
+	C_bonusProp = new s_bonus_proprieter[NB_ELEMENT_t_Bonus];
 
 	C_bonusProp[bombe].probabiliter_pop = 40;// 40% de pop
 	C_bonusProp[bombe].quantite_MAX_Ramassable = 20;
-//	C_bonusProp[bombe].duree = ;
+	C_bonusProp[bombe].duree = 3;// 3secs avant explosion
 
 	C_bonusProp[puissance_flamme].probabiliter_pop = 60;// 60% de pop
 	C_bonusProp[puissance_flamme].quantite_MAX_Ramassable = 10;
+	C_bonusProp[puissance_flamme].duree = -1;
 
 	C_bonusProp[declancheur].probabiliter_pop = 25;// 25% de pop
 	C_bonusProp[declancheur].quantite_MAX_Ramassable = 1;
+	C_bonusProp[declancheur].duree = -1;
 
 	C_bonusProp[vitesse].probabiliter_pop = 20;// 20% de pop
 	C_bonusProp[vitesse].quantite_MAX_Ramassable = 5;
 
 	C_bonusProp[vie].probabiliter_pop = 5;// 5% de pop
 	C_bonusProp[vie].quantite_MAX_Ramassable = 3;
+	C_bonusProp[vie].duree = -1;
 
 	return C_bonusProp;
 }
@@ -278,6 +279,55 @@ bool bonus::decQuantiteUtilisable( t_Bonus b )
 
 
 /***************************************************************************//*!
+* @fn bool bonus::decQuantiteUtilisable( t_Bonus b, unsigned int x, unsigned int y )
+* @brief Décrémente quantite_utilisable
+* @param[in] b Le bonus que l'on veut modifier
+* @param[in] x Position X du bonus
+* @param[in] y Position Y du bonus
+* @return Renvoie vrais si on a pu décrémenté la valeur
+*
+* Cette fonction permet d'activer le déclancheur d'event du bonus
+*/
+bool bonus::decQuantiteUtilisable( t_Bonus b, unsigned int x, unsigned int y )
+{
+	if( C_bonusProp[b].duree < 0 ){
+		stdErrorVar("Le temps du Bonus ne lui permet pas d'avoir un Event. bonus=%d, C_bonusProp[b].duree=%d", (int)b, C_bonusProp[b].duree);
+		return decQuantiteUtilisable( b );
+	}
+
+	if( !decQuantiteUtilisable( b ) )
+		return false;
+
+	// Création de l'event
+	s_Event e;
+	e.type = b;
+	e.pos.x = x;
+	e.pos.y = y;
+	e.finEvent = clock() + C_bonusProp[b].duree * CLOCKS_PER_SEC;// Ajustement du temps
+	c_listEvent.push_back( e );// On ajout l'event à la liste des event
+
+	return true;
+}
+
+
+
+/***************************************************************************//*!
+* @fn bool bonus::decQuantiteUtilisable( t_Bonus b, s_Coordonnees pos )
+* @brief Décrémente quantite_utilisable
+* @param[in] b Le bonus que l'on veut modifier
+* @param[in] pos Position X, Y du bonus
+* @return Renvoie vrais si on a pu décrémenté la valeur
+*
+* Cette fonction permet d'activer le déclancheur d'event du bonus
+* @note Alias de la fonction bonus::decQuantiteUtilisable( t_Bonus b, unsigned int x, unsigned int y )
+*/
+bool bonus::decQuantiteUtilisable( t_Bonus b, s_Coordonnees pos )
+{
+	return decQuantiteUtilisable( b, pos.x, pos.y );
+}
+
+
+/***************************************************************************//*!
 * @fn bool bonus::decQuantiteMAX_en_stock( t_Bonus b )
 * @brief Décrémente quantite_MAX_en_stock
 * @return Renvoie vrais si on a pu décrémenté la valeur
@@ -434,13 +484,14 @@ void bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned cha
 
 
 /***************************************************************************//*!
-* @fn s_Coordonnees* bonus::checkBombEvent( s_Coordonnees* pos )
+* @fn bool bonus::isEvent( s_Coordonnees* pos )
 * @brief Vérifit que le si le temps est écoulé pour une bombe posé
 * @param[in,out] pos	Cette variables contiendra la position X,Y de la bombe qui a explosé.
 * @return Renvoie le pointeur pos si une bombe a explosé, NULL sinon.
 *
 * Si le temps est écoulé, alors on renvoie sa position et on dit la vire de la<br />
 * file d'attente. De plus on rajoute cette bombe au nombre de bombe quantite_utilisable<br />
+*
 * @warning Cette fonction doit être utilisé en boucle !<br />
 * Elle renvoie les bombes qui ont explosées une à une.<br />
 * Cette fonction <b>doit être à couplée avec un tanque</b> jusqu'a NULL
@@ -450,7 +501,7 @@ void bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned cha
 * // Plus haut on a bonus* joueur; qui a été instancié et correctement defini
 * s_Coordonnees pos = {0};
 * // La on check toutes les bombes
-* while( joueur->checkBombEvent(&pos) != NULL )
+* while( joueur->isEvent(&pos) == true )
 * {
 *	// Cette boucle est exécutée autant de fois qu'il y a de bombes qui ont explosées.
 *	// Exemple, en cas d'utilisation d'un déclancheur => toutes les bombes posées par le joueur vont exploser
@@ -460,17 +511,17 @@ void bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned cha
 * }
 * @endcode
 */
-s_Coordonnees* bonus::checkBombEvent( s_Coordonnees* pos )
+bool bonus::isEvent( s_Coordonnees* pos )
 {
-	for( unsigned int i=0; i<c_bombePosees.size(); i++ )
+	for( unsigned int i=0; i<c_listEvent.size(); i++ )
 	{
-		if( c_bombePosees.at(i).finEvent <= clock() ){// Si timeout
-			*pos = c_bombePosees.at(i).pos;
-			c_bombePosees.erase(c_bombePosees.begin()+i);// On supprime la bombe qui était posée
+		if( c_listEvent.at(i).finEvent <= clock() ){// Si timeout
+			*pos = c_listEvent.at(i).pos;
+			c_listEvent.erase(c_listEvent.begin()+i);// On supprime la bombe qui était posée
 			incQuantiteUtilisable( bombe );// On redonne la bombe au joueur
-			return pos;
+			return true;
 		}
 	}
 
-	return NULL;
+	return false;
 }
