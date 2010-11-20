@@ -5,7 +5,9 @@
 #include "perso.h"
 #include "map.h"
 
-extern options G_OPTIONS;// Variable globale
+// Vitesse de déflagration en milli-sec
+#define VITESSE_DEFLAGRATION_FLAMME 500
+
 
 class partie
 {
@@ -21,12 +23,13 @@ class partie
 			s_Coordonnees pos;//!< Position Originel de l'event
 			unsigned char joueur;//!< Le joueur qui est la cause de l'event
 			unsigned char Nb_Repetition;//!< Nombre de répétition actuel pour l'event
+			unsigned char Nb_Repetition_MAX;//!< Nombre de répétition MAX pour l'event
 			clock_t repetionSuivante;//!< Time de la prochaine répétion
 		} s_Event;
 
 
 	public:
-		enum MODE {
+		enum t_MODE {
 			Combat_Libre,		// Free For All 	( F4A )
 			Attrape_drapeau		// Capture the Flag	( CTF )
 		};
@@ -49,12 +52,13 @@ class partie
 			unsigned char			c_nb_joueurs;
 			unsigned char			c_nb_MAX_joueurs;
 			perso*					c_joueurs;// Tableau
-			MODE					c_mode;
+			t_MODE					c_mode;
 			std::vector<s_Event>	c_listEvent;
 		// }
 
 		void deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned char joueur );
 		void checkInternalEvent();
+		char killPlayers( unsigned int x, unsigned int y );
 
 
 	public:
@@ -64,13 +68,13 @@ class partie
 		void genMap();
 		void def_nbJoueurs( unsigned char nb );
 		void def_nbMAX_joueurs( unsigned char nb );
-		void def_modeJeu( MODE m );
+		void def_modeJeu( t_MODE m );
 
 
 		// Accesseurs
 		unsigned char nbJoueurs() const;
 		unsigned char nbMAX_joueurs() const;
-		MODE modeJeu() const;
+		t_MODE modeJeu() const;
 		perso* joueur( unsigned int joueur_numero ) const;
 		map* getMap() const;
 		unsigned char nbJoueurVivant() const;
