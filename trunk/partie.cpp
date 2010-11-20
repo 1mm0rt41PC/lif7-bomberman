@@ -21,6 +21,9 @@ partie::~partie()
 		delete[] c_joueurs;
 	if( c_map )
 		delete c_map;
+
+	c_joueurs = 0;
+	c_map = 0;
 }
 
 
@@ -80,7 +83,7 @@ void partie::def_nbMAX_joueurs( unsigned char nb )
 /*******************************************************************************
 *
 */
-void partie::def_modeJeu( partie::MODE m )
+void partie::def_modeJeu( partie::t_MODE m )
 {
 	c_mode = m;
 }
@@ -122,7 +125,7 @@ perso* partie::joueur( unsigned int joueur_numero ) const
 /*******************************************************************************
 *
 */
-partie::MODE partie::modeJeu() const
+partie::t_MODE partie::modeJeu() const
 {
 	return c_mode;
 }
@@ -147,7 +150,7 @@ unsigned char partie::nbJoueurVivant() const
 	unsigned char nbJoueurVivant = 0;
 	for( unsigned char i=0; i<c_nb_joueurs; i++ )
 	{
-		if( c_joueurs[i].armements() && (c_joueurs[i].armements()->quantiteUtilisable(bonus::vie) > 0 || c_joueurs[i].armements()->quantiteMAX_Ramassable(bonus::vie) == 0) )
+		if( c_joueurs[i].armements() && (c_joueurs[i].armements()->est_Dans_La_Liste(bonus::vie) == -1 || (c_joueurs[i].armements()->quantiteUtilisable(bonus::vie) > 0 || c_joueurs[i].armements()->quantiteMAX_Ramassable(bonus::vie) == 0)) )
 			nbJoueurVivant++;
 	}
 	return nbJoueurVivant;
@@ -199,22 +202,22 @@ void partie::main( libAff* afficherMapEtEvent )
 		*/
 		for( i=0; i<c_nb_joueurs; i++ )
 		{
+			// Si le joueur est mort, on saut son scan
+			if( !c_joueurs[i].armements() ) continue ;
+
 			/*******************************************************************
 			* Scan des Events bonus de chaques joueurs
 			*/
-			if( c_joueurs[i].armements() ){
-				while( c_joueurs[i].armements()->isEvent(&pos) )// Tanqu'il y a des event on tourne
-				{
-					c_map->setBlock(pos.x, pos.y, map::vide);
-					/*
-					e.b = bonus::bombe;
-					e.joueur = i+1;
-					e.Nb_Repetition = 0;
-					e.pos = pos;
-					//e.repetionSuivante = ;
-					c_listEvent.push_back( e );
-					*/
-				}
+			while( c_joueurs[i].armements()->isEvent(&pos) )// Tanqu'il y a des event on tourne
+			{
+				//c_map->setBlock(pos.x, pos.y, map::vide);
+				e.type = bonus::bombe;
+				e.joueur = i+1;
+				e.pos = pos;
+				e.repetionSuivante = 0;
+				e.Nb_Repetition = 0;
+				e.Nb_Repetition_MAX = c_joueurs[i].armements()->quantiteUtilisable(bonus::puissance_flamme);
+				c_listEvent.push_back( e );
 			}
 
 			/*******************************************************************
@@ -292,17 +295,19 @@ void partie::main( libAff* afficherMapEtEvent )
 				}
 			}
 		}
+
+		/***********************************************************************
+		* Scan des Events interne
+		*/
+		checkInternalEvent();
+
 		continuerScanClavier = 1;
 
 
-		/***********************************************************************
-		* Scan des compteurs
-		*/
+	}while( key != KEY_ESCAP && (nbJoueurVivant() > 1 || c_listEvent.size()) );
 
-	}while( key != KEY_ESCAP );
-
-	delete c_map;
-
+	if( nbJoueurVivant() <= 1 )
+		stdError("Un joueur a gagner !");
 
 	// On désinitialise les bonus utilisables pour cette partie
 	bonus::unInitBonusProp();
@@ -345,8 +350,8 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 	*/
 	if( !(	0 <= newX && newX < c_map->X()// On vérif si on ne dépasse pas la
 		&&	0 <= newY && newY < c_map->Y()// taille de la map
-		&&	elementNouvellePosition != map::Mur_destrucible		// On vérif s'il n'y a pas
-		&&	elementNouvellePosition != map::Mur_INdestrucible	// d'objet solid
+		&&	elementNouvellePosition != map::Mur_destructible		// On vérif s'il n'y a pas
+		&&	elementNouvellePosition != map::Mur_INdestructible	// d'objet solid
 		&&	elementNouvellePosition != map::bombe_poser
 		&&	elementNouvellePosition != map::bombe_poser_AVEC_UN_joueur
 		&&	elementNouvellePosition != map::bombe_poser_AVEC_plusieurs_joueurs))
@@ -393,6 +398,7 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 			}
 
 			default: {
+				stdErrorVar("cas NON traite %d", (int)c_map->getBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y())->element);
 				break;
 			}
 		}
@@ -419,9 +425,16 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 			c_joueurs[joueur].defPos(newX, newY);
 			break;
 		}
-		case map::flamme:
+		case map::flamme_horizontal:
+		case map::flamme_vertical:
+		case map::flamme_pointe_haut:
+		case map::flamme_pointe_bas:
+		case map::flamme_pointe_droite:
+		case map::flamme_pointe_gauche:
 		case map::flamme_origine: {
 			// Viens d'aller dans le feu -> Boulet ?
+			c_joueurs[joueur].defArmements(0);// Mort
+			c_map->setBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y(), map::vide);
 			break;
 		}
 		default: {
@@ -431,24 +444,329 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 }
 
 
-
 /***************************************************************************//*!
 * @fn void partie::checkInternalEvent()
 * @brief Analyse et traite les Event internes
 */
 void partie::checkInternalEvent()
 {
+	/*
+		typedef struct {
+			bonus::t_Bonus type;//!< Type de bonus
+			s_Coordonnees pos;//!< Position Originel de l'event
+			unsigned char joueur;//!< Le joueur qui est la cause de l'event
+			unsigned char Nb_Repetition;//!< Nombre de répétition actuel pour l'event
+			clock_t repetionSuivante;//!< Time de la prochaine répétion
+		} s_Event;
+	*/
+	unsigned char j;
+	s_Event e;
+	bool continuerBoucle = 1;
 	for( unsigned int i=0; i<c_listEvent.size(); i++ )
 	{
+		// Tant que l'on a pas atteint le temps
+		if( c_listEvent.at(i).repetionSuivante > clock() ) continue;
+
+		e = c_listEvent.at(i);
 		switch( c_listEvent.at(i).type )
 		{
-			case bonus::bombe:{
+			case bonus::bombe: {
+				// Encore un tour ?
+				if( e.Nb_Repetition > e.Nb_Repetition_MAX ){
+					c_listEvent.erase(c_listEvent.begin()+i);
+					// On reset les block touché par vide
+					/*******************************************************
+					* On efface les flammes
+					*/
+					// Centre de la déflagration
+					c_map->setBlock(e.pos.x, e.pos.y, map::vide);
 
+					// Haut de la déflagration
+					for( j=1; j<e.Nb_Repetition; j++ )
+					{
+						// Adition des flammes avec le reste de l'environement
+						switch( c_map->getBlock(e.pos.x, e.pos.y-j)->element )// Monté vers le haut
+						{
+							case map::flamme_horizontal:
+							case map::flamme_vertical:
+							case map::flamme_pointe_haut:
+							case map::flamme_pointe_bas:
+							case map::flamme_pointe_droite:
+							case map::flamme_pointe_gauche:
+							case map::flamme_origine: {
+								c_map->setBlock(e.pos.x, e.pos.y-j, map::vide);
+								break;
+							}
+							default: {// On s'arrête sur les autres cas
+								j = e.Nb_Repetition;// On va pas plus loin
+								break;
+							}
+						}
+					}
+					// Bas de la déflagration
+					for( j=1; j<e.Nb_Repetition; j++ )
+					{
+						// Adition des flammes avec le reste de l'environement
+						switch( c_map->getBlock(e.pos.x, e.pos.y+j)->element )// Monté vers le haut
+						{
+							case map::flamme_horizontal:
+							case map::flamme_vertical:
+							case map::flamme_pointe_haut:
+							case map::flamme_pointe_bas:
+							case map::flamme_pointe_droite:
+							case map::flamme_pointe_gauche:
+							case map::flamme_origine: {
+								c_map->setBlock(e.pos.x, e.pos.y+j, map::vide);
+								break;
+							}
+							default: {// On s'arrête sur les autres cas
+								j = e.Nb_Repetition;// On va pas plus loin
+								break;
+							}
+						}
+					}
+					// Droite de la déflagration
+					for( j=1; j<e.Nb_Repetition; j++ )
+					{
+						// Adition des flammes avec le reste de l'environement
+						switch( c_map->getBlock(e.pos.x+j, e.pos.y)->element )// Monté vers le haut
+						{
+							case map::flamme_horizontal:
+							case map::flamme_vertical:
+							case map::flamme_pointe_haut:
+							case map::flamme_pointe_bas:
+							case map::flamme_pointe_droite:
+							case map::flamme_pointe_gauche:
+							case map::flamme_origine: {
+								c_map->setBlock(e.pos.x+j, e.pos.y, map::vide);
+								break;
+							}
+							default: {// On s'arrête sur les autres cas
+								j = e.Nb_Repetition;// On va pas plus loin
+								break;
+							}
+						}
+					}
+					// Gauche de la déflagration
+					for( j=1; j<e.Nb_Repetition; j++ )
+					{
+						// Adition des flammes avec le reste de l'environement
+						switch( c_map->getBlock(e.pos.x-j, e.pos.y)->element )// Monté vers le haut
+						{
+							case map::flamme_horizontal:
+							case map::flamme_vertical:
+							case map::flamme_pointe_haut:
+							case map::flamme_pointe_bas:
+							case map::flamme_pointe_droite:
+							case map::flamme_pointe_gauche:
+							case map::flamme_origine: {
+								c_map->setBlock(e.pos.x-j, e.pos.y, map::vide);
+								break;
+							}
+							default: {// On s'arrête sur les autres cas
+								j = e.Nb_Repetition;// On va pas plus loin
+								break;
+							}
+						}
+					}
+					break;
+				}
+
+				/***********************************************************
+				************************************************************
+				* Explosion en cours
+				************************************************************
+				***********************************************************/
+
+				/***********************************************************
+				* Centre de la déflagration
+				*/
+				killPlayers(e.pos.x, e.pos.y);// Adition des flammes avec le reste de l'environement
+				c_map->setBlock(e.pos.x, e.pos.y, map::flamme_origine);
+
+				/***********************************************************
+				* Haut de la déflagration
+				*/
+				continuerBoucle = 1;
+				for( j=1; j<=e.Nb_Repetition && continuerBoucle; j++ )
+				{
+					switch( killPlayers(e.pos.x, e.pos.y-j) )
+					{
+						case -1: {
+							continuerBoucle = 0;
+							break;
+						}
+						case 0: {
+							continuerBoucle = 0;
+							j = e.Nb_Repetition;// Pour mettre une pointe
+						}// Pas de break pour lire le block du dessous
+						case 1: {
+							if( j == e.Nb_Repetition ){
+								c_map->setBlock(e.pos.x, e.pos.y-j, map::flamme_pointe_haut);
+							}else{
+								c_map->setBlock(e.pos.x, e.pos.y-j, map::flamme_vertical);
+							}
+							break;
+						}
+					}
+				}
+
+				/***********************************************************
+				* Bas de la déflagration
+				*/
+				continuerBoucle = 1;
+				for( j=1; j<=e.Nb_Repetition && continuerBoucle; j++ )
+				{
+					switch( killPlayers(e.pos.x, e.pos.y+j) )
+					{
+						case -1: {
+							continuerBoucle = 0;
+							break;
+						}
+						case 0: {
+							continuerBoucle = 0;
+							j = e.Nb_Repetition;// Pour mettre une pointe
+						}// Pas de break pour lire le block du dessous
+						case 1: {
+							if( j == e.Nb_Repetition ){
+								c_map->setBlock(e.pos.x, e.pos.y+j, map::flamme_pointe_bas);
+							}else{
+								c_map->setBlock(e.pos.x, e.pos.y+j, map::flamme_vertical);
+							}
+							break;
+						}
+					}
+				}
+
+				/***********************************************************
+				* Droite de la déflagration
+				*/
+				continuerBoucle = 1;
+				for( j=1; j<=e.Nb_Repetition && continuerBoucle; j++ )
+				{
+					switch( killPlayers(e.pos.x+j, e.pos.y) )
+					{
+						case -1: {
+							continuerBoucle = 0;
+							break;
+						}
+						case 0: {
+							continuerBoucle = 0;
+							j = e.Nb_Repetition;// Pour mettre une pointe
+						}// Pas de break pour lire le block du dessous
+						case 1: {
+							if( j == e.Nb_Repetition ){
+								c_map->setBlock(e.pos.x+j, e.pos.y, map::flamme_pointe_droite);
+							}else{
+								c_map->setBlock(e.pos.x+j, e.pos.y, map::flamme_horizontal);
+							}
+							break;
+						}
+					}
+				}
+
+				/***********************************************************
+				* Gauche de la déflagration
+				*/
+				continuerBoucle = 1;
+				for( j=1; j<=e.Nb_Repetition && continuerBoucle; j++ )
+				{
+					switch( killPlayers(e.pos.x-j, e.pos.y) )
+					{
+						case -1: {
+							continuerBoucle = 0;
+							break;
+						}
+						case 0: {
+							continuerBoucle = 0;
+							j = e.Nb_Repetition;// Pour mettre une pointe
+						}// Pas de break pour lire le block du dessous
+						case 1: {
+							if( j == e.Nb_Repetition ){
+								c_map->setBlock(e.pos.x-j, e.pos.y, map::flamme_pointe_gauche);
+							}else{
+								c_map->setBlock(e.pos.x-j, e.pos.y, map::flamme_horizontal);
+							}
+							break;
+						}
+					}
+				}
+
+				c_listEvent.at(i).Nb_Repetition++;
+				c_listEvent.at(i).repetionSuivante = clock() + VITESSE_DEFLAGRATION_FLAMME;// * CLOCKS_PER_SEC;// Ajustement du temps
 				break;
 			}
-			default:{
+			default: {
 				break;
 			}
 		}
 	}
+}
+
+
+/***************************************************************************//*!
+* @fn char partie::killPlayers( unsigned int x, unsigned int y )
+* @brief Tue les joueurs et détruit les block destructibles
+* @param[in] x Position X de la map a check
+* @param[in] y Position Y de la map a check
+* @return 3 Valeur de retoures possible<br />
+*			- -1 On stop tout et on ne touche pas au block à cette adresse ! (Out of map ou Mur_INdestructible)
+*			-  0 On stop tout mais on traite le block à l'adresse (Mur_destructible)
+*			-  1 On continue
+*
+* @note Les valeurs de X et de Y sont comparées à la taille de la map => Pas de risque de sortir de la map
+*/
+char partie::killPlayers( unsigned int x, unsigned int y )
+{
+	static unsigned int k;// ça ne sert à rien de la recréer à chaque fois
+
+	if( x >= c_map->X() || y >= c_map->Y() )
+		return -1;
+
+	switch( c_map->getBlock(x, y)->element )// Monté vers le haut
+	{
+		case map::UN_joueur: {// Le pauvre joueur qui est au millieu du chemin de la flamme -> dead
+			c_joueurs[c_map->getBlock(x, y)->joueur->at(0)-1].defArmements(0);
+			return 1;
+		}
+		case map::plusieurs_joueurs: {// Les pauvres joueurs qui sont au millieu du chemin de la flamme -> dead
+				for( k=0; k<c_map->getBlock(x, y)->joueur->size(); k++ )
+				{
+					c_joueurs[c_map->getBlock(x, y)->joueur->at(k)-1].defArmements(0);
+				}
+			return 1;
+		}
+		case map::bombe_poser_AVEC_UN_joueur: {// Le pauvre joueur qui est au millieu du chemin de la flamme -> dead
+			c_joueurs[c_map->getBlock(x, y)->joueur->at(1)-1].defArmements(0);
+			return 1;
+		}
+		case map::bombe_poser_AVEC_plusieurs_joueurs: {// Les pauvres joueurs qui sont au millieu du chemin de la flamme -> dead
+				for( k=1; k<c_map->getBlock(x, y)->joueur->size(); k++ )
+				{
+					c_joueurs[c_map->getBlock(x, y)->joueur->at(k)-1].defArmements(0);
+				}
+			return 1;
+		}
+		case map::Mur_destructible: {
+			c_map->ajouterInfoJoueur(x, y, 0, 1);
+			return 0;
+		}
+		case map::Mur_INdestructible: {
+			return -1;
+		}
+		case map::flamme_pointe_haut:
+		case map::flamme_pointe_bas:
+		case map::flamme_pointe_droite:
+		case map::flamme_pointe_gauche:{
+			if( c_map->getBlock(x, y)->joueur && c_map->getBlock(x, y)->joueur->size() && c_map->getBlock(x, y)->joueur->at(0) == 0 )
+				return -1;
+
+			break;
+		}
+		default: {// On eject les autres cas
+			break;
+		}
+	}
+
+	return 1;
 }

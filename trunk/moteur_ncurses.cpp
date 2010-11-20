@@ -10,8 +10,17 @@ extern SCREEN* SP;// <- Salté de NCurses ( Compiler NCurses avec NO_LEAK ! )
 */
 moteur_ncurses::moteur_ncurses()
 {
-	if( !initscr() )// Passe l'écran texte en mode NCurses
+	#ifdef XCURSES
+		Xinitscr(argc, argv);
+	#else
+		initscr();// Passe l'écran texte en mode NCurses
+	#endif
+
+	if( !stdscr )
 		stdErrorE("Erreur lors de l'initialisation de ncurses !");
+
+	// Permet de changer la taille du terminal
+	//resize_term(50, 100);
 
 	clear();		/* Efface l'écran */
 	noecho();		/* Lorsqu'une touche est préssée au clavier, elle n'apparait pas à  l'écran */
@@ -19,37 +28,37 @@ moteur_ncurses::moteur_ncurses()
 					/* In the cbreak() mode these control characters are interpreted as any other character by the terminal driver. */
 	/*raw();*/		/* In the raw() mode these characters are directly passed to the program without generating a signal. */
 	keypad(stdscr, TRUE);		/* Pour que les flèches, F1, ... soient traitées (il faut le faire après création de la fenêtre) */
+	nodelay( stdscr, true );// Pas de délait d'attente
 
 	if( !has_colors() ){
 		this->~moteur_ncurses();
 		stdErrorE("Votre terminal ne supporte pas les couleurs ! STOP ALL...");
 	}
 	start_color();
+
+	// On éclaircit les couleurs si on peut
+	if( can_change_color() ){
+		/* int init_color(COLOR, r, g, b);
+		 * param 1			: color name
+		 * param 2, 3, 4	: rgb content min = 0, max = 1000
+		 */
+		init_color(COLOR_RED, 950, 0, 0);
+		init_color(COLOR_YELLOW, 950, 950, 0);
+		init_color(COLOR_BLUE, 0, 0, 950);
+	}
+
 	init_pair(MU_YELLOW_BLACK, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(MU_RED_BLACK, COLOR_RED, COLOR_BLACK);
 	init_pair(MU_BLUE_BLACK, COLOR_BLUE, COLOR_BLACK);
 	init_pair(MU_GREEN_BLACK, COLOR_GREEN, COLOR_BLACK);
 	init_pair(MU_WHITE_BLACK, COLOR_WHITE, COLOR_BLACK);
-
-	// init_color(COLOR_RED, 700, 0, 0);
-	/* param 1     : color name
-	 * param 2, 3, 4 : rgb content min = 0, max = 1000 */
+	init_pair(MU_BLACK_YELLOW, COLOR_BLACK, COLOR_YELLOW);
 
 	curs_set(0);// Cache le cursor tout moche
-
-	// Permet de changer la taille du terminal
-	//resize_term(50, 100);
 
 	#if defined(WIN32) || defined(WIN64)
 		PDC_set_title("Bomberman");
 	#endif
-
-/*
-	halfdelay( 2 );
-	notimeout( c_win, true );
-	wtimeout( c_win, 500 );
-	nodelay( c_win, true );
-*/
 }
 
 
@@ -88,175 +97,6 @@ void moteur_ncurses::cadre()
 	box(stdscr, 0, 0);
 
 	refresh(); /* Print it on to the real screen */
-}
-
-
-
-/***************************************************************************//*!
-* @fn void moteur_ncurses::main()
-* @brief Point d'accès général.
-*
-* Appeler cette fonction pour lancer l'interface ncurses.<br />
-* C'est dans cette fonction que l'on gère les menu
-* @todo Déplacer cette fonction et la mettre en commun avec toutes les lib d'affichage
-*/
-void moteur_ncurses::main()
-{
-	static const char* menu_main[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
-		"Jouer",			// NE PAS OUBLIER de modifier le for !
-		"Options",
-		"Quitter"
-	};
-	static const char* menu_options[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
-		"Port",					// NE PAS OUBLIER de modifier le for !
-		"Clavier",
-		"Retour"
-	};
-	static const char* menu_options_claviers[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
-		"Clavier Joueur 1",				// NE PAS OUBLIER de modifier le for !
-		"Clavier Joueur 2",
-		"Clavier Joueur 3",
-		"Clavier Joueur 4",
-		"Retour"
-	};
-	static const char* menu_jeu[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
-		"Offline",			// NE PAS OUBLIER de modifier le for !
-		"Online",
-		"Retour"
-	};
-	char titreNomJoueurNumI[30] = {0};
-	char nomJoueurNumI[21] = {0};
-
-	unsigned int entry = 0;
-	int tmp = 0;
-	bool retourMenuAudessus = 0;
-	do{
-		/***********************************************************************
-		* Menu d'accueil
-		*/
-		switch( entry = menu("", menu_main, 3) )
-		{
-			/*******************************************************************
-			* Jouer :: Type de partie
-			*/
-			case 1:{
-				do{
-					switch( entry = menu("Type de partie", menu_jeu, 3) )
-					{
-						/*******************************************************
-						* Offline
-						*/
-						case 1:{// Offline
-							while( getNombre("Entrez le nombre de joueur", 2, 2, 4, &tmp) != 3 )
-							{
-								// Menu suivant
-								partie jeu;
-								jeu.def_nbJoueurs(tmp);
-
-								nomJoueurNumI[0] = 0;
-								for( int i=0; i<tmp; i++ )
-								{
-									sprintf(titreNomJoueurNumI, "Joueur %d entrez votre nom", i+1);
-									if( getTexte( titreNomJoueurNumI, nomJoueurNumI ) == 3 ){
-										retourMenuAudessus = 1;
-										break;// Permet de remonter au menu au dessus
-									}
-
-									jeu.joueur(i)->defNom(nomJoueurNumI);
-									nomJoueurNumI[0] = 0;
-								}
-
-								if( !retourMenuAudessus ){
-									nodelay( stdscr, true );
-									jeu.main( afficherMapEtEvent );
-									nodelay( stdscr, false );
-								}
-								retourMenuAudessus = 0;
-							}
-							break;
-						}
-						/*******************************************************
-						* Online
-						*/
-						case 2:{// Online
-							break;
-						}
-						/*******************************************************
-						* Retour au menu précédant
-						*/
-						case 3:{// Retour
-							break;
-						}
-					}
-				}while( entry != 3 );
-				entry = 0;
-				break;
-			}
-			/*******************************************************************
-			* Menu des options
-			*/
-			case 2:{// Options
-				do{
-					switch( entry = menu("Options", menu_options, 3) )
-					{
-						/*******************************************************
-						* Menu des options
-						*/
-						case 1:{// Port
-								if( getNombre("Port pour le serveur", options::getInstance()->port(), 1, 9999, &tmp ) == 2 ){
-									options::getInstance()->defPort( tmp );
-									options::getInstance()->enregistrerConfig();
-								}
-							break;
-						}
-
-						/*******************************************************
-						* Menu des claviers
-						*/
-						case 2:{// Claviers
-							/*******************************************************
-							* Menu des claviers
-							*/
-							do{
-								switch( entry = menu("Options des Claviers", menu_options_claviers, 5) )
-								{
-									/*******************************************************
-									* Config d'un clavier
-									*/
-									case 1:
-									case 2:
-									case 3:
-									case 4:{// CONFIG CLAVIERS !
-										afficherConfigurationClavier( entry );
-										break;
-									}
-									case 5:{// Retour
-										break;
-									}
-								}
-							}while( entry != 5 );
-							entry=0;
-							break;
-						}
-
-						/*******************************************************
-						* Retour au menu précédant
-						*/
-						case 3:{// Retour
-							break;
-						}
-					}
-				}while( entry != 3 );
-				entry=0;
-				break;
-			}
-
-			case 3:{// Quiter
-				break;
-			}
-		}
-	}while( entry != 3 );
-	//entry = menu( menu_options, 3 );
 }
 
 
@@ -463,7 +303,7 @@ void moteur_ncurses::afficherConfigurationClavier( unsigned char joueur )
 				break;
 
 			// Touche Entrer pressée
-			case KEY_ENTER_bis:{
+			case KEY_ENTER_bis: {
 				if( highLight <= (unsigned int)nbLiens ){// On a selectionné un lien de modification de touche
 					cleanline(win_menu, 2);
 					wattron(win_menu, COLOR_PAIR(MU_RED_BLACK));
@@ -671,7 +511,7 @@ int moteur_ncurses::getNombre( const char titre[], int valeurParDefaut, int vale
 				break;
 
 			// Touche Entrer pressée
-			case KEY_ENTER_bis:{
+			case KEY_ENTER_bis: {
 				if( highLight == 1 ){// On a selectionné un lien de modification de texte
 					do{
 						wattron(win_menu, COLOR_PAIR(MU_RED_BLACK));
@@ -687,7 +527,7 @@ int moteur_ncurses::getNombre( const char titre[], int valeurParDefaut, int vale
 						switch( key )
 						{
 							case KEY_RIGHT:
-							case KEY_UP:{
+							case KEY_UP: {
 								if( *returnValue+1 > valeurMax )
 									*returnValue = valeurMin;
 								else
@@ -695,7 +535,7 @@ int moteur_ncurses::getNombre( const char titre[], int valeurParDefaut, int vale
 								break;
 							}
 							case KEY_LEFT:
-							case KEY_DOWN:{
+							case KEY_DOWN: {
 								if( *returnValue-1 < valeurMin )
 									*returnValue = valeurMax;
 								else
@@ -703,15 +543,15 @@ int moteur_ncurses::getNombre( const char titre[], int valeurParDefaut, int vale
 								break;
 							}
 							case KEY_BACKSPACE:
-							case KEY_BACKSPACE_bis:{
+							case KEY_BACKSPACE_bis: {
 								*returnValue /= 10;
 								break;
 							}
-							case KEY_ESCAP:{
+							case KEY_ESCAP: {
 								*returnValue = valeurParDefaut;
 								break;
 							}
-							case KEY_ENTER_bis:{
+							case KEY_ENTER_bis: {
 								if( !(valeurMin <= *returnValue && *returnValue <= valeurMax) ){
 									key = 0;
 									*returnValue = valeurMin;
@@ -723,12 +563,12 @@ int moteur_ncurses::getNombre( const char titre[], int valeurParDefaut, int vale
 							case PADMINUS:
 							#endif
 							case '+':
-							case '-':{
+							case '-': {
 								if( valeurMin <= *returnValue*(-1) && *returnValue*(-1) <= valeurMax )
 									*returnValue *= -1;
 								break;
 							}
-							default:{
+							default: {
 								// Ajout de chiffre à la main
 								if( '0' <= key && key <= '9' && *returnValue*10+(key-'0') <= valeurMax )
 									*returnValue = *returnValue*10+(key-'0');
@@ -787,8 +627,6 @@ int moteur_ncurses::getTexte( const char titre[], char texteRetour[21] )
 	* Boucle EVENT
 	*/
 	do{
-		//wclear(win_menu);
-
 		// Création d'une boite
 		box(win_menu, 0, 0);
 
@@ -859,7 +697,7 @@ int moteur_ncurses::getTexte( const char titre[], char texteRetour[21] )
 				break;
 
 			// Touche Entrer pressée
-			case KEY_ENTER_bis:{
+			case KEY_ENTER_bis: {
 				if( highLight == 1 ){// On a selectionné un lien de modification de texte
 					do{
 						cleanline(win_menu, 2);
@@ -878,26 +716,28 @@ int moteur_ncurses::getTexte( const char titre[], char texteRetour[21] )
 						switch( key )
 						{
 							case KEY_BACKSPACE:
-							case KEY_BACKSPACE_bis:{
+							case KEY_BACKSPACE_bis: {
 								if( strlen(texteRetour) > 0 )
 									texteRetour[strlen(texteRetour)-1] = 0;
 								break;
 							}
-							case KEY_ENTER_bis:{
+							case KEY_ENTER_bis: {
 								trimString(texteRetour);
 								erreurTexteVide = 0;
 								break;
 							}
-							default:{
+							default: {
 								// Ajout d'une lettre à la main
-								if( ' ' <= key && key <= '~' && strlen(texteRetour)+1 < 20 )
+								if( ' ' <= key && key <= '~' && strlen(texteRetour)+1 < 20 ){// NOTE: 21 = '\0'
 									texteRetour[strlen(texteRetour)+1] = 0;
 									texteRetour[strlen(texteRetour)] = key;
+								}
 								break;
 							}
 						}
 					}while( key != KEY_ESCAP && key != KEY_ENTER_bis );
 					cleanline(win_menu, 2);
+					highLight = 2;// On déplace sur le ok le cursor
 					key = 0;// Pas d'exit du menu accidentel
 				}
 				if( highLight == 2 && strlen(trimString(texteRetour)) < 1 ){
@@ -1032,7 +872,7 @@ chtype moteur_ncurses::getCouleurJoueur( unsigned char joueur )
 			return COLOR_PAIR(MU_JOUEUR3);
 		case 4:
 			return COLOR_PAIR(MU_JOUEUR4);
-		default:{
+		default: {
 			stdErrorVar("Problème d'id joueur ! id_joueur=%d", joueur);
 			return COLOR_PAIR(MU_WHITE_BLACK);
 		}
@@ -1083,16 +923,12 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 					mvwaddch( win, ypos+y, xpos+x, ' ');
 					break;
 				}
-				case map::Mur_destrucible: {
+				case map::Mur_destructible: {
 					mvwaddch( win, ypos+y, xpos+x, '%');
 					break;
 				}
-				case map::Mur_INdestrucible: {
+				case map::Mur_INdestructible: {
 					mvwaddch( win, ypos+y, xpos+x, '#');
-					break;
-				}
-				case map::flamme: {
-					mvwaddch( win, ypos+y, xpos+x, '*');
 					break;
 				}
 				case map::UN_joueur:
@@ -1110,7 +946,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 				case map::bombe_poser: {
 					couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
 					wattron(win, couleur);
-					mvwaddch( win, ypos+y, xpos+x, '¤');
+					mvwaddch( win, ypos+y, xpos+x, '!');
 					wattroff(win, couleur);
 					break;
 				}
@@ -1120,12 +956,49 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 
 					couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
 					wattron(win, couleur);
-					mvwaddch( win, ypos+y, xpos+x, 'à');
+					mvwaddch( win, ypos+y, xpos+x, '$');
 					wattroff(win, couleur);
 
 					break;
 				}
-				default:{
+				case map::flamme_origine: {
+					wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
+					mvwaddch( win, ypos+y, xpos+x, 'O');
+					wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
+					break;
+				}
+				case map::flamme_horizontal:
+				case map::flamme_vertical: {
+					wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
+					mvwaddch( win, ypos+y, xpos+x, 'X');
+					wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
+					break;
+				}
+				case map::flamme_pointe_haut: {
+					wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
+					mvwaddch( win, ypos+y, xpos+x, '^');
+					wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
+					break;
+				}
+				case map::flamme_pointe_bas: {
+					wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
+					mvwaddch( win, ypos+y, xpos+x, 'v');
+					wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
+					break;
+				}
+				case map::flamme_pointe_droite: {
+					wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
+					mvwaddch( win, ypos+y, xpos+x, '>');
+					wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
+					break;
+				}
+				case map::flamme_pointe_gauche: {
+					wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
+					mvwaddch( win, ypos+y, xpos+x, '<');
+					wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
+					break;
+				}
+				default: {
 					stdErrorVar("Erreur lors de la lecture de la map, Objet inconu <%d>", (int)l_map->getBlock(x,y)->element);
 					break;
 				}

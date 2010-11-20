@@ -118,8 +118,8 @@ void bonus::param_Par_Defaut()// Pour une partie classique ( F4A )
 	c_liste[2].quantite_MAX_en_stock = 0;// 20 Accelerateurs de vitesse Maxi
 
 	c_liste[2].type = puissance_flamme;
-	c_liste[2].quantite_utilisable = 1;
-	c_liste[2].quantite_MAX_en_stock = 1;
+	c_liste[2].quantite_utilisable = 5;
+	c_liste[2].quantite_MAX_en_stock = 5;
 }
 
 
