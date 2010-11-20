@@ -28,7 +28,7 @@
 *	- Le perso est capable de porter 10 bombes s'il y a le sac adéquate. ( quantite_MAX_Ramassable = 10 )
 *	- Notre perso a un sac pouvant contenir 5 bombes maximum. ( quantite_MAX_en_stock = 5 )
 *	- Le sac contient actuellement 3 bombes.( quantite_utilisable = 3)
-*	- J'ai donc 2 bombes posées. Ces 2 bombes sont dans la variable @link bonus::c_bombePosees c_bombePosees@endlink en attandant qu'elles explosent ^^
+*	- J'ai donc 2 bombes posées. Ces 2 bombes sont dans la variable @link bonus::c_listEvent c_listEvent@endlink en attandant qu'elles explosent ^^
 */
 class bonus
 {
@@ -36,7 +36,11 @@ class bonus
 		/*!
 		* @enum t_Bonus
 		* @brief Les types de bonus possible dans le jeu
+		*
+		* @attention En cas de modification du nombre d'element, modifier aussi
+		* le define NB_ELEMENT_t_Bonus
 		*/
+		#define NB_ELEMENT_t_Bonus 5
 		enum t_Bonus {
 			bombe=0,
 			puissance_flamme,
@@ -56,11 +60,11 @@ class bonus
 			/**
 			* @var duree
 			* La durée peut avoir 3 status<br />
-			* - -1 => L'objet est utilisé sans limite de temps (Durée Illimité)
-			* - +0 => L'objet est utilisé directement (Durée instantané)
-			* - >0 => L'objet est utilisé au bout de "XXX" sec (valeur dans la variable)
+			* - -1 => Pas de callback
+			* - +0 => Callback direct
+			* - >0 => Callback au bout de X secs
 			*/
-			int duree;//!< Durée d'utilisation
+			int duree;// Durée d'utilisation
 		} s_bonus_proprieter;
 
 	private:
@@ -86,8 +90,9 @@ class bonus
 		* Elle fourni, le Où  et Quand.<br />
 		*/
 		typedef struct {
+			t_Bonus type;//!< Le bonus
 			s_Coordonnees pos;//!< Position de la bombe posé
-			clock_t finEvent;// endwait = clock () + seconds * CLOCKS_PER_SEC ;
+			clock_t finEvent;//!< Temps avant la fin de l'event
 		} s_Event;
 
 		// Varaible Générale ( Variables global à toutes les class )
@@ -95,7 +100,7 @@ class bonus
 		// Varaibles Local à la class ( à l'instance de chaque class )
 		s_bonus* c_liste;//!< Liste des bonus attrapé par un player. ( bonus utilisable )
 		unsigned char c_nb;//!< Nombre de bonus obtenu par un player
-		std::vector<s_Event> c_bombePosees;//!< Tableau contenant les bombes posées
+		std::vector<s_Event> c_listEvent;//!< Tableau contenant les bombes posées
 
 
 	public:
@@ -116,6 +121,8 @@ class bonus
 		bool incQuantiteUtilisable( t_Bonus b );// Incrémenter quantite_utilisable
 		bool incQuantiteMAX_en_stock( t_Bonus b );// Incrémenter quantite_MAX_en_stock
 		bool decQuantiteUtilisable( t_Bonus b );// Décrémenter quantite_utilisable
+		bool decQuantiteUtilisable( t_Bonus b, unsigned int x, unsigned int y );
+		inline bool decQuantiteUtilisable( t_Bonus b, s_Coordonnees pos );
 		bool decQuantiteMAX_en_stock( t_Bonus b );// Décrémenter quantite_MAX_en_stock
 		void param_Par_Defaut();
 		void defQuantiteUtilisable( t_Bonus b, unsigned char quantite_utilisable );
@@ -126,7 +133,7 @@ class bonus
 		void defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock, unsigned char quantite_MAX_Ramassable, unsigned char probabiliter_pop );
 
 		// Autres
-		s_Coordonnees* checkBombEvent( s_Coordonnees* pos );
+		bool isEvent( s_Coordonnees* pos );
 };
 
 #endif
