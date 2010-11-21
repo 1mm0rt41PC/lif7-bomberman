@@ -5,6 +5,8 @@
 #include "coordonnees.h"
 #include <stdlib.h>// Pour fopen, fread
 #include <vector>
+#include <string>
+#include <dirent.h>
 
 
 /*!
@@ -40,11 +42,17 @@ class map
 			inconnu,// BUG
 			vide,
 			// MUR
-			Mur_destrucible,
-			Mur_INdestrucible,
-			// Armes
-			flamme,
+			Mur_destructible,
+			Mur_INdestructible,
+			// Flammes
+			flamme_horizontal,
+			flamme_vertical,
 			flamme_origine,
+			flamme_pointe_haut,
+			flamme_pointe_bas,
+			flamme_pointe_droite,
+			flamme_pointe_gauche,
+			// Armes
 			bombe_poser,
 			// Bonus
 			gain_bombe,
@@ -108,6 +116,7 @@ class map
 
 		// Accesseurs
 		const s_Case* getBlock( unsigned int X, unsigned int Y ) const;
+		const s_Case* getBlock( s_Coordonnees pos ) const;
 		unsigned int X() const;
 		unsigned int Y() const;
 		s_Coordonnees positionInitialJoueur( unsigned char joueur ) const;
@@ -117,6 +126,7 @@ class map
 
 		// Autres
 		static int myRand(int a, int b);
+		static void readDir( std::vector<std::string>* files );
 };
 
 #endif

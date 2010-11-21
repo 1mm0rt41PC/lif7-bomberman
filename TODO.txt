@@ -2,7 +2,7 @@
 
 /- MODULE NCURSES > Ecran Online OffLine
 
-- MODULE NCURSES > Ecran Port
+/- MODULE NCURSES > Ecran Port
 
 /- Rééquilibré les fenetres d'affichage
 

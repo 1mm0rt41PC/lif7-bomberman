@@ -55,7 +55,10 @@ map::~map()
 	if( c_block ){
 		// Suppression des meta données
 		for( unsigned int i=0; i<c_taille.x*c_taille.y; i++ )
-			delete c_block[i].joueur;
+		{
+			if( c_block[i].joueur )
+				delete c_block[i].joueur;
+		}
 		delete[] c_block;
 	}
 
@@ -100,7 +103,7 @@ void map::setBlock( unsigned int X, unsigned int Y, map::t_type what )
 */
 void map::ajouterInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierePosition )
 {
-	if( !c_block || X >= c_taille.x || Y >= c_taille.y || !id_Joueur )
+	if( !c_block || X >= c_taille.x || Y >= c_taille.y )
 		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, id_Joueur=%d, premierePosition=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, (int)id_Joueur, (int)premierePosition);
 
 	s_Case* c = c_block + (X * c_taille.x + Y);
@@ -188,18 +191,24 @@ void map::setTaille( unsigned int tailleX, unsigned int tailleY )
 * Un fichier de map a une forme :<br />
 * X Y NB_Joueur\n<br />
 * #...#\n<br />
+* @todo Virer la ligne fichiers.at(r) = "lvl1.map";
 */
 int map::chargerMap( const char fichier[] )
 {
 	char *fichierUtiliser = (char*)fichier;
 	FILE* fp=0;
 	char c=0;
+	vector<string> fichiers;
 
 	// Si pas de nom de fichier donnée => map aléatoire
 	if( !fichier ){
-		char fichier_bis[20]={0};
-		sprintf(fichier_bis, "lvl%d.map", myRand(1, NB_MAP));
-		fichierUtiliser = fichier_bis;
+		readDir( &fichiers );
+
+		// Ajout du préfix ./map
+		int r = myRand(0, fichiers.size()-1);
+		fichiers.at(r).insert(0, "./map/");
+		//fichiers.at(r) = "lvl1.map";// A VIRER EN FINAL ( MODE DEBUG )
+		fichierUtiliser = (char *)fichiers[r].c_str();
 	}
 
 	if( !(fp=fopen(fichierUtiliser, "r")) )
@@ -257,11 +266,11 @@ int map::chargerMap( const char fichier[] )
 					break;
 				}
 				case '#':{
-					c_block[x * c_taille.x + y].element = Mur_INdestrucible;
+					c_block[x * c_taille.x + y].element = Mur_INdestructible;
 					break;
 				}
 				case '%':{
-					c_block[x * c_taille.x + y].element = Mur_destrucible;
+					c_block[x * c_taille.x + y].element = Mur_destructible;
 					break;
 				}
 				default:{
@@ -278,6 +287,36 @@ int map::chargerMap( const char fichier[] )
 
 	return c_nb_PointDeDepartJoueur;
 }
+
+
+/***************************************************************************//*!
+* @fn void map::readDir( vector<string>* files )
+* @brief Lit le dossier ./map et retourne ( par files ) les fichiers (.map) qu'il contient
+* @param[in,out] files Dans cette variable sera stocké les nom des fichiers présent dans le dossier ./map
+* @attention Aucun fichier n'est préfixé du dossier !
+*/
+void map::readDir( vector<string>* files )
+{
+	DIR* dp;
+	dirent* dirp=0;
+
+	if( (dp = opendir("./map")) == NULL )
+		stdErrorE("Erreur lors de l'ourverture du dossier ./map");
+
+	string tmp;
+	while( (dirp = readdir(dp)) != NULL )
+	{
+		tmp = dirp->d_name;
+		if( tmp[tmp.size()-4] == '.' &&
+			tmp[tmp.size()-3] == 'm' &&
+			tmp[tmp.size()-2] == 'a' &&
+			tmp[tmp.size()-1] == 'p'
+		)
+			files->push_back(tmp);
+	}
+	closedir(dp);
+}
+
 
 
 /***************************************************************************//*!
@@ -318,6 +357,17 @@ const map::s_Case* map::getBlock( unsigned int X, unsigned int Y ) const
 		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y);
 
 	return c_block+(X * c_taille.x + Y);
+}
+
+
+/***************************************************************************//*!
+* @fn const map::s_Case* map::getBlock( s_Coordonnees pos ) const
+* @brief Retourn le block qui est à la position X, Y
+* @note Alias de map::getBlock( unsigned int X, unsigned int Y )
+*/
+const map::s_Case* map::getBlock( s_Coordonnees pos ) const
+{
+	return getBlock( pos.x, pos.y );
 }
 
 
