@@ -1,6 +1,6 @@
 // Define LIB : __LIB_ncurses__, __LIB_SDL__, __LIB_SFML__
 
-#define __LIB_ncurses__ 1
+#define __LIB_SDL__ 1
 
 /*******************************************************************************
 * Lib SFML
@@ -25,6 +25,7 @@
 	#define KEY_ESCAP 27
 	#define KEY_ENTER_bis 10
 	#define KEY_BACKSPACE_bis 8
+	#define RETOUR_MENU_PRECEDENT KEY_ESCAP// Permet de faire la liaison pour quitter le menu principal
 
 	#ifndef PADPLUS
 		#define PADPLUS '+'
@@ -40,7 +41,8 @@
 */
 #elif __LIB_SDL__
 	#include <SDL/SDL.h>
-	#define SYS_CLAVIER Uint8 // || SDLKey
+	#define SYS_CLAVIER SDLKey //Uint8 || SDLKey
+	#define RETOUR_MENU_PRECEDENT SDLK_ESCAPE// Permet de faire la liaison pour quitter le menu principal
 
 
 /*******************************************************************************

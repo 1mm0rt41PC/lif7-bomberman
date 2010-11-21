@@ -3,7 +3,7 @@ LIB_AFF = ncurses
 # Compilateur
 CXX = g++
 # Flags de Compilation
-CFLAGS := -Wall -D__LIB_${LIB_AFF}__
+CFLAGS := -Wall
 #Flags pour le linker
 LDFLAGS :=
 # Mode Debug (décommenter cette ligne pour activer le mode debug forcé)
@@ -14,7 +14,7 @@ DEBUG_AUTO_EXEC_GDB = oui
 # Fichiers contenant les dépendances
 DEP = .depend
 # Fichiers .cpp
-SRC = main.cpp map.cpp perso.cpp partie.cpp moteur_ncurses.cpp clavier.cpp options.cpp bonus.cpp
+SRC := main.cpp map.cpp perso.cpp partie.cpp clavier.cpp options.cpp bonus.cpp
 # Fichier de sortie final
 EXEC_NAME = bomberman.exe
 
@@ -54,14 +54,28 @@ endif
 ECHO_,=,
 ECHO_)=)
 ECHO_(=(
+
+# Determine si un la lib a été spécifié
+ifeq ($(findstring sdl,$(MAKECMDGOALS)) ,ncurses)
+	LIB_AFF = ncurses
+else
+	ifeq ($(findstring sdl,$(MAKECMDGOALS)) ,sdl)
+		LIB_AFF = sdl
+	else
+		ifeq ($(findstring sdl,$(MAKECMDGOALS)) ,sfml)
+			LIB_AFF = sfml
+		endif
+	endif
+endif
+
+# Ajustement des directives de précompilation
+CFLAGS += -D__LIB_${LIB_AFF}__
+
 # Met en mode debug ou non
 USE_DEBUG = $(if $(or $(findstring debug,$(MAKECMDGOALS)),$(DEBUG)) ,-ggdb)
 ifneq ($(USE_DEBUG),)
 	CFLAGS += $(USE_DEBUG)
 endif
-
-# Fichiers Objets ( *.o ) dans un dossier obj/
-OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(SRC:.cpp=.o))
 
 # Lib a utiliser ( /!\ Peut changer en fonction de l'OS OU du système d'affichage /!\ )
 ifeq ($(LIB_AFF), ncurses)
@@ -71,32 +85,34 @@ ifeq ($(LIB_AFF), ncurses)
 	else
 		LDFLAGS += -lncurses
 	endif
+	SRC += moteur_ncurses.cpp
 else
 	ifeq ($(LIB_AFF), sdl)
 # 		SDL
 		ifeq ($(OS), win)
-			LDFLAGS += -lSDLmain -lmingw32
+			LDFLAGS += -lmingw32 -lSDLmain
 		endif
-		LDFLAGS += -lSDL
+#		NOTE: -mwindows permet de virer la console
+		LDFLAGS += -lSDL -lSDL_ttf -lSDL_image $(if $(USE_DEBUG) ,,-mwindows)
+		SRC += moteur_sdl.cpp
 	else
 #		SFML
 		LDFLAGS +=
 	endif
 endif
+
+# Fichiers Objets ( *.o ) dans un dossier obj/
+OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(SRC:.cpp=.o))
+
 # ^ NE PAS TOUCHER A CE BLOCK ^
 ################################################################################
 
-
 # Simple Make
-all: $(EXEC_NAME)
-# La ligne ci dessous, permet d'éviter les bug avec la commande {make exec}
-$(BIN_DIR)/$(EXEC_NAME): $(EXEC_NAME)
-$(EXEC_NAME): $(BIN_DIR) $(OBJ_DIR) $(if $(USE_DEBUG) ,$(OBJ_DIR)/config_debug, $(OBJ_DIR)/config_release) $(DEP) $(OBJ_FILES)
+all: $(BIN_DIR)/$(EXEC_NAME)
+$(BIN_DIR)/$(EXEC_NAME): $(BIN_DIR) $(OBJ_DIR) $(if $(USE_DEBUG) ,$(OBJ_DIR)/config_${OS}_debug_${LIB_AFF}, $(OBJ_DIR)/config_${OS}_release_${LIB_AFF}) $(DEP) $(OBJ_FILES)
 	$(CMD_LINEFEED)
 	@echo Creation de l executable $(if $(USE_DEBUG) ,en mode Debug)
 	$(CXX) -o $(BIN_DIR)/$(EXEC_NAME) $(OBJ_FILES) $(LDFLAGS)
-# Suppression des dépendances ( pour être sur d'avoir la dernière version -> rebuild à chaque compilation )
-	@$(CMD_DEL) $(DEP) 2> $(NULL)
 
 
 # Génère et inclut les dépendances
@@ -111,7 +127,7 @@ $(OBJ_DIR)/%.o: %.cpp
 
 
 # Système de génération des dépendances
-$(DEP): $(SRC)
+$(DEP): $(SRC) $(subst main.h,,$(SRC:.cpp=.h))
 	$(CMD_CLEAR)
 	@echo Generation des dependances
 # Le sed est la pour permettre de mofidier les regles main.o:... --> obj/main.o:...
@@ -135,7 +151,7 @@ $(OBJ_DIR):
 ################################################################################
 
 # Make depend ( régénération manuel des dep )
-.PHONY: depend dep exec valgrind clean clean_dep pfiles help debug $(DOXYGEN_DIR) $(DOXYGEN_DIR)/Doxyfile doxygen $(OBJ_DIR)/config.release $(OBJ_DIR)/config.debug no_clear
+.PHONY: depend dep exec valgrind clean clean_dep pfiles help debug ncurses sdl sfml $(DOXYGEN_DIR) $(DOXYGEN_DIR)/Doxyfile doxygen $(OBJ_DIR)/config.release $(OBJ_DIR)/config.debug no_clear
 depend: $(DEP)
 dep: $(DEP)
 
@@ -152,8 +168,21 @@ else
 	cd $(BIN_DIR) && $(if $(and $(USE_DEBUG),$(DEBUG_AUTO_EXEC_GDB)), gdb $(EXEC_NAME), $(EXEC_NAME))
 endif
 
+
 # Regle pour le mode debug
-debug: $(EXEC_NAME)
+debug: $(BIN_DIR)/$(EXEC_NAME)
+
+
+# Regle pour le mode ncurses
+ncurses: $(BIN_DIR)/$(EXEC_NAME)
+
+
+# Regle pour le mode sdl
+sdl: $(BIN_DIR)/$(EXEC_NAME)
+
+
+# Regle pour le mode sfml
+sfml: $(BIN_DIR)/$(EXEC_NAME)
 
 
 # Cette règle permet de savoir si on était en mode debug ou pas
@@ -161,7 +190,7 @@ debug: $(EXEC_NAME)
 # Si on était en debug et qu'on passe en release -> clean all
 $(OBJ_DIR)/config_%:
 	$(CMD_LINEFEED)
-	@echo "Changement de type de compilation Debug <-> Release"
+	@echo "Changement de type de compilation Debug <-> Release & Ncurses <-> SDL <-> SFML"
 	@$(MAKE) --silent --no-print-directory --makefile=MakeFile.org clean no_clear
 	@echo .>$@
 
@@ -181,12 +210,12 @@ valgrind: $(BIN_DIR)/$(EXEC_NAME)
 doxygen: $(DOXYGEN_DIR)/Doxyfile
 	@echo Lancement de Doxygen
 	cd $(DOXYGEN_DIR) && doxygen
-	
-	
+
+
 # Pour créer une archive tar bz2
 tar:
 	$(CMD_DEL) bomberman.tar.bz2
-	tar -jcvf bomberman.tar.bz2 *.cpp *.h MakeFile.org makefile $(DOXYGEN_DIR)/Doxyfile TODO.txt _CodingStyle_.txt
+	tar -jcvf bomberman.tar.bz2 *.cpp *.h MakeFile.org makefile $(DOXYGEN_DIR)/Doxyfile TODO.txt _CodingStyle_.txt $(BIN_DIR)/map/*.map $(BIN_DIR)/Chicken\ Butt.ttf $(BIN_DIR)/images/*.png
 
 
 # Si pas de doxygen -> OUT
@@ -231,6 +260,9 @@ help:
 	$(call ECHO ,make ARG [no_clear])
 	$(call ECHO ,	all:		Construit tout le projet.)
 	$(call ECHO ,	debug:		Construit tout le projet en debug (gdb).)
+	$(call ECHO ,	ncurses:	Construit tout le projet avec la lib Ncurses.)
+	$(call ECHO ,	sdl:		Construit tout le projet avec la lib SDL.)
+	$(call ECHO ,	sfml:		Construit tout le projet avec la lib SFML.)
 	$(call ECHO ,	clean:		Supprime les fichiers .o, l'executable et le fichier de)
 	$(call ECHO ,			dependances.)
 	$(call ECHO ,	clean_dep:	Supprime le fichier des dependances.)
@@ -246,5 +278,5 @@ help:
 	$(call ECHO ,	pfiles:		Affiche les fichiers utilises)
 	$(call ECHO ,	help:		Affiche cette aide.)
 	$(CMD_LINEFEED)
-	$(call ECHO ,/!\ Si MAKE n'a pas d'ARG alors IDEM a {make all}.)
+	$(call ECHO ,/!\ Si MAKE n'a pas d'ARG alors IDEM a {make all} avec la lib $(LIB_AFF).)
 	$(call ECHO ,/!\ L'outil sed est utilise par ce makefile pour la generation des dependances !)
