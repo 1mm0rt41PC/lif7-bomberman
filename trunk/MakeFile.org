@@ -227,10 +227,15 @@ $(DOXYGEN_DIR)/Doxyfile:
 # Make clean
 clean:
 	$(CMD_CLEAR)
-	@echo Suppression des fichiers .o, de l executable et du fichier des dependances
+	@echo Suppression des fichiers .o, (de l executable et) du fichier des dependances
 	$(CMD_DEL) $(DEP)
-# Pour supprimer les .o, .exe dans le dossier obj ( bizari de windows ... )
-	cd $(OBJ_DIR) && $(CMD_DEL) *.o *.exe config_*
+# Pour supprimer les .o dans le dossier obj ( bizari de windows ... )
+	cd $(OBJ_DIR) && $(CMD_DEL) *.o config_*
+
+
+# Supprime aussi les executables obtenu
+clean_all: clean
+	cd $(BIN_DIR) && $(CMD_DEL) *.exe
 
 
 # Make clean dep
@@ -260,10 +265,19 @@ help:
 	$(call ECHO ,make ARG [no_clear])
 	$(call ECHO ,	all:		Construit tout le projet.)
 	$(call ECHO ,	debug:		Construit tout le projet en debug (gdb).)
+<<<<<<< .mine
+	$(call ECHO ,	ncurses:	Construit tout le projet avec la lib Ncurses.)
+	$(call ECHO ,	sdl:		Construit tout le projet avec la lib SDL.)
+	$(call ECHO ,	sfml:		Construit tout le projet avec la lib SFML.)
+	$(call ECHO ,	clean:		Supprime les fichiers .o, et le fichier de)
+	$(call ECHO ,			dependances.)
+	$(call ECHO ,	clean_all:	Supprime les fichiers .o, l'executable et le fichier de)
+=======
 	$(call ECHO ,	ncurses:	Construit tout le projet avec la lib Ncurses.)
 	$(call ECHO ,	sdl:		Construit tout le projet avec la lib SDL.)
 	$(call ECHO ,	sfml:		Construit tout le projet avec la lib SFML.)
 	$(call ECHO ,	clean:		Supprime les fichiers .o, l'executable et le fichier de)
+>>>>>>> .r22
 	$(call ECHO ,			dependances.)
 	$(call ECHO ,	clean_dep:	Supprime le fichier des dependances.)
 	$(call ECHO ,	depend:		Construit le fichier des dependances - Le fichier est :)
