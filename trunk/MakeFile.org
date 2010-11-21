@@ -265,19 +265,12 @@ help:
 	$(call ECHO ,make ARG [no_clear])
 	$(call ECHO ,	all:		Construit tout le projet.)
 	$(call ECHO ,	debug:		Construit tout le projet en debug (gdb).)
-<<<<<<< .mine
 	$(call ECHO ,	ncurses:	Construit tout le projet avec la lib Ncurses.)
 	$(call ECHO ,	sdl:		Construit tout le projet avec la lib SDL.)
 	$(call ECHO ,	sfml:		Construit tout le projet avec la lib SFML.)
 	$(call ECHO ,	clean:		Supprime les fichiers .o, et le fichier de)
 	$(call ECHO ,			dependances.)
 	$(call ECHO ,	clean_all:	Supprime les fichiers .o, l'executable et le fichier de)
-=======
-	$(call ECHO ,	ncurses:	Construit tout le projet avec la lib Ncurses.)
-	$(call ECHO ,	sdl:		Construit tout le projet avec la lib SDL.)
-	$(call ECHO ,	sfml:		Construit tout le projet avec la lib SFML.)
-	$(call ECHO ,	clean:		Supprime les fichiers .o, l'executable et le fichier de)
->>>>>>> .r22
 	$(call ECHO ,			dependances.)
 	$(call ECHO ,	clean_dep:	Supprime le fichier des dependances.)
 	$(call ECHO ,	depend:		Construit le fichier des dependances - Le fichier est :)
@@ -294,4 +287,3 @@ help:
 	$(CMD_LINEFEED)
 	$(call ECHO ,/!\ Si MAKE n'a pas d'ARG alors IDEM a {make all} avec la lib $(LIB_AFF).)
 	$(call ECHO ,/!\ L'outil sed est utilise par ce makefile pour la generation des dependances !)
-                                                                                                                                                                                                
