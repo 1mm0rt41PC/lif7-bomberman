@@ -33,9 +33,4 @@ class moteur_sdl
 		// Autre
 		static SYS_CLAVIER afficherMapEtEvent( const partie* p );
 
-		//static unsigned char getTailleNombre( int nb );
-		//static unsigned char getTailleNombre( unsigned int nb );
-		//static char* trimString( char texte[] );
-};
-
-#endif
+		//static u
