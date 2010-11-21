@@ -303,8 +303,7 @@ void partie::main( libAff* afficherMapEtEvent )
 
 		continuerScanClavier = 1;
 
-
-	}while( key != KEY_ESCAP && (nbJoueurVivant() > 1 || c_listEvent.size()) );
+	}while( key != RETOUR_MENU_PRECEDENT && (nbJoueurVivant() > 1 || c_listEvent.size()) );
 
 	if( nbJoueurVivant() <= 1 )
 		stdError("Un joueur a gagner !");

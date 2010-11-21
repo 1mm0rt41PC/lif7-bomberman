@@ -119,41 +119,80 @@ void options::configParDefaut()
 {
 	c_port = DEFAULT_PORT;
 
-	// Clavier Joueur 1
-	c_ClavierJoueur[0].initClavier( 6 );// On veut 6 touches !
-	c_ClavierJoueur[0].defTouche( clavier::haut, KEY_UP );
-	c_ClavierJoueur[0].defTouche( clavier::bas, KEY_DOWN );
-	c_ClavierJoueur[0].defTouche( clavier::droite, KEY_RIGHT );
-	c_ClavierJoueur[0].defTouche( clavier::gauche, KEY_LEFT );
-	c_ClavierJoueur[0].defTouche( clavier::lancerBombe, KEY_DC );// PADSTAR
-	c_ClavierJoueur[0].defTouche( clavier::declancheur, KEY_END );// PADSLASH
+	#ifdef __LIB_ncurses__
+		// Clavier Joueur 1
+		c_ClavierJoueur[0].initClavier( 6 );// On veut 6 touches !
+		c_ClavierJoueur[0].defTouche( clavier::haut, KEY_UP );
+		c_ClavierJoueur[0].defTouche( clavier::bas, KEY_DOWN );
+		c_ClavierJoueur[0].defTouche( clavier::droite, KEY_RIGHT );
+		c_ClavierJoueur[0].defTouche( clavier::gauche, KEY_LEFT );
+		c_ClavierJoueur[0].defTouche( clavier::lancerBombe, KEY_DC );// PADSTAR
+		c_ClavierJoueur[0].defTouche( clavier::declancheur, KEY_END );// PADSLASH
 
-	// Clavier Joueur 2
-	c_ClavierJoueur[1].initClavier( 6 );// On veut 6 touches !
-	c_ClavierJoueur[1].defTouche( clavier::haut, 'z' );
-	c_ClavierJoueur[1].defTouche( clavier::bas, 's' );
-	c_ClavierJoueur[1].defTouche( clavier::droite, 'd' );
-	c_ClavierJoueur[1].defTouche( clavier::gauche, 'q' );
-	c_ClavierJoueur[1].defTouche( clavier::lancerBombe, 't' );
-	c_ClavierJoueur[1].defTouche( clavier::declancheur, 'r' );
+		// Clavier Joueur 2
+		c_ClavierJoueur[1].initClavier( 6 );// On veut 6 touches !
+		c_ClavierJoueur[1].defTouche( clavier::haut, 'z' );
+		c_ClavierJoueur[1].defTouche( clavier::bas, 's' );
+		c_ClavierJoueur[1].defTouche( clavier::droite, 'd' );
+		c_ClavierJoueur[1].defTouche( clavier::gauche, 'q' );
+		c_ClavierJoueur[1].defTouche( clavier::lancerBombe, 't' );
+		c_ClavierJoueur[1].defTouche( clavier::declancheur, 'r' );
 
-	// Clavier Joueur 3
-	c_ClavierJoueur[2].initClavier( 6 );// On veut 6 touches !
-	c_ClavierJoueur[2].defTouche( clavier::haut, 'u' );
-	c_ClavierJoueur[2].defTouche( clavier::bas, 'j' );
-	c_ClavierJoueur[2].defTouche( clavier::droite, 'k' );
-	c_ClavierJoueur[2].defTouche( clavier::gauche, 'h' );
-	c_ClavierJoueur[2].defTouche( clavier::lancerBombe, 'p' );
-	c_ClavierJoueur[2].defTouche( clavier::declancheur, 'o' );
+		// Clavier Joueur 3
+		c_ClavierJoueur[2].initClavier( 6 );// On veut 6 touches !
+		c_ClavierJoueur[2].defTouche( clavier::haut, 'u' );
+		c_ClavierJoueur[2].defTouche( clavier::bas, 'j' );
+		c_ClavierJoueur[2].defTouche( clavier::droite, 'k' );
+		c_ClavierJoueur[2].defTouche( clavier::gauche, 'h' );
+		c_ClavierJoueur[2].defTouche( clavier::lancerBombe, 'p' );
+		c_ClavierJoueur[2].defTouche( clavier::declancheur, 'o' );
 
-	// Clavier Joueur 4
-	c_ClavierJoueur[3].initClavier( 6 );// On veut 6 touches !
-	c_ClavierJoueur[3].defTouche( clavier::haut, '5' );// Touche 5 Pad
-	c_ClavierJoueur[3].defTouche( clavier::bas, '2' );// Touche 2 Pad ( Curses pas térrible pour les define ... )
-	c_ClavierJoueur[3].defTouche( clavier::droite, '3' );// Touche 3 Pad
-	c_ClavierJoueur[3].defTouche( clavier::gauche, '1' );// Touche 1 Pad
-	c_ClavierJoueur[3].defTouche( clavier::lancerBombe, '0' );// Touche 0 Pad
-	c_ClavierJoueur[3].defTouche( clavier::declancheur, '.' );// Touche Suppr/. Pad
+		// Clavier Joueur 4
+		c_ClavierJoueur[3].initClavier( 6 );// On veut 6 touches !
+		c_ClavierJoueur[3].defTouche( clavier::haut, '5' );// Touche 5 Pad
+		c_ClavierJoueur[3].defTouche( clavier::bas, '2' );// Touche 2 Pad ( Curses pas térrible pour les define ... )
+		c_ClavierJoueur[3].defTouche( clavier::droite, '3' );// Touche 3 Pad
+		c_ClavierJoueur[3].defTouche( clavier::gauche, '1' );// Touche 1 Pad
+		c_ClavierJoueur[3].defTouche( clavier::lancerBombe, '0' );// Touche 0 Pad
+		c_ClavierJoueur[3].defTouche( clavier::declancheur, '.' );// Touche Suppr/. Pad
+
+	#elif __LIB_SDL__
+		// Clavier Joueur 1
+		c_ClavierJoueur[0].initClavier( 6 );// On veut 6 touches !
+		c_ClavierJoueur[0].defTouche( clavier::haut, SDLK_UP );
+		c_ClavierJoueur[0].defTouche( clavier::bas, SDLK_DOWN );
+		c_ClavierJoueur[0].defTouche( clavier::droite, SDLK_RIGHT );
+		c_ClavierJoueur[0].defTouche( clavier::gauche, SDLK_LEFT );
+		c_ClavierJoueur[0].defTouche( clavier::lancerBombe, SDLK_DELETE );
+		c_ClavierJoueur[0].defTouche( clavier::declancheur, SDLK_END );
+
+		// Clavier Joueur 2
+		c_ClavierJoueur[1].initClavier( 6 );// On veut 6 touches !
+		c_ClavierJoueur[1].defTouche( clavier::haut, SDLK_z );
+		c_ClavierJoueur[1].defTouche( clavier::bas, SDLK_s );
+		c_ClavierJoueur[1].defTouche( clavier::droite, SDLK_d );
+		c_ClavierJoueur[1].defTouche( clavier::gauche, SDLK_q );
+		c_ClavierJoueur[1].defTouche( clavier::lancerBombe, SDLK_t );
+		c_ClavierJoueur[1].defTouche( clavier::declancheur, SDLK_r );
+
+		// Clavier Joueur 3
+		c_ClavierJoueur[2].initClavier( 6 );// On veut 6 touches !
+		c_ClavierJoueur[2].defTouche( clavier::haut, SDLK_u );
+		c_ClavierJoueur[2].defTouche( clavier::bas, SDLK_j );
+		c_ClavierJoueur[2].defTouche( clavier::droite, SDLK_k );
+		c_ClavierJoueur[2].defTouche( clavier::gauche, SDLK_h );
+		c_ClavierJoueur[2].defTouche( clavier::lancerBombe, SDLK_p );
+		c_ClavierJoueur[2].defTouche( clavier::declancheur, SDLK_o );
+
+		// Clavier Joueur 4
+		c_ClavierJoueur[3].initClavier( 6 );// On veut 6 touches !
+		c_ClavierJoueur[3].defTouche( clavier::haut, SDLK_KP5 );// Touche 5 Pad
+		c_ClavierJoueur[3].defTouche( clavier::bas, SDLK_KP2 );// Touche 2 Pad ( Curses pas térrible pour les define ... )
+		c_ClavierJoueur[3].defTouche( clavier::droite, SDLK_KP3 );// Touche 3 Pad
+		c_ClavierJoueur[3].defTouche( clavier::gauche, SDLK_KP1 );// Touche 1 Pad
+		c_ClavierJoueur[3].defTouche( clavier::lancerBombe, SDLK_KP0 );// Touche 0 Pad
+		c_ClavierJoueur[3].defTouche( clavier::declancheur, SDLK_KP_PERIOD );// Touche Suppr/. Pad
+	#endif
 }
 
 

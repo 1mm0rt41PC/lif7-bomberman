@@ -1,6 +1,11 @@
-#include "moteur_ncurses.h"
 #include "options.h"
 #include "partie.h"
+
+#ifdef __LIB_ncurses__
+	#include "moteur_ncurses.h"
+#elif __LIB_SDL__
+	#include "moteur_sdl.h"
+#endif
 
 /*******************************************************************************
 * CONVENTION DE PROGRAMATION !
@@ -15,7 +20,7 @@
 
 
 
-int main()
+int main( int argc, char* arvg[] )
 {
 	freopen("bug.txt", "w", stderr);// Redirection du flux d'erreur dans un fichier
 	srand(time(NULL));// Make random
@@ -27,7 +32,7 @@ int main()
 	#ifdef __LIB_ncurses__
 		moteur_ncurses m;
 	#elif __LIB_SDL__
-		moteur_ncurses m;
+		moteur_sdl m;
 	#endif
 
 
