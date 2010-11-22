@@ -8,15 +8,6 @@
 #include <string>
 #include <dirent.h>
 
-
-/*!
-* @def NB_MAP
-* Le nombre de map dans le dossier<br />
-* Les noms de map sont du format : lvl<b/>XXX</b>.map avec XXX = [1 à +oo]
-*/
-#define NB_MAP 1
-
-
 /*!
 * @class map
 * @brief Gère une map.
