@@ -1,19 +1,22 @@
 #include "partie.h"
 
-/*******************************************************************************
+/***************************************************************************//*!
+* @fn partie::partie()
+* @brief Initialise la class partie
 *
+* Pas de new ici
 */
 partie::partie()
 {
 	c_nb_joueurs = 0;
 	c_joueurs = 0;
 	c_map = 0;
-	//getkey(&c_nb_joueurs);
 }
 
 
-/*******************************************************************************
-*
+/***************************************************************************//*!
+* @fn partie::~partie()
+* @brief Désinitialise la class partie et supprime tous les joueurs et la map
 */
 partie::~partie()
 {
@@ -445,23 +448,16 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 
 /***************************************************************************//*!
 * @fn void partie::checkInternalEvent()
-* @brief Analyse et traite les Event internes
+* @brief Analyse et traite les Event internes pour une partie F4A
 */
 void partie::checkInternalEvent()
 {
-	/*
-		typedef struct {
-			bonus::t_Bonus type;//!< Type de bonus
-			s_Coordonnees pos;//!< Position Originel de l'event
-			unsigned char joueur;//!< Le joueur qui est la cause de l'event
-			unsigned char Nb_Repetition;//!< Nombre de répétition actuel pour l'event
-			clock_t repetionSuivante;//!< Time de la prochaine répétion
-		} s_Event;
-	*/
-	unsigned char j;
-	s_Event e;
+	static unsigned char j;
+	static s_Event e;
 	bool continuerBoucle = 1;
-	for( unsigned int i=0; i<c_listEvent.size(); i++ )
+	static unsigned int i;
+
+	for( i=0; i<c_listEvent.size(); i++ )
 	{
 		// Tant que l'on a pas atteint le temps
 		if( c_listEvent.at(i).repetionSuivante > clock() ) continue;
@@ -472,13 +468,20 @@ void partie::checkInternalEvent()
 			case bonus::bombe: {
 				// Encore un tour ?
 				if( e.Nb_Repetition > e.Nb_Repetition_MAX ){
+					/***********************************************************
+					************************************************************
+					* Explosion TERMINEE ( On efface les flammes )
+					************************************************************
+					***********************************************************/
+					// Fin de l'event => out de la liste
 					c_listEvent.erase(c_listEvent.begin()+i);
-					// On reset les block touché par vide
-					/*******************************************************
-					* On efface les flammes
-					*/
+
+					s_Coordonnees pos;
+
 					// Centre de la déflagration
 					c_map->setBlock(e.pos.x, e.pos.y, map::vide);
+
+					pos.x = e.pos.x;
 
 					// Haut de la déflagration
 					for( j=1; j<e.Nb_Repetition; j++ )
@@ -493,6 +496,18 @@ void partie::checkInternalEvent()
 							case map::flamme_pointe_droite:
 							case map::flamme_pointe_gauche:
 							case map::flamme_origine: {
+								pos.y = e.pos.y-j;
+								// On parcours la liste des blocks qui ont été détruit
+								for( unsigned int k=0; k<c_listBlockDetruit.size(); k++ ){
+									if(	coordonneeEgal(c_listBlockDetruit.at(k).pos, pos) ){ // Si on trouve notre block
+										if( c_listBlockDetruit.at(k).joueur == e.joueur ){// Si on est à l'origine de la destruction du block => STOP
+											// On fait pop un bonus aléatoire ici !!!!
+											c_listBlockDetruit.erase(c_listBlockDetruit.begin()+k);
+										}
+										break;
+									}
+								}
+
 								c_map->setBlock(e.pos.x, e.pos.y-j, map::vide);
 								break;
 							}
@@ -515,6 +530,17 @@ void partie::checkInternalEvent()
 							case map::flamme_pointe_droite:
 							case map::flamme_pointe_gauche:
 							case map::flamme_origine: {
+								pos.y = e.pos.y+j;
+								// On parcours la liste des blocks qui ont été détruit
+								for( unsigned int k=0; k<c_listBlockDetruit.size(); k++ ){
+									if(	coordonneeEgal(c_listBlockDetruit.at(k).pos, pos) ){ // Si on trouve notre block
+										if( c_listBlockDetruit.at(k).joueur == e.joueur ){// Si on est à l'origine de la destruction du block => STOP
+											// On fait pop un bonus aléatoire ici !!!!
+											c_listBlockDetruit.erase(c_listBlockDetruit.begin()+k);
+										}
+										break;
+									}
+								}
 								c_map->setBlock(e.pos.x, e.pos.y+j, map::vide);
 								break;
 							}
@@ -524,6 +550,7 @@ void partie::checkInternalEvent()
 							}
 						}
 					}
+					pos.y = e.pos.y;
 					// Droite de la déflagration
 					for( j=1; j<e.Nb_Repetition; j++ )
 					{
@@ -537,6 +564,17 @@ void partie::checkInternalEvent()
 							case map::flamme_pointe_droite:
 							case map::flamme_pointe_gauche:
 							case map::flamme_origine: {
+								pos.x = e.pos.x+j;
+								// On parcours la liste des blocks qui ont été détruit
+								for( unsigned int k=0; k<c_listBlockDetruit.size(); k++ ){
+									if(	coordonneeEgal(c_listBlockDetruit.at(k).pos, pos) ){ // Si on trouve notre block
+										if( c_listBlockDetruit.at(k).joueur == e.joueur ){// Si on est à l'origine de la destruction du block => STOP
+											// On fait pop un bonus aléatoire ici !!!!
+											c_listBlockDetruit.erase(c_listBlockDetruit.begin()+k);
+										}
+										break;
+									}
+								}
 								c_map->setBlock(e.pos.x+j, e.pos.y, map::vide);
 								break;
 							}
@@ -559,6 +597,17 @@ void partie::checkInternalEvent()
 							case map::flamme_pointe_droite:
 							case map::flamme_pointe_gauche:
 							case map::flamme_origine: {
+								pos.x = e.pos.x-j;
+								// On parcours la liste des blocks qui ont été détruit
+								for( unsigned int k=0; k<c_listBlockDetruit.size(); k++ ){
+									if(	coordonneeEgal(c_listBlockDetruit.at(k).pos, pos) ){ // Si on trouve notre block
+										if( c_listBlockDetruit.at(k).joueur == e.joueur ){// Si on est à l'origine de la destruction du block => STOP
+											// On fait pop un bonus aléatoire ici !!!!
+											c_listBlockDetruit.erase(c_listBlockDetruit.begin()+k);
+										}
+										break;
+									}
+								}
 								c_map->setBlock(e.pos.x-j, e.pos.y, map::vide);
 								break;
 							}
@@ -580,7 +629,7 @@ void partie::checkInternalEvent()
 				/***********************************************************
 				* Centre de la déflagration
 				*/
-				killPlayers(e.pos.x, e.pos.y);// Adition des flammes avec le reste de l'environement
+				killPlayers(e.pos.x, e.pos.y, e.joueur);// Adition des flammes avec le reste de l'environement
 				c_map->setBlock(e.pos.x, e.pos.y, map::flamme_origine);
 
 				/***********************************************************
@@ -589,7 +638,7 @@ void partie::checkInternalEvent()
 				continuerBoucle = 1;
 				for( j=1; j<=e.Nb_Repetition && continuerBoucle; j++ )
 				{
-					switch( killPlayers(e.pos.x, e.pos.y-j) )
+					switch( killPlayers(e.pos.x, e.pos.y-j, e.joueur) )
 					{
 						case -1: {
 							continuerBoucle = 0;
@@ -605,6 +654,7 @@ void partie::checkInternalEvent()
 							}else{
 								c_map->setBlock(e.pos.x, e.pos.y-j, map::flamme_vertical);
 							}
+							c_map->ajouterInfoJoueur(e.pos.x, e.pos.y-j, e.joueur, 1);// On dit a qui appartient la flamme
 							break;
 						}
 					}
@@ -616,7 +666,7 @@ void partie::checkInternalEvent()
 				continuerBoucle = 1;
 				for( j=1; j<=e.Nb_Repetition && continuerBoucle; j++ )
 				{
-					switch( killPlayers(e.pos.x, e.pos.y+j) )
+					switch( killPlayers(e.pos.x, e.pos.y+j, e.joueur) )
 					{
 						case -1: {
 							continuerBoucle = 0;
@@ -632,6 +682,7 @@ void partie::checkInternalEvent()
 							}else{
 								c_map->setBlock(e.pos.x, e.pos.y+j, map::flamme_vertical);
 							}
+							c_map->ajouterInfoJoueur(e.pos.x, e.pos.y+j, e.joueur, 1);// On dit a qui appartient la flamme
 							break;
 						}
 					}
@@ -643,7 +694,7 @@ void partie::checkInternalEvent()
 				continuerBoucle = 1;
 				for( j=1; j<=e.Nb_Repetition && continuerBoucle; j++ )
 				{
-					switch( killPlayers(e.pos.x+j, e.pos.y) )
+					switch( killPlayers(e.pos.x+j, e.pos.y, e.joueur) )
 					{
 						case -1: {
 							continuerBoucle = 0;
@@ -659,6 +710,7 @@ void partie::checkInternalEvent()
 							}else{
 								c_map->setBlock(e.pos.x+j, e.pos.y, map::flamme_horizontal);
 							}
+							c_map->ajouterInfoJoueur(e.pos.x+j, e.pos.y, e.joueur, 1);// On dit a qui appartient la flamme
 							break;
 						}
 					}
@@ -670,7 +722,7 @@ void partie::checkInternalEvent()
 				continuerBoucle = 1;
 				for( j=1; j<=e.Nb_Repetition && continuerBoucle; j++ )
 				{
-					switch( killPlayers(e.pos.x-j, e.pos.y) )
+					switch( killPlayers(e.pos.x-j, e.pos.y, e.joueur) )
 					{
 						case -1: {
 							continuerBoucle = 0;
@@ -686,6 +738,7 @@ void partie::checkInternalEvent()
 							}else{
 								c_map->setBlock(e.pos.x-j, e.pos.y, map::flamme_horizontal);
 							}
+							c_map->ajouterInfoJoueur(e.pos.x-j, e.pos.y, e.joueur, 1);// On dit a qui appartient la flamme
 							break;
 						}
 					}
@@ -705,9 +758,10 @@ void partie::checkInternalEvent()
 
 /***************************************************************************//*!
 * @fn char partie::killPlayers( unsigned int x, unsigned int y )
-* @brief Tue les joueurs et détruit les block destructibles
+* @brief Tue les joueurs et détruit les block destructibles (Mode: F4A)
 * @param[in] x Position X de la map a check
 * @param[in] y Position Y de la map a check
+* @param[in] joueur Le joueur tueur ( The (Serial ?)killer ) ^^
 * @return 3 Valeur de retoures possible<br />
 *			- -1 On stop tout et on ne touche pas au block à cette adresse ! (Out of map ou Mur_INdestructible)
 *			-  0 On stop tout mais on traite le block à l'adresse (Mur_destructible)
@@ -715,8 +769,10 @@ void partie::checkInternalEvent()
 *
 * @note Les valeurs de X et de Y sont comparées à la taille de la map => Pas de risque de sortir de la map
 */
-char partie::killPlayers( unsigned int x, unsigned int y )
+char partie::killPlayers( unsigned int x, unsigned int y, unsigned char joueur )
 {
+	// k sert dans les boucle for comme compteur.
+	// Peut être utilisée sans problème
 	static unsigned int k;// ça ne sert à rien de la recréer à chaque fois
 
 	if( x >= c_map->X() || y >= c_map->Y() )
@@ -747,7 +803,12 @@ char partie::killPlayers( unsigned int x, unsigned int y )
 			return 1;
 		}
 		case map::Mur_destructible: {
-			c_map->ajouterInfoJoueur(x, y, 0, 1);
+			//c_map->ajouterInfoJoueur(x, y, 0, 1);// On dit au block -> Now tu as été détruit et tu est dans une liste
+			// Ajout du block à la liste des blocks qui ont été détruit
+			s_BlockExploser be;
+			be.joueur = joueur;
+			be.pos = coordonneeConvert( x, y );
+			c_listBlockDetruit.push_back(be);
 			return 0;
 		}
 		case map::Mur_INdestructible: {
@@ -757,9 +818,15 @@ char partie::killPlayers( unsigned int x, unsigned int y )
 		case map::flamme_pointe_bas:
 		case map::flamme_pointe_droite:
 		case map::flamme_pointe_gauche:{
-			if( c_map->getBlock(x, y)->joueur && c_map->getBlock(x, y)->joueur->size() && c_map->getBlock(x, y)->joueur->at(0) == 0 )
-				return -1;
-
+			// On regarde si le block sur lequel on est n'est pas un block que l'on a détruit
+			// Si c'est le cas, on regarde si c'est nous qui l'avons détruit
+			s_Coordonnees pos=coordonneeConvert( x, y );
+			// On parcours la liste des blocks qui ont été détruit
+			for( k=0; k<c_listBlockDetruit.size(); k++ )
+				if(	coordonneeEgal(c_listBlockDetruit.at(k).pos, pos) ) // Si on trouve notre block
+					if( c_listBlockDetruit.at(k).joueur == joueur )// Si on est à l'origine de la destruction du block => STOP
+						return -1;
+					//else // On est pas à l'origine de la destruction du block => on lui passe dessus ^^ et on continue la progression mortelle
 			break;
 		}
 		default: {// On eject les autres cas
@@ -768,4 +835,20 @@ char partie::killPlayers( unsigned int x, unsigned int y )
 	}
 
 	return 1;
+}
+
+
+/***************************************************************************//*!
+* @fn bool partie::estDansListBlockDetruit( s_Coordonnees& pos )
+* @brief Détermine si les coordonnées passées en arg sont dans la liste des blocks détruits
+*/
+bool partie::estDansListBlockDetruit( s_Coordonnees& pos )
+{
+	// On parcours la liste des blocks qui ont été détruit
+	for( unsigned int i=0; i<c_listBlockDetruit.size(); i++ )
+		if( coordonneeEgal(c_listBlockDetruit.at(i).pos, pos) )
+			return true;
+
+	return false;
+
 }

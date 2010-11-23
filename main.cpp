@@ -12,6 +12,8 @@
 * Toutes les variables d'une class doivent commencer par "c_"
 * Toutes les variables globales doivent commencer par "G_" et être écrites en MAJ
 *
+* BUG:
+*	- Lors de la colision de 2 flammes
 *
 * A FAIRE
 *	- Mettre des const la où il faut dans les *.h

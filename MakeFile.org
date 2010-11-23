@@ -151,7 +151,7 @@ $(OBJ_DIR):
 ################################################################################
 
 # Make depend ( régénération manuel des dep )
-.PHONY: depend dep exec valgrind clean clean_dep pfiles help debug ncurses sdl sfml $(DOXYGEN_DIR) $(DOXYGEN_DIR)/Doxyfile doxygen $(OBJ_DIR)/config.release $(OBJ_DIR)/config.debug no_clear
+.PHONY: depend dep exec valgrind clean clean_dep pfiles help debug ncurses sdl sfml doxygen $(OBJ_DIR)/config_% no_clear
 depend: $(DEP)
 dep: $(DEP)
 
@@ -191,13 +191,10 @@ sfml: $(BIN_DIR)/$(EXEC_NAME)
 $(OBJ_DIR)/config_%:
 	$(CMD_LINEFEED)
 	@echo "Changement de type de compilation Debug <-> Release & Ncurses <-> SDL <-> SFML"
-	@$(MAKE) --silent --no-print-directory --makefile=MakeFile.org clean no_clear
+#	@$(MAKE) --silent --no-print-directory --makefile=MakeFile.org clean no_clear
+#	Suppression des .o et du fichier de config, le .depend a toutes les config dé
+	cd $(OBJ_DIR) && $(CMD_DEL) *.o config_*
 	@echo .>$@
-
-
-# Permet de vérifier la présence de la commande sed
-$(CMD_SED):
-	$(warning Veuillez installer sed sur votre machine)
 
 
 # Valgrind
@@ -208,8 +205,10 @@ valgrind: $(BIN_DIR)/$(EXEC_NAME)
 
 # Doxygen
 doxygen: $(DOXYGEN_DIR)/Doxyfile
+	$(CMD_CLEAR)
 	@echo Lancement de Doxygen
 	cd $(DOXYGEN_DIR) && doxygen
+	@echo .>doxygen
 
 
 # Pour créer une archive tar bz2
@@ -218,16 +217,10 @@ tar:
 	tar -jcvf bomberman.tar.bz2 *.cpp *.h MakeFile.org makefile $(DOXYGEN_DIR)/Doxyfile TODO.txt _CodingStyle_.txt $(BIN_DIR)/map/*.map $(BIN_DIR)/Chicken\ Butt.ttf $(BIN_DIR)/images/*.png
 
 
-# Si pas de doxygen -> OUT
-$(DOXYGEN_DIR)/Doxyfile:
-	$(CMD_CLEAR)
-#	$(error Veuillez  Creer le dossier $(DOXYGEN_DIR) et le fichier de configuration $(DOXYGEN_DIR)/Doxyfile)
-
-
 # Make clean
 clean:
 	$(CMD_CLEAR)
-	@echo Suppression des fichiers .o, (de l executable et) du fichier des dependances
+	@echo "Suppression des fichiers .o, (de l'executable et) du fichier des dependances"
 	$(CMD_DEL) $(DEP)
 # Pour supprimer les .o dans le dossier obj ( bizari de windows ... )
 	cd $(OBJ_DIR) && $(CMD_DEL) *.o config_*
@@ -242,7 +235,7 @@ clean_all: clean
 clean_dep:
 	$(CMD_CLEAR)
 	@echo Suppression du fichier de dependances
-	$(CMD_DEL) $(DEP)	$(call ECHO ,	doxygen:	Execute doxygen sur le projet.)
+	$(CMD_DEL) $(DEP)
 
 
 # Affiche les fichiers utilisés
