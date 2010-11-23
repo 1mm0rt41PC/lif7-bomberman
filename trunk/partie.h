@@ -28,6 +28,16 @@ class partie
 		} s_Event;
 
 
+		/*!
+		* @struct s_BlockExploser
+		* @brief Permet de gérer les block qui sont détruit lors des explostions
+		*/
+		typedef struct {
+			unsigned char joueur;//!< Le joueur qui est la cause de l'explostion
+			s_Coordonnees pos;//!< Position de l'explostion
+		} s_BlockExploser;
+
+
 	public:
 		enum t_MODE {
 			Combat_Libre,		// Free For All 	( F4A )
@@ -48,17 +58,19 @@ class partie
 
 	private:
 		// struct {
-			map*					c_map;// SIMPLE POINTEUR !
-			unsigned char			c_nb_joueurs;
-			unsigned char			c_nb_MAX_joueurs;
-			perso*					c_joueurs;// Tableau
-			t_MODE					c_mode;
-			std::vector<s_Event>	c_listEvent;
+			map*							c_map;// SIMPLE POINTEUR !
+			unsigned char					c_nb_joueurs;
+			unsigned char					c_nb_MAX_joueurs;
+			perso*							c_joueurs;// Tableau
+			t_MODE							c_mode;
+			std::vector<s_Event>			c_listEvent;
+			std::vector<s_BlockExploser>	c_listBlockDetruit;
 		// }
 
 		void deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned char joueur );
 		void checkInternalEvent();
-		char killPlayers( unsigned int x, unsigned int y );
+		char killPlayers( unsigned int x, unsigned int y, unsigned char joueur );
+		bool estDansListBlockDetruit( s_Coordonnees& pos );
 
 
 	public:
