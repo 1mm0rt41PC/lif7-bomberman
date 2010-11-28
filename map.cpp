@@ -87,6 +87,7 @@ void map::setBlock( unsigned int X, unsigned int Y, map::t_type what )
 		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, what=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, what);
 
 	c_block[X * c_taille.x + Y].element = what;
+	c_listDesChangement.push_back( coordonneeConvert(X,Y) );
 
 	// Nétoyage des méta données si le block est vide
 	if( what == vide && c_block[X * c_taille.x + Y].joueur )
@@ -115,6 +116,10 @@ void map::ajouterInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Jo
 		c->joueur->insert( c->joueur->begin(), id_Joueur );
 	else
 		c->joueur->push_back( id_Joueur );
+
+	if( c_listDesChangement.size() && (c_listDesChangement.back().x != X || c_listDesChangement.back().y != Y) )
+		// Si les changement effectués ne sont pas déjà mit dans la liste => on ajoute ces coordonnées
+		c_listDesChangement.push_back( coordonneeConvert(X,Y) );
 }
 
 
@@ -143,6 +148,22 @@ void map::rmInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur,
 		if(vct->at(i) == id_Joueur)
 			vct->erase(vct->begin()+i);
 	}
+}
+
+
+/***************************************************************************//*!
+* @fn void map::rmInfoJoueur( unsigned int X, unsigned int Y )
+* @brief Supprime toutes les meta-info du block (X, Y)
+*
+* NOTE: Pour certain map::t_type comme @e bombe_poser, le 1er element représente l'id du joueur qui a posé l'objet
+*/
+void map::rmInfoJoueur( unsigned int X, unsigned int Y )
+{
+	if( !c_block || X >= c_taille.x || Y >= c_taille.y )
+		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y);
+
+	if( c_block[X * c_taille.x + Y].joueur )
+		c_block[X * c_taille.x + Y].joueur->clear();
 }
 
 
@@ -290,7 +311,7 @@ int map::chargerMap( const char fichier[] )
 
 
 /***************************************************************************//*!
-* @fn void map::readDir( vector<string>* files )
+* @fn void map::readDir( std::vector<std::string>* files )
 * @brief Lit le dossier ./map et retourne ( par files ) les fichiers (.map) qu'il contient
 * @param[in,out] files Dans cette variable sera stocké les nom des fichiers présent dans le dossier ./map
 * @attention Aucun fichier n'est préfixé du dossier !
@@ -361,37 +382,6 @@ const map::s_Case* map::getBlock( unsigned int X, unsigned int Y ) const
 
 
 /***************************************************************************//*!
-* @fn const map::s_Case* map::getBlock( s_Coordonnees pos ) const
-* @brief Retourn le block qui est à la position X, Y
-* @note Alias de map::getBlock( unsigned int X, unsigned int Y )
-*/
-const map::s_Case* map::getBlock( s_Coordonnees pos ) const
-{
-	return getBlock( pos.x, pos.y );
-}
-
-
-/***************************************************************************//*!
-* @fn unsigned int map::X() const
-* @brief Renvoie la taille X de la map
-*/
-unsigned int map::X() const
-{
-	return c_taille.x;
-}
-
-
-/***************************************************************************//*!
-* @fn unsigned int map::Y() const
-* @brief Renvoie la taille Y de la map
-*/
-unsigned int map::Y() const
-{
-	return c_taille.y;
-}
-
-
-/***************************************************************************//*!
 * @fn s_Coordonnees map::positionInitialJoueur( unsigned char joueur ) const
 * @brief Renvoie la position initial du joueur.
 * @param[in] joueur	Joueur dont on veut avoir sa position initial ( un nombre entre 1 et 255 )
@@ -414,20 +404,6 @@ s_Coordonnees map::positionInitialJoueur( unsigned char joueur ) const
 
 
 /***************************************************************************//*!
-** Liste des alias
-* @fn unsigned char nb_MAX_Joueur() const
-* @brief Alias de map::nb_PointDeDepartJoueur()
-** La Fonction
-* @fn unsigned char map::nb_PointDeDepartJoueur() const
-* @brief Renvoie le nombre de joueur maximum sur la carte en cours.
-*/
-unsigned char map::nb_PointDeDepartJoueur() const
-{
-	return c_nb_PointDeDepartJoueur;
-}
-
-
-/***************************************************************************//*!
 * @fn unsigned int map::nb_InfoJoueur( unsigned int X, unsigned int Y ) const
 * @brief Renvoie le nombre d'info joueurs dans le block (X, Y) (meta données)
 */
@@ -446,15 +422,18 @@ unsigned int map::nb_InfoJoueur( unsigned int X, unsigned int Y ) const
 
 
 /***************************************************************************//*!
-* @fn int map::myRand( int a, int b )
-* @brief Créer un nombre aléatoire compris entre a et b
+* @fn bool map::getModification( s_Coordonnees& pos);
+* @brief Retourne les positions X,Y des case modifiées depuis le dernier cycle
+* @param[out] pos La variables où sera stockée les données de retour
+* @return True s'il y a eu des modifications
 */
-int map::myRand( int a, int b )
+bool map::getModification( s_Coordonnees& pos)
 {
-	double r;
+	if( !c_listDesChangement.size() )
+		return false;
 
-	r = (double) rand() / RAND_MAX;
-	r *= (double) b+1.-a;
-	r += (double) a;
-	return (int) r;
+	pos = c_listDesChangement.back();// On envoie le dernier element
+	c_listDesChangement.pop_back();// On le supprime de la liste
+
+	return true;
 }

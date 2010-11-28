@@ -19,23 +19,19 @@ class partie
 		* Exemple: La duréer d'une animation
 		*/
 		typedef struct {
-			bonus::t_Bonus type;//!< Type de bonus
-			s_Coordonnees pos;//!< Position Originel de l'event
-			unsigned char joueur;//!< Le joueur qui est la cause de l'event
-			unsigned char Nb_Repetition;//!< Nombre de répétition actuel pour l'event
-			unsigned char Nb_Repetition_MAX;//!< Nombre de répétition MAX pour l'event
-			clock_t repetionSuivante;//!< Time de la prochaine répétion
+			bonus::t_Bonus				type;//!< Type de bonus
+			unsigned char				joueur;//!< Le joueur qui est la cause de l'event
+			s_Coordonnees				pos;//!< Position Originel de l'event
+			bool						continue_X,
+										continue_negativeX,
+										continue_Y,
+										continue_negativeY;
+			unsigned char				Nb_Repetition;//!< Nombre de répétition actuel pour l'event
+			unsigned char				Nb_Repetition_MAX;//!< Nombre de répétition MAX pour l'event
+			clock_t						repetionSuivante;//!< Time de la prochaine répétion
+			std::vector<s_Coordonnees>	listBlockDetruit;//!< Contient la liste des block qui ont été détruit => Bonus a la clef ^^
+			std::vector<s_Coordonnees>	deflagration;//!< Contient la position de tous block qui ont été touchés par la déflagration
 		} s_Event;
-
-
-		/*!
-		* @struct s_BlockExploser
-		* @brief Permet de gérer les block qui sont détruit lors des explostions
-		*/
-		typedef struct {
-			unsigned char joueur;//!< Le joueur qui est la cause de l'explostion
-			s_Coordonnees pos;//!< Position de l'explostion
-		} s_BlockExploser;
 
 
 	public:
@@ -64,13 +60,12 @@ class partie
 			perso*							c_joueurs;// Tableau
 			t_MODE							c_mode;
 			std::vector<s_Event>			c_listEvent;
-			std::vector<s_BlockExploser>	c_listBlockDetruit;
 		// }
 
 		void deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned char joueur );
 		void checkInternalEvent();
-		char killPlayers( unsigned int x, unsigned int y, unsigned char joueur );
-		bool estDansListBlockDetruit( s_Coordonnees& pos );
+		char actionSurLesElements( s_Event* e, unsigned int x, unsigned int y, unsigned int ValeurPositionOriginel, char direction );
+		char killPlayers( s_Event* e, unsigned int x, unsigned int y );
 
 
 	public:

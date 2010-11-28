@@ -3,6 +3,7 @@
 
 #include "debug.h"
 #include "coordonnees.h"
+#include "outils.h"
 #include <vector>
 #include <time.h>
 
@@ -134,6 +135,7 @@ class bonus
 
 		// Autres
 		bool isEvent( s_Coordonnees* pos );
+		static t_Bonus getBonusAleatoire();
 };
 
 #endif

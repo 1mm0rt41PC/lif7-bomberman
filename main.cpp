@@ -17,9 +17,9 @@
 *
 * A FAIRE
 *	- Mettre des const la où il faut dans les *.h
+*	- Optimiser avec des inline
 *
 */
-
 
 
 int main( int argc, char* arvg[] )
@@ -106,6 +106,7 @@ int main( int argc, char* arvg[] )
 								}
 
 								if( !retourMenuAudessus ){
+									m.forcerRafraichissement();
 									jeu.main( m.afficherMapEtEvent );
 								}
 								retourMenuAudessus = 0;
@@ -165,6 +166,7 @@ int main( int argc, char* arvg[] )
 									case 3:
 									case 4:{// CONFIG CLAVIERS !
 										m.afficherConfigurationClavier( entry );
+										options::getInstance()->enregistrerConfig();
 										break;
 									}
 									case 5:{// Retour
