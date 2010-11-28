@@ -3,6 +3,8 @@
 
 #include "debug.h"
 #include "coordonnees.h"
+#include "bonus.h"
+#include "outils.h"
 #include <stdlib.h>// Pour fopen, fread
 #include <vector>
 #include <string>
@@ -46,20 +48,35 @@ class map
 			// Armes
 			bombe_poser,
 			// Bonus
-			gain_bombe,
-			gain_puissance_flamme,
-			gain_declancheur_manuel,
+			bonus,
+			//gain_bombe,
+			//gain_puissance_flamme,
+			//gain_declancheur_manuel,
 			// Player
 			UN_joueur,
 			plusieurs_joueurs,
 			// Combinaison
 			bombe_poser_AVEC_UN_joueur,
-			bombe_poser_AVEC_plusieurs_joueurs,
+			bombe_poser_AVEC_plusieurs_joueurs
 			// Points de départ
-			point_de_depart_j1,
-			point_de_depart_j2,
-			point_de_depart_j3,
-			point_de_depart_j4
+			//point_de_depart_j1,
+			//point_de_depart_j2,
+			//point_de_depart_j3,
+			//point_de_depart_j4
+		};
+
+
+		/*!
+		* @enum t_direction
+		* @brief Les directions posssibles pour un personnages ou une flamme
+		*/
+		enum t_direction {
+			DIRECT_haut,
+			DIRECT_bas,
+			DIRECT_droite,
+			DIRECT_gauche,
+			DIRECT_vertical,
+			DIRECT_sans_direction
 		};
 
 		/*!
@@ -89,6 +106,7 @@ class map
 		s_Coordonnees c_taille;//!< Taille de la map
 		s_Coordonnees *c_PointDeDepartJoueur;//!< Liste des points de départ des joueurs ({point_de_depart_jXXX} numJ)
 		unsigned char c_nb_PointDeDepartJoueur;//!< Le nombre de points de départ => le nombre maximum de joueur sur une map
+		std::vector<s_Coordonnees> c_listDesChangement;//!< Les changement qui ont eu lieu sur la map
 		//}
 
 
@@ -99,26 +117,30 @@ class map
 		map( unsigned int tailleX, unsigned int tailleY );
 		~map();
 		void setBlock( unsigned int X, unsigned int Y, map::t_type what );
+		void setBlock( s_Coordonnees& pos, map::t_type what );
 		void ajouterInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierePosition=0 );
 		void rmInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierEltInclu );
+		void rmInfoJoueur( unsigned int X, unsigned int Y );
 		void setTaille( unsigned int tailleX, unsigned int tailleY );
 		int chargerMap( const char fichier[]=0 );
 		s_Coordonnees mettreJoueurA_sa_PositionInitial( unsigned char joueur );
 
 		// Accesseurs
 		const s_Case* getBlock( unsigned int X, unsigned int Y ) const;
-		const s_Case* getBlock( s_Coordonnees pos ) const;
+		const s_Case* getBlock( s_Coordonnees& pos ) const;
 		unsigned int X() const;
 		unsigned int Y() const;
 		s_Coordonnees positionInitialJoueur( unsigned char joueur ) const;
 		unsigned char nb_PointDeDepartJoueur() const;
-		inline unsigned char nb_MAX_Joueur() const { return nb_PointDeDepartJoueur(); }
+		unsigned char nb_MAX_Joueur() const;
 		unsigned int nb_InfoJoueur( unsigned int X, unsigned int Y ) const;
+		bool getModification( s_Coordonnees& pos);
 
 		// Autres
-		static int myRand(int a, int b);
 		static void readDir( std::vector<std::string>* files );
 };
 
-#endif
+// Ajout des fonctions inline
+#include "map.inl"
 
+#endif

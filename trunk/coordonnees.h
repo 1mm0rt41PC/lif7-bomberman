@@ -26,6 +26,18 @@ inline s_Coordonnees coordonneeConvert( unsigned int x, unsigned int y )
 
 
 /*!
+* @fn inline void coordonneeConvert( unsigned int x, unsigned int y, s_Coordonnees& pos )
+* @param pos La variable dans laquelle on va mettre X et Y
+* @brief Permet de facillement initialisée une stucture s_Coordonnees
+*/
+inline void coordonneeConvert( unsigned int x, unsigned int y, s_Coordonnees& pos )
+{
+	pos.x = x;
+	pos.y = y;
+}
+
+
+/*!
 * @fn bool coordonneeEgal( s_Coordonnees& c1, s_Coordonnees& c2 )
 * @brief Permet comparer le contenue de 2 variables de type s_Coordonnees
 */

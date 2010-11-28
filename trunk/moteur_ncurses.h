@@ -50,10 +50,13 @@
 class moteur_ncurses
 {
 	private:
+		static bool c_premierAffichage;
+
+	private:
 		void cadre();
-		void affichageTouche( WINDOW *win, int y, int x, int key );
-		void cleanline( WINDOW *win, int y, int x_begin, int x_end );
-		inline void cleanline( WINDOW *win, int y ){ cleanline( win, y, 1, getmaxx(win)-2 ); }
+		void affichageTouche( WINDOW* win, int y, int x, int key );
+		void cleanline( WINDOW* win, int y, int x_begin, int x_end );
+		inline void cleanline( WINDOW* win, int y ){ cleanline( win, y, 1, getmaxx(win)-2 ); }
 		static chtype getCouleurJoueur( unsigned char joueur );
 
 	public:
@@ -66,12 +69,11 @@ class moteur_ncurses
 		int getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* returnValue );
 		int getTexte( const char titre[], char texteRetour[21] );
 
-		// Autre
-		static SYS_CLAVIER afficherMapEtEvent( const partie* p );
+		// Modificateur
+		inline void forcerRafraichissement() { c_premierAffichage = 1; }
 
-		static unsigned char getTailleNombre( int nb );
-		static unsigned char getTailleNombre( unsigned int nb );
-		static char* trimString( char texte[] );
+		// Autres :: Affichage map
+		static SYS_CLAVIER afficherMapEtEvent( const partie* p );
 };
 
 #endif

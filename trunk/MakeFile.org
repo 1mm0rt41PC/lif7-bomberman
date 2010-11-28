@@ -14,7 +14,7 @@ DEBUG_AUTO_EXEC_GDB = oui
 # Fichiers contenant les dépendances
 DEP = .depend
 # Fichiers .cpp
-SRC := main.cpp map.cpp perso.cpp partie.cpp clavier.cpp options.cpp bonus.cpp
+SRC := main.cpp map.cpp perso.cpp partie.cpp clavier.cpp options.cpp bonus.cpp outils.cpp
 # Fichier de sortie final
 EXEC_NAME = bomberman.exe
 
@@ -214,7 +214,7 @@ doxygen: $(DOXYGEN_DIR)/Doxyfile
 # Pour créer une archive tar bz2
 tar:
 	$(CMD_DEL) bomberman.tar.bz2
-	tar -jcvf bomberman.tar.bz2 *.cpp *.h MakeFile.org makefile $(DOXYGEN_DIR)/Doxyfile TODO.txt _CodingStyle_.txt $(BIN_DIR)/map/*.map $(BIN_DIR)/Chicken\ Butt.ttf $(BIN_DIR)/images/*.png
+	tar -jcvf bomberman.tar.bz2 *.cpp *.h *.inl MakeFile.org makefile $(DOXYGEN_DIR)/Doxyfile TODO.txt _CodingStyle_.txt $(BIN_DIR)/map/*.map $(BIN_DIR)/Chicken\ Butt.ttf $(BIN_DIR)/images/*.png
 
 
 # Make clean

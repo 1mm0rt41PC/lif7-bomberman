@@ -4,6 +4,8 @@
 #include "config.h"
 #include "options.h"
 #include "partie.h"
+#include "outils.h"
+#include "math.h"
 #include <string.h>// Pour strlen()
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
@@ -19,6 +21,7 @@ class moteur_sdl
 		SDL_Surface* c_ecranGeneral;
 		SDL_Surface* c_background;
 		TTF_Font *c_policeGeneral;
+		bool c_premierAffichage;
 
 	public:
 		moteur_sdl();
@@ -30,7 +33,11 @@ class moteur_sdl
 		int getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* returnValue );
 		int getTexte( const char titre[], char texteRetour[21] );
 
+		// Modificateur
+		inline void forcerRafraichissement() { c_premierAffichage = 1; }
+
 		// Autre
 		static SYS_CLAVIER afficherMapEtEvent( const partie* p );
+};
 
-		//static u
+#endif

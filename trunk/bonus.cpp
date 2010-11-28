@@ -525,3 +525,15 @@ bool bonus::isEvent( s_Coordonnees* pos )
 
 	return false;
 }
+
+
+bonus::t_Bonus bonus::getBonusAleatoire()
+{
+	int r;
+
+	do{
+		r = myRand(0,NB_ELEMENT_t_Bonus);
+		if( myRand(0,100) <= C_bonusProp[r].probabiliter_pop )
+			return (bonus::t_Bonus)r;
+	}while(1);
+}

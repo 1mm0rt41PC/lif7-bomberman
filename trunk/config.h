@@ -18,6 +18,7 @@
 		#include <Ncurses/curses.h>
 	#else
 		#include <ncurses.h>
+		extern SCREEN* SP;// <- Salté de NCurses ( Compiler NCurses avec NO_LEAK ! )
 	#endif
 	#define SYS_CLAVIER int
 

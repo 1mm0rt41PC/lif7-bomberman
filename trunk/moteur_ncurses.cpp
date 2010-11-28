@@ -1,6 +1,12 @@
 #include "moteur_ncurses.h"
 
-extern SCREEN* SP;// <- Salté de NCurses ( Compiler NCurses avec NO_LEAK ! )
+bool moteur_ncurses::c_premierAffichage = 1;
+
+/***************************************************************************//*!
+* @fn void moteur_ncurses::forcerRafraichissement()
+* @brief Permet de forcer un affichage complet
+*/
+
 
 /***************************************************************************//*!
 * @fn moteur_ncurses::moteur_ncurses()
@@ -10,13 +16,7 @@ extern SCREEN* SP;// <- Salté de NCurses ( Compiler NCurses avec NO_LEAK ! )
 */
 moteur_ncurses::moteur_ncurses()
 {
-	#ifdef XCURSES
-		Xinitscr(argc, argv);
-	#else
-		initscr();// Passe l'écran texte en mode NCurses
-	#endif
-
-	if( !stdscr )
+	if( !initscr() )// Passe l'écran texte en mode NCurses
 		stdErrorE("Erreur lors de l'initialisation de ncurses !");
 
 	// Permet de changer la taille du terminal
@@ -319,7 +319,6 @@ void moteur_ncurses::afficherConfigurationClavier( unsigned char joueur )
 
 					if( key != KEY_ESCAP ){// Toutes les touches sont accèpté SAUF ECHAP !
 						cl->defTouche((clavier::t_touche)(clavier::haut+highLight-1), key);
-						options::getInstance()->enregistrerConfig();
 					}else{// Touche ECHAP pressée
 						key = 0;// pas envie d'exit completement
 					}
@@ -783,69 +782,6 @@ void moteur_ncurses::cleanline( WINDOW* win, int y, int x_begin, int x_end )
 
 
 /***************************************************************************//*!
-* @fn unsigned char moteur_ncurses::getTailleNombre( int nb )
-* @brief Calcule la longueur d'un nombre.
-* @param[in] nb Le nombre dont on veut savoir la taille
-* @return Renvoie le nombre de chiffre qui compose le nombre
-*
-* Exemple getTailleNombre(-10) => 3<br />
-*/
-unsigned char moteur_ncurses::getTailleNombre( int nb )
-{
-	if( nb < 0 )// On met le nombre en positif si ce n'est pas le cas
-		return getTailleNombre( (unsigned int) (nb*(-1)) )+1;// +1 pour le symbole négatif
-
-	return getTailleNombre( (unsigned int) nb );
-}
-
-
-/***************************************************************************//*!
-* @fn unsigned char moteur_ncurses::getTailleNombre( unsigned int nb )
-* @brief Calcule la longueur d'un nombre.
-* @param[in] nb Le nombre dont on veut savoir la taille
-* @return Renvoie le nombre de chiffre qui compose le nombre
-*
-* Exemple getTailleNombre(122) => 3
-*/
-unsigned char moteur_ncurses::getTailleNombre( unsigned int nb )
-{
-	unsigned char taille_NB;
-	for( taille_NB=1; nb>=10; taille_NB++ )
-		nb /=10;
-
-	return taille_NB;
-}
-
-
-/***************************************************************************//*!
-* @fn char* moteur_ncurses::trimString( char texte[] )
-* @brief Vire les espaces avant et après une chaine de caractère
-* @param[in,out] texte Le texte a trim. Le texte est directement modifié
-* @return Renvoie le pointeur @e texte
-*
-* Exemple : "  toto " => "toto"
-*/
-char* moteur_ncurses::trimString( char texte[] )
-{
-	unsigned int	posDebut=0,
-					posFin=strlen(texte)-2;// -2 car -1 => '\0' et 0 => out du tableau
-
-	// On remplis tous les espaces qui sont en fin de chaine de '\0'
-	while( isspace(*(texte+posFin)) && texte[posFin] && posFin>0 )
-	{
-		texte[posFin] = 0;
-		posFin--;
-	}
-
-	// On trouve la 1ère lettre qui n'est pas un espace
-	while( isspace(*(texte+posDebut)) && texte[posDebut] && ++posDebut>0 );
-
-	// On déplace les caractères
-	return strcpy(texte, texte+posDebut);
-}
-
-
-/***************************************************************************//*!
 * @fn chtype moteur_ncurses::getCouleurJoueur( unsigned char joueur )
 * @brief Renvoie la couleur d'un joueur
 * @param[in] Numéro du joueur de 1 à ...
@@ -896,6 +832,9 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 	// Fenetre d'affichage
 	WINDOW* win = stdscr;
 
+	// Sert à afficher les couleurs pour les joueurs
+	chtype couleur;
+
 	if( (unsigned int)getmaxx(stdscr) < l_map->X() || (unsigned int)getmaxy(stdscr) < l_map->Y() )
 		stdErrorVarE("La map est trop grande pour l'affichage ! SCREEN:(Xmax=%d, Ymax=%d), MAP:(Xmax=%u, Ymax=%u)", getmaxx(stdscr), getmaxy(stdscr), l_map->X(), l_map->Y());
 
@@ -904,108 +843,200 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 	//wtimeout( c_win, 500 );
 	//nodelay( stdscr, true );
 
-	attron(COLOR_PAIR(MU_YELLOW_BLACK));
-	mvwaddstr(stdscr, 1, (getmaxx(stdscr)-9)/2, "Bomberman");// -9 pour la taille de "Bomberman"
-	attroff(COLOR_PAIR(MU_YELLOW_BLACK));
-	box(stdscr, 0, 0);
-	refresh(); /* Print it on to the real screen */
+	if( c_premierAffichage ){
+		attron(COLOR_PAIR(MU_YELLOW_BLACK));
+		mvwaddstr(stdscr, 1, (getmaxx(stdscr)-9)/2, "Bomberman");// -9 pour la taille de "Bomberman"
+		attroff(COLOR_PAIR(MU_YELLOW_BLACK));
+		box(stdscr, 0, 0);
+		refresh(); /* Print it on to the real screen */
 
-	// Sert à afficher les couleurs pour les joueurs
-	chtype couleur;
-
-	for( unsigned int x,y=0; y<l_map->Y(); y++ )
-	{
-		for( x=0; x<l_map->X(); x++ )
+		for( unsigned int x,y=0; y<l_map->Y(); y++ )
 		{
-			switch( l_map->getBlock(x,y)->element )
+			for( x=0; x<l_map->X(); x++ )
+			{
+				switch( l_map->getBlock(x,y)->element )
+				{
+					case map::vide: {
+						mvwaddch( win, ypos+y, xpos+x, ' ');
+						break;
+					}
+					case map::Mur_destructible: {
+						mvwaddch( win, ypos+y, xpos+x, '%');
+						break;
+					}
+					case map::Mur_INdestructible: {
+						mvwaddch( win, ypos+y, xpos+x, '#');
+						break;
+					}
+					case map::UN_joueur:
+					case map::plusieurs_joueurs: {
+						if( !l_map->getBlock(x,y)->joueur )
+							stdErrorVarE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y)->joueur=0", x, y);
+
+						couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
+						wattron(win, couleur);
+						mvwaddch( win, ypos+y, xpos+x, '@');
+						wattroff(win, couleur);
+
+						break;
+					}
+					case map::bombe_poser: {
+						couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
+						wattron(win, couleur);
+						mvwaddch( win, ypos+y, xpos+x, '!');
+						wattroff(win, couleur);
+						break;
+					}
+					case map::bombe_poser_AVEC_UN_joueur: {
+						if( !l_map->getBlock(x,y)->joueur )
+							stdErrorVarE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y).joueur=0", x, y);
+
+						couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
+						wattron(win, couleur);
+						mvwaddch( win, ypos+y, xpos+x, '$');
+						wattroff(win, couleur);
+
+						break;
+					}
+					case map::flamme_origine: {
+						wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
+						mvwaddch( win, ypos+y, xpos+x, 'O');
+						wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
+						break;
+					}
+					case map::flamme_horizontal:
+					case map::flamme_vertical: {
+						wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
+						mvwaddch( win, ypos+y, xpos+x, 'X');
+						wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
+						break;
+					}
+					case map::flamme_pointe_haut: {
+						wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
+						mvwaddch( win, ypos+y, xpos+x, '^');
+						wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
+						break;
+					}
+					case map::flamme_pointe_bas: {
+						wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
+						mvwaddch( win, ypos+y, xpos+x, 'v');
+						wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
+						break;
+					}
+					case map::flamme_pointe_droite: {
+						wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
+						mvwaddch( win, ypos+y, xpos+x, '>');
+						wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
+						break;
+					}
+					case map::flamme_pointe_gauche: {
+						wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
+						mvwaddch( win, ypos+y, xpos+x, '<');
+						wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
+						break;
+					}
+					default: {
+						stdErrorVar("Erreur lors de la lecture de la map, Objet inconu <%d>", (int)l_map->getBlock(x,y)->element);
+						break;
+					}
+				}
+			}
+		}
+		c_premierAffichage = false;
+	}else{
+		s_Coordonnees pos;
+		while( l_map->getModification(pos) )
+		{
+			switch( l_map->getBlock(pos)->element )
 			{
 				case map::vide: {
-					mvwaddch( win, ypos+y, xpos+x, ' ');
+					mvwaddch( win, ypos+pos.y, xpos+pos.x, ' ');
 					break;
 				}
 				case map::Mur_destructible: {
-					mvwaddch( win, ypos+y, xpos+x, '%');
+					mvwaddch( win, ypos+pos.y, xpos+pos.x, '%');
 					break;
 				}
 				case map::Mur_INdestructible: {
-					mvwaddch( win, ypos+y, xpos+x, '#');
+					mvwaddch( win, ypos+pos.y, xpos+pos.x, '#');
 					break;
 				}
 				case map::UN_joueur:
 				case map::plusieurs_joueurs: {
-					if( !l_map->getBlock(x,y)->joueur )
-						stdErrorVarE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y)->joueur=0", x, y);
+					if( !l_map->getBlock(pos)->joueur )
+						stdErrorVarE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(pos)->joueur=0", pos.x, pos.y);
 
-					couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
+					couleur = getCouleurJoueur( l_map->getBlock(pos)->joueur->at(0) );
 					wattron(win, couleur);
-					mvwaddch( win, ypos+y, xpos+x, '@');
+					mvwaddch( win, ypos+pos.y, xpos+pos.x, '@');
 					wattroff(win, couleur);
 
 					break;
 				}
 				case map::bombe_poser: {
-					couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
+					couleur = getCouleurJoueur( l_map->getBlock(pos)->joueur->at(0) );
 					wattron(win, couleur);
-					mvwaddch( win, ypos+y, xpos+x, '!');
+					mvwaddch( win, ypos+pos.y, xpos+pos.x, '!');
 					wattroff(win, couleur);
 					break;
 				}
 				case map::bombe_poser_AVEC_UN_joueur: {
-					if( !l_map->getBlock(x,y)->joueur )
-						stdErrorVarE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y).joueur=0", x, y);
+					if( !l_map->getBlock(pos)->joueur )
+						stdErrorVarE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(pos).joueur=0", pos.x, pos.y);
 
-					couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
+					couleur = getCouleurJoueur( l_map->getBlock(pos)->joueur->at(0) );
 					wattron(win, couleur);
-					mvwaddch( win, ypos+y, xpos+x, '$');
+					mvwaddch( win, ypos+pos.y, xpos+pos.x, '$');
 					wattroff(win, couleur);
 
 					break;
 				}
 				case map::flamme_origine: {
 					wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
-					mvwaddch( win, ypos+y, xpos+x, 'O');
+					mvwaddch( win, ypos+pos.y, xpos+pos.x, 'O');
 					wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
 					break;
 				}
 				case map::flamme_horizontal:
 				case map::flamme_vertical: {
 					wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
-					mvwaddch( win, ypos+y, xpos+x, 'X');
+					mvwaddch( win, ypos+pos.y, xpos+pos.x, 'X');
 					wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
 					break;
 				}
 				case map::flamme_pointe_haut: {
 					wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
-					mvwaddch( win, ypos+y, xpos+x, '^');
+					mvwaddch( win, ypos+pos.y, xpos+pos.x, '^');
 					wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
 					break;
 				}
 				case map::flamme_pointe_bas: {
 					wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
-					mvwaddch( win, ypos+y, xpos+x, 'v');
+					mvwaddch( win, ypos+pos.y, xpos+pos.x, 'v');
 					wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
 					break;
 				}
 				case map::flamme_pointe_droite: {
 					wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
-					mvwaddch( win, ypos+y, xpos+x, '>');
+					mvwaddch( win, ypos+pos.y, xpos+pos.x, '>');
 					wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
 					break;
 				}
 				case map::flamme_pointe_gauche: {
 					wattron(win, COLOR_PAIR(MU_BLACK_YELLOW));
-					mvwaddch( win, ypos+y, xpos+x, '<');
+					mvwaddch( win, ypos+pos.y, xpos+pos.x, '<');
 					wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
 					break;
 				}
 				default: {
-					stdErrorVar("Erreur lors de la lecture de la map, Objet inconu <%d>", (int)l_map->getBlock(x,y)->element);
+					stdErrorVar("Erreur lors de la lecture de la map, Objet inconu <%d>", (int)l_map->getBlock(pos)->element);
 					break;
 				}
 			}
+
 		}
 	}
-	refresh(); /* Print it on to the real screen */
+	//refresh(); /* Print it on to the real screen */
 	wrefresh(win);
 
 	return wgetch(win);

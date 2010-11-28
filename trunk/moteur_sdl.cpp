@@ -71,10 +71,11 @@ unsigned int moteur_sdl::menu( const char titre[], const char *choix[], unsigned
 	bool continuer = 1;
 	SDL_Event event;
 	SDL_Color couleurNoire = {0, 0, 0};
-	SDL_Color couleurRouge = {255, 184, 0};
+	SDL_Color couleurOrange = {255, 184, 0};
 	SDL_Rect position;
 	SDL_Surface** textes;
 	unsigned int i;
+	bool dessiner = 1;
 
 	textes = new SDL_Surface*[nb_choix*2];
 
@@ -83,7 +84,7 @@ unsigned int moteur_sdl::menu( const char titre[], const char *choix[], unsigned
 
 	// Création du texte HighLight
 	for( i=nb_choix; i<nb_choix*2; i++ )/* Ecriture du texte dans la SDL_Surface "texte" en mode Blended (optimal) */
-		textes[i] = TTF_RenderText_Blended(c_policeGeneral, choix[i-nb_choix], couleurRouge);
+		textes[i] = TTF_RenderText_Blended(c_policeGeneral, choix[i-nb_choix], couleurOrange);
 
 	while( continuer )
 	{
@@ -104,6 +105,7 @@ unsigned int moteur_sdl::menu( const char titre[], const char *choix[], unsigned
 						}else{
 							highLight--;
 						}
+						dessiner = 1;// On redessine
 						break;
 					}
 					case SDLK_DOWN: {// On bouge notre highLight vers le bas
@@ -112,6 +114,7 @@ unsigned int moteur_sdl::menu( const char titre[], const char *choix[], unsigned
 						}else{
 							highLight++;
 						}
+						dessiner = 1;// On redessine
 						break;
 					}
 					case SDLK_RETURN: {// On a valider notre choix par entrer
@@ -132,28 +135,31 @@ unsigned int moteur_sdl::menu( const char titre[], const char *choix[], unsigned
 				break;
 		}
 
-		// Pas besoin de clean le screen, le background est full screen
-		//SDL_FillRect(c_ecranGeneral, NULL, SDL_MapRGB(c_ecranGeneral->format, 255, 255, 255));
+		/***********************************************************************
+		* Blitage général
+		* > On blit uniquement s'il y a eu une modification
+		*/
+		if( dessiner ){
+			position.x = 0;
+			position.y = 0;
+			SDL_BlitSurface(c_background, NULL, c_ecranGeneral, &position);// Blit background
 
-		position.x = 0;
-		position.y = 0;
-		SDL_BlitSurface(c_background, NULL, c_ecranGeneral, &position);// Blit background
-
-
-		position.y = 180;// Point de départ
-		// On blit le texte
-		for( i=0; i<nb_choix; i++ )
-		{
-			position.y+=100;// Espacement entre les textes ( blit )
-			position.x = (c_ecranGeneral->w-textes[i]->w)/2;// Centrage auto des blit ^^
-			if( i == highLight-1 ){
-				SDL_BlitSurface(textes[i+nb_choix], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
-			}else{
-				SDL_BlitSurface(textes[i], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+			position.y = 180;// Point de départ
+			// On blit le texte
+			for( i=0; i<nb_choix; i++ )
+			{
+				position.y+=100;// Espacement entre les textes ( blit )
+				position.x = (c_ecranGeneral->w-textes[i]->w)/2;// Centrage auto des blit ^^
+				if( i == highLight-1 ){
+					SDL_BlitSurface(textes[i+nb_choix], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				}else{
+					SDL_BlitSurface(textes[i], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				}
 			}
-		}
 
-		SDL_Flip(c_ecranGeneral);
+			SDL_Flip(c_ecranGeneral);
+			dessiner = 0;
+		}
 	}
 
 	for( i=0; i<nb_choix*2; i++ )// On libère les textes
@@ -189,8 +195,226 @@ void moteur_sdl::afficherConfigurationClavier( unsigned char joueur )
 */
 int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* returnValue )
 {
+	unsigned int highLight = 2;
+	bool continuer = 1;
+	SDL_Event event;
+	SDL_Color couleurNoire = {0, 0, 0};
+	SDL_Color couleurOrange = {255, 184, 0};
+	SDL_Color couleurRouge = {255, 0, 0};
+	SDL_Rect position;
+	SDL_Surface* sfr_titre;
+	SDL_Surface* sfr_msg;
+	SDL_Surface** textes;
+	unsigned int i;
+	bool dessiner = 1;
+	char str[20];// <- Valable 32bit ONLY ! Calcule :: lenght(2^(sizeof(int)*8))+4*2
 
-	return 0;
+	*returnValue = valeurParDefaut;
+
+	sprintf(str, "<-- %d -->", *returnValue);
+
+	sfr_titre = TTF_RenderText_Blended(c_policeGeneral, titre, couleurNoire);
+
+	textes = new SDL_Surface*[3*2];
+
+	/* Ecriture du texte dans la SDL_Surface "texte" en mode Blended (optimal) */
+	textes[0] = TTF_RenderText_Blended(c_policeGeneral, str, couleurNoire);
+	textes[1] = TTF_RenderText_Blended(c_policeGeneral, "Ok", couleurNoire);
+	textes[2] = TTF_RenderText_Blended(c_policeGeneral, "Retour", couleurNoire);
+
+	// Création du texte HighLight
+	textes[3] = TTF_RenderText_Blended(c_policeGeneral, str, couleurOrange);
+	textes[4] = TTF_RenderText_Blended(c_policeGeneral, "Ok", couleurOrange);
+	textes[5] = TTF_RenderText_Blended(c_policeGeneral, "Retour", couleurOrange);
+
+	while( continuer )
+	{
+		SDL_WaitEvent(&event);
+		switch( event.type )
+		{
+			case SDL_QUIT: {
+				highLight = 3;// On veux quitter !
+				continuer = 0;
+				break;
+			}
+			case SDL_KEYDOWN: {
+				switch( event.key.keysym.sym )
+				{
+					case SDLK_UP: { /* Appui sur la touche Echap, on arrête le programme */
+						if( highLight == 1 ){// On bouge notre highLight vers le haut
+							highLight = 3;
+						}else{
+							highLight--;
+						}
+						dessiner = 1;// On redessine
+						break;
+					}
+					case SDLK_DOWN: {// On bouge notre highLight vers le bas
+						if( highLight == 3 ){
+							highLight = 1;
+						}else{
+							highLight++;
+						}
+						dessiner = 1;// On redessine
+						break;
+					}
+					case SDLK_RETURN: {// On a valider notre choix par entrer
+						if( highLight == 1 ){// On a selectionné un lien de modification de texte
+							dessiner = 1;
+							sfr_msg = TTF_RenderText_Blended(c_policeGeneral, "Entrez le nombre manuellement", couleurRouge);
+							do{
+								SDL_WaitEvent(&event);
+								if( event.type == SDL_QUIT ){
+									continuer = 0;
+									highLight = 3;
+								}
+
+								if( event.type == SDL_KEYDOWN )
+								switch( event.key.keysym.sym )
+								{
+									case SDLK_RIGHT:
+									case SDLK_UP: {
+										if( *returnValue+1 > valeurMax )
+											*returnValue = valeurMin;
+										else
+											(*returnValue)++;
+										dessiner = 1;// On redessine
+										break;
+									}
+									case SDLK_LEFT:
+									case SDLK_DOWN: {
+										if( *returnValue-1 < valeurMin )
+											*returnValue = valeurMax;
+										else
+											(*returnValue)--;
+										dessiner = 1;// On redessine
+										break;
+									}
+									case SDLK_BACKSPACE:{
+										*returnValue /= 10;
+										dessiner = 1;// On redessine
+										break;
+									}
+									case SDLK_ESCAPE: {
+										*returnValue = valeurParDefaut;
+										dessiner = 1;// On redessine
+										break;
+									}
+									case SDLK_RETURN: {
+										if( !(valeurMin <= *returnValue && *returnValue <= valeurMax) )
+											*returnValue = valeurMin;
+										continuer = 0;
+										break;
+									}
+									case SDLK_KP_PLUS:
+									case SDLK_KP_MINUS: {
+										if( valeurMin <= *returnValue*(-1) && *returnValue*(-1) <= valeurMax )
+											*returnValue *= -1;
+										dessiner = 1;// On redessine
+										break;
+									}
+									default: {
+										// Ajout de chiffre à la main
+										//if( '0' <= key && key <= '9' && *returnValue*10+(key-'0') <= valeurMax )
+										//	*returnValue = *returnValue*10+(key-'0');
+										break;
+									}
+								}
+
+								/***********************************************************************
+								* Blitage général
+								* > On blit uniquement s'il y a eu une modification
+								*/
+								if( dessiner ){
+									sprintf(str, "<-- %d -->", *returnValue);
+									SDL_FreeSurface(textes[0]);
+									SDL_FreeSurface(textes[3]);
+									textes[0] = TTF_RenderText_Blended(c_policeGeneral, str, couleurNoire);
+									textes[3] = TTF_RenderText_Blended(c_policeGeneral, str, couleurRouge);
+
+									position.x = 0;
+									position.y = 0;
+									SDL_BlitSurface(c_background, NULL, c_ecranGeneral, &position);// Blit background
+
+									position.y = 180;
+									position.x = (c_ecranGeneral->w-sfr_msg->w)/2;// Centrage auto des blit ^^
+									SDL_BlitSurface(sfr_msg, NULL, c_ecranGeneral, &position);// Blit background
+
+									position.y = 180;// Point de départ
+									// On blit le texte
+									for( i=0; i<3; i++ )
+									{
+										position.y+=100;// Espacement entre les textes ( blit )
+										position.x = (c_ecranGeneral->w-textes[i]->w)/2;// Centrage auto des blit ^^
+										if( i == highLight-1 ){
+											SDL_BlitSurface(textes[i+3], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+										}else{
+											SDL_BlitSurface(textes[i], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+										}
+									}
+
+									SDL_Flip(c_ecranGeneral);
+									dessiner = 0;
+								}
+							}while( continuer );
+							SDL_FreeSurface(sfr_msg);
+							SDL_FreeSurface(textes[3]);
+							textes[3] = TTF_RenderText_Blended(c_policeGeneral, str, couleurOrange);
+							dessiner = 1;
+							continuer = 1;
+						}
+						if( highLight == 3 )// On a selectionné "Retour"
+							continuer = 0;
+						break;
+					}
+					case SDLK_ESCAPE: { /* Appui sur la touche Echap, on arrête le programme */
+						highLight = 3;// On veux quitter !
+						continuer = 0;
+						break;
+					}
+					default:
+						break;
+				}
+				break;
+			}
+			default:
+				break;
+		}
+
+		/***********************************************************************
+		* Blitage général
+		* > On blit uniquement s'il y a eu une modification
+		*/
+		if( dessiner ){
+			position.x = 0;
+			position.y = 0;
+			SDL_BlitSurface(c_background, NULL, c_ecranGeneral, &position);// Blit background
+
+			position.y = 180;// Point de départ
+			// On blit le texte
+			for( i=0; i<3; i++ )
+			{
+				position.y+=100;// Espacement entre les textes ( blit )
+				position.x = (c_ecranGeneral->w-textes[i]->w)/2;// Centrage auto des blit ^^
+				if( i == highLight-1 ){
+					SDL_BlitSurface(textes[i+3], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				}else{
+					SDL_BlitSurface(textes[i], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				}
+			}
+
+			SDL_Flip(c_ecranGeneral);
+			dessiner = 0;
+		}
+	}
+
+	for( i=0; i<3*2; i++ )// On libère les textes
+		SDL_FreeSurface(textes[i]);
+	delete[] textes;// On libère les textes
+
+	SDL_FreeSurface(sfr_titre);
+
+	return highLight;
 }
 
 
