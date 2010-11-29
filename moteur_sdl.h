@@ -30,14 +30,17 @@ class moteur_sdl
 		// Fonction d'affichage de menu
 		unsigned int menu( const char titre[], const char *choix[], unsigned int nb_choix );
 		void afficherConfigurationClavier( unsigned char joueur );
-		int getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* returnValue );
+		int getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* valeurRetour );
 		int getTexte( const char titre[], char texteRetour[21] );
 
 		// Modificateur
 		inline void forcerRafraichissement() { c_premierAffichage = 1; }
 
-		// Autre
+		// Autre :: Affichage
 		static SYS_CLAVIER afficherMapEtEvent( const partie* p );
+
+		// Clavier
+		static SDLKey traductionClavier( const SDL_KeyboardEvent* touche );
 };
 
 #endif
