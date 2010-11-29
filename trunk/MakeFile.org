@@ -208,7 +208,6 @@ doxygen: $(DOXYGEN_DIR)/Doxyfile
 	$(CMD_CLEAR)
 	@echo Lancement de Doxygen
 	cd $(DOXYGEN_DIR) && doxygen
-	@echo .>doxygen
 
 
 # Pour créer une archive tar bz2
