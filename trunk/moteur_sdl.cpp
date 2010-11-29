@@ -26,6 +26,8 @@ moteur_sdl::moteur_sdl()
 
 	if( !(c_background = IMG_Load("images/background.png")) )
 		stdErrorVarE("Erreur lors du chargement du background : %s", SDL_GetError());
+
+	SDL_EnableUNICODE(1);// On veux pas un clavier QWERTY
 }
 
 
@@ -35,9 +37,12 @@ moteur_sdl::moteur_sdl()
 */
 moteur_sdl::~moteur_sdl()
 {
-	SDL_FreeSurface(c_background);// On libère le background
+	if( c_background )
+		SDL_FreeSurface(c_background);// On libère le background
 
-	TTF_CloseFont(c_policeGeneral);/* Fermeture de la police avant TTF_Quit */
+	if( c_policeGeneral )
+		TTF_CloseFont(c_policeGeneral);/* Fermeture de la police avant TTF_Quit */
+
 	TTF_Quit();/* Arrêt de SDL_ttf (peut être avant ou après SDL_Quit, peu importe) */
 	SDL_Quit();
 }
@@ -182,18 +187,18 @@ void moteur_sdl::afficherConfigurationClavier( unsigned char joueur )
 
 
 /***************************************************************************//*!
-* @fn int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* returnValue )
+* @fn int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* valeurRetour )
 * @brief Créer un menu pour récupérer un nombre entré par un utilisateur
 * @param[in] titre			 Le titre du menu
 * @param[in] valeurParDefaut La valeur par défaut
 * @param[in] valeurMin		 La valeur minimum
 * @param[in] valeurMax		 La valeur maximum
-* @param[out] returnValue	 Dans cette variable sera stocké, le nombre obtenu a la fin de la fonction
+* @param[out] valeurRetour	 Dans cette variable sera stocké, le nombre obtenu a la fin de la fonction
 * @return
 *	- 2 : Nombre validé et accèpté
 *	- 3 : Action annulée
 */
-int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* returnValue )
+int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* valeurRetour )
 {
 	unsigned int highLight = 2;
 	bool continuer = 1;
@@ -207,23 +212,23 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 	SDL_Surface** textes;
 	unsigned int i;
 	bool dessiner = 1;
-	char str[20];// <- Valable 32bit ONLY ! Calcule :: lenght(2^(sizeof(int)*8))+4*2
+	char valeurRetourTexte[20];// <- Valable 32bit ONLY ! Calcule :: lenght(2^(sizeof(int)*8))+4*2
 
-	*returnValue = valeurParDefaut;
+	*valeurRetour = valeurParDefaut;
 
-	sprintf(str, "<-- %d -->", *returnValue);
+	sprintf(valeurRetourTexte, "<-- %d -->", *valeurRetour);
 
 	sfr_titre = TTF_RenderText_Blended(c_policeGeneral, titre, couleurNoire);
 
 	textes = new SDL_Surface*[3*2];
 
 	/* Ecriture du texte dans la SDL_Surface "texte" en mode Blended (optimal) */
-	textes[0] = TTF_RenderText_Blended(c_policeGeneral, str, couleurNoire);
+	textes[0] = TTF_RenderText_Blended(c_policeGeneral, valeurRetourTexte, couleurNoire);
 	textes[1] = TTF_RenderText_Blended(c_policeGeneral, "Ok", couleurNoire);
 	textes[2] = TTF_RenderText_Blended(c_policeGeneral, "Retour", couleurNoire);
 
 	// Création du texte HighLight
-	textes[3] = TTF_RenderText_Blended(c_policeGeneral, str, couleurOrange);
+	textes[3] = TTF_RenderText_Blended(c_policeGeneral, valeurRetourTexte, couleurOrange);
 	textes[4] = TTF_RenderText_Blended(c_policeGeneral, "Ok", couleurOrange);
 	textes[5] = TTF_RenderText_Blended(c_policeGeneral, "Retour", couleurOrange);
 
@@ -270,53 +275,58 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 								}
 
 								if( event.type == SDL_KEYDOWN )
-								switch( event.key.keysym.sym )
+								switch( traductionClavier(&event.key) )
 								{
 									case SDLK_RIGHT:
 									case SDLK_UP: {
-										if( *returnValue+1 > valeurMax )
-											*returnValue = valeurMin;
+										if( *valeurRetour+1 > valeurMax )
+											*valeurRetour = valeurMin;
 										else
-											(*returnValue)++;
+											(*valeurRetour)++;
 										dessiner = 1;// On redessine
 										break;
 									}
 									case SDLK_LEFT:
 									case SDLK_DOWN: {
-										if( *returnValue-1 < valeurMin )
-											*returnValue = valeurMax;
+										if( *valeurRetour-1 < valeurMin )
+											*valeurRetour = valeurMax;
 										else
-											(*returnValue)--;
+											(*valeurRetour)--;
 										dessiner = 1;// On redessine
 										break;
 									}
 									case SDLK_BACKSPACE:{
-										*returnValue /= 10;
+										*valeurRetour /= 10;
 										dessiner = 1;// On redessine
 										break;
 									}
 									case SDLK_ESCAPE: {
-										*returnValue = valeurParDefaut;
+										*valeurRetour = valeurParDefaut;
 										dessiner = 1;// On redessine
 										break;
 									}
 									case SDLK_RETURN: {
-										if( !(valeurMin <= *returnValue && *returnValue <= valeurMax) )
-											*returnValue = valeurMin;
+										if( !(valeurMin <= *valeurRetour && *valeurRetour <= valeurMax) )
+											*valeurRetour = valeurMin;
 										continuer = 0;
 										break;
 									}
+									case SDLK_PLUS:
+									case SDLK_MINUS:
 									case SDLK_KP_PLUS:
 									case SDLK_KP_MINUS: {
-										if( valeurMin <= *returnValue*(-1) && *returnValue*(-1) <= valeurMax )
-											*returnValue *= -1;
+										if( valeurMin <= *valeurRetour*(-1) && *valeurRetour*(-1) <= valeurMax )
+											*valeurRetour *= -1;
 										dessiner = 1;// On redessine
 										break;
 									}
 									default: {
 										// Ajout de chiffre à la main
-										//if( '0' <= key && key <= '9' && *returnValue*10+(key-'0') <= valeurMax )
-										//	*returnValue = *returnValue*10+(key-'0');
+										if( SDLK_0 <= event.key.keysym.unicode && event.key.keysym.unicode <= SDLK_9 && *valeurRetour*10+(int)(event.key.keysym.unicode-SDLK_0) <= valeurMax )
+											*valeurRetour = *valeurRetour*10+(event.key.keysym.unicode-SDLK_0);
+										if( SDLK_KP0 <= event.key.keysym.unicode && event.key.keysym.unicode <= SDLK_KP0 && *valeurRetour*10+(int)(event.key.keysym.unicode-SDLK_KP0) <= valeurMax )
+											*valeurRetour = *valeurRetour*10+(event.key.keysym.unicode-SDLK_KP0);
+										dessiner = 1;// On redessine
 										break;
 									}
 								}
@@ -326,11 +336,11 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 								* > On blit uniquement s'il y a eu une modification
 								*/
 								if( dessiner ){
-									sprintf(str, "<-- %d -->", *returnValue);
+									sprintf(valeurRetourTexte, "<-- %d -->", *valeurRetour);
 									SDL_FreeSurface(textes[0]);
 									SDL_FreeSurface(textes[3]);
-									textes[0] = TTF_RenderText_Blended(c_policeGeneral, str, couleurNoire);
-									textes[3] = TTF_RenderText_Blended(c_policeGeneral, str, couleurRouge);
+									textes[0] = TTF_RenderText_Blended(c_policeGeneral, valeurRetourTexte, couleurNoire);
+									textes[3] = TTF_RenderText_Blended(c_policeGeneral, valeurRetourTexte, couleurRouge);
 
 									position.x = 0;
 									position.y = 0;
@@ -359,12 +369,11 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 							}while( continuer );
 							SDL_FreeSurface(sfr_msg);
 							SDL_FreeSurface(textes[3]);
-							textes[3] = TTF_RenderText_Blended(c_policeGeneral, str, couleurOrange);
+							textes[3] = TTF_RenderText_Blended(c_policeGeneral, valeurRetourTexte, couleurOrange);
 							dessiner = 1;
 							continuer = 1;
-						}
-						if( highLight == 3 )// On a selectionné "Retour"
-							continuer = 0;
+						}else
+							continuer = 0;// On sort de la boucle
 						break;
 					}
 					case SDLK_ESCAPE: { /* Appui sur la touche Echap, on arrête le programme */
@@ -445,4 +454,33 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 
 
 	return SDLK_LAST;
+}
+
+
+/***************************************************************************//*!
+* @fn SDLKey moteur_sdl::traductionClavier( SDL_KeyboardEvent* touche )
+* @brief Permet l'uitlisation d'un clavier unicode en toute simplicité
+* @param[in] touche L'event: event.key
+* @return La touche actuellement appuyé
+*
+* Exemple:
+* @code
+* SDL_Event event;
+* SDL_WaitEvent(&event);
+* switch( traductionClavier(&event.key) )
+* {
+*	case SDLK_LEFT:
+*		break;
+*	case SDLK_a:
+*		break;
+* }
+* @endcode
+*/
+SDLKey moteur_sdl::traductionClavier( const SDL_KeyboardEvent* touche )
+{
+	if( touche->keysym.unicode != SDLK_UNKNOWN ){
+		return (SDLKey)touche->keysym.unicode;
+	}else{
+		return (SDLKey)touche->keysym.sym;
+	}
 }

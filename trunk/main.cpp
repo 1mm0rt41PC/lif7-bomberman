@@ -37,6 +37,8 @@ int main( int argc, char* arvg[] )
 		moteur_sdl m;
 	#endif
 
+	partie* jeu;
+
 
 	// Appel des menus
 	//**************************************************************************
@@ -89,8 +91,8 @@ int main( int argc, char* arvg[] )
 							while( m.getNombre("Entrez le nombre de joueur", 2, 2, 4, &tmp) != 3 )
 							{
 								// Menu suivant
-								partie jeu;
-								jeu.def_nbJoueurs(tmp);
+								jeu = new partie;
+								jeu->def_nbJoueurs(tmp);
 
 								nomJoueurNumI[0] = 0;
 								for( int i=0; i<tmp; i++ )
@@ -101,15 +103,16 @@ int main( int argc, char* arvg[] )
 										break;// Permet de remonter au menu au dessus
 									}
 
-									jeu.joueur(i)->defNom(nomJoueurNumI);
+									jeu->joueur(i)->defNom(nomJoueurNumI);
 									nomJoueurNumI[0] = 0;
 								}
 
 								if( !retourMenuAudessus ){
 									m.forcerRafraichissement();
-									jeu.main( m.afficherMapEtEvent );
+									jeu->main( m.afficherMapEtEvent );
 								}
 								retourMenuAudessus = 0;
+								delete jeu;
 							}
 							break;
 						}
