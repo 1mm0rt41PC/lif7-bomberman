@@ -43,6 +43,8 @@ class bonus
 		#define NB_ELEMENT_t_Bonus 5
 		enum t_Bonus {
 			bombe=0,
+			// Vitesse de déflagration en milli-sec
+			#define VITESSE_DEFLAGRATION_FLAMME CLOCKS_PER_SEC/20
 			puissance_flamme,
 			declancheur,
 			vitesse,
@@ -61,7 +63,7 @@ class bonus
 			* - +0 => Callback direct
 			* - >0 => Callback au bout de X secs
 			*/
-			char duree;// Durée d'utilisation
+			clock_t duree;// Durée d'utilisation
 			//t_Bonus type; // <- Le type est stocké dans le numéro du tableau [0] -> [t_Bonus::bombe]
 			unsigned char probabiliter_pop;//!< Pourcentage q'un bonus pop (valeur: entre 0 et 100 au max)
 			unsigned char quantite_MAX_Ramassable;//!< Quantité max qu'un joueur peut avoir d'un objet
@@ -77,7 +79,7 @@ class bonus
 		* quantite_MAX_en_stock: Quantité Maxi d'un objet ( ex: 5 bonus de type bombe => 5 Bombes max en stock ! )
 		* @note Passe -Wpadded pour 32bit (4o)
 		*/
-public : typedef struct {
+		typedef struct {
 			t_Bonus type;//!< Le bonus (2o)
 			unsigned char quantite_utilisable;//!< Nombre d'objet possédé actuellement et utilisable (1o)
 			unsigned char quantite_MAX_en_stock;//!< Quantité Maxi d'un objet (1o)
@@ -93,7 +95,7 @@ public : typedef struct {
 		*/
 		typedef struct {
 			s_Coordonnees pos;//!< Position de la bombe posé (8o)
-			time_t finEvent;//!< Temps avant la fin de l'event (4o)
+			clock_t finEvent;//!< Temps avant la fin de l'event (4o)
 			t_Bonus type;//!< Le bonus (4o)
 		} s_Event;
 

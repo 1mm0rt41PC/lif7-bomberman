@@ -56,7 +56,7 @@ bonus::s_bonus_proprieter* bonus::bonusProp()
 
 	C_bonusProp[bombe].probabiliter_pop = 40;// 40% de pop
 	C_bonusProp[bombe].quantite_MAX_Ramassable = 20;
-	C_bonusProp[bombe].duree = 3;// 3secs avant explosion
+	C_bonusProp[bombe].duree = 2*CLOCKS_PER_SEC;// 2secs avant explosion
 
 	C_bonusProp[puissance_flamme].probabiliter_pop = 60;// 60% de pop
 	C_bonusProp[puissance_flamme].quantite_MAX_Ramassable = 10;
@@ -89,6 +89,7 @@ void bonus::unInitBonusProp()
 		stdErrorE("C_bonusProp PAS encore initialisé.");
 
 	delete[] C_bonusProp;
+	C_bonusProp = 0;// ATTENTION delete[] ne met rien a 0
 }
 
 
@@ -292,7 +293,7 @@ bool bonus::decQuantiteUtilisable( t_Bonus b )
 bool bonus::decQuantiteUtilisable( t_Bonus b, unsigned int x, unsigned int y )
 {
 	if( C_bonusProp[b].duree < 0 ){
-		stdError("Le temps du Bonus ne lui permet pas d'avoir un Event. bonus=%d, C_bonusProp[b].duree=%d", (int)b, C_bonusProp[b].duree);
+		stdError("Le temps du Bonus ne lui permet pas d'avoir un Event. bonus=%d, C_bonusProp[b].duree=%d", (int)b, (int)C_bonusProp[b].duree);
 		return decQuantiteUtilisable( b );
 	}
 
@@ -304,8 +305,7 @@ bool bonus::decQuantiteUtilisable( t_Bonus b, unsigned int x, unsigned int y )
 	e.type = b;
 	e.pos.x = x;
 	e.pos.y = y;
-//	e.finEvent = clock() + C_bonusProp[b].duree * CLOCKS_PER_SEC;// Ajustement du temps
-	e.finEvent = time(0) + C_bonusProp[b].duree;
+	e.finEvent = clock() + C_bonusProp[b].duree;// Ajustement du temps
 	c_listEvent.push_back( e );// On ajout l'event à la liste des event
 
 	return true;
@@ -517,7 +517,7 @@ bool bonus::isEvent( s_Coordonnees* pos )
 {
 	for( unsigned int i=0; i<c_listEvent.size(); i++ )
 	{
-		if( c_listEvent.at(i).finEvent <= time(0) ){// Si timeout
+		if( c_listEvent.at(i).finEvent <= clock() ){// Si timeout
 			*pos = c_listEvent.at(i).pos;
 			c_listEvent.erase(c_listEvent.begin()+i);// On supprime la bombe qui était posée
 			incQuantiteUtilisable( bombe );// On redonne la bombe au joueur

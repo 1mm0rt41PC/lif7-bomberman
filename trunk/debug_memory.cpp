@@ -1,7 +1,14 @@
 #include "debug_memory.h"
 
+// NOTE A MOI MÊME : NE PAS OUBLIER D'INITIALISER CETTE SALTE DE MEMBRE STATIC AINSI !!! ( principe singleton )
 CMemoryManager CMemoryManager::c_inst;
 
+
+/***************************************************************************//*!
+* @fn CMemoryManager::CMemoryManager()
+* @brief Le constructeur par défaut.
+* @note Initialise uniquement l'ouverture du fichier de rapport
+*/
 CMemoryManager::CMemoryManager()
 {
 	if( !(c_fp = fopen("allocations.txt","w")) )
@@ -9,6 +16,14 @@ CMemoryManager::CMemoryManager()
 }
 
 
+/***************************************************************************//*!
+* @fn CMemoryManager::~CMemoryManager()
+* @brief Le desconstructeur par défaut
+*
+* C'est ici que l'on :
+*	- détermine s'il y a une fuite mémoire.
+*	- construit la fin de rapport.
+*/
 CMemoryManager::~CMemoryManager()
 {
 	if( c_Blocks.empty() ){// Aucune fuite, bravo !
@@ -40,6 +55,12 @@ CMemoryManager::~CMemoryManager()
 }
 
 
+/***************************************************************************//*!
+* @fn void* CMemoryManager::allocate( size_t size, const char fileName[], unsigned int line, bool is_array )
+* @brief Récolte les informations sur les allocations
+*
+* Permet grace aux surchages de new de compter et d'identifier les allocations
+*/
 // Ajoute une allocation mémoire
 void* CMemoryManager::allocate( size_t size, const char fileName[], unsigned int line, bool is_array )
 {
@@ -60,7 +81,13 @@ void* CMemoryManager::allocate( size_t size, const char fileName[], unsigned int
 }
 
 
-// Retire une allocation mémoire
+/***************************************************************************//*!
+* @fn void CMemoryManager::Free( void* ptr, bool is_array )
+* @brief Récolte les informations sur les désallocations
+*
+* Permet grace aux surchages de delete de compter et d'identifier les désallocations.<br />
+* ( Retire une allocation mémoire )
+*/
 void CMemoryManager::Free( void* ptr, bool is_array )
 {
 	// Recherche de l'adresse dans les blocs alloués
@@ -101,7 +128,10 @@ void CMemoryManager::Free( void* ptr, bool is_array )
 }
 
 
-// Sauvegarde les infos sur la désallocation courante
+/***************************************************************************//*!
+* @fn void CMemoryManager::nextDelete( const char fileName[], unsigned int line )
+* @brief Sauvegarde les infos sur la désallocation courante
+*/
 void CMemoryManager::nextDelete( const char fileName[], unsigned int line )
 {
 	s_AllocatatedBlock Delete;
@@ -112,6 +142,10 @@ void CMemoryManager::nextDelete( const char fileName[], unsigned int line )
 }
 
 
+/***************************************************************************//*!
+* @fn CMemoryManager& CMemoryManager::getInstance()
+* @brief Renvoie l'intance de la class
+*/
 // Renvoie l'instance de la classe
 CMemoryManager& CMemoryManager::getInstance()
 {
