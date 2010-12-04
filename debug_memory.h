@@ -14,7 +14,10 @@
 * @class CMemoryManager
 * @brief Système de vérification de fuite mémoire.
 *
-* @warning Cette class surcharge les operateurs new et delete
+* @warning <b>Cette class n'est pas faites pour être utilisée directement !</b><br />
+* Cette class surcharge les operateurs new et delete.<br />
+* La class ne peut être instancié qu'une seule fois (class singleton) !<br />
+* De plus elle s'instancie sans pointeur => Si une autre class singleton utilise la même technologie => BUG
 *
 * Pour utiliser cette class, mettre le code suivant dans les fichiers <b>.cpp</b> <em>UNIQUEMENT</em> !
 * @code
@@ -25,19 +28,24 @@
 class CMemoryManager
 {
 	private:
+		/*!
+		* @struct s_AllocatatedBlock
+		* @brief Stock les info sur les block mémoires alloués
+		*
+		*/
 		typedef struct {
-			std::string		fileName;	// Fichier contenant l'allocation
-			void*			ptr;		// Le pointeur
-			size_t			size;		// Taille allouée
-			unsigned int	line;		// Ligne de l'allocation
-			bool			is_array;	// Est-ce un objet ou un tableau ?
+			std::string		fileName;	//!< Fichier contenant l'allocation
+			void*			ptr;		//!< Le pointeur
+			size_t			size;		//!< Taille allouée
+			unsigned int	line;		//!< Ligne de l'allocation
+			bool			is_array;	//!< Est-ce un objet ou un tableau ?
 		} s_AllocatatedBlock;
 		typedef std::vector<s_AllocatatedBlock> v_AllocatatedBlock;
 
-		v_AllocatatedBlock c_Blocks; // Blocs de mémoire alloués
-		std::stack<s_AllocatatedBlock> c_DeleteStack; // Pile contenant les infos sur les prochaines désallocations
-		FILE* c_fp;
-		static CMemoryManager c_inst;
+		v_AllocatatedBlock c_Blocks; //!< Blocs de mémoire alloués
+		std::stack<s_AllocatatedBlock> c_DeleteStack; //!< Pile contenant les infos sur les prochaines désallocations
+		FILE* c_fp; //!< Pointeur de fichier où sera stocké le rapport
+		static CMemoryManager c_inst;//!< L'instance de la class
 
 	private :
 		CMemoryManager();
