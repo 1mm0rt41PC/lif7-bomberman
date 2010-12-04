@@ -961,7 +961,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 
 
 /***************************************************************************//*!
-* @fn SDLKey moteur_sdl::traductionClavier( SDL_KeyboardEvent* touche )
+* @fn SDLKey moteur_sdl::traductionClavier( const SDL_KeyboardEvent* touche )
 * @brief Permet l'utilisation d'un clavier unicode en toute simplicité
 * @param[in] touche L'event: event.key
 * @return La touche actuellement appuyé
@@ -1038,7 +1038,7 @@ SDL_Surface* moteur_sdl::ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8
 
 
 /***************************************************************************//*!
-* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color* couleur )
+* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur )
 * @brief Permet d'écrire du texte dans une couleur
 * @param[in] texte Le texte a écrire
 * @param[in] couleur La couleur du texte
@@ -1059,7 +1059,7 @@ SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleu
 * @fn char* moteur_sdl::completerMot( char texte[], unsigned int taille )
 * @brief Complete le texte avec le caractère _ jusqu'a avoir un texte de longueur 20
 * @param[in,out] texte Le texte a combler
-* @param[in] Taille réel du texte ( sans les _ )
+* @param[in] taille Taille réel du texte ( sans les _ )
 * @return La variable : texte
 */
 char* moteur_sdl::completerMot( char texte[], unsigned int taille )

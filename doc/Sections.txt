@@ -1,0 +1,57 @@
+/*! @mainpage Bomberman Online
+
+Infomations générales
+
+This manual is divided in the following sections:
+- @subpage directory
+- @subpage makefile
+*/
+
+//-----------------------------------------------------------
+
+/*! @page directory Répartition des dossiers
+@code
+.			La racine du projet continent tout les fichiers
+./bin		Contient les executables obtenus
+./obj		Conteint les fichier objets et les fichiers de configurations
+./doc		Contient la documentation
+@endcode
+*/
+
+//-----------------------------------------------------------
+
+/*! @page makefile Compilation du projet
+Le projet a été conçu pour compiler avec GCC et make (gnu).<br />
+En fonction de ce que vous voulez obtenir, les dépendances varies.<br />
+Listes des dépendances et des commandes make approriées
+	- <b>NCurses</b><br />
+	La lib NCurses ou PDCurses sous Windows
+@code
+make nurcses
+@endcode
+	- <b>SDL</b><br />
+	Les Lib :<br />
+		SDLmain, SDL, SDL_ttf, SDL_image
+@code
+make sdl
+@endcode
+	- <b>SFML</b><br />
+@code
+make sfml
+@endcode
+<br />
+
+Pour debugguer le programme:<br />
+	- <b>memcheck</b>: Permet de détecter les fuites mémoires ( le rapport est dans ./bin/allocations.txt )
+	- <b>debug</b>: Permet l'utilisation de gdb ( level 2 )
+@code
+make memcheck debug
+// NOTE: L'odre des commandes importe peu
+@endcode
+<br />
+<br />
+Pour plus d'informations sur les options de compilations, cf :
+@code
+make help
+@endcode
+*/

@@ -256,7 +256,7 @@ unsigned int options::port() const
 /***************************************************************************//*!
 * @fn clavier* options::clavierJoueur( unsigned char clavier_numero )
 * @brief Renvoie le clavier numéro {clavier_numero}
-* @param[in] Le clavier que l'on veut ( un nombre entre [0 et 3] )
+* @param[in] clavier_numero Le clavier que l'on veut ( un nombre entre [0 et 3] )
 * @return Le port utilisé actuellement
 */
 clavier* options::clavierJoueur( unsigned char clavier_numero )
@@ -273,7 +273,7 @@ clavier* options::clavierJoueur( unsigned char clavier_numero )
 /***************************************************************************//*!
 * @fn clavier* options::operator[]( unsigned char clavier_numero )
 * @brief Alias de options::clavierJoueur( unsigned char clavier_numero )
-* @param[in] Le clavier que l'on veut ( un nombre entre [0 et 3] )
+* @param[in] clavier_numero Le clavier que l'on veut ( un nombre entre [0 et 3] )
 * @return Le port utilisé actuellement
 */
 clavier* options::operator[]( unsigned char clavier_numero )

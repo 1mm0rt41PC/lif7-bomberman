@@ -19,7 +19,7 @@
 * La class ne peut être instancié qu'une seule fois (class singleton) !<br />
 * De plus elle s'instancie sans pointeur => Si une autre class singleton utilise la même technologie => BUG
 *
-* Pour utiliser cette class, mettre le code suivant dans les fichiers <b>.cpp</b> <em>UNIQUEMENT</em> !
+* Pour utiliser cette class, mettre le code suivant dans les fichiers <b>.cpp</b>  <span style="text-decoration:underline;">UNIQUEMENT</span> !
 * @code
 * #define __DEBUG_MEMORY__// Active le debug memoire
 * #inlcude "debug_memory.h"
@@ -64,6 +64,7 @@ class CMemoryManager
 		// Renvoie l'instance de la classe
 		static CMemoryManager& getInstance();
 };
+
 
 inline void* operator new ( size_t taille, const char fileName[], unsigned int line )
 {
