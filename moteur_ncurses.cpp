@@ -1,4 +1,5 @@
 #include "moteur_ncurses.h"
+#include "debug.h"
 
 bool moteur_ncurses::c_premierAffichage = 1;
 
@@ -78,7 +79,6 @@ moteur_ncurses::~moteur_ncurses()
 	refresh(); /* Print it on to the real screen */
 	delwin(stdscr);
 	endwin();/* End curses mode */
-	delscreen(SP);// <- Salté de NCurses ( Compiler NCurses avec NO_LEAK ! )
 }
 
 
@@ -234,7 +234,7 @@ void moteur_ncurses::afficherConfigurationClavier( unsigned char joueur )
 
 	// Si pas de clavier retourné => stop la fonction
 	if( !cl )
-		stdErrorVarE("Erreur lors de la tentative d'affichage de la configuration du clavier du joueur:: afficherConfigurationClavier(%u)", (unsigned int)joueur);
+		stdErrorE("Erreur lors de la tentative d'affichage de la configuration du clavier du joueur:: afficherConfigurationClavier(%u)", (unsigned int)joueur);
 
 	// On affiche le super cadre :D
 	cadre();
@@ -736,17 +736,21 @@ int moteur_ncurses::getTexte( const char titre[], char texteRetour[21] )
 						}
 					}while( key != KEY_ESCAP && key != KEY_ENTER_bis );
 					cleanline(win_menu, 2);
-					highLight = 2;// On déplace sur le ok le cursor
+					if( strlen(trimString(texteRetour)) ){// IL FAUT AU MOINS 1 CARACTRERES
+						highLight = 2;// On déplace sur le ok le cursor
+					}
 					key = 0;// Pas d'exit du menu accidentel
+				}else{
+					if( highLight == 2 ){
+						if( strlen(trimString(texteRetour)) < 1 ){
+							// IL FAUT AU MOINS 1 CARACTRERES
+							erreurTexteVide = 1;
+							key = 0;
+						}
+					}else{// highLight == 3 )// On a selectionné "Retour"
+						key = KEY_ESCAP;// Donc on quit.
+					}
 				}
-				if( highLight == 2 && strlen(trimString(texteRetour)) < 1 ){
-					// IL FAUT AU MOINS 1 CARACTRERES
-					erreurTexteVide = 1;
-					key = 0;
-				}
-				if( highLight == 3 )// On a selectionné "Retour"
-					key = KEY_ESCAP;// Donc on quit.
-
 				break;
 			}
 
@@ -774,7 +778,7 @@ int moteur_ncurses::getTexte( const char titre[], char texteRetour[21] )
 void moteur_ncurses::cleanline( WINDOW* win, int y, int x_begin, int x_end )
 {
 	if( x_begin > x_end )
-		stdErrorVarE("Taille incorrect x_begin(=%d) > x_end(=%d)", x_begin, x_end);
+		stdErrorE("Taille incorrect x_begin(=%d) > x_end(=%d)", x_begin, x_end);
 
 	for( int x=x_begin; x<=x_end; x++ )
 		mvwaddch(win, y, x, ' ');
@@ -809,7 +813,7 @@ chtype moteur_ncurses::getCouleurJoueur( unsigned char joueur )
 		case 4:
 			return COLOR_PAIR(MU_JOUEUR4);
 		default: {
-			stdErrorVar("Problème d'id joueur ! id_joueur=%d", joueur);
+			stdError("Problème d'id joueur ! id_joueur=%d", joueur);
 			return COLOR_PAIR(MU_WHITE_BLACK);
 		}
 	}
@@ -836,7 +840,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 	chtype couleur;
 
 	if( (unsigned int)getmaxx(stdscr) < l_map->X() || (unsigned int)getmaxy(stdscr) < l_map->Y() )
-		stdErrorVarE("La map est trop grande pour l'affichage ! SCREEN:(Xmax=%d, Ymax=%d), MAP:(Xmax=%u, Ymax=%u)", getmaxx(stdscr), getmaxy(stdscr), l_map->X(), l_map->Y());
+		stdErrorE("La map est trop grande pour l'affichage ! SCREEN:(Xmax=%d, Ymax=%d), MAP:(Xmax=%u, Ymax=%u)", getmaxx(stdscr), getmaxy(stdscr), l_map->X(), l_map->Y());
 
 	//halfdelay( 2 );
 	//notimeout( c_win, true );
@@ -871,7 +875,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 					case map::UN_joueur:
 					case map::plusieurs_joueurs: {
 						if( !l_map->getBlock(x,y)->joueur )
-							stdErrorVarE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y)->joueur=0", x, y);
+							stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y)->joueur=0", x, y);
 
 						couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
 						wattron(win, couleur);
@@ -889,7 +893,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 					}
 					case map::bombe_poser_AVEC_UN_joueur: {
 						if( !l_map->getBlock(x,y)->joueur )
-							stdErrorVarE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y).joueur=0", x, y);
+							stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y).joueur=0", x, y);
 
 						couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
 						wattron(win, couleur);
@@ -936,7 +940,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 						break;
 					}
 					default: {
-						stdErrorVar("Erreur lors de la lecture de la map, Objet inconu <%d>", (int)l_map->getBlock(x,y)->element);
+						stdError("Erreur lors de la lecture de la map, Objet inconu <%d>", (int)l_map->getBlock(x,y)->element);
 						break;
 					}
 				}
@@ -964,7 +968,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 				case map::UN_joueur:
 				case map::plusieurs_joueurs: {
 					if( !l_map->getBlock(pos)->joueur )
-						stdErrorVarE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(pos)->joueur=0", pos.x, pos.y);
+						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(pos)->joueur=0", pos.x, pos.y);
 
 					couleur = getCouleurJoueur( l_map->getBlock(pos)->joueur->at(0) );
 					wattron(win, couleur);
@@ -982,7 +986,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 				}
 				case map::bombe_poser_AVEC_UN_joueur: {
 					if( !l_map->getBlock(pos)->joueur )
-						stdErrorVarE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(pos).joueur=0", pos.x, pos.y);
+						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(pos).joueur=0", pos.x, pos.y);
 
 					couleur = getCouleurJoueur( l_map->getBlock(pos)->joueur->at(0) );
 					wattron(win, couleur);
@@ -1029,7 +1033,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 					break;
 				}
 				default: {
-					stdErrorVar("Erreur lors de la lecture de la map, Objet inconu <%d>", (int)l_map->getBlock(pos)->element);
+					stdError("Erreur lors de la lecture de la map, Objet inconu <%d>", (int)l_map->getBlock(pos)->element);
 					break;
 				}
 			}

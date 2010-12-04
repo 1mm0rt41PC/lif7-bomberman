@@ -1,11 +1,10 @@
 #ifndef BONUS_h
 #define BONUS_h
 
-#include "debug.h"
-#include "coordonnees.h"
-#include "outils.h"
 #include <vector>
 #include <time.h>
+#include "coordonnees.h"
+#include "outils.h"
 
 /*!
 * @class bonus
@@ -55,17 +54,17 @@ class bonus
 		* @brief Cette structure accueil la propriété des bonus
 		*/
 		typedef struct {
-			//t_Bonus type; // <- Le type est stocké dans le numéro du tableau [0] -> [t_Bonus::bombe]
-			unsigned char probabiliter_pop;//!< Pourcentage q'un bonus pop (valeur: entre 0 et 100 au max)
-			unsigned char quantite_MAX_Ramassable;//!< Quantité max qu'un joueur peut avoir d'un objet
 			/**
-			* @var duree
+			* @var bonus::s_bonus_proprieter::duree
 			* La durée peut avoir 3 status<br />
 			* - -1 => Pas de callback
 			* - +0 => Callback direct
 			* - >0 => Callback au bout de X secs
 			*/
-			int duree;// Durée d'utilisation
+			char duree;// Durée d'utilisation
+			//t_Bonus type; // <- Le type est stocké dans le numéro du tableau [0] -> [t_Bonus::bombe]
+			unsigned char probabiliter_pop;//!< Pourcentage q'un bonus pop (valeur: entre 0 et 100 au max)
+			unsigned char quantite_MAX_Ramassable;//!< Quantité max qu'un joueur peut avoir d'un objet
 		} s_bonus_proprieter;
 
 	private:
@@ -76,11 +75,12 @@ class bonus
 		* ( un tableau de cette structure forme l'ensemble des bonus d'un joueur )
 		* quantite_utilisable: Nombre d'objet possédé actuellement et utilisable
 		* quantite_MAX_en_stock: Quantité Maxi d'un objet ( ex: 5 bonus de type bombe => 5 Bombes max en stock ! )
+		* @note Passe -Wpadded pour 32bit (4o)
 		*/
-		typedef struct {
-			t_Bonus type;//!< Le bonus
-			unsigned char quantite_utilisable;//!< Nombre d'objet possédé actuellement et utilisable
-			unsigned char quantite_MAX_en_stock;//!< Quantité Maxi d'un objet
+public : typedef struct {
+			t_Bonus type;//!< Le bonus (2o)
+			unsigned char quantite_utilisable;//!< Nombre d'objet possédé actuellement et utilisable (1o)
+			unsigned char quantite_MAX_en_stock;//!< Quantité Maxi d'un objet (1o)
 		} s_bonus;
 
 		/*!
@@ -89,19 +89,20 @@ class bonus
 		*
 		* Exemple: C'est par elle que l'on sait quand une bombe explose.<br />
 		* Elle fourni, le Où  et Quand.<br />
+		* @note Passe -Wpadded pour 32bit (16o)
 		*/
 		typedef struct {
-			t_Bonus type;//!< Le bonus
-			s_Coordonnees pos;//!< Position de la bombe posé
-			clock_t finEvent;//!< Temps avant la fin de l'event
+			s_Coordonnees pos;//!< Position de la bombe posé (8o)
+			time_t finEvent;//!< Temps avant la fin de l'event (4o)
+			t_Bonus type;//!< Le bonus (4o)
 		} s_Event;
 
+		std::vector<s_Event> c_listEvent;//!< Tableau contenant les bombes posées (12o)
 		// Varaible Générale ( Variables global à toutes les class )
-		static s_bonus_proprieter *C_bonusProp;//!< Liste des bonus chargé et utilisables sur la map ( cette var n'est remplis q'une fois ! (static) )
+		static s_bonus_proprieter* C_bonusProp;//!< Liste des bonus chargé et utilisables sur la map ( cette var n'est remplis q'une fois ! (static) )
 		// Varaibles Local à la class ( à l'instance de chaque class )
 		s_bonus* c_liste;//!< Liste des bonus attrapé par un player. ( bonus utilisable )
 		unsigned char c_nb;//!< Nombre de bonus obtenu par un player
-		std::vector<s_Event> c_listEvent;//!< Tableau contenant les bombes posées
 
 
 	public:

@@ -1,4 +1,5 @@
 #include "clavier.h"
+#include "debug.h"
 
 /***************************************************************************//*!
 * @fn clavier::clavier()
@@ -67,7 +68,7 @@ void clavier::defTouche( clavier::t_touche t, SYS_CLAVIER tsys )
 bool clavier::chargerConfig( FILE* fp, unsigned int nb_touches )
 {
 	if( !fp || !nb_touches ){
-		stdErrorVar("Erreur lors du chargement de la configuration du clavier ! {fp=%X; nb_touches=%u}\n", (unsigned int)fp, nb_touches);
+		stdError("Erreur lors du chargement de la configuration du clavier ! {fp=%X; nb_touches=%u}\n", (unsigned int)fp, nb_touches);
 		return 0;
 	}
 
@@ -141,7 +142,7 @@ SYS_CLAVIER clavier::touche( t_touche t ) const
 bool clavier::enregistrerConfig( FILE* fp )
 {
 	if( !c_touches || !c_nb_touches ){
-		stdErrorVar("Erreur lors de l'enregistrement de la configuration du clavier ! {c_touches=%X; c_nb_touches=%u}\n", (unsigned int)c_touches, c_nb_touches);
+		stdError("Erreur lors de l'enregistrement de la configuration du clavier ! {c_touches=%X; c_nb_touches=%u}\n", (unsigned int)c_touches, c_nb_touches);
 		return 0;
 	}
 	if( fwrite(c_touches, sizeof(SYS_CLAVIER), c_nb_touches, fp) != c_nb_touches ){

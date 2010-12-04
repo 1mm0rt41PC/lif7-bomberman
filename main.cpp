@@ -7,6 +7,9 @@
 	#include "moteur_sdl.h"
 #endif
 
+#include "debug.h"
+#include "debug_memory.h"
+
 /*******************************************************************************
 * CONVENTION DE PROGRAMATION !
 * Toutes les variables d'une class doivent commencer par "c_"
@@ -34,11 +37,8 @@ int main( int argc, char* arvg[] )
 	#ifdef __LIB_ncurses__
 		moteur_ncurses m;
 	#elif __LIB_SDL__
-		moteur_sdl m;
+		moteur_sdl& m = moteur_sdl::getInstance();
 	#endif
-
-	partie* jeu;
-
 
 	// Appel des menus
 	//**************************************************************************
@@ -91,8 +91,8 @@ int main( int argc, char* arvg[] )
 							while( m.getNombre("Entrez le nombre de joueur", 2, 2, 4, &tmp) != 3 )
 							{
 								// Menu suivant
-								jeu = new partie;
-								jeu->def_nbJoueurs(tmp);
+								partie jeu;
+								jeu.def_nbJoueurs(tmp);
 
 								nomJoueurNumI[0] = 0;
 								for( int i=0; i<tmp; i++ )
@@ -103,16 +103,16 @@ int main( int argc, char* arvg[] )
 										break;// Permet de remonter au menu au dessus
 									}
 
-									jeu->joueur(i)->defNom(nomJoueurNumI);
+									jeu.joueur(i)->defNom(nomJoueurNumI);
 									nomJoueurNumI[0] = 0;
 								}
 
 								if( !retourMenuAudessus ){
 									m.forcerRafraichissement();
-									jeu->main( m.afficherMapEtEvent );
+									//jeu.start( m, &CLASS_TO_USE::afficherMapEtEvent );
+									jeu.main( m.afficherMapEtEvent );
 								}
 								retourMenuAudessus = 0;
-								delete jeu;
 							}
 							break;
 						}
@@ -199,9 +199,12 @@ int main( int argc, char* arvg[] )
 		}
 	}while( entry != 3 );
 
+	//**************************************************************************
+	//**************************************************************************
 
-	//**************************************************************************
-	//**************************************************************************
+	#ifdef __LIB_SDL__
+		delete &m;
+	#endif
 
 
 	// Désinitialisation des options général

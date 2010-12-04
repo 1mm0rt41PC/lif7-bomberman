@@ -1,4 +1,5 @@
 #include "perso.h"
+#include "debug.h"
 
 using namespace std;
 
@@ -97,6 +98,8 @@ void perso::defX( unsigned int Xpos )
 */
 void perso::defArmements( bonus* a )
 {
+	if( c_armements )
+		delete c_armements;
 	c_armements = a;
 }
 

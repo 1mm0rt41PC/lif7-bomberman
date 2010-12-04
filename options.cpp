@@ -1,4 +1,5 @@
 #include "options.h"
+#include "debug.h"
 
 // NOTE A MOI MÊME : NE PAS OUBLIER D'INITIALISER CETTE SALTE DE MEMBRE STATIC AINSI !!! ( principe singleton )
 options* options::c_Instance = NULL;
@@ -27,7 +28,7 @@ options::options()
 		if( fread( &c_port, sizeof(unsigned int), 1, fp ) != 1 ){
 			// Si un bug lors de la lecture, on charge la config par défaut
 			fclose(fp);
-			stdErrorVar("Erreur lors de la lecture du fichier %s {port}", CONFIG_FILE);
+			stdError("Erreur lors de la lecture du fichier %s {port}", CONFIG_FILE);
 
 			configParDefaut();
 			return ;
@@ -39,7 +40,7 @@ options::options()
 		if( fread( &nb_touches, sizeof(unsigned int), 1, fp ) != 1 ){
 			// Si un bug lors de la lecture, on charge la config par défaut
 			fclose(fp);
-			stdErrorVar("Erreur lors de la lecture du fichier %s {nb_touches}", CONFIG_FILE);
+			stdError("Erreur lors de la lecture du fichier %s {nb_touches}", CONFIG_FILE);
 
 			configParDefaut();
 			return ;
@@ -49,7 +50,7 @@ options::options()
 		if( nb_touches == 0 ){
 			// Si un bug lors de la lecture, alors on RESET la config
 			fclose(fp);
-			stdErrorVar("Erreur lors de la lecture du fichier %s {nb_touches == 0 !?} => resetData()", CONFIG_FILE);
+			stdError("Erreur lors de la lecture du fichier %s {nb_touches == 0 !?} => resetData()", CONFIG_FILE);
 
 			remise_a_zero();
 			return ;
@@ -63,7 +64,7 @@ options::options()
 			if( !c_ClavierJoueur[i].chargerConfig( fp, nb_touches ) ){
 				// Si un bug lors de la lecture, on charge la config par défaut
 				fclose(fp);
-				stdErrorVar("Erreur lors de la lecture du clavier <%u>", i);
+				stdError("Erreur lors de la lecture du clavier <%u>", i);
 
 				configParDefaut();
 				return ;// On arrête tout
@@ -261,7 +262,7 @@ unsigned int options::port() const
 clavier* options::clavierJoueur( unsigned char clavier_numero )
 {
 	if( clavier_numero > 4 ){// Si le numero demandé est pas bon -> out
-		stdErrorVar("options::clavierJoueur( %d )", (int)clavier_numero);
+		stdError("options::clavierJoueur( %d )", (int)clavier_numero);
 		return 0;
 	}
 
@@ -291,7 +292,7 @@ void options::enregistrerConfig()
 {
 	FILE *fp=0;
 	if( !(fp=fopen(CONFIG_FILE, "wb")) ){
-		stdErrorVar("Erreur lors de l'ouverture du fichier <%s>", CONFIG_FILE);
+		stdError("Erreur lors de l'ouverture du fichier <%s>", CONFIG_FILE);
 		return ;
 	}
 
@@ -301,7 +302,7 @@ void options::enregistrerConfig()
 	if( fwrite( &c_port, sizeof(unsigned int), 1, fp) != 1 ){
 		// Si bug d'écriture on le signal et on stop tout !
 		fclose(fp);
-		stdErrorVar("Erreur lors de l'enregistrement du fichier <%s> {c_port=%d} => resetData()", CONFIG_FILE, c_port);
+		stdError("Erreur lors de l'enregistrement du fichier <%s> {c_port=%d} => resetData()", CONFIG_FILE, c_port);
 
 		// On remet à zéro la config du fichier pour éviter les bug zarb lors d'une lecture => del All !
 		supprimerFichierConfiguation();
@@ -312,7 +313,7 @@ void options::enregistrerConfig()
 	unsigned int nb_touches = c_ClavierJoueur[0].nb_touches();// On a au minimum le joueur 1
 	if( nb_touches == 0 ){// ON PEUT PAS AVOIR 0 TOUCHES !
 		fclose(fp);
-		stdErrorVar("Erreur lors de l'enregistrement du fichier %s {nb_touches == 0 !?} => resetData()", CONFIG_FILE);
+		stdError("Erreur lors de l'enregistrement du fichier %s {nb_touches == 0 !?} => resetData()", CONFIG_FILE);
 
 		// On remet à zéro la config du fichier pour éviter les bug zarb lors d'une lecture => del All !
 		supprimerFichierConfiguation();
@@ -325,7 +326,7 @@ void options::enregistrerConfig()
 	if( fwrite( &nb_touches , sizeof(unsigned int), 1, fp) != 1 ){
 		// Si bug d'écriture on le signal et on stop tout !
 		fclose(fp);
-		stdErrorVar("Erreur lors de l'enregistrement du fichier <%s> {nb_touches=%d;}", CONFIG_FILE, nb_touches);
+		stdError("Erreur lors de l'enregistrement du fichier <%s> {nb_touches=%d;}", CONFIG_FILE, nb_touches);
 
 		// On remet à zéro la config du fichier pour éviter les bug zarb lors d'une lecture => del All !
 		supprimerFichierConfiguation();
@@ -340,7 +341,7 @@ void options::enregistrerConfig()
 		if(! c_ClavierJoueur[i].enregistrerConfig(fp) ){
 			// Si bug d'écriture on le signal et on stop tout !
 			fclose(fp);
-			stdErrorVar("Erreur lors de l'enregistrement du clavier <%d>", (int)i);
+			stdError("Erreur lors de l'enregistrement du clavier <%d>", (int)i);
 
 			// On remet à zéro la config du fichier pour éviter les bug zarb lors d'une lecture => del All !
 			supprimerFichierConfiguation();
@@ -359,5 +360,5 @@ void options::enregistrerConfig()
 void options::supprimerFichierConfiguation() const
 {
 	if( remove(CONFIG_FILE) != 0 )
-		stdErrorVar("Erreur lors de la suppression du fichier <%s>", CONFIG_FILE);
+		stdError("Erreur lors de la suppression du fichier <%s>", CONFIG_FILE);
 }

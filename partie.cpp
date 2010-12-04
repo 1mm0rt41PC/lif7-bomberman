@@ -1,4 +1,5 @@
 #include "partie.h"
+#include "debug.h"
 
 /***************************************************************************//*!
 * @fn partie::partie()
@@ -41,7 +42,7 @@ partie::~partie()
 void partie::genMap()
 {
 	if( !c_nb_joueurs || !c_joueurs )
-		stdErrorVarE("Initialiser les perso avant la map !!! c_nb_joueurs(%u) c_joueurs(%u)", (unsigned int)c_nb_joueurs, (unsigned int)c_joueurs);
+		stdErrorE("Initialiser les perso avant la map !!! c_nb_joueurs(%u) c_joueurs(%u)", (unsigned int)c_nb_joueurs, (unsigned int)c_joueurs);
 
 	if( c_map )
 		delete c_map;
@@ -66,7 +67,7 @@ void partie::genMap()
 void partie::def_nbJoueurs( unsigned char nb )
 {
 	if( c_nb_joueurs && c_joueurs ){
-		stdErrorVar("c_nb_joueurs(%u), c_joueurs(%X)", (unsigned int)c_nb_joueurs, (unsigned int)c_joueurs);
+		stdError("c_nb_joueurs(%u), c_joueurs(%X)", (unsigned int)c_nb_joueurs, (unsigned int)c_joueurs);
 		delete[] c_joueurs;
 	}
 	c_nb_joueurs = nb;
@@ -119,7 +120,7 @@ unsigned char partie::nbMAX_joueurs() const
 perso* partie::joueur( unsigned int joueur_numero ) const
 {
 	if( joueur_numero >= c_nb_joueurs || !c_joueurs ){
-		stdErrorVar("joueur_numero(%u) >= c_nb_joueurs(%u) || !c_joueurs(%X)", (unsigned int)joueur_numero, (unsigned int)c_nb_joueurs, (unsigned int)c_joueurs);
+		stdError("joueur_numero(%u) >= c_nb_joueurs(%u) || !c_joueurs(%X)", (unsigned int)joueur_numero, (unsigned int)c_nb_joueurs, (unsigned int)c_joueurs);
 		return 0;
 	}
 	return c_joueurs+joueur_numero;
@@ -161,7 +162,7 @@ unsigned char partie::nbJoueurVivant() const
 
 
 /***************************************************************************//*!
-* @fn void partie::main( libAff* afficherMapEtEvent )
+* @fn void partie::main( libAff * afficherMapEtEvent )
 * @brief Lance le jeu
 * @param[in] afficherMapEtEvent La fonction qui va servir à afficher la map
 *
@@ -170,7 +171,8 @@ unsigned char partie::nbJoueurVivant() const
 *
 * @warning Toutes les variables doivent être correctement initialisées !
 */
-void partie::main( libAff* afficherMapEtEvent )
+//void partie::start( CLASS_TO_USE& moteur, fctAff afficherMapEtEvent )
+void partie::main( libAff * afficherMapEtEvent )
 {
 	if( !afficherMapEtEvent )
 		stdErrorE("Fonction d'affichage incorrect ! (afficherMapEtEvent=0)");
@@ -191,14 +193,14 @@ void partie::main( libAff* afficherMapEtEvent )
 	int i=0;
 	bool continuerScanClavier=1;
 	options* opt = options::getInstance();
-	s_Coordonnees pos={0};
+	s_Coordonnees pos={0,0};
 	s_Event e;
 
 	// Commencement de la partie
 	do{
 		// Affichage de la map et récéption des Event
+		//key = moteur.afficherMapEtEvent( this );
 		key = afficherMapEtEvent( this );
-
 
 		/***********************************************************************
 		* On parcours les joueurs
@@ -299,7 +301,7 @@ void partie::main( libAff* afficherMapEtEvent )
 					break;
 				}
 				default: {
-					stdErrorVarE("Touche envoyé par le joueur %d est inconnue : %d", (int)opt->clavierJoueur(i)->obtenirTouche(key), (int)key);
+					stdErrorE("Touche envoyé par le joueur %d est inconnue : %d", (int)opt->clavierJoueur(i)->obtenirTouche(key), (int)key);
 					break;
 				}
 			}
@@ -347,7 +349,7 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 		stdErrorE("Initialiser les joueurs avant !");
 
 	if( joueur >= c_nb_joueurs )
-		stdErrorVarE("Le joueur %d n'existe pas ! Impossible de déplacer le joueur !", joueur);
+		stdErrorE("Le joueur %d n'existe pas ! Impossible de déplacer le joueur !", joueur);
 
 	// Ce qui a sur la nouvelle case
 	elementNouvellePosition = c_map->getBlock(newX, newY)->element;
@@ -372,7 +374,7 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 	* Anti bug
 	*/
 	if( elementNouvellePosition == map::inconnu )
-		stdErrorVarE("Objet inconnu dans la map à X=%d, Y=%d !", newX, newY);
+		stdErrorE("Objet inconnu dans la map à X=%d, Y=%d !", newX, newY);
 
 	// Tout est Ok, on déplace le perso
 
@@ -406,7 +408,7 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 			}
 
 			default: {
-				stdErrorVar("cas NON traite %d", (int)c_map->getBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y())->element);
+				stdError("cas NON traite %d", (int)c_map->getBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y())->element);
 				break;
 			}
 		}
@@ -446,7 +448,7 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 			break;
 		}
 		default: {
-			stdErrorVarE("Cas non pris en charge c_map->getBlock(%u, %u).element=%d", newX, newY, elementNouvellePosition);
+			stdErrorE("Cas non pris en charge c_map->getBlock(%u, %u).element=%d", newX, newY, elementNouvellePosition);
 		}
 	}
 }
