@@ -1,9 +1,8 @@
 #ifndef PERSO_h
 #define PERSO_h
 
-#include "bonus.h"
-#include "debug.h"
 #include <string>
+#include "bonus.h"
 
 
 /*!

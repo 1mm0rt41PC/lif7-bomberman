@@ -1,8 +1,9 @@
 #ifndef MOTEUR_NCURSES_h
 #define MOTEUR_NCURSES_h
+
+#include <string.h>// Pour strlen()
 #include "partie.h"
 #include "config.h"
-#include <string.h>// Pour strlen()
 
 
 /* curses.h

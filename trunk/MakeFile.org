@@ -3,13 +3,19 @@ LIB_AFF = ncurses
 # Compilateur
 CXX = g++
 # Flags de Compilation
-CFLAGS := -Wall
+CFLAGS := -W -Wall -Wextra -Wdeprecated -Wuninitialized -Wunused-variable -Wvariadic-macros -Winline -Wredundant-decls -Wunused-macros
+#CFLAGS += -Wpadded -Werror
+# A NE PAS UTILISER AVEC SDL
+#CFLAGS += -fshort-enums
 #Flags pour le linker
-LDFLAGS :=
-# Mode Debug (décommenter cette ligne pour activer le mode debug forcé)
+# Permet d'inclure en dure les dll : libgcc_s_dw2-1.dll, libstdc++-6.dll
+#LDFLAGS := -static-libstdc++ -static-libgcc
+# Mode Debug (décommenter cette ligne pour activer le mode debug forcé) (identique a la commande: make debug)
 #DEBUG = 1
 # Lancer automatiquement gdb après chaque compilation en mode debug ( make exec ! )
 DEBUG_AUTO_EXEC_GDB = oui
+# Tracage mémoire (no leaks) (décommenter cette ligne pour activer le mode debug forcé) (identique a la commande: make memcheck)
+DEBUG_MEMORY = 1
 
 # Fichiers contenant les dépendances
 DEP = .depend
@@ -34,6 +40,7 @@ ifeq ($(SHELL), sh.exe)
 	CMD_CLEAR = cls
 	CMD_LINEFEED = @echo. && @echo . > NUL
 	CMD_SED = "%CD%\.tools\sed.exe"
+	CMD_CAT = type
 	ECHO=@echo $(1)$(if $(2),$(ECHO_,)$(2))$(if $(3),$(ECHO_,)$(3))$(if $(4),$(ECHO_,)$(4))$(if $(5),$(ECHO_,)$(5))
 	NULL = NUL
 else
@@ -43,6 +50,7 @@ else
 	CMD_CLEAR = clear
 	CMD_LINEFEED = @echo ""
 	CMD_SED = /bin/sed
+	CMD_CAT = /bin/cat
 	ECHO=@echo "$(1)$(if $(2),$(ECHO_,)$(2))$(if $(3),$(ECHO_,)$(3))$(if $(4),$(ECHO_,)$(4))$(if $(5),$(ECHO_,)$(5))"
 	NULL = /dev/null
 endif
@@ -60,10 +68,10 @@ ifeq ($(findstring sdl,$(MAKECMDGOALS)) ,ncurses)
 	LIB_AFF = ncurses
 else
 	ifeq ($(findstring sdl,$(MAKECMDGOALS)) ,sdl)
-		LIB_AFF = sdl
+		LIB_AFF = SDL
 	else
 		ifeq ($(findstring sdl,$(MAKECMDGOALS)) ,sfml)
-			LIB_AFF = sfml
+			LIB_AFF = SFML
 		endif
 	endif
 endif
@@ -71,10 +79,17 @@ endif
 # Ajustement des directives de précompilation
 CFLAGS += -D__LIB_${LIB_AFF}__
 
+# Mode débug mémoire ?
+USE_DEBUG_MEMORY = $(or $(findstring memcheck,$(MAKECMDGOALS)),$(findstring memchk,$(MAKECMDGOALS)),$(DEBUG_MEMORY))
+ifneq ($(USE_DEBUG_MEMORY),)
+	CFLAGS += -D__DEBUG_MEMORY__
+	SRC += debug_memory.cpp
+endif
+
 # Met en mode debug ou non
-USE_DEBUG = $(if $(or $(findstring debug,$(MAKECMDGOALS)),$(DEBUG)) ,-ggdb)
+USE_DEBUG = $(or $(findstring debug,$(MAKECMDGOALS)),$(DEBUG))
 ifneq ($(USE_DEBUG),)
-	CFLAGS += $(USE_DEBUG)
+	CFLAGS += -ggdb3
 endif
 
 # Lib a utiliser ( /!\ Peut changer en fonction de l'OS OU du système d'affichage /!\ )
@@ -87,7 +102,7 @@ ifeq ($(LIB_AFF), ncurses)
 	endif
 	SRC += moteur_ncurses.cpp
 else
-	ifeq ($(LIB_AFF), sdl)
+	ifeq ($(LIB_AFF), SDL)
 # 		SDL
 		ifeq ($(OS), win)
 			LDFLAGS += -lmingw32 -lSDLmain
@@ -109,7 +124,7 @@ OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(SRC:.cpp=.o))
 
 # Simple Make
 all: $(BIN_DIR)/$(EXEC_NAME)
-$(BIN_DIR)/$(EXEC_NAME): $(BIN_DIR) $(OBJ_DIR) $(if $(USE_DEBUG) ,$(OBJ_DIR)/config_${OS}_debug_${LIB_AFF}, $(OBJ_DIR)/config_${OS}_release_${LIB_AFF}) $(DEP) $(OBJ_FILES)
+$(BIN_DIR)/$(EXEC_NAME): $(BIN_DIR) $(OBJ_DIR) $(OBJ_DIR)/config_${OS}_$(if $(USE_DEBUG),debug,release)_$(if $(USE_DEBUG_MEMORY),memckeck_)${LIB_AFF} $(DEP) $(OBJ_FILES)
 	$(CMD_LINEFEED)
 	@echo Creation de l executable $(if $(USE_DEBUG) ,en mode Debug)
 	$(CXX) -o $(BIN_DIR)/$(EXEC_NAME) $(OBJ_FILES) $(LDFLAGS)
@@ -120,7 +135,7 @@ $(BIN_DIR)/$(EXEC_NAME): $(BIN_DIR) $(OBJ_DIR) $(if $(USE_DEBUG) ,$(OBJ_DIR)/con
 
 
 # Génération des fichier .o ( dans le repertoire $(OBJ_DIR) )
-$(OBJ_DIR)/%.o: %.cpp
+$(OBJ_DIR)/%.o: %.cpp MakeFile.org
 	$(CMD_LINEFEED)
 	@echo Generation de $@ $(if $(USE_DEBUG) ,en mode Debug)
 	$(CXX) $(CFLAGS) -o $@ -c $<
@@ -151,7 +166,7 @@ $(OBJ_DIR):
 ################################################################################
 
 # Make depend ( régénération manuel des dep )
-.PHONY: depend dep exec valgrind clean clean_dep pfiles help debug ncurses sdl sfml doxygen $(OBJ_DIR)/config_% no_clear
+.PHONY: depend dep exec valgrind clean clean_dep pfiles help debug ncurses sdl sfml doxygen no_clear memcheck memchk
 depend: $(DEP)
 dep: $(DEP)
 
@@ -163,9 +178,14 @@ no_clear:
 # Lancer le prog
 exec: $(BIN_DIR)/$(EXEC_NAME)
 ifeq ($(OS), linux)
-	cd $(BIN_DIR) && $(if $(and $(USE_DEBUG),$(DEBUG_AUTO_EXEC_GDB)), gdb $(EXEC_NAME), ./$(EXEC_NAME))
+	cd $(BIN_DIR) && $(if $(and $(USE_DEBUG),$(DEBUG_AUTO_EXEC_GDB)) ,gdb $(EXEC_NAME) ,./$(EXEC_NAME))
 else
-	cd $(BIN_DIR) && $(if $(and $(USE_DEBUG),$(DEBUG_AUTO_EXEC_GDB)), gdb $(EXEC_NAME), $(EXEC_NAME))
+	cd $(BIN_DIR) && $(if $(and $(USE_DEBUG),$(DEBUG_AUTO_EXEC_GDB)) ,gdb $(EXEC_NAME) ,$(EXEC_NAME))
+endif
+# On look si on a fait appel a memcheck => On affiche le résultat
+ifneq ($(or $(findstring memcheck,$(MAKECMDGOALS)),$(findstring memchk,$(MAKECMDGOALS)),$(DEBUG_MEMORY)),)
+	$(call ECHO ,Detail des allocations memoires ${ECHO_(}Fichier: bin/allocations.txt${ECHO_)})
+	@cd bin && $(CMD_CAT) allocations.txt
 endif
 
 
@@ -183,6 +203,11 @@ sdl: $(BIN_DIR)/$(EXEC_NAME)
 
 # Regle pour le mode sfml
 sfml: $(BIN_DIR)/$(EXEC_NAME)
+
+
+# Règle pour effectuer un MemCheck sur le prog
+memchk: $(BIN_DIR)/$(EXEC_NAME)
+memcheck: $(BIN_DIR)/$(EXEC_NAME)
 
 
 # Cette règle permet de savoir si on était en mode debug ou pas
@@ -273,6 +298,11 @@ help:
 	$(call ECHO ,	tar:		Archive les fichiers dans un fichier tar.bz2)
 	$(call ECHO ,	doxygen:	Execute doxygen sur le projet.)
 	$(call ECHO ,	no_clear:	Annule tous les effacements d'ecran)
+	$(call ECHO ,	exec:		{make all} et execute l'executable obtenu.)
+	$(call ECHO ,	memcheck:	{make all} avec ajout du systeme de debug memoire, )
+	$(call ECHO ,			execute l'executable obtenu et retourne les resultats)
+	$(call ECHO ,			memoire.)
+	$(call ECHO ,	memchk:		Alias de memcheck)
 	$(call ECHO ,	exec:		{make all} et execute l'executable obtenu.)
 	$(call ECHO ,	pfiles:		Affiche les fichiers utilises)
 	$(call ECHO ,	help:		Affiche cette aide.)

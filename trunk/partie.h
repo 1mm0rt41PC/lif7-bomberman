@@ -5,9 +5,10 @@
 #include "perso.h"
 #include "map.h"
 
-// Vitesse de déflagration en milli-sec
-#define VITESSE_DEFLAGRATION_FLAMME 500
 
+
+// Vitesse de déflagration en milli-sec
+#define VITESSE_DEFLAGRATION_FLAMME CLOCKS_PER_SEC/20
 
 class partie
 {
@@ -19,18 +20,18 @@ class partie
 		* Exemple: La duréer d'une animation
 		*/
 		typedef struct {
-			bonus::t_Bonus				type;//!< Type de bonus
-			unsigned char				joueur;//!< Le joueur qui est la cause de l'event
+			std::vector<s_Coordonnees>	listBlockDetruit;//!< Contient la liste des block qui ont été détruit => Bonus a la clef ^^
+			std::vector<s_Coordonnees>	deflagration;//!< Contient la position de tous block qui ont été touchés par la déflagration
 			s_Coordonnees				pos;//!< Position Originel de l'event
+			bonus::t_Bonus				type;//!< Type de bonus
+			clock_t						repetionSuivante;//!< Time de la prochaine répétion
+			unsigned char				joueur;//!< Le joueur qui est la cause de l'event
+			unsigned char				Nb_Repetition;//!< Nombre de répétition actuel pour l'event
+			unsigned char				Nb_Repetition_MAX;//!< Nombre de répétition MAX pour l'event
 			bool						continue_X,
 										continue_negativeX,
 										continue_Y,
 										continue_negativeY;
-			unsigned char				Nb_Repetition;//!< Nombre de répétition actuel pour l'event
-			unsigned char				Nb_Repetition_MAX;//!< Nombre de répétition MAX pour l'event
-			clock_t						repetionSuivante;//!< Time de la prochaine répétion
-			std::vector<s_Coordonnees>	listBlockDetruit;//!< Contient la liste des block qui ont été détruit => Bonus a la clef ^^
-			std::vector<s_Coordonnees>	deflagration;//!< Contient la position de tous block qui ont été touchés par la déflagration
 		} s_Event;
 
 
@@ -49,17 +50,18 @@ class partie
 		*
 		* @see partie::main(libAff * afficherMapEtEvent);
 		*/
+		//typedef SYS_CLAVIER(CLASS_TO_USE::*fctAff)(const partie*);
 		typedef SYS_CLAVIER(libAff)(const partie*);
 
 
 	private:
 		// struct {
-			map*							c_map;// SIMPLE POINTEUR !
-			unsigned char					c_nb_joueurs;
-			unsigned char					c_nb_MAX_joueurs;
-			perso*							c_joueurs;// Tableau
-			t_MODE							c_mode;
 			std::vector<s_Event>			c_listEvent;
+			map*							c_map;// SIMPLE POINTEUR !
+			perso*							c_joueurs;// Tableau
+			t_MODE							c_mode;//4
+			unsigned char					c_nb_joueurs;//1
+			unsigned char					c_nb_MAX_joueurs;//1
 		// }
 
 		void deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned char joueur );
@@ -87,7 +89,8 @@ class partie
 		unsigned char nbJoueurVivant() const;
 
 		// Autres
-		void main(libAff * afficherMapEtEvent);
+		//void start( CLASS_TO_USE& moteur, fctAff afficherMapEtEvent );
+		void main( libAff * afficherMapEtEvent );
 };
 
 #endif

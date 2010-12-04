@@ -1,10 +1,8 @@
 #ifndef CLAVIER_h
 #define CLAVIER_h
 
-#include "config.h"
-#include "debug.h"
 #include <stdio.h> // Pour fread, fwrite
-
+#include "config.h"
 
 /*!
 * @class clavier

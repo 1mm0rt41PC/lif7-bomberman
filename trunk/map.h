@@ -1,14 +1,13 @@
 #ifndef MAP_h
 #define MAP_h
 
-#include "debug.h"
-#include "coordonnees.h"
-#include "bonus.h"
-#include "outils.h"
 #include <stdlib.h>// Pour fopen, fread
 #include <vector>
 #include <string>
 #include <dirent.h>
+#include "coordonnees.h"
+#include "bonus.h"
+#include "outils.h"
 
 /*!
 * @class map
@@ -94,19 +93,19 @@ class map
 		*		2 à ...) Les num des joueurs qui sont à cette position.<br />
 		*/
 		typedef struct {
-			t_type element;//!< type d'element.
 			std::vector<unsigned char>* joueur;//!< La liste est ici pour obtenir des info sur le perso à l'origine du type t.
+			t_type element;//!< type d'element.
 		} s_Case;
 
 
 	// Variables
 	private:
 		// struct map {
-		s_Case *c_block;//!< Tableau de case => la map en entère
+		std::vector<s_Coordonnees> c_listDesChangement;//!< Les changement qui ont eu lieu sur la map
 		s_Coordonnees c_taille;//!< Taille de la map
+		s_Case *c_block;//!< Tableau de case => la map en entère
 		s_Coordonnees *c_PointDeDepartJoueur;//!< Liste des points de départ des joueurs ({point_de_depart_jXXX} numJ)
 		unsigned char c_nb_PointDeDepartJoueur;//!< Le nombre de points de départ => le nombre maximum de joueur sur une map
-		std::vector<s_Coordonnees> c_listDesChangement;//!< Les changement qui ont eu lieu sur la map
 		//}
 
 

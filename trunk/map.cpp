@@ -1,4 +1,5 @@
 #include "map.h"
+#include "debug.h"
 
 using namespace std;
 
@@ -84,7 +85,7 @@ map::~map()
 void map::setBlock( unsigned int X, unsigned int Y, map::t_type what )
 {
 	if( !c_block || X >= c_taille.x || Y >= c_taille.y )
-		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, what=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, what);
+		stdErrorE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, what=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, what);
 
 	c_block[X * c_taille.x + Y].element = what;
 	c_listDesChangement.push_back( coordonneeConvert(X,Y) );
@@ -105,7 +106,7 @@ void map::setBlock( unsigned int X, unsigned int Y, map::t_type what )
 void map::ajouterInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierePosition )
 {
 	if( !c_block || X >= c_taille.x || Y >= c_taille.y )
-		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, id_Joueur=%d, premierePosition=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, (int)id_Joueur, (int)premierePosition);
+		stdErrorE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, id_Joueur=%d, premierePosition=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, (int)id_Joueur, (int)premierePosition);
 
 	s_Case* c = c_block + (X * c_taille.x + Y);
 
@@ -135,13 +136,13 @@ void map::rmInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur,
 	vector<unsigned char>* vct = NULL;
 
 	if( !c_block || X >= c_taille.x || Y >= c_taille.y )
-		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, id_Joueur=%u, premierEltInclu=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, (unsigned int)id_Joueur, (int)premierEltInclu);
+		stdErrorE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, id_Joueur=%u, premierEltInclu=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, (unsigned int)id_Joueur, (int)premierEltInclu);
 
 	if( id_Joueur == 0 )
-		stdErrorVarE("ID de joueur incorrect ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, id_Joueur=%u, premierEltInclu=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, (unsigned int)id_Joueur, (int)premierEltInclu);
+		stdErrorE("ID de joueur incorrect ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, id_Joueur=%u, premierEltInclu=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, (unsigned int)id_Joueur, (int)premierEltInclu);
 
 	if( !(vct = c_block[X * c_taille.x + Y].joueur) )
-		stdErrorVarE("Pas de meta donnée pour le block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, id_Joueur=%u, premierEltInclu=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, (unsigned int)id_Joueur, (int)premierEltInclu);
+		stdErrorE("Pas de meta donnée pour le block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, id_Joueur=%u, premierEltInclu=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, (unsigned int)id_Joueur, (int)premierEltInclu);
 
 	for( unsigned int i=!premierEltInclu; i<vct->size(); i++ )
 	{
@@ -160,7 +161,7 @@ void map::rmInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur,
 void map::rmInfoJoueur( unsigned int X, unsigned int Y )
 {
 	if( !c_block || X >= c_taille.x || Y >= c_taille.y )
-		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y);
+		stdErrorE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y);
 
 	if( c_block[X * c_taille.x + Y].joueur )
 		c_block[X * c_taille.x + Y].joueur->clear();
@@ -233,28 +234,28 @@ int map::chargerMap( const char fichier[] )
 	}
 
 	if( !(fp=fopen(fichierUtiliser, "r")) )
-		stdErrorVarE("Erreur lors de l'ouverture de la map <%s>", fichierUtiliser);
+		stdErrorE("Erreur lors de l'ouverture de la map <%s>", fichierUtiliser);
 
 	if( fscanf(fp, "%2u %2u %2u\n", &c_taille.x, &c_taille.y, (unsigned int*)&c_nb_PointDeDepartJoueur) != 3 ){
 		fclose(fp);
-		stdErrorVarE("Erreur lors de la lecture du fichier <%s>", fichierUtiliser);
+		stdErrorE("Erreur lors de la lecture du fichier <%s>", fichierUtiliser);
 	}
 
 	// Bonne dimension ?
 	if( !c_taille.x || !c_taille.y )
-		stdErrorVarE("Les dimensions de la map sont incorrect ! c_taille=(%u,%u)", c_taille.x, c_taille.y);
+		stdErrorE("Les dimensions de la map sont incorrect ! c_taille=(%u,%u)", c_taille.x, c_taille.y);
 
 	// Nombre de joueur correct
 	if( !c_nb_PointDeDepartJoueur )
-		stdErrorVarE("Le nombre de joueur pour la map ( ou nombre de point de départ ) est incorrect ! c_nb_PointDeDepartJoueur=%u", c_nb_PointDeDepartJoueur);
+		stdErrorE("Le nombre de joueur pour la map ( ou nombre de point de départ ) est incorrect ! c_nb_PointDeDepartJoueur=%u", c_nb_PointDeDepartJoueur);
 
 	// Allocation de la map
 	if( !(c_block = new s_Case[ c_taille.x * c_taille.y ]) )
-		stdErrorVarE("Erreur lors de l'allocation de la mémoire ! c_taille=(%u,%u)", c_taille.x, c_taille.y);
+		stdErrorE("Erreur lors de l'allocation de la mémoire ! c_taille=(%u,%u)", c_taille.x, c_taille.y);
 
 	// Allocation des points de départ
 	if( !(c_PointDeDepartJoueur = new s_Coordonnees[ c_nb_PointDeDepartJoueur ]) )
-		stdErrorVarE("Erreur lors de l'allocation de la mémoire ! c_taille=(%u,%u)", c_taille.x, c_taille.y);
+		stdErrorE("Erreur lors de l'allocation de la mémoire ! c_taille=(%u,%u)", c_taille.x, c_taille.y);
 
 
 	for( unsigned int y=0,x; y<c_taille.y; y++ )
@@ -264,7 +265,7 @@ int map::chargerMap( const char fichier[] )
 			switch( c=fgetc(fp) )
 			{
 				case EOF:{
-					stdErrorVarE("Fin de fichier prématuré ! x=%u, y=%u, c_taille=(%u,%u), <%s>", x, y, c_taille.x, c_taille.y, fichierUtiliser);
+					stdErrorE("Fin de fichier prématuré ! x=%u, y=%u, c_taille=(%u,%u), <%s>", x, y, c_taille.x, c_taille.y, fichierUtiliser);
 					break;
 				}
 				case '1':
@@ -275,7 +276,7 @@ int map::chargerMap( const char fichier[] )
 
 					// On vérif que l'on a pas un joueur qui soit en dehors de ce que l'on a réservé
 					if( c > c_nb_PointDeDepartJoueur )
-						stdErrorVarE("Joueur inconnu dans la map <%s> ! x=%u, y=%u, joueur=%d", fichierUtiliser, x, y, (int)c);
+						stdErrorE("Joueur inconnu dans la map <%s> ! x=%u, y=%u, joueur=%d", fichierUtiliser, x, y, (int)c);
 
 					c_PointDeDepartJoueur[c-1].x = x;
 					c_PointDeDepartJoueur[c-1].y = y;
@@ -295,7 +296,7 @@ int map::chargerMap( const char fichier[] )
 					break;
 				}
 				default:{
-					stdErrorVarE("Caractère inatendu dans le fichier <%s> : (code)%d, (aff)%c, x=%u, y=%u", fichierUtiliser, (int)c, c, x, y);
+					stdErrorE("Caractère inatendu dans le fichier <%s> : (code)%d, (aff)%c, x=%u, y=%u", fichierUtiliser, (int)c, c, x, y);
 					break;
 				}
 			}
@@ -353,10 +354,10 @@ void map::readDir( vector<string>* files )
 s_Coordonnees map::mettreJoueurA_sa_PositionInitial( unsigned char joueur )
 {
 	if( joueur == 0 || joueur > c_nb_PointDeDepartJoueur )
-		stdErrorVarE("Le numéro de joueur Doit être entre 1 et %d ! mettreJoueurA_sa_PositionInitial( %d )", (int)c_nb_PointDeDepartJoueur, (int)joueur);
+		stdErrorE("Le numéro de joueur Doit être entre 1 et %d ! mettreJoueurA_sa_PositionInitial( %d )", (int)c_nb_PointDeDepartJoueur, (int)joueur);
 
 	if( !c_block || c_PointDeDepartJoueur[joueur-1].x >= c_taille.x || c_PointDeDepartJoueur[joueur-1].y >= c_taille.y )
-		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, Joueur=%u", (unsigned int)c_block, c_taille.x, c_taille.y, c_PointDeDepartJoueur[joueur-1].x, c_PointDeDepartJoueur[joueur-1].y, (unsigned int)joueur);
+		stdErrorE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, Joueur=%u", (unsigned int)c_block, c_taille.x, c_taille.y, c_PointDeDepartJoueur[joueur-1].x, c_PointDeDepartJoueur[joueur-1].y, (unsigned int)joueur);
 
 	s_Case* c = &c_block[ c_PointDeDepartJoueur[joueur-1].x * c_taille.x + c_PointDeDepartJoueur[joueur-1].y ];
 	c->element = UN_joueur;
@@ -375,7 +376,7 @@ s_Coordonnees map::mettreJoueurA_sa_PositionInitial( unsigned char joueur )
 const map::s_Case* map::getBlock( unsigned int X, unsigned int Y ) const
 {
 	if( !c_block || X >= c_taille.x || Y >= c_taille.y )
-		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y);
+		stdErrorE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y);
 
 	return c_block+(X * c_taille.x + Y);
 }
@@ -397,7 +398,7 @@ s_Coordonnees map::positionInitialJoueur( unsigned char joueur ) const
 		stdErrorE("Charger une map correct avant d'appeler positionInitialJoueur() ! Il n'existe aucun point de départ !");
 
 	if( joueur > c_nb_PointDeDepartJoueur )
-		stdErrorVarE("Le joueur demandé ne peut être positionné sur cette map ! c_nb_PointDeDepartJoueur=%u, joueur=%u", (unsigned int)c_nb_PointDeDepartJoueur, (unsigned int)joueur);
+		stdErrorE("Le joueur demandé ne peut être positionné sur cette map ! c_nb_PointDeDepartJoueur=%u, joueur=%u", (unsigned int)c_nb_PointDeDepartJoueur, (unsigned int)joueur);
 
 	return c_PointDeDepartJoueur[joueur-1];
 }
@@ -410,7 +411,7 @@ s_Coordonnees map::positionInitialJoueur( unsigned char joueur ) const
 unsigned int map::nb_InfoJoueur( unsigned int X, unsigned int Y ) const
 {
 	if( !c_block || X >= c_taille.x || Y >= c_taille.y )
-		stdErrorVarE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y);
+		stdErrorE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y);
 
 	s_Case* c = c_block+(X * c_taille.x + Y);
 
