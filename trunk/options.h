@@ -14,7 +14,7 @@
 *
 * La class manipule le port de jeu et les claviers ( 4 min et 4 max => 4 claviers tout le temps ^^ )
 * <b>Il ne peut y avoir qu'une seule et unique instance de cette class !</b><br />
-* @underline Utilisation:<br />
+* <span style="text-decoration:underline;">Utilisation:</span><br />
 *	- Pour créer l'instance: option* optGeneral = options::getInstance();
 *	- Pour récup l'instance: option* optGeneral = options::getInstance();
 *

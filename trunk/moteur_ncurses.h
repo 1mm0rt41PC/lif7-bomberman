@@ -46,7 +46,6 @@
 * @brief Gère l'affichage via le moteur "graphique" NCurses
 *
 * @note Aucune variable n'est membre de ce module
-* @todo Déplacer moteur_ncurses::trimString( char texte[] ) vers un endroit plus approprié
 */
 class moteur_ncurses
 {

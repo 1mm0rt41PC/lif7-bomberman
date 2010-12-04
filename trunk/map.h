@@ -12,13 +12,6 @@
 /*!
 * @class map
 * @brief Gère une map.
-* @todo Coder les fonctions enleverAuBlock(), ajouterAuBlock()<br />
-* - PASSER std::vector<unsigned char>* joueur; -> std::vector<unsigned char> joueur; ???<br />
-* - PROBLEME : c'est la map où la partie qui defini quand on meure ?<br />
-* Une partie = map + play dessus + style de jeu<br />
-* MAIS<br />
-* une map c'est un ensemble de block avec des infos dont celle des joueurs<br />
-* Surcharger la map ? map(virtual)+map_F4A || map(virtual)+map_CTF
 */
 class map
 {

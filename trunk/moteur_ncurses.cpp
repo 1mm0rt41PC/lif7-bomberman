@@ -788,7 +788,7 @@ void moteur_ncurses::cleanline( WINDOW* win, int y, int x_begin, int x_end )
 /***************************************************************************//*!
 * @fn chtype moteur_ncurses::getCouleurJoueur( unsigned char joueur )
 * @brief Renvoie la couleur d'un joueur
-* @param[in] Numéro du joueur de 1 à ...
+* @param[in] joueur Numéro du joueur de 1 à ...
 * @return Renvoie la couleur à utiliser ( couleur directement utilisable dans wattron() )
 *
 * Exemple:

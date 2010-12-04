@@ -113,7 +113,7 @@ unsigned char partie::nbMAX_joueurs() const
 
 
 /***************************************************************************//*!
-* @fn perso* partie::joueur( unsigned int joueur_numero )
+* @fn perso* partie::joueur( unsigned int joueur_numero ) const
 * @brief Renvoie un joueur
 * @return 0 en cas de bug ! Un pointeur vers le joueur demandé sinon.
 */
@@ -325,7 +325,7 @@ void partie::main( libAff * afficherMapEtEvent )
 
 
 /***************************************************************************//*!
-* @fn void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY )
+* @fn void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned char joueur )
 * @brief Test si un personnage peut se déplacer à un endroit.
 * Si on peut déplacer le perso dans la zone demandé => on déplace le perso
 * SINON rien.
@@ -602,11 +602,11 @@ char partie::actionSurLesElements( s_Event* e, unsigned int x, unsigned int y, u
 
 
 /***************************************************************************//*!
-* @fn char partie::killPlayers( s_Event e, unsigned int x, unsigned int y )
+* @fn char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 * @brief Tue les joueurs et détruit les block destructibles (Mode: F4A)
+* @param[in,out] e L'event en cours
 * @param[in] x Position X de la map a check
 * @param[in] y Position Y de la map a check
-* @param[in] joueur Le joueur tueur ( The (Serial ?)killer ) ^^
 * @return 3 Valeur de retoures possible<br />
 *			- -1 On stop tout et on ne touche pas au block à cette adresse ! (Out of map ou Mur_INdestructible)
 *			-  0 On stop tout mais on traite le block à l'adresse (Mur_destructible)

@@ -99,6 +99,9 @@ void map::setBlock( unsigned int X, unsigned int Y, map::t_type what )
 /***************************************************************************//*!
 * @fn void map::ajouterInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierePosition )
 * @brief Ajoute des meta donnée ( ou info joueurs ) dans le block (X, Y)
+* @param[in] X Coordonnée
+* @param[in] Y Coordonnée
+* @param[in] id_Joueur L'id du joueur a ajouter au block (meta-info)
 * @param[in] premierePosition Placer l'id du joueur en 1ère position ?
 *
 * NOTE: Pour certain map::type comme bombe_poser, le 1er element représente l'id du joueur qui a posé l'objet
@@ -127,6 +130,9 @@ void map::ajouterInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Jo
 /***************************************************************************//*!
 * @fn void map::rmInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierEltInclu )
 * @brief Supprime les info du joueur du block (X, Y)
+* @param[in] X Coordonnée
+* @param[in] Y Coordonnée
+* @param[in] id_Joueur L'id du joueur a ajouter au block (meta-info)
 * @param[in] premierEltInclu Si le premier element dela liste est l'id du joueur => SUPPRIMER ?
 *
 * NOTE: Pour certain map::t_type comme @e bombe_poser, le 1er element représente l'id du joueur qui a posé l'objet
@@ -213,7 +219,6 @@ void map::setTaille( unsigned int tailleX, unsigned int tailleY )
 * Un fichier de map a une forme :<br />
 * X Y NB_Joueur\n<br />
 * #...#\n<br />
-* @todo Virer la ligne fichiers.at(r) = "lvl1.map";
 */
 int map::chargerMap( const char fichier[] )
 {
@@ -317,7 +322,7 @@ int map::chargerMap( const char fichier[] )
 * @param[in,out] files Dans cette variable sera stocké les nom des fichiers présent dans le dossier ./map
 * @attention Aucun fichier n'est préfixé du dossier !
 */
-void map::readDir( vector<string>* files )
+void map::readDir( std::vector<std::string>* files )
 {
 	DIR* dp;
 	dirent* dirp=0;

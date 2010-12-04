@@ -18,7 +18,7 @@ perso::perso()
 * @fn perso::perso( std::string nom, unsigned int Xpos, unsigned int Ypos )
 * @brief Constructeur surchargé
 */
-perso::perso( string nom, unsigned int Xpos, unsigned int Ypos )
+perso::perso( std::string nom, unsigned int Xpos, unsigned int Ypos )
 {
 	c_nom = nom;
 	c_pos.x = Xpos;
@@ -38,10 +38,10 @@ perso::~perso()
 
 
 /***************************************************************************//*!
-* @fn void perso::defNom( string nom )
+* @fn void perso::defNom( std::string nom )
 * @brief Modifie le nom du personnage
 */
-void perso::defNom( string nom )
+void perso::defNom( std::string nom )
 {
 	c_nom = nom;
 }

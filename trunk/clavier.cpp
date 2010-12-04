@@ -109,7 +109,6 @@ clavier::t_touche clavier::obtenirTouche( SYS_CLAVIER tsys ) const
 /***************************************************************************//*!
 * @fn unsigned int clavier::nb_touches() const
 * @brief Renvoie le nombre d'actions possibles sur ce clavier.
-* @param[in] tsys La touche que dont on veux connaitre l'appartenance vis à vis de ce clavier
 * @return Renvoie le nombre d'actions possibles sur ce clavier.
 *
 * Renvoie donc aussi le nombre de touches gérées par ce clavier.
