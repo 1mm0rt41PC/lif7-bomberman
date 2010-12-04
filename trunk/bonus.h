@@ -48,7 +48,9 @@ class bonus
 			puissance_flamme,
 			declancheur,
 			vitesse,
-			vie
+			vie,
+			// NE RIEN METTRE APRES CET ELEMENT. NE PAS COMPTER CETTE ELEMENT
+			__RIEN__//!< Sert pour bonus::getBonusAleatoire();
 		};
 
 		/*!

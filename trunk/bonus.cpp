@@ -529,13 +529,17 @@ bool bonus::isEvent( s_Coordonnees* pos )
 }
 
 
+/***************************************************************************//*!
+* @fn bonus::t_Bonus bonus::getBonusAleatoire()
+* @brief Renvoie un bonus aléatoire
+* @return Renvoie un bonus aléatoire
+*/
 bonus::t_Bonus bonus::getBonusAleatoire()
 {
 	int r;
 
-	do{
-		r = myRand(0,NB_ELEMENT_t_Bonus);
-		if( myRand(0,100) <= C_bonusProp[r].probabiliter_pop )
-			return (bonus::t_Bonus)r;
-	}while(1);
+	r = myRand(0,NB_ELEMENT_t_Bonus);
+	if( myRand(0,100) <= C_bonusProp[r].probabiliter_pop )
+		return (bonus::t_Bonus)r;
+	return __RIEN__;
 }
