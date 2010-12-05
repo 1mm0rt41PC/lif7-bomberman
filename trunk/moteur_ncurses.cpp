@@ -971,7 +971,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 								break;
 							}
 						}
-						mvwaddch( win, ypos+y, xpos+x, '?');
+						//mvwaddch( win, ypos+y, xpos+x, '?');
 						wattroff(win, COLOR_PAIR(MU_BLACK_MAGENTA));
 						break;
 					}

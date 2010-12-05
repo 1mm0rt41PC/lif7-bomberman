@@ -515,16 +515,29 @@ void bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned cha
 */
 bool bonus::isEvent( s_Coordonnees* pos )
 {
-	for( unsigned int i=0; i<c_listEvent.size(); i++ )
-	{
-		if( c_listEvent.at(i).finEvent <= clock() ){// Si timeout
-			*pos = c_listEvent.at(i).pos;
-			c_listEvent.erase(c_listEvent.begin()+i);// On supprime la bombe qui était posée
-			incQuantiteUtilisable( bombe );// On redonne la bombe au joueur
-			return true;
+	if( C_bonusProp[declancheur].quantite_MAX_Ramassable > 0 ){// Partie avec déclancheur
+		for( unsigned int i=0; i<c_listEvent.size(); i++ )
+		{
+			if( (quantiteUtilisable(declancheur) == 0 && c_listEvent.at(i).finEvent <= clock())// On a pas de déclancheur + timeout
+				|| (quantiteUtilisable(declancheur) > 0 && c_listEvent.at(i).finEvent == 0)// On a un déclancheur + timeout==0 => timeout
+				){// Si timeout
+				*pos = c_listEvent.at(i).pos;
+				c_listEvent.erase(c_listEvent.begin()+i);// On supprime la bombe qui était posée
+				incQuantiteUtilisable( bombe );// On redonne la bombe au joueur
+				return true;
+			}
+		}
+	}else{// Partie SANS déclancheur
+		for( unsigned int i=0; i<c_listEvent.size(); i++ )
+		{
+			if( c_listEvent.at(i).finEvent <= clock() ){// Si timeout
+				*pos = c_listEvent.at(i).pos;
+				c_listEvent.erase(c_listEvent.begin()+i);// On supprime la bombe qui était posée
+				incQuantiteUtilisable( bombe );// On redonne la bombe au joueur
+				return true;
+			}
 		}
 	}
-
 	return false;
 }
 
@@ -546,9 +559,19 @@ bonus::t_Bonus bonus::getBonusAleatoire()
 
 
 /***************************************************************************//*!
-* @fn bonus::t_Bonus bonus::getBonusAleatoire()
-* @brief Renvoie un bonus aléatoire
-* @return Renvoie un bonus aléatoire
+* @fn void bonus::forceTimeOut()
+* @brief Met fin au temps d'attente de tout les event
+*/
+void bonus::forceTimeOut()
+{
+	for( unsigned int i=0; i<c_listEvent.size(); i++ )
+		c_listEvent.at(i).finEvent = 0;
+}
+
+
+/***************************************************************************//*!
+* @fn void bonus::forceTimeOut( unsigned int x, unsigned int y )
+* @brief Met fin au temps d'attente de tout les event qui sont en X,Y
 */
 void bonus::forceTimeOut( unsigned int x, unsigned int y )
 {
