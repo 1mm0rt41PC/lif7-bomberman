@@ -357,11 +357,12 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 	/***********************************************************************
 	* Toutes les condition nécéssaire pour pouvoir bouger
 	* Si l'une d'elle pas bonne => return void;
+	* NOTE: newX, newY unsigned ! => pas besoin de check => 0
 	*/
-	if( !(	0 <= newX && newX < c_map->X()// On vérif si on ne dépasse pas la
-		&&	0 <= newY && newY < c_map->Y()// taille de la map
+	if( !(	/*0 <= newX &&*/ newX < c_map->X()// On vérif si on ne dépasse pas la
+		&&	/*0 <= newY &&*/ newY < c_map->Y()// taille de la map
 		&&	elementNouvellePosition != map::Mur_destructible		// On vérif s'il n'y a pas
-		&&	elementNouvellePosition != map::Mur_INdestructible	// d'objet solid
+		&&	elementNouvellePosition != map::Mur_INdestructible		// d'objet solid
 		&&	elementNouvellePosition != map::bombe_poser
 		&&	elementNouvellePosition != map::bombe_poser_AVEC_UN_joueur
 		&&	elementNouvellePosition != map::bombe_poser_AVEC_plusieurs_joueurs))
@@ -447,6 +448,22 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 			c_map->setBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y(), map::vide);
 			break;
 		}
+		case map::bonus: {
+			if( !c_map->getBlock(newX, newY)->joueur )
+				stdErrorE("BONUS: Problème de pointeur ! c_map->getBlock(%u, %u)->joueur = 0 !", newX, newY);
+			if( !c_map->getBlock(newX, newY)->joueur->size() )
+				stdErrorE("BONUS: Problème de contenu ! c_map->getBlock(%u, %u)->joueur->size() = 0 !", newX, newY);
+			if( c_map->getBlock(newX, newY)->joueur->at(0) >= NB_ELEMENT_t_Bonus )
+				stdErrorE("BONUS: Problème de contenu ! c_map->getBlock(%u, %u)->joueur->at(0){%u} >= {%d}NB_ELEMENT_t_Bonus !", newX, newY, (unsigned int)c_map->getBlock(newX, newY)->joueur->at(0), NB_ELEMENT_t_Bonus);
+			// Ajout de l'armement
+			c_joueurs[joueur].armements()->incQuantiteMAX_en_stock((bonus::t_Bonus)c_map->getBlock(newX, newY)->joueur->at(0));
+			c_map->setBlock(newX, newY, map::vide);// On surrpime tout ce qui avait avant
+			// Placement du perso
+			c_map->setBlock(newX, newY, map::UN_joueur);
+			c_map->ajouterInfoJoueur(newX, newY, joueur+1);
+			c_joueurs[joueur].defPos(newX, newY);
+			break;
+		}
 		default: {
 			stdErrorE("Cas non pris en charge c_map->getBlock(%u, %u).element=%d", newX, newY, elementNouvellePosition);
 		}
@@ -483,6 +500,21 @@ void partie::checkInternalEvent()
 				c_map->rmInfoJoueur(e.deflagration.at(j).x, e.deflagration.at(j).y, e.joueur, true);
 				if( !c_map->getBlock(e.deflagration.at(j))->joueur->size() )
 					c_map->setBlock(e.deflagration.at(j), map::vide);
+			}
+
+			// Pop des bonus
+			for( unsigned int j=0; j<e.listBlockDetruit.size(); j++ )
+			{
+				if( !c_map->getBlock(e.deflagration.at(j))->joueur->size() ){
+					bonus::t_Bonus tmp = bonus::getBonusAleatoire();
+					if( tmp == bonus::__RIEN__ ){
+						c_map->setBlock(e.deflagration.at(j), map::vide);
+					}else{
+						c_map->setBlock(e.deflagration.at(j), map::vide);// Pour supprimer tout les meta-info
+						c_map->setBlock(e.deflagration.at(j), map::bonus);
+						c_map->ajouterInfoJoueur(e.deflagration.at(j).x,e.deflagration.at(j).y, (unsigned char)tmp, 1);
+					}
+				}
 			}
 
 			// Fin de l'event => out de la liste
@@ -638,14 +670,29 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 		}
 		case map::bombe_poser_AVEC_UN_joueur: {// Le pauvre joueur qui est au millieu du chemin de la flamme -> dead
 			c_joueurs[c_map->getBlock(x, y)->joueur->at(1)-1].defArmements(0);
-			return 1;
+			// On fait explosé la bombe
+			c_joueurs[c_map->getBlock(x, y)->joueur->at(0)-1].armements()->forceTimeOut(x,y);
+			return 0;
 		}
 		case map::bombe_poser_AVEC_plusieurs_joueurs: {// Les pauvres joueurs qui sont au millieu du chemin de la flamme -> dead
 				for( k=1; k<c_map->getBlock(x, y)->joueur->size(); k++ )
 				{
 					c_joueurs[c_map->getBlock(x, y)->joueur->at(k)-1].defArmements(0);
 				}
-			return 1;
+				// On fait explosé la bombe
+				c_joueurs[c_map->getBlock(x, y)->joueur->at(0)-1].armements()->forceTimeOut(x,y);
+			return 0;
+		}
+		case map::bombe_poser: {
+			if( !c_map->getBlock(x, y)->joueur )
+				stdErrorE("Problème de pointeur vide ! c_map->getBlock(%u, %u)->joueur = 0", x, y);
+			if( !c_map->getBlock(x, y)->joueur->size() )
+				stdErrorE("Vector vide à x=%u, y=%u", x, y);
+
+			// On fait explosé la bombe
+			c_joueurs[c_map->getBlock(x, y)->joueur->at(0)-1].armements()->forceTimeOut(x,y);
+			break;
+			return 0;
 		}
 		case map::Mur_destructible: {
 			//c_map->ajouterInfoJoueur(x, y, 0, 1);// On dit au block -> Now tu as été détruit et tu est dans une liste
@@ -673,6 +720,11 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 			*/
 			break;
 		}
+		case map::bonus: {
+			if( c_map->getBlock(x, y)->joueur )
+				c_map->getBlock(x, y)->joueur->clear();
+			break;
+		}
 		default: {// On eject les autres cas
 			break;
 		}
@@ -680,4 +732,3 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 
 	return 1;
 }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

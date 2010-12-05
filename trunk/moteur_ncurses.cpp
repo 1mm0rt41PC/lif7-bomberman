@@ -54,6 +54,7 @@ moteur_ncurses::moteur_ncurses()
 	init_pair(MU_GREEN_BLACK, COLOR_GREEN, COLOR_BLACK);
 	init_pair(MU_WHITE_BLACK, COLOR_WHITE, COLOR_BLACK);
 	init_pair(MU_BLACK_YELLOW, COLOR_BLACK, COLOR_YELLOW);
+	init_pair(MU_BLACK_MAGENTA, COLOR_BLACK, COLOR_MAGENTA);
 
 	curs_set(0);// Cache le cursor tout moche
 
@@ -939,6 +940,41 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 						wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
 						break;
 					}
+					case map::bonus:{
+						wattron(win, COLOR_PAIR(MU_BLACK_MAGENTA));
+						if( !l_map->getBlock(x,y)->joueur )
+							stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y).joueur=0", x, y);
+						switch( (bonus::t_Bonus)l_map->getBlock(x,y)->joueur->at(0) )
+						{
+							case bonus::bombe: {
+								mvwaddch( win, ypos+y, xpos+x, '!');
+								break;
+							}
+							case bonus::puissance_flamme: {
+								mvwaddch( win, ypos+y, xpos+x, 'O');
+								break;
+							}
+							case bonus::declancheur: {
+								mvwaddch( win, ypos+y, xpos+x, 'D');
+								break;
+							}
+							case bonus::vitesse: {
+								mvwaddch( win, ypos+y, xpos+x, 'V');
+								break;
+							}
+							case bonus::vie: {
+								mvwaddch( win, ypos+y, xpos+x, '@');
+								break;
+							}
+							default: {
+								stdError("Erreur lors de la lecture de la map, BONUS inconu <%d>", (int)l_map->getBlock(x,y)->joueur->at(0));
+								break;
+							}
+						}
+						mvwaddch( win, ypos+y, xpos+x, '?');
+						wattroff(win, COLOR_PAIR(MU_BLACK_MAGENTA));
+						break;
+					}
 					default: {
 						stdError("Erreur lors de la lecture de la map, Objet inconu <%d>", (int)l_map->getBlock(x,y)->element);
 						break;
@@ -1032,6 +1068,41 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 					wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
 					break;
 				}
+				case map::bonus:{
+					wattron(win, COLOR_PAIR(MU_BLACK_MAGENTA));
+					if( !l_map->getBlock(pos)->joueur )
+						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(pos).joueur=0", pos.x, pos.y);
+					switch( (bonus::t_Bonus)l_map->getBlock(pos)->joueur->at(0) )
+					{
+						case bonus::bombe: {
+							mvwaddch( win, ypos+pos.y, xpos+pos.x, '!');
+							break;
+						}
+						case bonus::puissance_flamme: {
+							mvwaddch( win, ypos+pos.y, xpos+pos.x, 'O');
+							break;
+						}
+						case bonus::declancheur: {
+							mvwaddch( win, ypos+pos.y, xpos+pos.x, 'D');
+							break;
+						}
+						case bonus::vitesse: {
+							mvwaddch( win, ypos+pos.y, xpos+pos.x, 'V');
+							break;
+						}
+						case bonus::vie: {
+							mvwaddch( win, ypos+pos.y, xpos+pos.x, '@');
+							break;
+						}
+						default: {
+							stdError("Erreur lors de la lecture de la map, BONUS inconu <%d>", (int)l_map->getBlock(pos)->joueur->at(0));
+							break;
+						}
+					}
+					//mvwaddch( win, ypos+pos.y, xpos+pos.x, '?');
+					wattroff(win, COLOR_PAIR(MU_BLACK_MAGENTA));
+					break;
+				}
 				default: {
 					stdError("Erreur lors de la lecture de la map, Objet inconu <%d>", (int)l_map->getBlock(pos)->element);
 					break;
@@ -1045,4 +1116,3 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 
 	return wgetch(win);
 }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                

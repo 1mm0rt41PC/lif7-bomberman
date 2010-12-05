@@ -137,10 +137,23 @@ class bonus
 		static void defProbabiliter( t_Bonus b, unsigned char probabiliter_pop );
 		void defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock );
 		void defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock, unsigned char quantite_MAX_Ramassable, unsigned char probabiliter_pop );
+		inline std::vector<s_Event>* modEvent();
+		void forceTimeOut( unsigned int x, unsigned int y );
 
 		// Autres
 		bool isEvent( s_Coordonnees* pos );
 		static t_Bonus getBonusAleatoire();
 };
+
+
+/***************************************************************************//*!
+* @fn std::vector<bonus::s_Event>* bonus::modEvent()
+* @brief La liste des events non terminé
+* @return Renvoie La liste des events non terminé
+*/
+std::vector<bonus::s_Event>* bonus::modEvent()
+{
+	return &c_listEvent;
+}
 
 #endif
