@@ -120,8 +120,8 @@ void bonus::param_Par_Defaut()// Pour une partie classique ( F4A )
 	c_liste[2].quantite_MAX_en_stock = 0;// 20 Accelerateurs de vitesse Maxi
 
 	c_liste[2].type = puissance_flamme;
-	c_liste[2].quantite_utilisable = 5;
-	c_liste[2].quantite_MAX_en_stock = 5;
+	c_liste[2].quantite_utilisable = 1;
+	c_liste[2].quantite_MAX_en_stock = 1;
 }
 
 
@@ -239,7 +239,7 @@ bool bonus::incQuantiteUtilisable( t_Bonus b )
 
 /***************************************************************************//*!
 * @fn bool bonus::incQuantiteMAX_en_stock( t_Bonus b )
-* @brief Incrémente quantite_MAX_en_stock
+* @brief Incrémente quantite_MAX_en_stock et quantite_utilisable
 * @return Renvoie vrais si on a pu incrémenter la valeur
 */
 bool bonus::incQuantiteMAX_en_stock( t_Bonus b )
@@ -542,4 +542,21 @@ bonus::t_Bonus bonus::getBonusAleatoire()
 	if( myRand(0,100) <= C_bonusProp[r].probabiliter_pop )
 		return (bonus::t_Bonus)r;
 	return __RIEN__;
+}
+
+
+/***************************************************************************//*!
+* @fn bonus::t_Bonus bonus::getBonusAleatoire()
+* @brief Renvoie un bonus aléatoire
+* @return Renvoie un bonus aléatoire
+*/
+void bonus::forceTimeOut( unsigned int x, unsigned int y )
+{
+	for( unsigned int i=0; i<c_listEvent.size(); i++ )
+	{
+		if( c_listEvent.at(i).pos.x == x && c_listEvent.at(i).pos.y == y ){
+			c_listEvent.at(i).finEvent = 0;
+			return ;
+		}
+	}
 }
