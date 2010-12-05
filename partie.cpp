@@ -296,7 +296,8 @@ void partie::main( libAff * afficherMapEtEvent )
 					break;
 				}
 				case clavier::declancheur: {
-					// A FAIRE
+					if( c_joueurs[i].armements()->quantiteUtilisable(bonus::declancheur) )
+						c_joueurs[i].armements()->forceTimeOut();
 					continuerScanClavier = 0;
 					break;
 				}

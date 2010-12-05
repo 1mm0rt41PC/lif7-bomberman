@@ -138,6 +138,7 @@ class bonus
 		void defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock );
 		void defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock, unsigned char quantite_MAX_Ramassable, unsigned char probabiliter_pop );
 		inline std::vector<s_Event>* modEvent();
+		void forceTimeOut();
 		void forceTimeOut( unsigned int x, unsigned int y );
 
 		// Autres

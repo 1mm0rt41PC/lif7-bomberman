@@ -13,3 +13,6 @@
 /- Bug avec le makefile : sous linux, création d'un fichier NUL ( équivalent de /dev/null sous windows )
 
 - Faire un WikiCodingStyle
+
+- Réglèe le bug d'affichages des flammes ( partie.cpp )
+- Bug de pop bonus sur des cases vides
