@@ -34,7 +34,7 @@ moteur_sdl::moteur_sdl()
 	/***************************************************************************
 	* On charge ici le décor
 	*/
-	c_nb_Decor = 29;
+	c_nb_Decor = 30;
 	c_Decor = new SDL_Surface*[c_nb_Decor];
 	for( unsigned int i=0; i<c_nb_Decor; i++ )// POUR EVVITER LES BUG EN ATTANDANT LES AUTRES IMAGES
 	{
@@ -45,10 +45,10 @@ moteur_sdl::moteur_sdl()
 	c_Decor[mur_destructible]= chargerImage("images/mur_destructible.png");
 	c_Decor[mur_indestructible]= chargerImage("images/mur_indestructible.png");
 	//joueur1
-//	c_Decor[joueur1_haut]= chargerImage("images/bomberman1_haut.png");
+	c_Decor[joueur1_haut]= chargerImage("images/bomberman1_haut.png");
 	c_Decor[joueur1_bas]= chargerImage("images/bomberman1_bas.png");
-//	c_Decor[joueur1_gauche]= chargerImage("images/bomberman1_gauche.png");
-//	c_Decor[joueur1_droite]= chargerImage("images/bomberman1_droite.png");
+	c_Decor[joueur1_gauche]= chargerImage("images/bomberman1_gauche.png");
+	c_Decor[joueur1_droite]= chargerImage("images/bomberman1_droite.png");
 //	//joueur2
 //	c_Decor[joueur2_haut]= chargerImage("images/bomberman2_haut.png");
 //	c_Decor[joueur2_bas]= chargerImage("images/bomberman2_bas.png");
@@ -69,11 +69,13 @@ moteur_sdl::moteur_sdl()
 //	c_Decor[gain_puissance_flamme]= chargerImage("images/gain_puissance_flamme.png");
 //	c_Decor[gain_bombe]= chargerImage("images/gain_bombe.png");
 	//armes
-	c_Decor[flamme]= chargerImage("images/flamme.png");
-//	c_Decor[bout_flamme_haut]= chargerImage("images/bout_flamme_haut.png");
-//	c_Decor[bout_flamme_bas]= chargerImage("images/bout_flamme_bas.png");
-//	c_Decor[bout_flamme_gauche]= chargerImage("images/bout_flamme_gauche.png");
-//	c_Decor[bout_flamme_droite]= chargerImage("images/bout_flamme_droite.png");
+	c_Decor[flamme_origine]= chargerImage("images/flamme_origine.png");
+	c_Decor[flamme_vertical]= chargerImage("images/milieu_flamme_verticale.png");
+	c_Decor[flamme_horizontal]= chargerImage("images/milieu_flamme_horizontale.png");
+	c_Decor[bout_flamme_haut]= chargerImage("images/flamme_haut.png");
+	c_Decor[bout_flamme_bas]= chargerImage("images/flamme_bas.png");
+	c_Decor[bout_flamme_gauche]= chargerImage("images/flamme_gauche.png");
+	c_Decor[bout_flamme_droite]= chargerImage("images/flamme_droite.png");
 	c_Decor[bombe]= chargerImage("images/bombe.gif");
 //	c_Decor[bombe_explosion]= chargerImage("images/bombe_explosion.png");
 }
@@ -815,7 +817,25 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 
 						//couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
 						SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
-						SDL_BlitSurface(c_Instance->c_Decor[joueur1_bas], NULL, c_Instance->c_ecranGeneral, &pos);
+						switch( p->joueur(l_map->getBlock(x,y)->joueur->at(0)-1)->orientation() )
+						{
+							case perso::ORI_haut: {
+								SDL_BlitSurface(c_Instance->c_Decor[joueur1_haut], NULL, c_Instance->c_ecranGeneral, &pos);
+								break;
+							}
+							case perso::ORI_bas: {
+								SDL_BlitSurface(c_Instance->c_Decor[joueur1_bas], NULL, c_Instance->c_ecranGeneral, &pos);
+								break;
+							}
+							case perso::ORI_droite: {
+								SDL_BlitSurface(c_Instance->c_Decor[joueur1_droite], NULL, c_Instance->c_ecranGeneral, &pos);
+								break;
+							}
+							case perso::ORI_gauche: {
+								SDL_BlitSurface(c_Instance->c_Decor[joueur1_gauche], NULL, c_Instance->c_ecranGeneral, &pos);
+								break;
+							}
+						}
 						break;
 					}
 					case map::bombe_poser: {
@@ -836,28 +856,31 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 						break;
 					}
 					case map::flamme_origine: {
-						SDL_BlitSurface(c_Instance->c_Decor[flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+						SDL_BlitSurface(c_Instance->c_Decor[flamme_origine], NULL, c_Instance->c_ecranGeneral, &pos);
 						break;
 					}
-					case map::flamme_horizontal:
+					case map::flamme_horizontal:{
+							SDL_BlitSurface(c_Instance->c_Decor[flamme_horizontal], NULL, c_Instance->c_ecranGeneral, &pos);
+							break;
+					}
 					case map::flamme_vertical: {
-						SDL_BlitSurface(c_Instance->c_Decor[flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+						SDL_BlitSurface(c_Instance->c_Decor[flamme_vertical], NULL, c_Instance->c_ecranGeneral, &pos);
 						break;
 					}
 					case map::flamme_pointe_haut: {
-						SDL_BlitSurface(c_Instance->c_Decor[flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+						SDL_BlitSurface(c_Instance->c_Decor[bout_flamme_haut], NULL, c_Instance->c_ecranGeneral, &pos);
 						break;
 					}
 					case map::flamme_pointe_bas: {
-						SDL_BlitSurface(c_Instance->c_Decor[flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+						SDL_BlitSurface(c_Instance->c_Decor[bout_flamme_bas], NULL, c_Instance->c_ecranGeneral, &pos);
 						break;
 					}
 					case map::flamme_pointe_droite: {
-						SDL_BlitSurface(c_Instance->c_Decor[flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+						SDL_BlitSurface(c_Instance->c_Decor[bout_flamme_droite], NULL, c_Instance->c_ecranGeneral, &pos);
 						break;
 					}
 					case map::flamme_pointe_gauche: {
-						SDL_BlitSurface(c_Instance->c_Decor[flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+						SDL_BlitSurface(c_Instance->c_Decor[bout_flamme_gauche], NULL, c_Instance->c_ecranGeneral, &pos);
 						break;
 					}
 					default: {
@@ -868,7 +891,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 			}
 		}
 		c_Instance->c_premierAffichage = false;
-		dessiner = 1;
+		SDL_Flip(c_Instance->c_ecranGeneral);// afficher la map
 	}else{
 		s_Coordonnees v_pos;
 		while( l_map->getModification(v_pos) )
@@ -897,7 +920,25 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 
 					//couleur = getCouleurJoueur( l_map->getBlock(v_pos)->joueur->at(0) );
 					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
-					SDL_BlitSurface(c_Instance->c_Decor[joueur1_bas], NULL, c_Instance->c_ecranGeneral, &pos);
+					switch( p->joueur(l_map->getBlock(v_pos)->joueur->at(0)-1)->orientation() )
+					{
+						case perso::ORI_haut: {
+							SDL_BlitSurface(c_Instance->c_Decor[joueur1_haut], NULL, c_Instance->c_ecranGeneral, &pos);
+							break;
+						}
+						case perso::ORI_bas: {
+							SDL_BlitSurface(c_Instance->c_Decor[joueur1_bas], NULL, c_Instance->c_ecranGeneral, &pos);
+							break;
+						}
+						case perso::ORI_droite: {
+							SDL_BlitSurface(c_Instance->c_Decor[joueur1_droite], NULL, c_Instance->c_ecranGeneral, &pos);
+							break;
+						}
+						case perso::ORI_gauche: {
+							SDL_BlitSurface(c_Instance->c_Decor[joueur1_gauche], NULL, c_Instance->c_ecranGeneral, &pos);
+							break;
+						}
+					}
 					break;
 				}
 				case map::bombe_poser: {
@@ -918,28 +959,32 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 					break;
 				}
 				case map::flamme_origine: {
-					SDL_BlitSurface(c_Instance->c_Decor[flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
+					SDL_BlitSurface(c_Instance->c_Decor[flamme_origine], NULL, c_Instance->c_ecranGeneral, &pos);
 					break;
 				}
-				case map::flamme_horizontal:
+				case map::flamme_horizontal:{
+						SDL_BlitSurface(c_Instance->c_Decor[flamme_horizontal], NULL, c_Instance->c_ecranGeneral, &pos);
+						break;
+				}
 				case map::flamme_vertical: {
-					SDL_BlitSurface(c_Instance->c_Decor[flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+					SDL_BlitSurface(c_Instance->c_Decor[flamme_vertical], NULL, c_Instance->c_ecranGeneral, &pos);
 					break;
 				}
 				case map::flamme_pointe_haut: {
-					SDL_BlitSurface(c_Instance->c_Decor[flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+					SDL_BlitSurface(c_Instance->c_Decor[bout_flamme_haut], NULL, c_Instance->c_ecranGeneral, &pos);
 					break;
 				}
 				case map::flamme_pointe_bas: {
-					SDL_BlitSurface(c_Instance->c_Decor[flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+					SDL_BlitSurface(c_Instance->c_Decor[bout_flamme_bas], NULL, c_Instance->c_ecranGeneral, &pos);
 					break;
 				}
 				case map::flamme_pointe_droite: {
-					SDL_BlitSurface(c_Instance->c_Decor[flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+					SDL_BlitSurface(c_Instance->c_Decor[bout_flamme_droite], NULL, c_Instance->c_ecranGeneral, &pos);
 					break;
 				}
 				case map::flamme_pointe_gauche: {
-					SDL_BlitSurface(c_Instance->c_Decor[flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+					SDL_BlitSurface(c_Instance->c_Decor[bout_flamme_gauche], NULL, c_Instance->c_ecranGeneral, &pos);
 					break;
 				}
 				default: {
@@ -947,16 +992,16 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 					break;
 				}
 			}
+			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-32, pos.y-32, 32*3, 32*3);
 		}
 	}
 
-	// afficher la map
-	if( dessiner )
-		SDL_Flip(c_Instance->c_ecranGeneral);
-
 	SDL_Event event;
 	SDL_PollEvent(&event);
-	return traductionClavier(&event.key);
+	if( event.type == SDL_KEYDOWN )
+		return traductionClavier(&event.key);
+	else
+		return SDLK_UNKNOWN;
 }
 
 

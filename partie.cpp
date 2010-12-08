@@ -194,6 +194,7 @@ void partie::main( libAff * afficherMapEtEvent )
 	bool continuerScanClavier=1;
 	options* opt = options::getInstance();
 	s_Coordonnees pos={0,0};
+	bonus::s_Event bonusEvent;
 	s_Event e;
 
 	// Commencement de la partie
@@ -213,12 +214,12 @@ void partie::main( libAff * afficherMapEtEvent )
 			/*******************************************************************
 			* Scan des Events bonus de chaques joueurs
 			*/
-			while( c_joueurs[i].armements()->isEvent(&pos) )// Tanqu'il y a des event on tourne
+			while( c_joueurs[i].armements()->isEvent(&bonusEvent) )// Tanqu'il y a des event on tourne
 			{
 				//c_map->setBlock(pos.x, pos.y, map::vide);
-				e.type = bonus::bombe;
+				e.type = bonusEvent.type;
 				e.joueur = i+1;
-				e.pos = pos;
+				e.pos = bonusEvent.pos;
 				e.repetionSuivante = 0;
 				e.Nb_Repetition = 0;
 				e.Nb_Repetition_MAX = c_joueurs[i].armements()->quantiteUtilisable(bonus::puissance_flamme);
@@ -240,21 +241,25 @@ void partie::main( libAff * afficherMapEtEvent )
 					break;
 				}
 				case clavier::haut: {
+					c_joueurs[i].defOrientation(perso::ORI_haut);
 					deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()-1, i );
 					continuerScanClavier = 0;
 					break;
 				}
 				case clavier::bas: {
+					c_joueurs[i].defOrientation(perso::ORI_bas);
 					deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()+1, i );
 					continuerScanClavier = 0;
 					break;
 				}
 				case clavier::droite: {
+					c_joueurs[i].defOrientation(perso::ORI_droite);
 					deplacer_le_Perso_A( c_joueurs[i].X()+1, c_joueurs[i].Y(), i );
 					continuerScanClavier = 0;
 					break;
 				}
 				case clavier::gauche: {
+					c_joueurs[i].defOrientation(perso::ORI_gauche);
 					deplacer_le_Perso_A( c_joueurs[i].X()-1, c_joueurs[i].Y(), i );
 					continuerScanClavier = 0;
 					break;
@@ -506,14 +511,14 @@ void partie::checkInternalEvent()
 			// Pop des bonus
 			for( unsigned int j=0; j<e.listBlockDetruit.size(); j++ )
 			{
-				if( !c_map->getBlock(e.deflagration.at(j))->joueur->size() ){
+				if( !c_map->getBlock(e.listBlockDetruit.at(j))->joueur->size() ){// One ne fait rien pop si il y a déjà quelqu'un à cette emplacement ou si il y a des flammes enemis
 					bonus::t_Bonus tmp = bonus::getBonusAleatoire();
 					if( tmp == bonus::__RIEN__ ){
-						c_map->setBlock(e.deflagration.at(j), map::vide);
+						c_map->setBlock(e.listBlockDetruit.at(j), map::vide);
 					}else{
-						c_map->setBlock(e.deflagration.at(j), map::vide);// Pour supprimer tout les meta-info
-						c_map->setBlock(e.deflagration.at(j), map::bonus);
-						c_map->ajouterInfoJoueur(e.deflagration.at(j).x,e.deflagration.at(j).y, (unsigned char)tmp, 1);
+						c_map->rmInfoJoueur(e.listBlockDetruit.at(j).x, e.listBlockDetruit.at(j).y);// Pour supprimer tout les meta-info
+						c_map->setBlock(e.listBlockDetruit.at(j), map::bonus);
+						c_map->ajouterInfoJoueur(e.listBlockDetruit.at(j).x,e.listBlockDetruit.at(j).y, (unsigned char)tmp, 1);
 					}
 				}
 			}
@@ -670,9 +675,9 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 			return 1;
 		}
 		case map::bombe_poser_AVEC_UN_joueur: {// Le pauvre joueur qui est au millieu du chemin de la flamme -> dead
-			c_joueurs[c_map->getBlock(x, y)->joueur->at(1)-1].defArmements(0);
 			// On fait explosé la bombe
 			c_joueurs[c_map->getBlock(x, y)->joueur->at(0)-1].armements()->forceTimeOut(x,y);
+			c_joueurs[c_map->getBlock(x, y)->joueur->at(1)-1].defArmements(0);
 			return 0;
 		}
 		case map::bombe_poser_AVEC_plusieurs_joueurs: {// Les pauvres joueurs qui sont au millieu du chemin de la flamme -> dead

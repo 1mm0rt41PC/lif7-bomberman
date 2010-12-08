@@ -11,6 +11,7 @@ perso::perso()
 	c_pos.x = 0;
 	c_pos.y = 0;
 	c_armements = 0;
+	c_orientation = ORI_bas;
 }
 
 
@@ -24,6 +25,7 @@ perso::perso( std::string nom, unsigned int Xpos, unsigned int Ypos )
 	c_pos.x = Xpos;
 	c_pos.y = Ypos;
 	c_armements = 0;
+	c_orientation = ORI_bas;
 }
 
 
@@ -105,6 +107,16 @@ void perso::defArmements( bonus* a )
 
 
 /***************************************************************************//*!
+* @fn void perso::defOrientation( t_Orientation ori )
+* @brief Modif l'orientation du perso
+*/
+void perso::defOrientation( t_Orientation ori )
+{
+	c_orientation = ori;
+}
+
+
+/***************************************************************************//*!
 * @fn string perso::nom() const
 * @brief Renvoie le nom du personnage
 */
@@ -156,4 +168,13 @@ bool perso::estVivant() const
 bonus* perso::armements() const
 {
 	return c_armements;
+}
+
+/***************************************************************************//*!
+* @fn perso::t_Orientation perso::orientation() const
+* @brief Renvoie l'orientation du personnage
+*/
+perso::t_Orientation perso::orientation() const
+{
+	return c_orientation;
 }
