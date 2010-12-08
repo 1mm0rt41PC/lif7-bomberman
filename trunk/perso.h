@@ -16,11 +16,20 @@
 */
 class perso
 {
+	public:
+		typedef enum {
+			ORI_haut,
+			ORI_bas,
+			ORI_droite,
+			ORI_gauche
+		} t_Orientation;
+
 	private:
 		// struct {
 		std::string c_nom;
 		s_Coordonnees c_pos;
 		bonus* c_armements;
+		t_Orientation c_orientation;
 		//clavier c_Touches; <- CLAVIER géré en global ( options général )
 		// }
 
@@ -37,6 +46,7 @@ class perso
 		void defX( unsigned int Xpos );
 		void defY( unsigned int Ypos );
 		void defArmements( bonus* a );
+		void defOrientation( t_Orientation ori );
 
 		// Accesseurs
 		std::string nom() const;
@@ -44,6 +54,7 @@ class perso
 		unsigned int Y() const;
 		bool estVivant() const;
 		bonus* armements() const;
+		t_Orientation orientation() const;
 };
 
 #endif

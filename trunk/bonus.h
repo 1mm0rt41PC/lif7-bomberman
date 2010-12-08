@@ -44,11 +44,14 @@ class bonus
 		enum t_Bonus {
 			bombe=0,
 			// Vitesse de déflagration en milli-sec
-			#define VITESSE_DEFLAGRATION_FLAMME CLOCKS_PER_SEC/20
+			#define VITESSE_DEFLAGRATION_FLAMME CLOCKS_PER_SEC/2
 			puissance_flamme,
 			declancheur,
 			vitesse,
 			vie,
+			// Signal pour les event
+			SIGNAL_kill,
+
 			// NE RIEN METTRE APRES CET ELEMENT. NE PAS COMPTER CETTE ELEMENT
 			__RIEN__//!< Sert pour bonus::getBonusAleatoire();
 		};
@@ -71,6 +74,21 @@ class bonus
 			unsigned char quantite_MAX_Ramassable;//!< Quantité max qu'un joueur peut avoir d'un objet
 		} s_bonus_proprieter;
 
+
+		/*!
+		* @struct s_Event
+		* @brief Cette sturcture accueil les Events posées
+		*
+		* Exemple: C'est par elle que l'on sait quand une bombe explose.<br />
+		* Elle fourni, le Où  et Quand.<br />
+		* @note Passe -Wpadded pour 32bit (16o)
+		*/
+		typedef struct {
+			s_Coordonnees pos;//!< Position de la bombe posé (8o)
+			clock_t finEvent;//!< Temps avant la fin de l'event (4o)
+			t_Bonus type;//!< Le bonus (4o)
+		} s_Event;
+
 	private:
 		/*!
 		* @struct s_bonus
@@ -86,20 +104,6 @@ class bonus
 			unsigned char quantite_utilisable;//!< Nombre d'objet possédé actuellement et utilisable (1o)
 			unsigned char quantite_MAX_en_stock;//!< Quantité Maxi d'un objet (1o)
 		} s_bonus;
-
-		/*!
-		* @struct s_Event
-		* @brief Cette sturcture accueil les Events posées
-		*
-		* Exemple: C'est par elle que l'on sait quand une bombe explose.<br />
-		* Elle fourni, le Où  et Quand.<br />
-		* @note Passe -Wpadded pour 32bit (16o)
-		*/
-		typedef struct {
-			s_Coordonnees pos;//!< Position de la bombe posé (8o)
-			clock_t finEvent;//!< Temps avant la fin de l'event (4o)
-			t_Bonus type;//!< Le bonus (4o)
-		} s_Event;
 
 		std::vector<s_Event> c_listEvent;//!< Tableau contenant les bombes posées (12o)
 		// Varaible Générale ( Variables global à toutes les class )
@@ -142,7 +146,8 @@ class bonus
 		void forceTimeOut( unsigned int x, unsigned int y );
 
 		// Autres
-		bool isEvent( s_Coordonnees* pos );
+		bool isEvent( s_Event* pos );
+		unsigned int nbEvent() const;
 		static t_Bonus getBonusAleatoire();
 };
 

@@ -65,6 +65,11 @@ int main( int argc, char* arvg[] )
 		"Online",
 		"Retour"
 	};
+	static const char* menu_replay[] = {	// ATTENTION ! Si ajout / suppresion d'un menu,
+		"Refaire une partie",				// NE PAS OUBLIER de modifier le for !
+		"Changer de map",
+		"Retour"
+	};
 	char titreNomJoueurNumI[30] = {0};
 	char nomJoueurNumI[21] = {0};
 
@@ -108,9 +113,11 @@ int main( int argc, char* arvg[] )
 								}
 
 								if( !retourMenuAudessus ){
-									m.forcerRafraichissement();
-									//jeu.start( m, &CLASS_TO_USE::afficherMapEtEvent );
-									jeu.main( m.afficherMapEtEvent );
+									do{
+										m.forcerRafraichissement();
+										//jeu.start( m, &CLASS_TO_USE::afficherMapEtEvent );
+										jeu.main( m.afficherMapEtEvent );
+									}while( m.menu("Un joueur a gagne !", menu_replay, 3) != 3 );
 								}
 								retourMenuAudessus = 0;
 							}

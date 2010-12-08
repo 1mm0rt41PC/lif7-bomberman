@@ -122,6 +122,10 @@ void bonus::param_Par_Defaut()// Pour une partie classique ( F4A )
 	c_liste[2].type = puissance_flamme;
 	c_liste[2].quantite_utilisable = 1;
 	c_liste[2].quantite_MAX_en_stock = 1;
+
+	c_liste[3].type = vie;
+	c_liste[3].quantite_utilisable = 1;
+	c_liste[3].quantite_MAX_en_stock = 1;
 }
 
 
@@ -486,7 +490,7 @@ void bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned cha
 
 
 /***************************************************************************//*!
-* @fn bool bonus::isEvent( s_Coordonnees* pos )
+* @fn bool bonus::isEvent( s_Event* pos )
 * @brief Vérifit que le si le temps est écoulé pour une bombe posé
 * @param[in,out] pos	Cette variables contiendra la position X,Y de la bombe qui a explosé.
 * @return Renvoie le pointeur pos si une bombe a explosé, NULL sinon.
@@ -513,7 +517,7 @@ void bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned cha
 * }
 * @endcode
 */
-bool bonus::isEvent( s_Coordonnees* pos )
+bool bonus::isEvent( s_Event* e )
 {
 	if( C_bonusProp[declancheur].quantite_MAX_Ramassable > 0 ){// Partie avec déclancheur
 		for( unsigned int i=0; i<c_listEvent.size(); i++ )
@@ -521,24 +525,40 @@ bool bonus::isEvent( s_Coordonnees* pos )
 			if( (quantiteUtilisable(declancheur) == 0 && c_listEvent.at(i).finEvent <= clock())// On a pas de déclancheur + timeout
 				|| (quantiteUtilisable(declancheur) > 0 && c_listEvent.at(i).finEvent == 0)// On a un déclancheur + timeout==0 => timeout
 				){// Si timeout
-				*pos = c_listEvent.at(i).pos;
+				*e = c_listEvent.at(i);
 				c_listEvent.erase(c_listEvent.begin()+i);// On supprime la bombe qui était posée
 				incQuantiteUtilisable( bombe );// On redonne la bombe au joueur
 				return true;
 			}
 		}
+		//if( !c_listEvent.size() )
 	}else{// Partie SANS déclancheur
 		for( unsigned int i=0; i<c_listEvent.size(); i++ )
 		{
 			if( c_listEvent.at(i).finEvent <= clock() ){// Si timeout
-				*pos = c_listEvent.at(i).pos;
+				*e = c_listEvent.at(i);
 				c_listEvent.erase(c_listEvent.begin()+i);// On supprime la bombe qui était posée
 				incQuantiteUtilisable( bombe );// On redonne la bombe au joueur
 				return true;
 			}
 		}
 	}
+	if( !c_listEvent.size() )
+	{
+
+	}
 	return false;
+}
+
+
+/***************************************************************************//*!
+* @fn unsigned int bonus::nbEvent() const
+* @brief Renvoie le nombre d'event Traité on non.
+* @return Renvoie un bonus aléatoire
+*/
+unsigned int bonus::nbEvent() const
+{
+	return c_listEvent.size();
 }
 
 
@@ -551,7 +571,7 @@ bonus::t_Bonus bonus::getBonusAleatoire()
 {
 	int r;
 
-	r = myRand(0,NB_ELEMENT_t_Bonus);
+	r = myRand(0,NB_ELEMENT_t_Bonus-1);
 	if( myRand(0,100) <= C_bonusProp[r].probabiliter_pop )
 		return (bonus::t_Bonus)r;
 	return __RIEN__;
