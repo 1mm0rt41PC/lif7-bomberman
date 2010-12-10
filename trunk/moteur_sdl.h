@@ -47,7 +47,6 @@ class moteur_sdl
 			bout_flamme_droite,
 			bombe,
 			bombe_explosion,
-			gain_flamme,
 			gain_puissance_flamme,
 			gain_bombe
 		};
@@ -67,6 +66,7 @@ class moteur_sdl
 		SDL_Surface* ecritTexte( const char texte[] );
 		SDL_Surface* ecritTexte( const char texte[], const SDL_Color& couleur );
 		SDL_Surface* ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8 b );
+		SDL_Surface* ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille );
 
 		static char* completerMot( char texte[], unsigned int taille );
 
