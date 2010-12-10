@@ -34,7 +34,7 @@ moteur_sdl::moteur_sdl()
 	/***************************************************************************
 	* On charge ici le décor
 	*/
-	c_nb_Decor = 30;
+	c_nb_Decor = gain_bombe+1;// mettre ici le dernier element de la liste enum
 	c_Decor = new SDL_Surface*[c_nb_Decor];
 	for( unsigned int i=0; i<c_nb_Decor; i++ )// POUR EVVITER LES BUG EN ATTANDANT LES AUTRES IMAGES
 	{
@@ -49,26 +49,25 @@ moteur_sdl::moteur_sdl()
 	c_Decor[joueur1_bas]= chargerImage("images/bomberman1_bas.png");
 	c_Decor[joueur1_gauche]= chargerImage("images/bomberman1_gauche.png");
 	c_Decor[joueur1_droite]= chargerImage("images/bomberman1_droite.png");
-//	//joueur2
-//	c_Decor[joueur2_haut]= chargerImage("images/bomberman2_haut.png");
-//	c_Decor[joueur2_bas]= chargerImage("images/bomberman2_bas.png");
-//	c_Decor[joueur2_gauche]= chargerImage("images/bomberman2_gauche.png");
-//	c_Decor[joueur2_droite]= chargerImage("images/bomberman2_droite.png");
-//	//joueur3
-//	c_Decor[joueur3_haut]= chargerImage("images/bomberman3_haut.png");
-//	c_Decor[joueur3_bas]= chargerImage("images/bomberman3_bas.png");
-//	c_Decor[joueur3_gauche]= chargerImage("images/bomberman3_gauche.png");
-//	c_Decor[joueur3_droite]= chargerImage("images/bomberman3_droite.png");
+	//joueur2
+	c_Decor[joueur2_haut]= chargerImage("images/bomberman2_haut.png");
+	c_Decor[joueur2_bas]= chargerImage("images/bomberman2_bas.png");
+	c_Decor[joueur2_gauche]= chargerImage("images/bomberman2_gauche.png");
+	c_Decor[joueur2_droite]= chargerImage("images/bomberman2_droite.png");
+	//joueur3
+	c_Decor[joueur3_haut]= chargerImage("images/bomberman3_haut.png");
+	c_Decor[joueur3_bas]= chargerImage("images/bomberman3_bas.png");
+	c_Decor[joueur3_gauche]= chargerImage("images/bomberman3_gauche.png");
+	c_Decor[joueur3_droite]= chargerImage("images/bomberman3_droite.png");
 //	//joueur4
-//	c_Decor[joueur4_haut]= chargerImage("images/bomberman4_haut.png");
-//	c_Decor[joueur4_bas]= chargerImage("images/bomberman4_bas.png");
-//	c_Decor[joueur4_gauche]= chargerImage("images/bomberman4_gauche.png");
-//	c_Decor[joueur4_droite]= chargerImage("images/bomberman4_droite.png");
-	//gain
-//	c_Decor[gain_flamme]= chargerImage("images/gain_flamme.png");
-//	c_Decor[gain_puissance_flamme]= chargerImage("images/gain_puissance_flamme.png");
-//	c_Decor[gain_bombe]= chargerImage("images/gain_bombe.png");
-	//armes
+	c_Decor[joueur4_haut]= chargerImage("images/bomberman4_haut.png");
+	c_Decor[joueur4_bas]= chargerImage("images/bomberman4_bas.png");
+	c_Decor[joueur4_gauche]= chargerImage("images/bomberman4_gauche.png");
+	c_Decor[joueur4_droite]= chargerImage("images/bomberman4_droite.png");
+//	//gain
+	c_Decor[gain_puissance_flamme]= chargerImage("images/gain_puissance_flamme.png");
+	c_Decor[gain_bombe]= chargerImage("images/gain_bombe.png");
+//	//armes
 	c_Decor[flamme_origine]= chargerImage("images/flamme_origine.png");
 	c_Decor[flamme_vertical]= chargerImage("images/milieu_flamme_verticale.png");
 	c_Decor[flamme_horizontal]= chargerImage("images/milieu_flamme_horizontale.png");
@@ -261,7 +260,313 @@ unsigned int moteur_sdl::menu( const char titre[], const char *choix[], unsigned
 */
 void moteur_sdl::afficherConfigurationClavier( unsigned char joueur )
 {
+	bool continuer = 1;
+	SDL_Event event;
+	unsigned int highLight = 1;
+	bool dessiner = 1;
+	int i;
+	SDL_Rect position, position_droite; /* position de blittage du texte */
+	// On récupère la config du joueur
+	clavier* cl = options::getInstance()->clavierJoueur( joueur-1 );
 
+	// POUR def une touche :
+	// cl->defTouche((clavier::t_touche)(clavier::haut+highLight-1), key);
+	// POUR récup une touche dans la configuration
+	// cl->touche(  clavier::haut );
+
+	SDL_Color couleurOrange = {255, 184, 0, 0/*unused*/};
+	SDL_Color couleurRouge = {255, 0, 0, 0/*unused*/};
+
+	// Création titre
+	SDL_Surface* sfr_titre;
+	char tempTexte[] = "Configuration clavier du joueur 0";// Ne pas oublier le '\0' !
+	tempTexte[strlen(tempTexte)-1] += joueur;
+	TTF_SetFontStyle(c_policeGeneral, TTF_STYLE_UNDERLINE);
+	sfr_titre = ecritTexte(tempTexte);
+	TTF_SetFontStyle(c_policeGeneral, TTF_STYLE_NORMAL);
+
+	// Création du texte de retour
+	SDL_Surface* sfr_retour[2];
+	sfr_retour[0] = ecritTexte("Retour");
+	sfr_retour[1] = ecritTexte("Retour", couleurOrange);
+
+	// Ecriture des textes
+	SDL_Surface* sfr_msg; /* pour dialoguer avec l'utilisateur */
+	SDL_Surface* sfr_HAUT[2];
+	SDL_Surface* sfr_HAUT_touche[2];
+	SDL_Surface* sfr_BAS[2];
+	SDL_Surface* sfr_BAS_touche[2];
+	SDL_Surface* sfr_DROITE[2];
+	SDL_Surface* sfr_DROITE_touche[2];
+	SDL_Surface* sfr_GAUCHE[2];
+	SDL_Surface* sfr_GAUCHE_touche[2];
+	SDL_Surface* sfr_LANCER_BOMBE[2];
+	SDL_Surface* sfr_LANCER_BOMBE_touche[2];
+	SDL_Surface* sfr_DETONATEUR[2];
+	SDL_Surface* sfr_DETONATEUR_touche[2];
+
+	sfr_HAUT[0] = ecritTexte("Haut");
+	sfr_HAUT[1] = ecritTexte("Haut", couleurOrange);
+	sfr_HAUT_touche[0] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::haut) ));
+	sfr_HAUT_touche[1] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::haut) ), couleurOrange);
+	sfr_BAS[0] = ecritTexte("Bas");
+	sfr_BAS[1] = ecritTexte("Bas", couleurOrange);
+	sfr_BAS_touche[0] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::bas) ));
+	sfr_BAS_touche[1] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::bas) ), couleurOrange);
+	sfr_DROITE[0] = ecritTexte("Droite");
+	sfr_DROITE[1] = ecritTexte("Droite", couleurOrange);
+	sfr_DROITE_touche[0] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::droite) ));
+	sfr_DROITE_touche[1] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::droite) ), couleurOrange);
+	sfr_GAUCHE[0] = ecritTexte("Gauche");
+	sfr_GAUCHE[1] = ecritTexte("Gauche", couleurOrange);
+	sfr_GAUCHE_touche[0] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::gauche) ));
+	sfr_GAUCHE_touche[1] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::gauche) ), couleurOrange);
+	sfr_LANCER_BOMBE[0] = ecritTexte("Lancer bombe");
+	sfr_LANCER_BOMBE[1] = ecritTexte("Lancer bombe", couleurOrange);
+	sfr_LANCER_BOMBE_touche[0] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::lancerBombe) ));
+	sfr_LANCER_BOMBE_touche[1] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::lancerBombe) ), couleurOrange);
+	sfr_DETONATEUR[0] = ecritTexte("Détonateur");
+	sfr_DETONATEUR[1] = ecritTexte("Détonateur", couleurOrange);
+	sfr_DETONATEUR_touche[0] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::declancheur) ));
+	sfr_DETONATEUR_touche[1] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::declancheur) ), couleurOrange);
+
+	do{
+		SDL_WaitEvent(&event);
+		switch( event.type )
+		{
+			case SDL_QUIT: { /*	si on clique sur la croix rouge de la fenêtre -> on sort et highLight */
+				highLight = 7; /*	passe à 7 (valeur de sortie) */
+				continuer = 0;
+				break;
+			}
+			case SDL_KEYDOWN: { /* si touche appuyée */
+				switch( traductionClavier(&event.key) ) /* on traduit la touche */
+				{
+					case SDLK_ESCAPE: { /*	si on appuit sur la touche echap */
+						highLight = 7; /*	passe à 7 (valeur de sortie) */
+						continuer = 0;
+						break;
+					}
+					case SDLK_UP:{ /* flèche du haut */
+						if( highLight == 1 ){ /* si on est tout en haut, alors on va tout en bas */
+							highLight = 7;
+						}else{ /* sinon highLight --*/
+							highLight--;
+						}
+						dessiner = 1; /* mouvement donc on redessine */
+						break;
+					}
+					case SDLK_DOWN: { /* flèche bas */
+						if( highLight == 7 ){ /* si on est tout en bas, alors on va tout en haut */
+							highLight = 1;
+						}else{ /* sinon highLight ++ */
+							highLight++;
+						}
+						dessiner = 1; /* mouvement donc on redessine */
+						break;
+					}
+					case SDLK_RETURN: { /* touche entrer appuyée */
+						if( highLight == 7 ){ /* entrer + dernière ligne -> sortie */
+							highLight = 7;
+							continuer = 0;
+							break;
+						}
+
+						switch( highLight )
+						{
+							/* liens modifiables : de 1 à 6 */
+							case 1:
+								sfr_msg = ecritTexte("Appuyer sur la nouvelle touche pour HAUT", couleurRouge, 50);
+								break;
+							case 2:
+								sfr_msg = ecritTexte("Appuyer sur la nouvelle touche pour BAS", couleurRouge, 50);
+								break;
+							case 3:
+								sfr_msg = ecritTexte("Appuyer sur la nouvelle touche pour DROITE", couleurRouge, 50);
+								break;
+							case 4:
+								sfr_msg = ecritTexte("Appuyer sur la nouvelle touche pour GAUCHE", couleurRouge, 50);
+								break;
+							case 5:
+								sfr_msg = ecritTexte("Appuyer sur la nouvelle touche pour la BOMBE", couleurRouge, 50);
+								break;
+							case 6:
+								sfr_msg = ecritTexte("Appuyer sur la nouvelle touche pour le DETONATEUR", couleurRouge, 50);
+								break;
+						}
+
+						position.x = 0;
+						position.y = 0;
+						SDL_BlitSurface(c_background, NULL, c_ecranGeneral, &position);/* blittage du background */
+						position.x = (c_ecranGeneral->w-sfr_msg->w)/2;
+						position.y = (c_ecranGeneral->h-sfr_msg->h)/2;
+						SDL_BlitSurface(sfr_msg, NULL, c_ecranGeneral, &position); /* blittage du texte */
+						SDL_Flip(c_ecranGeneral); /* raffraichissement */
+						do{
+							SDL_WaitEvent(&event); /* en attente d'un évènement */
+							if( event.type == SDL_QUIT ){ /* si croix rouge -> on sort */
+								continuer = 0;
+								highLight = 7;
+								break;
+							}
+							/* sinon lire la touche et l'enregistrer */
+							if( event.type == SDL_KEYDOWN && traductionClavier(&event.key) != SDLK_ESCAPE ){
+								/* redéfinition de la touche : */
+								cl->defTouche((clavier::t_touche)(clavier::haut+highLight-1), traductionClavier(&event.key));
+								switch( highLight )
+								{
+									/* liens modifiables : de 1 à 6 */
+									case 1:
+										SDL_FreeSurface(sfr_HAUT_touche[0]);
+										SDL_FreeSurface(sfr_HAUT_touche[1]);
+										sfr_HAUT_touche[0] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::haut) ));
+										sfr_HAUT_touche[1] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::haut) ), couleurOrange);
+										break;
+									case 2:
+										SDL_FreeSurface(sfr_BAS_touche[0]);
+										SDL_FreeSurface(sfr_BAS_touche[1]);
+										sfr_BAS_touche[0] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::haut) ));
+										sfr_BAS_touche[1] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::haut) ), couleurOrange);
+										break;
+									case 3:
+										SDL_FreeSurface(sfr_DROITE_touche[0]);
+										SDL_FreeSurface(sfr_DROITE_touche[1]);
+										sfr_DROITE_touche[0] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::haut) ));
+										sfr_DROITE_touche[1] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::haut) ), couleurOrange);
+										break;
+									case 4:
+										SDL_FreeSurface(sfr_GAUCHE_touche[0]);
+										SDL_FreeSurface(sfr_GAUCHE_touche[1]);
+										sfr_GAUCHE_touche[0] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::haut) ));
+										sfr_GAUCHE_touche[1] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::haut) ), couleurOrange);
+										break;
+									case 5:
+										SDL_FreeSurface(sfr_LANCER_BOMBE_touche[0]);
+										SDL_FreeSurface(sfr_LANCER_BOMBE_touche[1]);
+										sfr_LANCER_BOMBE_touche[0] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::haut) ));
+										sfr_LANCER_BOMBE_touche[1] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::haut) ), couleurOrange);
+										break;
+									case 6:
+										SDL_FreeSurface(sfr_DETONATEUR_touche[0]);
+										SDL_FreeSurface(sfr_DETONATEUR_touche[1]);
+										sfr_DETONATEUR_touche[0] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::haut) ));
+										sfr_DETONATEUR_touche[1] = ecritTexte(SDL_GetKeyName( cl->touche(clavier::haut) ), couleurOrange);
+										break;
+								}
+							}
+						}while( event.type != SDL_KEYDOWN );
+						SDL_FreeSurface(sfr_msg); /* libération de sfr_msg */
+						dessiner = 1;
+						break;
+					}
+
+					default:// On eject les autres cas
+						break;
+				} /* fin switch */
+			} /* fin case return */
+		} /* fin switch */
+
+		if( dessiner )
+		{
+			position.x = 0;
+			position.y = 0;
+			SDL_BlitSurface(c_background, NULL, c_ecranGeneral, &position);// Blit background
+
+			position.y = 200;
+			position.x = (c_ecranGeneral->w-sfr_titre->w)/2; /* centrage */
+			SDL_BlitSurface(sfr_titre, NULL, c_ecranGeneral, &position); /* blittage du titre */
+
+
+			position.x = 100;
+			position_droite.x = c_ecranGeneral->w-250;
+
+			position.y = 300;//+60
+			position_droite.y = position.y;
+			if( highLight == 1 ){ /* if i = highLight (exemple i = 0 implique higLight = 1 -> égaux */
+				SDL_BlitSurface(sfr_HAUT[1], NULL, c_ecranGeneral, &position);
+				SDL_BlitSurface(sfr_HAUT_touche[1], NULL, c_ecranGeneral, &position_droite); /* Blit du texte par-dessus */
+			}else{
+				SDL_BlitSurface(sfr_HAUT[0], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				SDL_BlitSurface(sfr_HAUT_touche[0], NULL, c_ecranGeneral, &position_droite);
+			}
+			position.y += 60;
+			position_droite.y = position.y;
+			if( highLight == 2 ){ /* if i = highLight (exemple i = 0 implique higLight = 1 -> égaux */
+				SDL_BlitSurface(sfr_BAS[1], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				SDL_BlitSurface(sfr_BAS_touche[1], NULL, c_ecranGeneral, &position_droite);
+			}else{
+				SDL_BlitSurface(sfr_BAS[0], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				SDL_BlitSurface(sfr_BAS_touche[0], NULL, c_ecranGeneral, &position_droite);
+			}
+			position.y += 60;
+			position_droite.y = position.y;
+			if( highLight == 3 ){ /* if i = highLight (exemple i = 0 implique higLight = 1 -> égaux */
+				SDL_BlitSurface(sfr_DROITE[1], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				SDL_BlitSurface(sfr_DROITE_touche[1], NULL, c_ecranGeneral, &position_droite);
+			}else{
+				SDL_BlitSurface(sfr_DROITE[0], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				SDL_BlitSurface(sfr_DROITE_touche[0], NULL, c_ecranGeneral, &position_droite);
+			}
+			position.y += 60;
+			position_droite.y = position.y;
+			if( highLight == 4 ){ /* if i = highLight (exemple i = 0 implique higLight = 1 -> égaux */
+				SDL_BlitSurface(sfr_GAUCHE[1], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				SDL_BlitSurface(sfr_GAUCHE_touche[1], NULL, c_ecranGeneral, &position_droite);
+			}else{
+				SDL_BlitSurface(sfr_GAUCHE[0], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				SDL_BlitSurface(sfr_GAUCHE_touche[0], NULL, c_ecranGeneral, &position_droite);
+			}
+			position.y += 60;
+			position_droite.y = position.y;
+			if( highLight == 5 ){ /* if i = highLight (exemple i = 0 implique higLight = 1 -> égaux */
+				SDL_BlitSurface(sfr_LANCER_BOMBE[1], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				SDL_BlitSurface(sfr_LANCER_BOMBE_touche[1], NULL, c_ecranGeneral, &position_droite);
+			}else{
+				SDL_BlitSurface(sfr_LANCER_BOMBE[0], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				SDL_BlitSurface(sfr_LANCER_BOMBE_touche[0], NULL, c_ecranGeneral, &position_droite);
+			}
+			position.y += 60;
+			position_droite.y = position.y;
+			if( highLight == 6 ){ /* if i = highLight (exemple i = 0 implique higLight = 1 -> égaux */
+				SDL_BlitSurface(sfr_DETONATEUR[1], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				SDL_BlitSurface(sfr_DETONATEUR_touche[1], NULL, c_ecranGeneral, &position_droite);
+			}else{
+				SDL_BlitSurface(sfr_DETONATEUR[0], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+				SDL_BlitSurface(sfr_DETONATEUR_touche[0], NULL, c_ecranGeneral, &position_droite);
+			}
+			position.x = (c_ecranGeneral->w-sfr_retour[0]->w)/2;
+			position.y += 60;
+			if( highLight == 7 ){ /* if i = highLight (exemple i = 0 implique higLight = 1 -> égaux */
+				SDL_BlitSurface(sfr_retour[1], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+			}else{
+				SDL_BlitSurface(sfr_retour[0], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
+			}
+
+			SDL_Flip(c_ecranGeneral);
+			dessiner = 0;
+		}
+
+	}while( continuer );/* fin while */
+
+	// Free
+	for( i=0; i<2; i++ )
+	{
+		SDL_FreeSurface(sfr_retour[i]);
+		SDL_FreeSurface(sfr_HAUT[i]);
+		SDL_FreeSurface(sfr_HAUT_touche[i]);
+		SDL_FreeSurface(sfr_BAS[i]);
+		SDL_FreeSurface(sfr_BAS_touche[i]);
+		SDL_FreeSurface(sfr_DROITE[i]);
+		SDL_FreeSurface(sfr_DROITE_touche[i]);
+		SDL_FreeSurface(sfr_GAUCHE[i]);
+		SDL_FreeSurface(sfr_GAUCHE_touche[i]);
+		SDL_FreeSurface(sfr_LANCER_BOMBE[i]);
+		SDL_FreeSurface(sfr_LANCER_BOMBE_touche[i]);
+		SDL_FreeSurface(sfr_DETONATEUR[i]);
+		SDL_FreeSurface(sfr_DETONATEUR_touche[i]);
+	}
+
+	SDL_FreeSurface(sfr_titre);
 }
 
 
@@ -815,24 +1120,84 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 						if( !l_map->getBlock(x,y)->joueur )
 							stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y)->joueur=0", x, y);
 
-						//couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
+						unsigned char joueur = l_map->getBlock(x,y)->joueur->at(0);
+
+						//couleur = getCouleurJoueur( joueur );
 						SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
-						switch( p->joueur(l_map->getBlock(x,y)->joueur->at(0)-1)->orientation() )
+						switch( p->joueur( joueur-1 )->orientation() )
 						{
 							case perso::ORI_haut: {
-								SDL_BlitSurface(c_Instance->c_Decor[joueur1_haut], NULL, c_Instance->c_ecranGeneral, &pos);
+								switch( joueur )
+								{
+									case 1:
+										SDL_BlitSurface(c_Instance->c_Decor[joueur1_haut], NULL, c_Instance->c_ecranGeneral, &pos);
+										break;
+									case 2:
+										SDL_BlitSurface(c_Instance->c_Decor[joueur2_haut], NULL, c_Instance->c_ecranGeneral, &pos);
+										break;
+									case 3:
+										SDL_BlitSurface(c_Instance->c_Decor[joueur3_haut], NULL, c_Instance->c_ecranGeneral, &pos);
+										break;
+									case 4:
+										SDL_BlitSurface(c_Instance->c_Decor[joueur4_haut], NULL, c_Instance->c_ecranGeneral, &pos);
+										break;
+								}
 								break;
 							}
+
 							case perso::ORI_bas: {
-								SDL_BlitSurface(c_Instance->c_Decor[joueur1_bas], NULL, c_Instance->c_ecranGeneral, &pos);
+								switch( joueur )
+								{
+									case 1:
+										SDL_BlitSurface(c_Instance->c_Decor[joueur1_bas], NULL, c_Instance->c_ecranGeneral, &pos);
+										break;
+									case 2:
+										SDL_BlitSurface(c_Instance->c_Decor[joueur2_bas], NULL, c_Instance->c_ecranGeneral, &pos);
+										break;
+									case 3:
+										SDL_BlitSurface(c_Instance->c_Decor[joueur3_bas], NULL, c_Instance->c_ecranGeneral, &pos);
+										break;
+									case 4:
+										SDL_BlitSurface(c_Instance->c_Decor[joueur4_bas], NULL, c_Instance->c_ecranGeneral, &pos);
+										break;
+								}
 								break;
 							}
+
 							case perso::ORI_droite: {
-								SDL_BlitSurface(c_Instance->c_Decor[joueur1_droite], NULL, c_Instance->c_ecranGeneral, &pos);
+								switch( joueur )
+								{
+									case 1:
+										SDL_BlitSurface(c_Instance->c_Decor[joueur1_droite], NULL, c_Instance->c_ecranGeneral, &pos);
+										break;
+									case 2:
+										SDL_BlitSurface(c_Instance->c_Decor[joueur2_droite], NULL, c_Instance->c_ecranGeneral, &pos);
+										break;
+									case 3:
+										SDL_BlitSurface(c_Instance->c_Decor[joueur3_droite], NULL, c_Instance->c_ecranGeneral, &pos);
+										break;
+									case 4:
+										SDL_BlitSurface(c_Instance->c_Decor[joueur4_droite], NULL, c_Instance->c_ecranGeneral, &pos);
+										break;
+								}
 								break;
 							}
 							case perso::ORI_gauche: {
-								SDL_BlitSurface(c_Instance->c_Decor[joueur1_gauche], NULL, c_Instance->c_ecranGeneral, &pos);
+								switch( joueur )
+								{
+								case 1:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur1_gauche], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+								case 2:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur2_gauche], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+								case 3:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur3_gauche], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+								case 4:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur4_gauche], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+								}
 								break;
 							}
 						}
@@ -918,24 +1283,84 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 					if( !l_map->getBlock(v_pos)->joueur )
 						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(v_pos)->joueur=0", v_pos.x, v_pos.y);
 
-					//couleur = getCouleurJoueur( l_map->getBlock(v_pos)->joueur->at(0) );
+					unsigned char joueur = l_map->getBlock(v_pos)->joueur->at(0);
+
+					//couleur = getCouleurJoueur( joueur );
 					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
-					switch( p->joueur(l_map->getBlock(v_pos)->joueur->at(0)-1)->orientation() )
+					switch( p->joueur( joueur-1 )->orientation() )
 					{
 						case perso::ORI_haut: {
-							SDL_BlitSurface(c_Instance->c_Decor[joueur1_haut], NULL, c_Instance->c_ecranGeneral, &pos);
+							switch( joueur )
+							{
+								case 1:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur1_haut], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+								case 2:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur2_haut], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+								case 3:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur3_haut], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+								case 4:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur4_haut], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+							}
 							break;
 						}
+
 						case perso::ORI_bas: {
-							SDL_BlitSurface(c_Instance->c_Decor[joueur1_bas], NULL, c_Instance->c_ecranGeneral, &pos);
+							switch( joueur )
+							{
+								case 1:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur1_bas], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+								case 2:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur2_bas], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+								case 3:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur3_bas], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+								case 4:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur4_bas], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+							}
 							break;
 						}
+
 						case perso::ORI_droite: {
-							SDL_BlitSurface(c_Instance->c_Decor[joueur1_droite], NULL, c_Instance->c_ecranGeneral, &pos);
+							switch( joueur )
+							{
+								case 1:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur1_droite], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+								case 2:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur2_droite], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+								case 3:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur3_droite], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+								case 4:
+									SDL_BlitSurface(c_Instance->c_Decor[joueur4_droite], NULL, c_Instance->c_ecranGeneral, &pos);
+									break;
+							}
 							break;
 						}
 						case perso::ORI_gauche: {
-							SDL_BlitSurface(c_Instance->c_Decor[joueur1_gauche], NULL, c_Instance->c_ecranGeneral, &pos);
+							switch( joueur )
+							{
+							case 1:
+								SDL_BlitSurface(c_Instance->c_Decor[joueur1_gauche], NULL, c_Instance->c_ecranGeneral, &pos);
+								break;
+							case 2:
+								SDL_BlitSurface(c_Instance->c_Decor[joueur2_gauche], NULL, c_Instance->c_ecranGeneral, &pos);
+								break;
+							case 3:
+								SDL_BlitSurface(c_Instance->c_Decor[joueur3_gauche], NULL, c_Instance->c_ecranGeneral, &pos);
+								break;
+							case 4:
+								SDL_BlitSurface(c_Instance->c_Decor[joueur4_gauche], NULL, c_Instance->c_ecranGeneral, &pos);
+								break;
+							}
 							break;
 						}
 					}
@@ -1098,6 +1523,29 @@ SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleu
 	return tmp;
 }
 
+
+/***************************************************************************//*!
+* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille )
+* @brief Permet d'écrire du texte dans une couleur avec une certaine taille de police
+* @param[in] texte Le texte a écrire
+* @param[in] couleur La couleur a utiliser
+* @param[in] taille La taille du texte
+* @return Une surface (contenant le texte) a libérer avec SDL_FreeSurface()
+*/
+SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille )
+{
+	TTF_Font* police = TTF_OpenFont("Chicken Butt.ttf", taille);
+	if( !police )
+		stdErrorE("Erreur lors du chargement de la police : %s", TTF_GetError());
+
+	SDL_Surface* tmp = TTF_RenderText_Blended(police, texte, couleur);
+	if( !tmp )
+		stdErrorE("Erreur lors de la création du texte <%s>, Couleur:{%u, %u, %u}, Erreur renvoyée: %s", texte, (unsigned int)couleur.r, (unsigned int)couleur.g, (unsigned int)couleur.b, TTF_GetError());
+
+	TTF_CloseFont(police);/* Fermeture de la police */
+
+	return tmp;
+}
 
 
 /***************************************************************************//*!
