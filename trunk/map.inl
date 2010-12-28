@@ -34,7 +34,6 @@ inline const map::s_Case* map::getBlock( s_Coordonnees& pos ) const
 /***************************************************************************//*!
 * @fn void map::setBlock( s_Coordonnees& pos, map::t_type what )
 * @brief Modifie le block qui est à la position X, Y
-*
 * @note Alias de setBlock( unsigned int X, unsigned int Y, map::t_type what )
 */
 inline void map::setBlock( s_Coordonnees& pos, map::t_type what )
@@ -60,4 +59,15 @@ inline unsigned char map::nb_PointDeDepartJoueur() const
 inline unsigned char map::nb_MAX_Joueur() const
 {
 	return nb_PointDeDepartJoueur();
+}
+
+
+/***************************************************************************//*!
+* @fn const std::vector<s_Coordonnees>* readModification() const
+* @brief Retourne la liste des modifications
+* @note Pour une utilisation plus correcte de la liste, préférez l'utilisation de map::getModification( s_Coordonnees& pos )
+*/
+inline const std::vector<s_Coordonnees>* map::readModification() const
+{
+	return &c_listDesChangement;
 }

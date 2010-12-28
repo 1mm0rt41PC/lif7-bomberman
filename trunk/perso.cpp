@@ -12,6 +12,8 @@ perso::perso()
 	c_pos.y = 0;
 	c_armements = 0;
 	c_orientation = ORI_bas;
+	c_isLocal = true;
+	c_MySocket = INVALID_SOCKET;
 }
 
 
@@ -26,6 +28,8 @@ perso::perso( std::string nom, unsigned int Xpos, unsigned int Ypos )
 	c_pos.y = Ypos;
 	c_armements = 0;
 	c_orientation = ORI_bas;
+	c_isLocal = true;
+	c_MySocket = INVALID_SOCKET;
 }
 
 
@@ -117,12 +121,33 @@ void perso::defOrientation( t_Orientation ori )
 
 
 /***************************************************************************//*!
-* @fn string perso::nom() const
+* @fn void perso::defLocal( bool isLocal )
+* @brief Permet de definir si ce perso est local ou distant
+*/
+void perso::defLocal( bool isLocal )
+{
+	c_isLocal = isLocal;
+}
+
+
+/***************************************************************************//*!
+* @fn void perso::defSocket( bool MySocket )
+* @brief Permet de definir le socket utilisé par le perso
+* @note Valeur par défaut: INVALID_SOCKET
+*/
+void perso::defSocket( bool MySocket )
+{
+	c_MySocket = MySocket;
+}
+
+
+/***************************************************************************//*!
+* @fn const string* perso::nom() const
 * @brief Renvoie le nom du personnage
 */
-string perso::nom() const
+const string* perso::nom() const
 {
-	return c_nom;
+	return &c_nom;
 }
 
 
@@ -177,4 +202,24 @@ bonus* perso::armements() const
 perso::t_Orientation perso::orientation() const
 {
 	return c_orientation;
+}
+
+
+/***************************************************************************//*!
+* @fn bool perso::isLocal() const
+* @brief Renvoie l'état du personnage vis à vis du reseau. (Local ou non)
+*/
+bool perso::isLocal() const
+{
+	return c_isLocal;
+}
+
+
+/***************************************************************************//*!
+* @fn SOCKET perso::socket() const
+* @brief Renvoie le socket utilisé (Par defaut: INVALID_SOCKET)
+*/
+SOCKET perso::socket() const
+{
+	return c_MySocket;
 }

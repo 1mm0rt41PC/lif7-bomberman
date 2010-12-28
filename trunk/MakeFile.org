@@ -10,6 +10,7 @@ CFLAGS := -W -Wall -Wextra -Wdeprecated -Wuninitialized -Wunused-variable -Wvari
 #Flags pour le linker
 # Permet d'inclure en dure les dll : libgcc_s_dw2-1.dll, libstdc++-6.dll
 #LDFLAGS := -static-libstdc++ -static-libgcc
+LDFLAGS :=
 # Mode Debug (décommenter cette ligne pour activer le mode debug forcé) (identique a la commande: make debug)
 #DEBUG = 1
 # Lancer automatiquement gdb après chaque compilation en mode debug ( make exec ! )
@@ -21,6 +22,7 @@ DEBUG_MEMORY = 1
 DEP = .depend
 # Fichiers .cpp
 SRC := main.cpp map.cpp perso.cpp partie.cpp clavier.cpp options.cpp bonus.cpp outils.cpp
+SRC += ClientServer/Server/class_server.cpp ClientServer/Client/class_client.cpp ClientServer/class_BaseClientServer.cpp
 # Fichier de sortie final
 EXEC_NAME = bomberman.exe
 
@@ -43,6 +45,7 @@ ifeq ($(SHELL), sh.exe)
 	CMD_CAT = type
 	ECHO=@echo $(1)$(if $(2),$(ECHO_,)$(2))$(if $(3),$(ECHO_,)$(3))$(if $(4),$(ECHO_,)$(4))$(if $(5),$(ECHO_,)$(5))
 	NULL = NUL
+	LDFLAGS += -lws2_32
 else
 	OS = linux
 	# Commandes Spé aux OS
@@ -112,12 +115,14 @@ else
 		SRC += moteur_sdl.cpp
 	else
 #		SFML
-		LDFLAGS +=
+		LDFLAGS += -lsfml-system -lsfml-window
+		SRC += moteur_sfml.cpp
 	endif
 endif
 
 # Fichiers Objets ( *.o ) dans un dossier obj/
-OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(SRC:.cpp=.o))
+OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.cpp=.o)))
+VPATH = $(dir $(SRC))
 
 # ^ NE PAS TOUCHER A CE BLOCK ^
 ################################################################################
@@ -224,8 +229,10 @@ $(OBJ_DIR)/config_%:
 
 # Valgrind
 valgrind: $(BIN_DIR)/$(EXEC_NAME)
+	$(CMD_CLEAR)
 	@echo Lancement de Valgrind
-	cd $(BIN_DIR) && valgrind --tool=memcheck --leak-check=full ./$(EXEC_NAME)
+	@cd $(BIN_DIR) && valgrind --tool=memcheck --leak-check=full --track-origins=yes --log-file=valgrind.txt ./$(EXEC_NAME)
+	@cd $(BIN_DIR) && $(CMD_CAT) valgrind.txt
 
 
 # Doxygen
@@ -237,8 +244,9 @@ doxygen: $(DOXYGEN_DIR)/Doxyfile
 
 # Pour créer une archive tar bz2
 tar:
-	$(CMD_DEL) bomberman.tar.bz2
-	tar -jcvf bomberman.tar.bz2 *.cpp *.h *.inl MakeFile.org makefile $(DOXYGEN_DIR)/Doxyfile TODO.txt _CodingStyle_.txt $(BIN_DIR)/map/*.map $(BIN_DIR)/Chicken\ Butt.ttf $(BIN_DIR)/images/*.png
+	$(call ECHO ,Creation de l'archive du projet)
+	@$(CMD_DEL) bomberman.tar.bz2
+	@tar -jcvf bomberman.tar.bz2 *.cpp *.h *.inl MakeFile.org makefile $(DOXYGEN_DIR)/Doxyfile TODO.txt _CodingStyle_.txt $(BIN_DIR)/map/*.map $(BIN_DIR)/Chicken\ Butt.ttf $(BIN_DIR)/images/*.png ClientServer/*.h ClientServer/*.cpp ClientServer/*.inl ClientServer/Client/*.h ClientServer/Client/*.cpp ClientServer/Server/*.h ClientServer/Server/*.cpp ClientServer/Server/*.inl
 
 
 # Make clean

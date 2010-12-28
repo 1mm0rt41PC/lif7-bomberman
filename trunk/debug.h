@@ -2,7 +2,6 @@
 #include <stdlib.h>
 
 #ifndef stdError
-
 	// Permet de mettre entre quot (")
 	#define QUOT_ME( data ) #data
 
@@ -16,7 +15,7 @@
 
 	#define redirectSdtErr( filename ) freopen(filename, "w", stderr)
 	#define closeSdtErr( filename ) fclose(stderr)
-
-	// Debug Mémoire
-	#include "debug_memory.h"
 #endif
+
+// Debug Mémoire
+#include "debug_memory.h"

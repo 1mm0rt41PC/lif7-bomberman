@@ -3,7 +3,7 @@
 
 #include <string>
 #include "bonus.h"
-
+#include "ClientServer/class_BaseClientServer.h"// Pour avoir le type SOCKET
 
 /*!
 * @class perso
@@ -30,6 +30,8 @@ class perso
 		s_Coordonnees c_pos;
 		bonus* c_armements;
 		t_Orientation c_orientation;
+		bool c_isLocal;
+		SOCKET c_MySocket;//!< Socket a utiliser pour le perso. Valeur par defaut: INVALID_SOCKET
 		//clavier c_Touches; <- CLAVIER géré en global ( options général )
 		// }
 
@@ -47,14 +49,18 @@ class perso
 		void defY( unsigned int Ypos );
 		void defArmements( bonus* a );
 		void defOrientation( t_Orientation ori );
+		void defLocal( bool isLocal );
+		void defSocket( bool MySocket );
 
 		// Accesseurs
-		std::string nom() const;
+		const std::string* nom() const;
 		unsigned int X() const;
 		unsigned int Y() const;
 		bool estVivant() const;
 		bonus* armements() const;
 		t_Orientation orientation() const;
+		bool isLocal() const;
+		SOCKET socket() const;
 };
 
 #endif

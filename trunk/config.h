@@ -2,6 +2,11 @@
 
 //#define __LIB_SDL__ 1
 
+#if defined(_WIN32) || defined(WIN32) || defined(WIN64) || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__BORLANDC__)
+	#define OS_WINDOWS 1
+#else
+#endif
+
 /*******************************************************************************
 * Lib SFML
 */
@@ -14,7 +19,7 @@
 * Lib NCruses
 */
 #elif __LIB_ncurses__
-	#if defined(WIN32) || defined(WIN64)
+	#if defined(OS_WINDOWS)
 		#include <Ncurses/curses.h>
 	#else
 		#include <ncurses.h>

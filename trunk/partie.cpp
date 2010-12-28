@@ -9,9 +9,16 @@
 */
 partie::partie()
 {
+	c_connection = CNX_None;
 	c_nb_joueurs = 0;
 	c_joueurs = 0;
 	c_map = 0;
+
+	c_server = 0;
+	//c_client = 0;// <- Pas besoin ( union )
+
+	// On vide le buffer
+	memset(c_buffer, 0, PACK_bufferSize);
 }
 
 
@@ -28,6 +35,16 @@ partie::~partie()
 
 	c_joueurs = 0;
 	c_map = 0;
+
+	if( c_connection == CNX_Host && c_server ){
+		delete c_server;
+		c_server = 0;
+	}
+
+	if( c_connection == CNX_Client && c_client ){
+		delete c_client;
+		c_client = 0;
+	}
 }
 
 
@@ -70,45 +87,26 @@ void partie::def_nbJoueurs( unsigned char nb )
 		stdError("c_nb_joueurs(%u), c_joueurs(%X)", (unsigned int)c_nb_joueurs, (unsigned int)c_joueurs);
 		delete[] c_joueurs;
 	}
+	if(	!nb	)
+		stdErrorE("def_nbJoueurs(0) Interdit !");
+
 	c_nb_joueurs = nb;
 	c_joueurs = new perso[nb];
 }
 
 
-/*******************************************************************************
-*
-*/
-void partie::def_nbMAX_joueurs( unsigned char nb )
-{
-	c_nb_MAX_joueurs = nb;
-}
-
-
-/*******************************************************************************
-*
-*/
-void partie::def_modeJeu( partie::t_MODE m )
-{
-	c_mode = m;
-}
-
-
-/*******************************************************************************
-*
-*/
-unsigned char partie::nbJoueurs() const
-{
-	return c_nb_joueurs;
-}
-
-
 /***************************************************************************//*!
-* @fn unsigned char partie::nbMAX_joueurs() const
-* @brief Retourne le nombre de joueur maximum
+* @fn void partie::def_connection( partie::t_Connection cnx )
+* @brief Permet de modifier la connection: Host, Local, None ( pas de connection )
 */
-unsigned char partie::nbMAX_joueurs() const
+void partie::def_connection( partie::t_Connection cnx )
 {
-	return c_nb_MAX_joueurs;
+	c_connection = cnx;
+	if( cnx == CNX_Host )
+		c_server = new server;
+
+	if( cnx == CNX_Client )
+		c_client = new client;
 }
 
 
@@ -124,24 +122,6 @@ perso* partie::joueur( unsigned int joueur_numero ) const
 		return 0;
 	}
 	return c_joueurs+joueur_numero;
-}
-
-/*******************************************************************************
-*
-*/
-partie::t_MODE partie::modeJeu() const
-{
-	return c_mode;
-}
-
-
-/***************************************************************************//*!
-* @fn map* partie::getMap() const
-* @brief Renvoie la map actuel
-*/
-map* partie::getMap() const
-{
-	return c_map;
 }
 
 
@@ -162,6 +142,36 @@ unsigned char partie::nbJoueurVivant() const
 
 
 /***************************************************************************//*!
+* @fn server* partie::getServeur() const
+* @brief Renvoie le serveur utilisé pour communiquer.
+* @return Le pointeur vers le serveur si tout est OK. NULL sinon
+*/
+server* partie::getServeur() const
+{
+	if( c_connection == CNX_Host )
+		return c_server;
+
+	stdError("Attention ! Cette partie n'est pas configurée en tant que Host !");
+	return NULL;
+}
+
+
+/***************************************************************************//*!
+* @fn client* partie::getClient() const
+* @brief Renvoie le client utilisé pour communiquer.
+* @return Le pointeur vers le client si tout est OK. NULL sinon
+*/
+client* partie::getClient() const
+{
+	if( c_connection == CNX_Client )
+		return c_client;
+
+	stdError("Attention ! Cette partie n'est pas configurée en tant que Client !");
+	return NULL;
+}
+
+
+/***************************************************************************//*!
 * @fn void partie::main( libAff * afficherMapEtEvent )
 * @brief Lance le jeu
 * @param[in] afficherMapEtEvent La fonction qui va servir à afficher la map
@@ -177,6 +187,87 @@ void partie::main( libAff * afficherMapEtEvent )
 	if( !afficherMapEtEvent )
 		stdErrorE("Fonction d'affichage incorrect ! (afficherMapEtEvent=0)");
 
+	SYS_CLAVIER key;
+	int i=0;
+	bool continuerScanClavier=1;
+	options* opt = options::getInstance();
+	bonus::s_Event bonusEvent;
+	s_Event e;
+	SOCKET s;
+
+	/*##########################################################################
+	* Partie en mode client
+	*/
+	if( c_connection == CNX_Client ){
+		// Teste sur les types
+		if( sizeof(uint8_t) != sizeof(unsigned char) )
+			stdErrorE("sizeof(uint8_t){%u} != sizeof(unsigned char){%u}", sizeof(uint8_t), sizeof(unsigned char));
+
+		// Tentative de connection
+		if( !c_client->connection() ){
+			stdError("Impossible de se connecter au serveur demandé !");
+			return ;
+		}
+
+		memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
+		// Envoie de la config 32Bits?, IsIntel?
+		sprintf(c_buffer, "%d %d", Is32Bits, (int)baseClientServer::isLittleEndian());
+		c_client->send_message(c_buffer, PACK_bufferSize);
+
+		memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
+		// Attente de la réponce
+		if( !c_client->readServer(c_buffer, PACK_bufferSize) ){
+			stdError("Configuration 32Bits, IsIntel incorrect pour le serveur ! Connection refusé !");
+			return ;// On a été déconnecté !
+		}
+
+		// Envoie du nom
+		c_client->send_message(c_joueurs[0].nom()->c_str(), c_joueurs[0].nom()->length());
+
+		memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
+		// Attente de la réponce
+		if( !c_client->readServer(c_buffer, PACK_bufferSize) ){
+			stdError("Nom déjà utilisé ! Connection refusé !");
+			return ;// On a été déconnecté !
+		}
+
+		memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
+		// Attente de la dimention de la map
+		if( !c_client->readServer(c_buffer, PACK_bufferSize) ){
+			stdError("Erreur de connection !");
+			return ;// On a été déconnecté !
+		}
+		// Définition des variables qui seront utilisées
+		uint32_t X=0, Y=0, nb_MetaDonnee=0;
+		map::t_type type;
+
+		unPackIt( &X, &Y, &type, &nb_MetaDonnee );// type et nb_MetaDonnee inutile ici
+
+		if( c_map )
+			delete c_map;
+		c_map = new map(X,Y);// Création de la map
+
+		memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
+		while( !c_client->readServer(c_buffer, PACK_bufferSize) && std::string("end") != c_buffer ){
+			unPackIt( &X, &Y, &type, &nb_MetaDonnee );// type et nb_MetaDonnee inutile ici
+			c_map->setBlock(X, Y, type);
+			c_map->ajouterInfoJoueur(X, Y, nb_MetaDonnee);
+			memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
+		}
+
+		// Commencement de la partie
+		do{
+			// Affichage de la map et récéption des Event claviers
+			//key = moteur.afficherMapEtEvent( this );
+			key = afficherMapEtEvent( this );
+
+		}while( key != RETOUR_MENU_PRECEDENT && c_client->is_connected() );
+		return ;
+	}
+
+	/*##########################################################################
+	* Partie en mode serveur ou offline
+	*/
 	// On initialise les bonus utilisables pour cette partie
 	bonus::bonusProp();
 	// On initialise les bonus pour les joueurs
@@ -189,16 +280,57 @@ void partie::main( libAff * afficherMapEtEvent )
 	// On génère la map
 	genMap();
 
-	SYS_CLAVIER key;
-	int i=0;
-	bool continuerScanClavier=1;
-	options* opt = options::getInstance();
-	s_Coordonnees pos={0,0};
-	bonus::s_Event bonusEvent;
-	s_Event e;
+	if( c_connection == CNX_Host ){// Si on est en mode serveur alors on connecte le serveur
+		// On détermine le nombre maximum de player online
+		unsigned int nbLocal=0;
+		for( i=0; i<c_nb_joueurs; i++ )
+			nbLocal += c_joueurs[i].isLocal();
+		stdError("Nombre de player online max: %u",c_nb_joueurs-nbLocal);
+		// Ajustement des paramètres
+		c_server->setNbClientMax(c_nb_joueurs-nbLocal);
+		c_server->Listening();
+
+		// Teste sur les types
+		if( sizeof(uint8_t) != sizeof(unsigned char) )
+			stdErrorE("sizeof(uint8_t){%u} != sizeof(unsigned char){%u}", sizeof(uint8_t), sizeof(unsigned char));
+
+		// S'il n'y a qu'un perso en local, alors on wait un perso exterieur
+		if( nbLocal == 1 ){
+			c_server->setWait(0,100000);// 0.1 secondes
+			// Ajout des player
+			while( (s = c_server->lookupNewConnection()) == INVALID_SOCKET && key != RETOUR_MENU_PRECEDENT )
+			{
+				key = afficherMapEtEvent( this );// Pour récup les touches
+			}
+			// On a enfin un player, on lui envoie la map
+			ajouterNouvelleConnection( s );
+		}
+		c_server->setWait(0,1000);// 0.001 secondes
+	}
 
 	// Commencement de la partie
 	do{
+		/***********************************************************************
+		* Traitement des connections ( HOST )
+		*/
+		if( c_connection == CNX_Host ){
+			// On traite les joueurs déjà connecté
+			while( (s = c_server->lookupConnectionClient()) != INVALID_SOCKET )
+			{
+				if( c_server->readClient( s, c_buffer, PACK_bufferSize ) ){
+
+				}else{
+					stdError("Joueur déco");
+				}
+			}
+			// Ajout des player
+			while( (s = c_server->lookupNewConnection()) != INVALID_SOCKET )
+			{
+				// Nouveau joueur !
+				ajouterNouvelleConnection( s );
+			}
+		}
+
 		// Affichage de la map et récéption des Event
 		//key = moteur.afficherMapEtEvent( this );
 		key = afficherMapEtEvent( this );
@@ -327,6 +459,9 @@ void partie::main( libAff * afficherMapEtEvent )
 
 	// On désinitialise les bonus utilisables pour cette partie
 	bonus::unInitBonusProp();
+
+	if( c_connection == CNX_Host )// Si on est en mode serveur alors on connecte le serveur
+		c_server->endListen();
 }
 
 
@@ -542,7 +677,7 @@ void partie::checkInternalEvent()
 
 			// Flamme gauche
 			if( e.continue_negativeX ){
-				char r = actionSurLesElements( &e, e.pos.x-e.Nb_Repetition, e.pos.y, e.pos.x, -1 );
+				char r = actionSurLesElements( &e, e.pos.x-e.Nb_Repetition, e.pos.y, -1 );
 				if( r == -1 || r == 0 )
 					e.continue_negativeX = false;
 				if( r == 0 || r == 1 )
@@ -551,7 +686,7 @@ void partie::checkInternalEvent()
 
 			// Flamme droite
 			if( e.continue_X ){
-				char r = actionSurLesElements( &e, e.pos.x+e.Nb_Repetition, e.pos.y, e.pos.x, +1 );
+				char r = actionSurLesElements( &e, e.pos.x+e.Nb_Repetition, e.pos.y, +1 );
 				if( r == -1 || r == 0 )
 					e.continue_X = false;
 				if( r == 0 || r == 1 )
@@ -560,7 +695,7 @@ void partie::checkInternalEvent()
 
 			// Flamme haut
 			if( e.continue_negativeY ){
-				char r = actionSurLesElements( &e, e.pos.x, e.pos.y-e.Nb_Repetition, e.pos.y, -2 );
+				char r = actionSurLesElements( &e, e.pos.x, e.pos.y-e.Nb_Repetition, -2 );
 				if( r == -1 || r == 0 )
 					e.continue_negativeY = false;
 				if( r == 0 || r == 1 )
@@ -569,7 +704,7 @@ void partie::checkInternalEvent()
 
 			// Flamme bas
 			if( e.continue_Y ){
-				char r = actionSurLesElements( &e, e.pos.x, e.pos.y+e.Nb_Repetition, e.pos.y, +2 );
+				char r = actionSurLesElements( &e, e.pos.x, e.pos.y+e.Nb_Repetition, +2 );
 				if( r == -1 || r == 0 )
 					e.continue_Y = false;
 				if( r == 0 || r == 1 )
@@ -584,7 +719,7 @@ void partie::checkInternalEvent()
 
 
 
-char partie::actionSurLesElements( s_Event* e, unsigned int x, unsigned int y, unsigned int ValeurPositionOriginel, char direction )
+char partie::actionSurLesElements( s_Event* e, unsigned int x, unsigned int y, char direction )
 {
 	char continuer = 1;
 	switch( killPlayers(e, x, y) )
@@ -737,4 +872,175 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 	}
 
 	return 1;
+}
+
+
+/***************************************************************************//*!
+* @fn const char* partie::packIt( uint32_t X, uint32_t Y, map::t_type type, uint32_t nb_MetaDonnee )
+* @brief Empaquette les variable X, Y, type, nb_MetaDonnee pour les envoyer sur le réseau
+* @return Les variables formaté dans une chaine de caractère
+*/
+const char* partie::packIt( uint32_t X, uint32_t Y, map::t_type type, uint32_t nb_MetaDonnee )
+{
+	unsigned int PACK_size = snprintf(c_buffer, PACK_bufferSize, "%u,%u,%u,%u", X, Y, type, nb_MetaDonnee);
+	if( PACK_size >= PACK_bufferSize )
+		stdError("ATTENTION ! Perte de donnees ! %d donnees lues et %d donnees ecrites Maximum ( Ne pas oublier dans les calcules le \\0 ! )", PACK_size, PACK_bufferSize);
+
+	return c_buffer;
+}
+
+
+/***************************************************************************//*!
+* @fn void partie::unPackIt( uint32_t* X, uint32_t* Y, map::t_type* type, uint32_t* nb_MetaDonnee )
+* @brief Désempaquette le buffer et met les données dans les variables X, Y, type et nb_MetaDonnee
+*/
+void partie::unPackIt( uint32_t* X, uint32_t* Y, map::t_type* type, uint32_t* nb_MetaDonnee )
+{
+	unsigned int i=0;
+	bool firstLap = 1;
+
+	*X = 0;
+	firstLap = 1;
+	for( ; c_buffer[i] != ',' ; i++ )
+	{
+		if( firstLap ){
+			firstLap = 0;
+		}else{
+			*X *= 10;
+		}
+		*X += c_buffer[i]-'0';
+	}
+	i++;// Pour virer la ,
+
+	*Y = 0;
+	firstLap = 1;
+	for( ; c_buffer[i] != ','; i++ )
+	{
+		if( firstLap ){
+			firstLap = 0;
+		}else{
+			*Y *= 10;
+		}
+		*Y += c_buffer[i]-'0';
+	}
+	i++;// Pour virer la ,
+
+	*type = (map::t_type)0;
+	firstLap = 1;
+	for( ; c_buffer[i] != ','; i++ )
+	{
+		if( firstLap ){
+			firstLap = 0;
+		}else{
+			*type = (map::t_type)(*type*10);
+		}
+		*type = (map::t_type)(*type+(c_buffer[i]-'0'));
+	}
+	i++;// Pour virer la ,
+
+	*nb_MetaDonnee = 0;
+	firstLap = 1;
+	for( ; c_buffer[i] != 0; i++ )
+	{
+		if( firstLap ){
+			firstLap = 0;
+		}else{
+			*nb_MetaDonnee *= 10;
+		}
+		*nb_MetaDonnee += c_buffer[i]-'0';
+	}
+
+	//sscanf(c_buffer, "%u,%u,%u,%u", X, Y, type, nb_MetaDonnee );
+}
+
+
+/***************************************************************************//*!
+* @fn void partie::ajouterNouvelleConnection( SOCKET s )
+* @brief Permet d'ajouter un nouveau joueur à la partie
+*
+* <b>Protocole</b> (Envoie des données)<br />
+* Client: 0-1 0-1 (32bits ? Intel ?)<br />
+* Server: 1-0 (Connection accordé ?)<br />
+* Client: Nom Joueur<br />
+* Server: 1-0 (Accordé ou non)<br />
+* Server: {Envoie de la taille de la map}
+* Server: {Envoie de la map} : "X, Y, type, nb_MetaDonnee"<br />
+* Server: Si nb_MetaDonnee > 0 => Envoie des Meta-Donnees
+* Server: "end" (Fin de transmission)
+*<br />
+* Si le perso du client bouge:<br />
+* Client: 1 {action: haut, bas, droite, gauche, poser bombe, exploser} (note, 1=action)<br />
+* Server: 0-1 (Accordé ou non)(Si accordé, alors le server fait l'action)<br />
+* PAS d'envoie de nouvelle position, envoie effectué lors du rafraichissement.
+*/
+void partie::ajouterNouvelleConnection( SOCKET s )
+{
+	unsigned int	l_isIntel=1,
+					l_is32Bits=1;
+	unsigned char	i,
+					idJoueur = 0;
+
+	stdError("Nouvelle connection !");
+
+	// On vide le buffer
+	memset(c_buffer, 0, PACK_bufferSize);
+	c_server->readClient( s, c_buffer, PACK_bufferSize );// On attend les données du client
+	sscanf(c_buffer, "%u %u", &l_is32Bits, &l_isIntel );// Utilisation d'un buffer pour eviter tout problème de lecture
+
+	stdError("Nouvelle connection p2 !");
+
+	if( Is32Bits != l_is32Bits || l_isIntel != (int)baseClientServer::isLittleEndian() ){
+		stdError("Attention ! Un client a essayé de se connecté avec les paramètres suivant: is32Bits=%u, isIntel=%u (Paramètre accèpté: is32Bits=%u, isIntel=%u)", l_is32Bits, l_isIntel, Is32Bits, (unsigned int)baseClientServer::isLittleEndian());
+		c_server->rmClient( s );// Connection refusé
+		return ;
+	}
+
+	stdError("Nouvelle connection p1 !");
+
+	c_server->send_message( s, "1", 2);// Connection accèpté
+
+	// On vide le buffer
+	memset(c_buffer, 0, PACK_bufferSize);
+	c_server->readClient( s, c_buffer, PACK_bufferSize );// On attend le nom du client
+
+// COMMENTER CETTE LIGNE SI PAS UTILISATION telnet
+//	c_buffer[strlen(c_buffer)] = 0;// Permet de virer le '\n'
+
+
+	// On cherche un SLOT pour notre joueur
+	// Et on vérifit si le nom n'est pas dans la liste
+	for( i=0; i<c_nb_joueurs; i++ ){
+		if( c_joueurs[i].isLocal() ){
+			stdError("%s == %s", (const char*)c_joueurs[i].nom()->c_str(), c_buffer)
+			if( *c_joueurs[i].nom() == c_buffer ){// Nom déjà utilisé
+				c_server->rmClient( s );// Nom refusé => Déco
+				return ;
+			}
+		}else{
+			if( c_joueurs[i].socket() == INVALID_SOCKET ){// Note, on est obligé de trouver un slot libre, sinon le server n'aurait pas accèpté la connection
+				idJoueur = i;
+			}
+		}
+	}
+	c_server->send_message( s, "1", 2);// Nom accèpté
+
+	// Envoie des dim de la map
+	c_server->send_message(s, packIt(c_map->X(), c_map->Y(), (map::t_type)0, 0), PACK_bufferSize);
+
+	// Envoie de la map
+	for( unsigned int x=0, y=0; y<c_map->Y(); y++ )
+	{
+		for( x=0; x< c_map->X(); x++ )
+		{
+			if( c_map->getBlock(x,y)->joueur ){
+				c_server->send_message(s, packIt(x, y, c_map->getBlock(x,y)->element, c_map->getBlock(x,y)->joueur->size()), PACK_bufferSize);
+				for( unsigned int k=0; k<c_map->getBlock(x,y)->joueur->size(); k++ )// Envoie du tableau de meta-données
+					c_server->send_message(s, (const char*)(&c_map->getBlock(x,y)->joueur->at(k)), sizeof(uint8_t));
+			}else{
+				c_server->send_message(s, packIt(x, y, c_map->getBlock(x,y)->element, 0), PACK_bufferSize);
+			}
+		}
+	}
+
+	c_server->send_message( s, "end", 4);// Fin de transmition
 }
