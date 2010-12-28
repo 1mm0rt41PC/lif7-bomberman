@@ -1,120 +1,95 @@
-#include "moteur_sdl.h"
+using namespace sf;
+#include "moteur_sfml.h"
 #include "debug.h"
 
-moteur_sdl* moteur_sdl::c_Instance = 0;
+moteur_sfml* moteur_sfml::c_Instance = 0;
+
+#define chargerImage( Image, src ) if( !Image.LoadFromFile(src) ) stdErrorE("Erreur lors du chargement de l'image " src)
+
 
 /***************************************************************************//*!
-* @fn moteur_sdl::moteur_sdl()
+* @fn moteur_sfml::moteur_sdl()
 * @brief Initialise la class moteur_sdl
 *
 * Initialise l'écran sdl et prépare le "terrain" pour les traitements futurs
 */
-moteur_sdl::moteur_sdl()
+moteur_sfml::moteur_sfml()
 {
-	if( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 ) // Démarrage de la SDL. Si erreur alors...
-		stdErrorE("Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // Ecriture de l'erreur
+	c_App.Create(VideoMode(1024,768,32), "Bomberman");
 
-	if(TTF_Init() == -1)
-		stdErrorE("Erreur d'initialisation de TTF_Init : %s", TTF_GetError());
+	// 50 : Size of characters in bitmap - the bigger, the higher quality (30 by default)
+	if( !c_policeGeneral.LoadFromFile("Chicken Butt.ttf", 50) )
+		stdErrorE("Erreur lors du chargement de la police.")
 
-	c_ecranGeneral = SDL_SetVideoMode(1024,768, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
-	SDL_FillRect(c_ecranGeneral, NULL, SDL_MapRGB(c_ecranGeneral->format, 255, 255, 255));/* Efface l'écran */
-
-	//SDL_ShowCursor(SDL_DISABLE);// Masque le curseur de la souris
-
-	SDL_WM_SetCaption("Bomberman", NULL);// Titre de la fenêtre
-
-	if( !(c_policeGeneral = TTF_OpenFont("Chicken Butt.ttf", 75)) )
-		stdErrorE("Erreur lors du chargement de la police : %s", TTF_GetError());
-
-	c_background = chargerImage("images/background.png");
-
-	SDL_EnableUNICODE(1);// On ne veut pas un clavier QWERTY
+	chargerImage(c_background, "images/background.png");
 
 	/***************************************************************************
 	* On charge ici le décor
 	*/
 	c_nb_Decor = gain_bombe+1;// mettre ici le dernier element de la liste enum
-	c_Decor = new SDL_Surface*[c_nb_Decor];
-	for( unsigned int i=0; i<c_nb_Decor; i++ )// POUR EVITER LES BUG EN ATTENDANT LES AUTRES IMAGES
-	{
-		c_Decor[i]=0;
-	}
+	c_Decor = new Image[c_nb_Decor];
+
 	//murs
-	c_Decor[vide] = chargerImage("images/vide.png");
-	c_Decor[mur_destructible]= chargerImage("images/mur_destructible.png");
-	c_Decor[mur_indestructible]= chargerImage("images/mur_indestructible.png");
+	chargerImage(c_Decor[vide], "images/vide.png");
+	chargerImage(c_Decor[mur_destructible], "images/mur_destructible.png");
+	chargerImage(c_Decor[mur_indestructible], "images/mur_indestructible.png");
 	//joueur1
-	c_Decor[joueur1_haut]= chargerImage("images/bomberman1_haut.png");
-	c_Decor[joueur1_bas]= chargerImage("images/bomberman1_bas.png");
-	c_Decor[joueur1_gauche]= chargerImage("images/bomberman1_gauche.png");
-	c_Decor[joueur1_droite]= chargerImage("images/bomberman1_droite.png");
+	chargerImage(c_Decor[joueur1_haut], "images/bomberman1_haut.png");
+	chargerImage(c_Decor[joueur1_bas], "images/bomberman1_bas.png");
+	chargerImage(c_Decor[joueur1_gauche], "images/bomberman1_gauche.png");
+	chargerImage(c_Decor[joueur1_droite], "images/bomberman1_droite.png");
 	//joueur2
-	c_Decor[joueur2_haut]= chargerImage("images/bomberman2_haut.png");
-	c_Decor[joueur2_bas]= chargerImage("images/bomberman2_bas.png");
-	c_Decor[joueur2_gauche]= chargerImage("images/bomberman2_gauche.png");
-	c_Decor[joueur2_droite]= chargerImage("images/bomberman2_droite.png");
+	chargerImage(c_Decor[joueur2_haut], "images/bomberman2_haut.png");
+	chargerImage(c_Decor[joueur2_bas], "images/bomberman2_bas.png");
+	chargerImage(c_Decor[joueur2_gauche], "images/bomberman2_gauche.png");
+	chargerImage(c_Decor[joueur2_droite], "images/bomberman2_droite.png");
 	//joueur3
-	c_Decor[joueur3_haut]= chargerImage("images/bomberman3_haut.png");
-	c_Decor[joueur3_bas]= chargerImage("images/bomberman3_bas.png");
-	c_Decor[joueur3_gauche]= chargerImage("images/bomberman3_gauche.png");
-	c_Decor[joueur3_droite]= chargerImage("images/bomberman3_droite.png");
+	chargerImage(c_Decor[joueur3_haut], "images/bomberman3_haut.png");
+	chargerImage(c_Decor[joueur3_bas], "images/bomberman3_bas.png");
+	chargerImage(c_Decor[joueur3_gauche], "images/bomberman3_gauche.png");
+	chargerImage(c_Decor[joueur3_droite], "images/bomberman3_droite.png");
 	//joueur4
-	c_Decor[joueur4_haut]= chargerImage("images/bomberman4_haut.png");
-	c_Decor[joueur4_bas]= chargerImage("images/bomberman4_bas.png");
-	c_Decor[joueur4_gauche]= chargerImage("images/bomberman4_gauche.png");
-	c_Decor[joueur4_droite]= chargerImage("images/bomberman4_droite.png");
+	chargerImage(c_Decor[joueur4_haut], "images/bomberman4_haut.png");
+	chargerImage(c_Decor[joueur4_bas], "images/bomberman4_bas.png");
+	chargerImage(c_Decor[joueur4_gauche], "images/bomberman4_gauche.png");
+	chargerImage(c_Decor[joueur4_droite], "images/bomberman4_droite.png");
 	//gain
-	c_Decor[gain_puissance_flamme]= chargerImage("images/gain_puissance_flamme.png");
-	c_Decor[gain_bombe]= chargerImage("images/gain_bombe.png");
+	chargerImage(c_Decor[gain_puissance_flamme], "images/gain_puissance_flamme.png");
+	chargerImage(c_Decor[gain_bombe], "images/gain_bombe.png");
 	//armes
-	c_Decor[flamme_origine]= chargerImage("images/flamme_origine.png");
-	c_Decor[flamme_vertical]= chargerImage("images/milieu_flamme_verticale.png");
-	c_Decor[flamme_horizontal]= chargerImage("images/milieu_flamme_horizontale.png");
-	c_Decor[bout_flamme_haut]= chargerImage("images/flamme_haut.png");
-	c_Decor[bout_flamme_bas]= chargerImage("images/flamme_bas.png");
-	c_Decor[bout_flamme_gauche]= chargerImage("images/flamme_gauche.png");
-	c_Decor[bout_flamme_droite]= chargerImage("images/flamme_droite.png");
-	c_Decor[bombe]= chargerImage("images/bombe.gif");
-//	c_Decor[bombe_explosion]= chargerImage("images/bombe_explosion.png");
+	chargerImage(c_Decor[flamme_origine], "images/flamme_origine.png");
+	chargerImage(c_Decor[flamme_vertical], "images/milieu_flamme_verticale.png");
+	chargerImage(c_Decor[flamme_horizontal], "images/milieu_flamme_horizontale.png");
+	chargerImage(c_Decor[bout_flamme_haut], "images/flamme_haut.png");
+	chargerImage(c_Decor[bout_flamme_bas], "images/flamme_bas.png");
+	chargerImage(c_Decor[bout_flamme_gauche], "images/flamme_gauche.png");
+	chargerImage(c_Decor[bout_flamme_droite], "images/flamme_droite.png");
+	chargerImage(c_Decor[bombe], "images/bombe.gif");
+	//chargerImage(c_Decor[bombe_explosion], "images/bombe_explosion.png");
 }
 
 
-moteur_sdl& moteur_sdl::getInstance()
+moteur_sfml& moteur_sfml::getInstance()
 {
 	if( !c_Instance )
-		c_Instance = new moteur_sdl;
+		c_Instance = new moteur_sfml;
 
 	return *c_Instance;
 }
 
 
 /***************************************************************************//*!
-* @fn moteur_sdl::~moteur_sdl()
+* @fn moteur_sfml::~moteur_sdl()
 * @brief Désinitialise la class moteur_sdl
 */
-moteur_sdl::~moteur_sdl()
+moteur_sfml::~moteur_sfml()
 {
-	// FONCTIONNE PARTIELLEMENT -> EN ATTENTE DES IMAGES MANQUANTES
-	for( unsigned int i=0; i<c_nb_Decor; i++ )
-	{
-		if(c_Decor[i]) SDL_FreeSurface(c_Decor[i]);
-	}
 	delete[] c_Decor;
-
-	if( c_background )
-		SDL_FreeSurface(c_background);// On libère le background
-
-	if( c_policeGeneral )
-		TTF_CloseFont(c_policeGeneral);/* Fermeture de la police avant TTF_Quit */
-
-	TTF_Quit();/* Arrêt de SDL_ttf (peut être avant ou après SDL_Quit, peu importe) */
-	SDL_Quit();
 }
 
 
 /***************************************************************************//*!
-* @fn unsigned int moteur_sdl::menu( const char titre[], const char *choix[], unsigned int nb_choix )
+* @fn unsigned int moteur_sfml::menu( const char titre[], const char *choix[], unsigned int nb_choix )
 * @brief Afficher l'image correspondante suivant le menu où on est
 * @param[in] titre		Titre de la sous fenêtre
 * @param[in] choix		Liste des choix a mettre dans la sous fenêtre. ( Tableau de chaine de caractères )
@@ -135,7 +110,7 @@ moteur_sdl::~moteur_sdl()
 * unsigned int choix_selectionner = menu( "Liste de mes choix", choix, 5 );
 * @endcode
 */
-unsigned int moteur_sdl::menu( const char titre[], const char *choix[], unsigned int nb_choix )
+unsigned int moteur_sfml::menu( const char titre[], const char *choix[], unsigned int nb_choix )
 {
 	unsigned int highLight = 1;
 	bool continuer = 1;
@@ -247,18 +222,18 @@ unsigned int moteur_sdl::menu( const char titre[], const char *choix[], unsigned
 		SDL_FreeSurface(textes[i]);
 	delete[] textes;// On libère les textes
 
-	if( sfr_titre )
-		SDL_FreeSurface(sfr_titre);
+	SDL_FreeSurface(sfr_titre);
+
 	return highLight;
 }
 
 
 /***************************************************************************//*!
-* @fn void moteur_sdl::afficherConfigurationClavier( unsigned char joueur )
+* @fn void moteur_sfml::afficherConfigurationClavier( unsigned char joueur )
 * @brief Menu permettant d'afficher et de modifier la configuration du clavier d'un joueur
 * @param[in] joueur		Le numéro du joueur ( de 1 à ... )
 */
-void moteur_sdl::afficherConfigurationClavier( unsigned char joueur )
+void moteur_sfml::afficherConfigurationClavier( unsigned char joueur )
 {
 	bool continuer = 1;
 	SDL_Event event;
@@ -470,7 +445,7 @@ void moteur_sdl::afficherConfigurationClavier( unsigned char joueur )
 		{
 			position.x = 0;
 			position.y = 0;
-			SDL_BlitSurface(c_background, NULL, c_ecranGeneral, &position); /* blittage du background */
+			SDL_BlitSurface(c_background, NULL, c_ecranGeneral, &position);// Blit background
 
 			position.y = 200;
 			position.x = (c_ecranGeneral->w-sfr_titre->w)/2; /* centrage */
@@ -571,7 +546,7 @@ void moteur_sdl::afficherConfigurationClavier( unsigned char joueur )
 
 
 /***************************************************************************//*!
-* @fn int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* valeurRetour )
+* @fn int moteur_sfml::getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* valeurRetour )
 * @brief Créer un menu pour récupérer un nombre entré par un utilisateur
 * @param[in] titre			 Le titre du menu
 * @param[in] valeurParDefaut La valeur par défaut
@@ -582,7 +557,7 @@ void moteur_sdl::afficherConfigurationClavier( unsigned char joueur )
 *	- 2 : Nombre validé et accèpté
 *	- 3 : Action annulée
 */
-int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* valeurRetour )
+int moteur_sfml::getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* valeurRetour )
 {
 	unsigned int highLight = 2;
 	bool continuer = 1;
@@ -627,7 +602,7 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 		switch( event.type )
 		{
 			case SDL_QUIT: {
-				highLight = 3;// On veut quitter !
+				highLight = 3;// On veux quitter !
 				continuer = 0;
 				break;
 			}
@@ -652,7 +627,7 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 						dessiner = 1;// On redessine
 						break;
 					}
-					case SDLK_RETURN: {// On a validé notre choix par entrer
+					case SDLK_RETURN: {// On a valider notre choix par entrer
 						if( highLight == 1 ){// On a selectionné un lien de modification de texte
 							dessiner = 1;
 							sfr_msg = ecritTexte("Entrez le nombre manuellement", couleurRouge);
@@ -766,7 +741,7 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 						break;
 					}
 					case SDLK_ESCAPE: { /* Appui sur la touche Echap, on arrête le programme */
-						highLight = 3;// On veut quitter !
+						highLight = 3;// On veux quitter !
 						continuer = 0;
 						break;
 					}
@@ -820,7 +795,7 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 
 
 /***************************************************************************//*!
-* @fn int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
+* @fn int moteur_sfml::getTexte( const char titre[], char texteRetour[21] )
 * @brief Permet d'obtenir du texte
 * @param[in] titre				Le titre du menu
 * @param[out] texteRetour		Dans cette variable sera stocké, le texte obtenu a la fin de la fonction
@@ -828,7 +803,7 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 *	- 2 : Texte validé et accèpté
 *	- 3 : Action annulée
 */
-int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
+int moteur_sfml::getTexte( const char titre[], char texteRetour[21] )
 {
 	unsigned int highLight = 1;
 	bool continuer = 1;
@@ -862,14 +837,13 @@ int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
 	sfr_titre = ecritTexte(titre);
 	TTF_SetFontStyle(c_policeGeneral, TTF_STYLE_NORMAL);
 
-
 	while( continuer )
 	{
 		SDL_WaitEvent(&event);
 		switch( event.type )
 		{
 			case SDL_QUIT: {
-				highLight = 3;// On veut quitter !
+				highLight = 3;// On veux quitter !
 				continuer = 0;
 				break;
 			}
@@ -894,7 +868,7 @@ int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
 						dessiner = 1;// On redessine
 						break;
 					}
-					case SDLK_RETURN: {// On a validé notre choix par entrer
+					case SDLK_RETURN: {// On a valider notre choix par entrer
 						if( highLight == 1 ){// On a selectionné un lien de modification de texte
 							dessiner = 1;
 							sfr_msg = ecritTexte("Entrez le texte manuellement", couleurRouge);
@@ -1010,7 +984,7 @@ int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
 						break;
 					}
 					case SDLK_ESCAPE: { /* Appui sur la touche Echap, on arrête le programme */
-						highLight = 3;// On veut quitter !
+						highLight = 3;// On veux quitter !
 						continuer = 0;
 						break;
 					}
@@ -1071,12 +1045,12 @@ int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
 
 
 /***************************************************************************//*!
-* @fn SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
+* @fn SYS_CLAVIER moteur_sfml::afficherMapEtEvent( const partie* p )
 * @brief Affiche une map
 * @param[in] p	La partie en cours a afficher
 * @return La touche actuellement appuyé
 */
-SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
+SYS_CLAVIER moteur_sfml::afficherMapEtEvent( const partie* p )
 {
 	if( !c_Instance )
 		stdErrorE("Veuillez instancier la class moteur_sdl !");
@@ -1280,7 +1254,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 
 
 /***************************************************************************//*!
-* @fn SDLKey moteur_sdl::traductionClavier( const SDL_KeyboardEvent* touche )
+* @fn SDLKey moteur_sfml::traductionClavier( const SDL_KeyboardEvent* touche )
 * @brief Permet l'utilisation d'un clavier unicode en toute simplicité
 * @param[in] touche L'event: event.key
 * @return La touche actuellement appuyé
@@ -1298,7 +1272,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 * }
 * @endcode
 */
-SDLKey moteur_sdl::traductionClavier( const SDL_KeyboardEvent* touche )
+SDLKey moteur_sfml::traductionClavier( const SDL_KeyboardEvent* touche )
 {
 	if( touche->keysym.unicode != SDLK_UNKNOWN ){
 		return (SDLKey)touche->keysym.unicode;
@@ -1309,30 +1283,15 @@ SDLKey moteur_sdl::traductionClavier( const SDL_KeyboardEvent* touche )
 
 
 /***************************************************************************//*!
-* @fn SDL_Surface* moteur_sdl::chargerImage( const char image[] )
-* @brief Permet de charger une image.
-* @param[in] image L'image a charger
-* @return Une surface (contenant l'image) a libérer avec SDL_FreeSurface()
-*/
-SDL_Surface* moteur_sdl::chargerImage( const char image[] )
-{
-	SDL_Surface* tmp = IMG_Load(image);
-	if( !tmp )
-		stdErrorE("Erreur lors du chargement de l'image <%s> : %s", image, SDL_GetError());
-	return tmp;
-}
-
-
-/***************************************************************************//*!
-* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[] )
+* @fn SDL_Surface* moteur_sfml::ecritTexte( const char texte[] )
 * @brief Permet d'écrire du texte en <b>NOIR</b>
 * @param[in] texte Le texte a écrire en noir
 * @return Une surface (contenant le texte) a libérer avec SDL_FreeSurface()
 *
-* Cette fonction est un alias de moteur_sdl::ecritTexte( const char texte[], const SDL_Color* couleur )
-* @see moteur_sdl::ecritTexte( const char texte[], const SDL_Color* couleur )
+* Cette fonction est un alias de moteur_sfml::ecritTexte( const char texte[], const SDL_Color* couleur )
+* @see moteur_sfml::ecritTexte( const char texte[], const SDL_Color* couleur )
 */
-SDL_Surface* moteur_sdl::ecritTexte( const char texte[] )
+SDL_Surface* moteur_sfml::ecritTexte( const char texte[] )
 {
 	static SDL_Color couleurNoire = {0,0,0,0/*unused*/};
 	return ecritTexte( texte, couleurNoire );
@@ -1340,16 +1299,16 @@ SDL_Surface* moteur_sdl::ecritTexte( const char texte[] )
 
 
 /***************************************************************************//*!
-* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8 b )
+* @fn SDL_Surface* moteur_sfml::ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8 b )
 * @brief Permet d'écrire du texte dans une couleur RBG
 * @param[in] texte Le texte a écrire
 * @param[in] r,g,b Le taux d'utilisation de chaque couleurs ( de 0 à 255 )
 * @return Une surface (contenant le texte) a libérer avec SDL_FreeSurface()
 *
-* Cette fonction est un alias de moteur_sdl::ecritTexte( const char texte[], const SDL_Color* couleur )
-* @see moteur_sdl::ecritTexte( const char texte[], const SDL_Color* couleur )
+* Cette fonction est un alias de moteur_sfml::ecritTexte( const char texte[], const SDL_Color* couleur )
+* @see moteur_sfml::ecritTexte( const char texte[], const SDL_Color* couleur )
 */
-SDL_Surface* moteur_sdl::ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8 b )
+SDL_Surface* moteur_sfml::ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8 b )
 {
 	SDL_Color couleur = {r, g, b, 0/*unused*/};
 	return ecritTexte( texte, couleur );
@@ -1357,13 +1316,13 @@ SDL_Surface* moteur_sdl::ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8
 
 
 /***************************************************************************//*!
-* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur )
+* @fn SDL_Surface* moteur_sfml::ecritTexte( const char texte[], const SDL_Color& couleur )
 * @brief Permet d'écrire du texte dans une couleur
 * @param[in] texte Le texte a écrire
 * @param[in] couleur La couleur du texte
 * @return Une surface (contenant le texte) a libérer avec SDL_FreeSurface()
 */
-SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur )
+SDL_Surface* moteur_sfml::ecritTexte( const char texte[], const SDL_Color& couleur )
 {
 	SDL_Surface* tmp = TTF_RenderText_Blended(c_policeGeneral, texte, couleur);
 	if( !tmp )
@@ -1374,14 +1333,14 @@ SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleu
 
 
 /***************************************************************************//*!
-* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille )
+* @fn SDL_Surface* moteur_sfml::ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille )
 * @brief Permet d'écrire du texte dans une couleur avec une certaine taille de police
 * @param[in] texte Le texte a écrire
 * @param[in] couleur La couleur a utiliser
 * @param[in] taille La taille du texte
 * @return Une surface (contenant le texte) a libérer avec SDL_FreeSurface()
 */
-SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille )
+SDL_Surface* moteur_sfml::ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille )
 {
 	TTF_Font* police = TTF_OpenFont("Chicken Butt.ttf", taille);
 	if( !police )
@@ -1398,13 +1357,13 @@ SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleu
 
 
 /***************************************************************************//*!
-* @fn char* moteur_sdl::completerMot( char texte[], unsigned int taille )
+* @fn char* moteur_sfml::completerMot( char texte[], unsigned int taille )
 * @brief Complete le texte avec le caractère _ jusqu'a avoir un texte de longueur 20
 * @param[in,out] texte Le texte a combler
 * @param[in] taille Taille réel du texte ( sans les _ )
 * @return La variable : texte
 */
-char* moteur_sdl::completerMot( char texte[], unsigned int taille )
+char* moteur_sfml::completerMot( char texte[], unsigned int taille )
 {
 	if( taille == 20 )
 		return texte;
@@ -1417,14 +1376,15 @@ char* moteur_sdl::completerMot( char texte[], unsigned int taille )
 }
 
 
+
 /***************************************************************************//*!
-* @fn void moteur_sdl::joueur_orientation( perso::t_Orientation ori, unsigned char joueur, SDL_Rect* pos ) const
+* @fn void moteur_sfml::joueur_orientation( perso::t_Orientation ori, unsigned char joueur, SDL_Rect* pos ) const
 * @brief Blit le joueur {joueur} a la position {pos} avec l'orientation {ori}
 * @param[in] ori L'orientation du perso
 * @param[in] joueur L'e noméro du joueur a blitter [1-...]
 * @param[in] pos La position où blitter le perso
 */
-void moteur_sdl::joueur_orientation( perso::t_Orientation ori, unsigned char joueur, SDL_Rect* pos ) const
+void moteur_sfml::joueur_orientation( perso::t_Orientation ori, unsigned char joueur, SDL_Rect* pos ) const
 {
 	switch( ori )
 	{

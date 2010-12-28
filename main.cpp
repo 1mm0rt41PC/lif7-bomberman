@@ -8,7 +8,6 @@
 #endif
 
 #include "debug.h"
-#include "debug_memory.h"
 
 /*******************************************************************************
 * CONVENTION DE PROGRAMATION !
@@ -27,6 +26,9 @@
 
 int main( int argc, char* arvg[] )
 {
+	(void)argc;
+	(void)arvg;
+
 	freopen("bug.txt", "w", stderr);// Redirection du flux d'erreur dans un fichier
 	srand(time(NULL));// Make random
 
@@ -38,6 +40,8 @@ int main( int argc, char* arvg[] )
 		moteur_ncurses m;
 	#elif __LIB_SDL__
 		moteur_sdl& m = moteur_sdl::getInstance();
+	#elif __LIB_SFML__
+		moteur_sfml& m = moteur_sfml::getInstance();
 	#endif
 
 	// Appel des menus
@@ -70,6 +74,11 @@ int main( int argc, char* arvg[] )
 		"Changer de map",
 		"Retour"
 	};
+	static const char* menu_online[] = {		// ATTENTION ! Si ajout / suppresion d'un menu,
+		"Creer une partie (host)",				// NE PAS OUBLIER de modifier le for !
+		"Joindre une partie (client)",
+		"Retour"
+	};
 	char titreNomJoueurNumI[30] = {0};
 	char nomJoueurNumI[21] = {0};
 
@@ -99,9 +108,9 @@ int main( int argc, char* arvg[] )
 								partie jeu;
 								jeu.def_nbJoueurs(tmp);
 
-								nomJoueurNumI[0] = 0;
 								for( int i=0; i<tmp; i++ )
 								{
+									nomJoueurNumI[0] = 0;
 									sprintf(titreNomJoueurNumI, "Joueur %d entrez votre nom", i+1);
 									if( m.getTexte( titreNomJoueurNumI, nomJoueurNumI ) == 3 ){
 										retourMenuAudessus = 1;
@@ -109,13 +118,11 @@ int main( int argc, char* arvg[] )
 									}
 
 									jeu.joueur(i)->defNom(nomJoueurNumI);
-									nomJoueurNumI[0] = 0;
 								}
 
 								if( !retourMenuAudessus ){
 									do{
 										m.forcerRafraichissement();
-										//jeu.start( m, &CLASS_TO_USE::afficherMapEtEvent );
 										jeu.main( m.afficherMapEtEvent );
 									}while( m.menu("Un joueur a gagne !", menu_replay, 3) != 3 );
 								}
@@ -127,6 +134,92 @@ int main( int argc, char* arvg[] )
 						* Online
 						*/
 						case 2:{// Online
+							do{
+								switch( entry = m.menu("Type de connection", menu_online, 3) )
+								{
+									/***********************************************
+									* Host
+									*/
+									case 1:{// RESTE A DEF: le nb player total, nb player local
+										/***************************************
+										* Nombre de joueur TOTAL
+										*/
+										while( m.getNombre("Nombre de joueur TOTAL", 2, 2, 4, &tmp) != 3 )
+										{
+											partie jeu;
+											jeu.def_connection( partie::CNX_Host );
+											jeu.getServeur()->setPort(options::getInstance()->port());
+											jeu.def_nbJoueurs(tmp);
+											for( int i=0; i<tmp; i++ )// Par défaut, on met tout les joueur en mode NON LOCAL
+												jeu.joueur(i)->defLocal( false );
+
+											/***********************************
+											* Nombre de joueur LOCAL
+											*/
+											while( m.getNombre("Nombre de joueur LOCAL", 1, 1, tmp-1, &tmp) != 3 )
+											{
+												for( int i=0; i<tmp; i++ )
+												{
+													nomJoueurNumI[0] = 0;
+													sprintf(titreNomJoueurNumI, "Joueur %d entrez votre nom", i+1);
+													if( m.getTexte( titreNomJoueurNumI, nomJoueurNumI ) == 3 ){
+														retourMenuAudessus = 1;
+														break;// Permet de remonter au menu au dessus
+													}
+
+													jeu.joueur(i)->defNom(nomJoueurNumI);
+													jeu.joueur(i)->defLocal( true );
+												}
+												if( !retourMenuAudessus ){
+													do{
+														m.forcerRafraichissement();
+														jeu.main( m.afficherMapEtEvent );
+													}while( m.menu("Un joueur a gagne !", menu_replay, 3) != 3 );
+												}
+												retourMenuAudessus = 0;
+											}
+										}
+										break;
+									}
+									/***********************************************
+									* Client
+									*/
+									case 2:{
+										while( m.getTexte( "Veuillez entrez l'adresse IP du serveur", nomJoueurNumI ) != 3 )
+										{
+											partie jeu;
+											jeu.def_connection( partie::CNX_Client );
+											jeu.getClient()->setPort(options::getInstance()->port());
+											jeu.getClient()->setServerAdress(nomJoueurNumI);
+											jeu.def_nbJoueurs(1);
+
+											// On récup le nom du joueur
+											nomJoueurNumI[0] = 0;
+											if( m.getTexte("Joueur, Entrez votre nom", nomJoueurNumI ) == 3 ){
+												retourMenuAudessus = 1;
+												break;// Permet de remonter au menu au dessus
+											}
+											jeu.joueur(0)->defNom(nomJoueurNumI);
+
+											jeu.joueur(0)->defLocal( false );
+											if( !retourMenuAudessus ){
+												do{
+													m.forcerRafraichissement();
+													jeu.main( m.afficherMapEtEvent );
+												}while( m.menu("Un joueur a gagne !", menu_replay, 3) != 3 );
+											}
+											retourMenuAudessus = 0;
+										}
+										break;
+									}
+									/***********************************************
+									* Retour au menu précédant
+									*/
+									case 3:{// Retour
+										break;
+									}
+								}
+							}while( entry != 3 );
 							break;
 						}
 						/*******************************************************

@@ -120,6 +120,22 @@ unsigned int clavier::nb_touches() const
 
 
 /***************************************************************************//*!
+* @fn bool clavier::estDansClavier( SYS_CLAVIER tsys ) const
+* @brief Permet de déterminer si la touche tsys est dans la liste des touches de cette configuration
+* @param[in] tsys La touche qui est a comparer avec celles qui appartiennent aux touches de ce clavier (configuration)
+* @return true si la touche demandé est dans cette configuration
+*/
+bool clavier::estDansClavier( SYS_CLAVIER tsys ) const
+{
+	for( unsigned int i=0; i<c_nb_touches; i++ )
+		if( c_touches[i] == tsys )
+			return true;
+
+	return false;
+}
+
+
+/***************************************************************************//*!
 * @fn SYS_CLAVIER clavier::touche( t_touche t ) const
 * @brief Renvoie la touche affecté pour une action
 * @param[in] t L'action dont on veut déterminer la touche affectée.

@@ -7,15 +7,14 @@
 #include "outils.h"
 #include "math.h"
 #include <string.h>// Pour strlen()
-#include <SDL/SDL_ttf.h>
-#include <SDL/SDL_image.h>
+#include <SFML/Window.hpp>
 
 /*!
-* @class moteur_sdl
-* @brief Gère l'affichage via le moteur graphique SDL
+* @class moteur_sfml
+* @brief Gère l'affichage via le moteur graphique SFML
 */
 
-class moteur_sdl
+class moteur_sfml
 {
 	private:
 		enum {
@@ -52,16 +51,15 @@ class moteur_sdl
 		};
 
 	private:
-		static moteur_sdl* c_Instance;
-		SDL_Surface* c_ecranGeneral;
-		SDL_Surface* c_background;
-		TTF_Font* c_policeGeneral;
-		SDL_Surface** c_Decor;
+		sf::Window c_App;
+		static moteur_sfml* c_Instance;
+		sf::Image c_background;
+		sf::Font c_policeGeneral;
+		sf::Image* c_Decor;
 		unsigned int c_nb_Decor;
 		bool c_premierAffichage;
 
 	private:
-		SDL_Surface* chargerImage( const char image[] );
 		SDL_Surface* ecritTexte( const char texte[] );
 		SDL_Surface* ecritTexte( const char texte[], const SDL_Color& couleur );
 		SDL_Surface* ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8 b );
@@ -70,11 +68,11 @@ class moteur_sdl
 
 		static char* completerMot( char texte[], unsigned int taille );
 
-		moteur_sdl();
+		moteur_sfml();
 
 	public:
-		static moteur_sdl& getInstance();
-		~moteur_sdl();
+		static moteur_sfml& getInstance();
+		~moteur_sfml();
 
 		// Fonction d'affichage de menu
 		unsigned int menu( const char titre[], const char *choix[], unsigned int nb_choix );
@@ -87,9 +85,6 @@ class moteur_sdl
 
 		// Autre :: Affichage
 		static SYS_CLAVIER afficherMapEtEvent( const partie* p );
-
-		// Clavier
-		static SDLKey traductionClavier( const SDL_KeyboardEvent* touche );
 };
 
 #endif

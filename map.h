@@ -126,7 +126,8 @@ class map
 		unsigned char nb_PointDeDepartJoueur() const;
 		unsigned char nb_MAX_Joueur() const;
 		unsigned int nb_InfoJoueur( unsigned int X, unsigned int Y ) const;
-		bool getModification( s_Coordonnees& pos);
+		bool getModification( s_Coordonnees& pos );
+		const std::vector<s_Coordonnees>* readModification() const;
 
 		// Autres
 		static void readDir( std::vector<std::string>* files );

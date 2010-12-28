@@ -1,18 +1,20 @@
-- TRAVAIL EN COURS SUR LE MODULE NCURSES :> Affichage de la map && Bonus duré d'un bonus
-
-/- MODULE NCURSES > Ecran Online OffLine
-
-/- MODULE NCURSES > Ecran Port
-
-/- Rééquilibré les fenetres d'affichage
-
-/- Désactiver le PDC_set_title(char *) quand on compil en Linux
-
-- Les couleurs ne vont que de 0 à 7 sous Linux ! Régler l'affichage en fonction des ces couleurs. Voir modifier si possibles les couleurs.
-
 /- Bug avec le makefile : sous linux, création d'un fichier NUL ( équivalent de /dev/null sous windows )
 
 - Faire un WikiCodingStyle
 
 - Réglèe le bug d'affichages des flammes ( partie.cpp )
-- Bug de pop bonus sur des cases vides
+
+- getText NCurses -> la touche Entrée du numpad ne valide pas une fin de texte
+
+- SDL: Ajouter le clique sourie sur les menu
+
+- Si affichage graphique, Ajouter une variable qui permet detester si on veux fermet la window ou pas
+
+- NCurses : Utiliser la meta-prog
+
+
+
+
+-- FAIT --
+MOMO > Débug oientation perso.
+> Ajout d'une fonction pour blitter le perso
