@@ -79,7 +79,7 @@ class server : public baseClientServer
 		void endListen();
 		// Récéption des activités ( Nouvelle connnection, Déconnection, message en attante )
 		SOCKET lookupNewConnection();
-		bool lookupConnectionClient( unsigned int client );
+		inline bool lookupConnectionClient( SOCKET client );
 		SOCKET lookupConnectionClient();
 };
 

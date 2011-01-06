@@ -44,3 +44,23 @@ inline partie::t_Connection partie::connection() const
 {
 	return c_connection;
 }
+
+
+/***************************************************************************//*!
+* @fn std::string partie::getWinnerName() const
+* @brief Renvoie le nom du gagnant de la partie
+*/
+inline std::string partie::getWinnerName() const
+{
+	return c_winnerName;
+}
+
+
+/***************************************************************************//*!
+* @fn clock_t partie::timeOut() const
+* @brief Renvoie le temps de fin / mort subite. (Ne change pas en cours de partie)
+*/
+inline clock_t partie::timeOut() const
+{
+	return c_timeOut;
+}

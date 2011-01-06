@@ -81,6 +81,7 @@ int main( int argc, char* arvg[] )
 	};
 	char titreNomJoueurNumI[30] = {0};
 	char nomJoueurNumI[21] = {0};
+	char finPartie[70] = {0};
 
 	unsigned int entry = 0;
 	int tmp = 0;
@@ -123,8 +124,11 @@ int main( int argc, char* arvg[] )
 								if( !retourMenuAudessus ){
 									do{
 										m.forcerRafraichissement();
-										jeu.main( m.afficherMapEtEvent );
-									}while( m.menu("Un joueur a gagne !", menu_replay, 3) != 3 );
+										tmp = jeu.main( m.afficherMapEtEvent );
+										if( tmp >= 1 )
+											sprintf(finPartie, "Le joueur(%d) %s a gagne !", tmp, jeu.getWinnerName().c_str());
+
+									}while( tmp >= 1 && m.menu(finPartie, menu_replay, 3) != 3 );
 								}
 								retourMenuAudessus = 0;
 							}
@@ -173,8 +177,11 @@ int main( int argc, char* arvg[] )
 												if( !retourMenuAudessus ){
 													do{
 														m.forcerRafraichissement();
-														jeu.main( m.afficherMapEtEvent );
-													}while( m.menu("Un joueur a gagne !", menu_replay, 3) != 3 );
+														tmp = jeu.main( m.afficherMapEtEvent );
+														if( tmp >= 1 )
+															sprintf(finPartie, "Le joueur(%d) %s a gagne !", tmp, jeu.getWinnerName().c_str());
+
+													}while( tmp >= 1 && m.menu(finPartie, menu_replay, 3) != 3 );
 												}
 												retourMenuAudessus = 0;
 											}
@@ -185,6 +192,7 @@ int main( int argc, char* arvg[] )
 									* Client
 									*/
 									case 2:{
+										strcpy(nomJoueurNumI, "127.0.0.1");
 										while( m.getTexte( "Veuillez entrez l'adresse IP du serveur", nomJoueurNumI ) != 3 )
 										{
 											partie jeu;
@@ -205,8 +213,11 @@ int main( int argc, char* arvg[] )
 											if( !retourMenuAudessus ){
 												do{
 													m.forcerRafraichissement();
-													jeu.main( m.afficherMapEtEvent );
-												}while( m.menu("Un joueur a gagne !", menu_replay, 3) != 3 );
+													tmp = jeu.main( m.afficherMapEtEvent );
+													if( tmp >= 1 )
+														sprintf(finPartie, "Le joueur(%d) %s a gagne !", tmp, jeu.getWinnerName().c_str());
+
+												}while( tmp >= 1 && m.menu(finPartie, menu_replay, 3) != 3 );
 											}
 											retourMenuAudessus = 0;
 										}

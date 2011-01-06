@@ -44,7 +44,7 @@ class bonus
 		enum t_Bonus {
 			bombe=0,
 			// Vitesse de déflagration en milli-sec
-			#define VITESSE_DEFLAGRATION_FLAMME CLOCKS_PER_SEC/2
+			#define VITESSE_DEFLAGRATION_FLAMME CLOCKS_PER_SEC/4
 			puissance_flamme,
 			declancheur,
 			vitesse,

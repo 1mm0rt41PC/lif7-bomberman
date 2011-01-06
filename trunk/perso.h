@@ -50,7 +50,7 @@ class perso
 		void defArmements( bonus* a );
 		void defOrientation( t_Orientation ori );
 		void defLocal( bool isLocal );
-		void defSocket( bool MySocket );
+		void defSocket( SOCKET MySocket );
 
 		// Accesseurs
 		const std::string* nom() const;

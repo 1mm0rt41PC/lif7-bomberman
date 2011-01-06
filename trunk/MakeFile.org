@@ -171,7 +171,7 @@ $(OBJ_DIR):
 ################################################################################
 
 # Make depend ( régénération manuel des dep )
-.PHONY: depend dep exec valgrind clean clean_dep pfiles help debug ncurses sdl sfml doxygen no_clear memcheck memchk
+.PHONY: depend dep exec valgrind clean clean_dep pfiles help debug ncurses sdl sfml doxygen no_clear memcheck memchk wc
 depend: $(DEP)
 dep: $(DEP)
 
@@ -246,7 +246,7 @@ doxygen: $(DOXYGEN_DIR)/Doxyfile
 tar:
 	$(call ECHO ,Creation de l'archive du projet)
 	@$(CMD_DEL) bomberman.tar.bz2
-	@tar -jcvf bomberman.tar.bz2 *.cpp *.h *.inl MakeFile.org makefile $(DOXYGEN_DIR)/Doxyfile TODO.txt _CodingStyle_.txt $(BIN_DIR)/map/*.map $(BIN_DIR)/Chicken\ Butt.ttf $(BIN_DIR)/images/*.png ClientServer/*.h ClientServer/*.cpp ClientServer/*.inl ClientServer/Client/*.h ClientServer/Client/*.cpp ClientServer/Server/*.h ClientServer/Server/*.cpp ClientServer/Server/*.inl
+	@tar -jcvf bomberman.tar.bz2 *.cpp *.h *.inl MakeFile.org makefile $(DOXYGEN_DIR)/Doxyfile TODO.txt _CodingStyle_.txt $(BIN_DIR)/map/*.map $(BIN_DIR)/Chicken\ Butt.ttf $(BIN_DIR)/images/*.png ClientServer/*.h ClientServer/*.cpp ClientServer/*.inl ClientServer/Client/*.h ClientServer/Client/*.cpp ClientServer/Client/*.inl ClientServer/Server/*.h ClientServer/Server/*.cpp ClientServer/Server/*.inl
 
 
 # Make clean
@@ -268,6 +268,13 @@ clean_dep:
 	$(CMD_CLEAR)
 	@echo Suppression du fichier de dependances
 	$(CMD_DEL) $(DEP)
+
+
+# Affiche le nombres de lignes pour le projet
+wc:
+	$(CMD_CLEAR)
+	$(call ECHO ,======================== Nombre de lignes pour le projet =======================)
+	@wc -l *.cpp *.h *.inl ClientServer/*.cpp ClientServer/*.h ClientServer/*.inl ClientServer/Client/*.cpp ClientServer/Client/*.h ClientServer/Client/*.inl ClientServer/Server/*.cpp ClientServer/Server/*.h ClientServer/Server/*.inl
 
 
 # Affiche les fichiers utilisés
@@ -313,6 +320,7 @@ help:
 	$(call ECHO ,	memchk:		Alias de memcheck)
 	$(call ECHO ,	exec:		{make all} et execute l'executable obtenu.)
 	$(call ECHO ,	pfiles:		Affiche les fichiers utilises)
+	$(call ECHO ,	wc:		Affiche le nombre de lignes ecrites dans ce projet)
 	$(call ECHO ,	help:		Affiche cette aide.)
 	$(CMD_LINEFEED)
 	$(call ECHO ,/!\ Si MAKE n'a pas d'ARG alors IDEM a {make all} avec la lib $(LIB_AFF).)

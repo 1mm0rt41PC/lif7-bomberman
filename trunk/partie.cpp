@@ -1,6 +1,8 @@
 #include "partie.h"
 #include "debug.h"
 
+using namespace std;
+
 /***************************************************************************//*!
 * @fn partie::partie()
 * @brief Initialise la class partie
@@ -12,6 +14,7 @@ partie::partie()
 	c_connection = CNX_None;
 	c_nb_joueurs = 0;
 	c_joueurs = 0;
+	//c_joueursOrientation = 0;// <- Pas besoin ( union )
 	c_map = 0;
 
 	c_server = 0;
@@ -28,8 +31,13 @@ partie::partie()
 */
 partie::~partie()
 {
-	if( c_nb_joueurs && c_joueurs )
-		delete[] c_joueurs;
+	if( c_connection == CNX_Client ){// Si on est en mode client !
+		if( c_nb_joueurs && c_joueursOrientation )
+			delete[] c_joueursOrientation;
+	}else{
+		if( c_nb_joueurs && c_joueurs )
+			delete[] c_joueurs;
+	}
 	if( c_map )
 		delete c_map;
 
@@ -113,6 +121,7 @@ void partie::def_connection( partie::t_Connection cnx )
 /***************************************************************************//*!
 * @fn perso* partie::joueur( unsigned int joueur_numero ) const
 * @brief Renvoie un joueur
+* @param joueur_numero l'id du joueur [0 à ... ]
 * @return 0 en cas de bug ! Un pointeur vers le joueur demandé sinon.
 */
 perso* partie::joueur( unsigned int joueur_numero ) const
@@ -172,28 +181,33 @@ client* partie::getClient() const
 
 
 /***************************************************************************//*!
-* @fn void partie::main( libAff * afficherMapEtEvent )
+* @fn char partie::main( libAff * afficherMapEtEvent )
 * @brief Lance le jeu
 * @param[in] afficherMapEtEvent La fonction qui va servir à afficher la map
-*
-* Veuillez initialiser les variables :<br />
-* - c_nb_joueurs
+* @return	Un nombre > à 1 : Le nombre retourné est le joueur qui a gagné.<br />
+*			0 : Retour au menu
+*			-1: Tout Quitter
+*			-10: Problème
 *
 * @warning Toutes les variables doivent être correctement initialisées !
 */
-//void partie::start( CLASS_TO_USE& moteur, fctAff afficherMapEtEvent )
-void partie::main( libAff * afficherMapEtEvent )
+char partie::main( libAff * afficherMapEtEvent )
 {
 	if( !afficherMapEtEvent )
 		stdErrorE("Fonction d'affichage incorrect ! (afficherMapEtEvent=0)");
 
 	SYS_CLAVIER key;
-	int i=0;
+	unsigned int i=0;
+	unsigned char j=0;
 	bool continuerScanClavier=1;
 	options* opt = options::getInstance();
 	bonus::s_Event bonusEvent;
 	s_Event e;
 	SOCKET s;
+	uint32_t X=0, Y=0;// Utilisé uniquement lors de partie online ( host & client )
+	clavier::t_touche onlineClavier;// Utilisé uniquement lors de partie online ( host & client )
+	c_winnerName.clear();
+	c_timeOut = clock() + 2*60*CLOCKS_PER_SEC+30*CLOCKS_PER_SEC;// 2min:30
 
 	/*##########################################################################
 	* Partie en mode client
@@ -206,7 +220,7 @@ void partie::main( libAff * afficherMapEtEvent )
 		// Tentative de connection
 		if( !c_client->connection() ){
 			stdError("Impossible de se connecter au serveur demandé !");
-			return ;
+			return -10;
 		}
 
 		memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
@@ -218,7 +232,7 @@ void partie::main( libAff * afficherMapEtEvent )
 		// Attente de la réponce
 		if( !c_client->readServer(c_buffer, PACK_bufferSize) ){
 			stdError("Configuration 32Bits, IsIntel incorrect pour le serveur ! Connection refusé !");
-			return ;// On a été déconnecté !
+			return -10;// On a été déconnecté !
 		}
 
 		// Envoie du nom
@@ -228,41 +242,123 @@ void partie::main( libAff * afficherMapEtEvent )
 		// Attente de la réponce
 		if( !c_client->readServer(c_buffer, PACK_bufferSize) ){
 			stdError("Nom déjà utilisé ! Connection refusé !");
-			return ;// On a été déconnecté !
+			return -10;// On a été déconnecté !
 		}
 
 		memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
 		// Attente de la dimention de la map
 		if( !c_client->readServer(c_buffer, PACK_bufferSize) ){
 			stdError("Erreur de connection !");
-			return ;// On a été déconnecté !
+			return -10;// On a été déconnecté !
 		}
+
 		// Définition des variables qui seront utilisées
-		uint32_t X=0, Y=0, nb_MetaDonnee=0;
+		uint32_t nb_MetaDonnee=0;
 		map::t_type type;
 
 		unPackIt( &X, &Y, &type, &nb_MetaDonnee );// type et nb_MetaDonnee inutile ici
 
+		if( !X || !Y )
+			stdErrorE("Taille de map incorrect !!! TailleX=%u, TailleY=%u, <%s>", X, Y, c_buffer);
+
 		if( c_map )
 			delete c_map;
-		c_map = new map(X,Y);// Création de la map
+		if( !(c_map = new map(X, Y)) )// Création de la map
+			stdErrorE("Erreur lors de l'allocation mémoire !");
 
 		memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
-		while( !c_client->readServer(c_buffer, PACK_bufferSize) && std::string("end") != c_buffer ){
-			unPackIt( &X, &Y, &type, &nb_MetaDonnee );// type et nb_MetaDonnee inutile ici
-			c_map->setBlock(X, Y, type);
-			c_map->ajouterInfoJoueur(X, Y, nb_MetaDonnee);
+
+		// Récéption de TOUTE la map
+		while( c_client->readServer(c_buffer, PACK_bufferSize) != 0 && string("end") != c_buffer )
+		{
+			if( !nb_MetaDonnee ){
+				unPackIt( &X, &Y, &type, &nb_MetaDonnee );
+				c_map->setBlock(X, Y, type);
+			}else{
+				nb_MetaDonnee = 0;
+				unPackIt(X, Y);
+			}
 			memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
 		}
 
 		// Commencement de la partie
 		do{
 			// Affichage de la map et récéption des Event claviers
-			//key = moteur.afficherMapEtEvent( this );
 			key = afficherMapEtEvent( this );
 
-		}while( key != RETOUR_MENU_PRECEDENT && c_client->is_connected() );
-		return ;
+			switch( opt->clavierJoueur(0)->obtenirTouche(key) )
+			{
+				case clavier::NUL: {
+					break;
+				}
+				case clavier::haut:
+				case clavier::bas:
+				case clavier::droite:
+				case clavier::gauche:
+				case clavier::lancerBombe:
+				case clavier::declancheur: {
+					if( c_client->is_connected() )
+						c_client->send_message(packIt(opt->clavierJoueur(0)->obtenirTouche(key)), PACK_bufferSize);// Envoie de notre touche
+					break;
+				}
+				default: {
+					stdError("Touche envoyé par le joueur %d est inconnue : %d", (int)opt->clavierJoueur(i)->obtenirTouche(key), (int)key);
+					break;
+				}
+			}
+
+			/*******************************************************************
+			* Reception des données réseaux
+			*/
+			if( c_client->lookupConnection() ){// A faire en 1er !
+				memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
+				if( c_client->readServer(c_buffer, PACK_bufferSize) ){
+					if( strcmp("endGame", c_buffer) != 0 ){
+						nb_MetaDonnee = 0;
+						do{
+							if( !nb_MetaDonnee ){
+								unPackIt( &X, &Y, &type, &nb_MetaDonnee );
+								c_map->setBlock(X, Y, map::vide);
+								c_map->setBlock(X, Y, type);
+							}else{
+								nb_MetaDonnee = 0;
+								unPackIt(X, Y);
+							}
+							memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
+						}while( c_client->readServer(c_buffer, PACK_bufferSize) != 0 && strcmp("end", c_buffer) != 0 && strcmp("endGame", c_buffer) != 0 );
+					}
+				}else{
+					stdError("Vous avez été déconnecté.");
+					break;// On a été déconnecté !
+				}
+			}
+
+		}while( key != RETOUR_MENU_PRECEDENT && c_client->is_connected() && string("endGame") != c_buffer );
+
+		// On détermine, qui a gagné
+		char JoueurGagnant = 0;
+
+		// Si c'est la fin de la partie ( avec un gagnant )
+		stdError("ici");
+		if( string("endGame") == c_buffer && c_client->is_connected() ){
+			stdError("passe :)");
+			memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
+			c_client->readServer(c_buffer, PACK_bufferSize);
+			c_client->readServer(c_buffer, PACK_bufferSize);
+			c_client->readServer(c_buffer, PACK_bufferSize);
+			c_client->readServer(c_buffer, PACK_bufferSize);
+			c_client->readServer(c_buffer, PACK_bufferSize);
+			c_client->readServer(c_buffer, PACK_bufferSize);
+
+			stdError("données: %s", c_buffer);
+			JoueurGagnant = c_buffer[0]-'0';
+			c_winnerName = c_buffer+2;
+		}
+		stdError("ici-fin");
+
+		c_client->disconnection();
+
+		return JoueurGagnant;
 	}
 
 	/*##########################################################################
@@ -285,7 +381,9 @@ void partie::main( libAff * afficherMapEtEvent )
 		unsigned int nbLocal=0;
 		for( i=0; i<c_nb_joueurs; i++ )
 			nbLocal += c_joueurs[i].isLocal();
-		stdError("Nombre de player online max: %u",c_nb_joueurs-nbLocal);
+
+		//stdError("Nombre de player online max: %u",c_nb_joueurs-nbLocal);
+
 		// Ajustement des paramètres
 		c_server->setNbClientMax(c_nb_joueurs-nbLocal);
 		c_server->Listening();
@@ -299,40 +397,20 @@ void partie::main( libAff * afficherMapEtEvent )
 			c_server->setWait(0,100000);// 0.1 secondes
 			// Ajout des player
 			while( (s = c_server->lookupNewConnection()) == INVALID_SOCKET && key != RETOUR_MENU_PRECEDENT )
-			{
 				key = afficherMapEtEvent( this );// Pour récup les touches
-			}
+
 			// On a enfin un player, on lui envoie la map
 			ajouterNouvelleConnection( s );
 		}
 		c_server->setWait(0,1000);// 0.001 secondes
 	}
+	//##########################################################################
+	//##########################################################################
 
-	// Commencement de la partie
+
+	//-----------------------> Commencement de la partie <----------------------
 	do{
-		/***********************************************************************
-		* Traitement des connections ( HOST )
-		*/
-		if( c_connection == CNX_Host ){
-			// On traite les joueurs déjà connecté
-			while( (s = c_server->lookupConnectionClient()) != INVALID_SOCKET )
-			{
-				if( c_server->readClient( s, c_buffer, PACK_bufferSize ) ){
-
-				}else{
-					stdError("Joueur déco");
-				}
-			}
-			// Ajout des player
-			while( (s = c_server->lookupNewConnection()) != INVALID_SOCKET )
-			{
-				// Nouveau joueur !
-				ajouterNouvelleConnection( s );
-			}
-		}
-
 		// Affichage de la map et récéption des Event
-		//key = moteur.afficherMapEtEvent( this );
 		key = afficherMapEtEvent( this );
 
 		/***********************************************************************
@@ -365,7 +443,7 @@ void partie::main( libAff * afficherMapEtEvent )
 			/*******************************************************************
 			* Scan du clavier pour les joueurs
 			*/
-			if( continuerScanClavier == 1 )
+			if( continuerScanClavier == 1 && c_joueurs[i].isLocal() )
 			switch( opt->clavierJoueur(i)->obtenirTouche(key) )
 			{
 				case clavier::NUL: {
@@ -445,23 +523,180 @@ void partie::main( libAff * afficherMapEtEvent )
 			}
 		}
 
-		/***********************************************************************
-		* Scan des Events interne
+		/*######################################################################
+		* Traitement des connections ( HOST )
 		*/
-		checkInternalEvent();
+		if( c_connection == CNX_Host ){
+			// Ajout des players
+			while( (s = c_server->lookupNewConnection()) != INVALID_SOCKET )
+				ajouterNouvelleConnection( s );// Nouveau joueur !
+
+			for( i=0; i<c_nb_joueurs; i++ )
+			{
+				// Si le joueur est local où non connecté, on passe
+				if( c_joueurs[i].isLocal() || c_joueurs[i].socket() == INVALID_SOCKET )
+					continue;
+
+				// Si il y a une activité coté réseau, on la traite
+				if( c_server->lookupConnectionClient(c_joueurs[i].socket()) ){
+					if( c_server->readClient(c_joueurs[i].socket(), c_buffer, PACK_bufferSize) ){
+
+						// Traitement du clavier des joueurs online
+						if( c_joueurs[i].armements() ){
+
+							// On récup la touche
+							unPackIt( &onlineClavier );
+
+							switch( onlineClavier )
+							{
+								case clavier::haut: {
+									c_joueurs[i].defOrientation(perso::ORI_haut);
+									deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()-1, i );
+									break;
+								}
+								case clavier::bas: {
+									c_joueurs[i].defOrientation(perso::ORI_bas);
+									deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()+1, i );
+									break;
+								}
+								case clavier::droite: {
+									c_joueurs[i].defOrientation(perso::ORI_droite);
+									deplacer_le_Perso_A( c_joueurs[i].X()+1, c_joueurs[i].Y(), i );
+									break;
+								}
+								case clavier::gauche: {
+									c_joueurs[i].defOrientation(perso::ORI_gauche);
+									deplacer_le_Perso_A( c_joueurs[i].X()-1, c_joueurs[i].Y(), i );
+									break;
+								}
+								/***************************************************************
+								* On veux poser une bombe
+								*/
+								case clavier::lancerBombe: {
+									/***********************************************************
+									* IL NE RESTE PAS DE BOMBE EN STOCK
+									*/
+									if( !c_joueurs[i].armements()->quantiteUtilisable(bonus::bombe) )
+										break;
+									/***********************************************************
+									* Il reste des bombes à poser ->
+									* 2 Posibilités:
+									* 1) Il n'y a que le joueur qui veut poser la bombe
+									* 2) Il y a plusieurs joueurs
+									*/
+									switch( c_map->getBlock( c_joueurs[i].X(), c_joueurs[i].Y())->element )// Utilisation d'un switch pour la rapidité ( en asm ebx modifié une fois => plus rapide )
+									{
+										case map::UN_joueur:{
+											c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_UN_joueur );
+											c_map->ajouterInfoJoueur( c_joueurs[i].X(), c_joueurs[i].Y(), i+1, 1 );// Ajout de l'info > Mais qui a donc posé la bombe ...
+											c_joueurs[i].armements()->decQuantiteUtilisable( bonus::bombe, c_joueurs[i].X(), c_joueurs[i].Y() );
+											break;
+										}
+										case map::plusieurs_joueurs: {
+											c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_plusieurs_joueurs );
+											c_map->ajouterInfoJoueur( c_joueurs[i].X(), c_joueurs[i].Y(), i+1, 1 );// Ajout de l'info > Mais qui a donc posé la bombe ...
+											c_joueurs[i].armements()->decQuantiteUtilisable( bonus::bombe, c_joueurs[i].X(), c_joueurs[i].Y() );
+											break;
+										}
+										default: {// On ne pose pas la bombe ! On a pas les conditions réuni
+											break;
+										}
+									}
+									break;
+								}
+								case clavier::declancheur: {
+									if( c_joueurs[i].armements()->quantiteUtilisable(bonus::declancheur) )
+										c_joueurs[i].armements()->forceTimeOut();
+									break;
+								}
+								default: {
+									stdErrorE("Touche envoyé par le joueur %d est inconnue : %d", (int)opt->clavierJoueur(i)->obtenirTouche(key), (int)key);
+									break;
+								}
+							}
+						}
+					}else{
+						stdError("Joueur déco");
+					}
+				}
+			}
+
+			/*******************************************************************
+			* Scan des Events interne
+			*/
+			checkInternalEvent();
+
+			// On envoie les modif faite sur la map au players online.
+			if( c_map->getModifications()->size() ){
+				for( j=0; j<c_nb_joueurs; j++ ){
+					// On récup que les players online
+					if( c_joueurs[j].isLocal() || c_joueurs[j].socket() == INVALID_SOCKET )
+						continue;
+
+					for( i=0; i<c_map->getModifications()->size(); i++ )
+					{
+						X = c_map->getModifications()->at(i).x;
+						Y = c_map->getModifications()->at(i).y;
+						if( c_map->getBlock(X, Y)->joueur && c_map->getBlock(X, Y)->joueur->size() ){
+							c_server->send_message(c_joueurs[j].socket(), packIt(X, Y, c_map->getBlock(X, Y)->element, c_map->getBlock(X, Y)->joueur->size()), PACK_bufferSize);
+							c_server->send_message(c_joueurs[j].socket(), packIt( c_map->getBlock(X, Y)->joueur ), PACK_bufferSize);
+						}else{
+							c_server->send_message(c_joueurs[j].socket(), packIt(X, Y, c_map->getBlock(X, Y)->element, 0), PACK_bufferSize);
+						}
+					}
+					c_server->send_message(c_joueurs[j].socket(), "end", 4);// Fin de transmition
+				}
+			}
+		}else{
+		//######################################################################
+		//######################################################################
+
+			/*******************************************************************
+			* Scan des Events interne
+			*/
+			checkInternalEvent();
+		}
 
 		continuerScanClavier = 1;
 
 	}while( key != RETOUR_MENU_PRECEDENT && (nbJoueurVivant() > 1 || c_listEvent.size()) );
 
-	if( nbJoueurVivant() <= 1 )
-		stdError("Un joueur a gagner !");
+	// On détermine, qui a gagné
+	char JoueurGagnant = 0;
+	for( i=0; i<c_nb_joueurs; i++ )
+	{
+		if( c_joueurs[i].armements() && (c_joueurs[i].armements()->est_Dans_La_Liste(bonus::vie) == -1 || (c_joueurs[i].armements()->quantiteUtilisable(bonus::vie) > 0 || c_joueurs[i].armements()->quantiteMAX_Ramassable(bonus::vie) == 0)) ){
+			JoueurGagnant = i+1;// ( on veut un nombre entre 1 et ... )
+			c_winnerName = *c_joueurs[i].nom();
+			break;
+		}
+	}
+
+	// Si on est host, alors, on envoie le nom du gagnant au clients
+	if( c_connection == CNX_Host ){
+		memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
+		sprintf(c_buffer, "%d,%s", (int)JoueurGagnant, c_winnerName.c_str());
+		for( i=0; i<c_nb_joueurs; i++ )
+		{
+			// Si le joueur est local où non connecté, on passe
+			if( c_joueurs[i].isLocal() || c_joueurs[i].socket() == INVALID_SOCKET )
+				continue;
+
+			c_server->send_message(c_joueurs[i].socket(), "endGame", 8);// Envoie du signal: Fin de partie.
+			c_server->send_message(c_joueurs[i].socket(), c_buffer, PACK_bufferSize);// Nom du joueur gagnant. Note => Fin de transmition.
+		}
+	}
 
 	// On désinitialise les bonus utilisables pour cette partie
 	bonus::unInitBonusProp();
 
 	if( c_connection == CNX_Host )// Si on est en mode serveur alors on connecte le serveur
 		c_server->endListen();
+
+	if( nbJoueurVivant() == 1 )
+		return JoueurGagnant;
+
+	return 0;
 }
 
 
@@ -621,6 +856,18 @@ void partie::checkInternalEvent()
 {
 	//static s_Event& e;
 	static unsigned int i;
+
+
+	if( clock() >= c_timeOut ){
+		for( unsigned x=0, y=0; y<c_map->Y(); y++ )
+		{
+			for( x=0; x<c_map->X(); x++ )
+			{
+				if( c_map->getBlock(x, y)->element == map::Mur_destructible )
+					c_map->setBlock(x, y, map::vide);
+			}
+		}
+	}
 
 	for( i=0; i<c_listEvent.size(); i++ )
 	{
@@ -811,7 +1058,7 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 		}
 		case map::bombe_poser_AVEC_UN_joueur: {// Le pauvre joueur qui est au millieu du chemin de la flamme -> dead
 			// On fait explosé la bombe
-			c_joueurs[c_map->getBlock(x, y)->joueur->at(0)-1].armements()->forceTimeOut(x,y);
+			c_joueurs[c_map->getBlock(x, y)->joueur->at(0)-1].armements()->forceTimeOut(x, y);
 			c_joueurs[c_map->getBlock(x, y)->joueur->at(1)-1].defArmements(0);
 			return 0;
 		}
@@ -821,7 +1068,7 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 					c_joueurs[c_map->getBlock(x, y)->joueur->at(k)-1].defArmements(0);
 				}
 				// On fait explosé la bombe
-				c_joueurs[c_map->getBlock(x, y)->joueur->at(0)-1].armements()->forceTimeOut(x,y);
+				c_joueurs[c_map->getBlock(x, y)->joueur->at(0)-1].armements()->forceTimeOut(x, y);
 			return 0;
 		}
 		case map::bombe_poser: {
@@ -831,7 +1078,7 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 				stdErrorE("Vector vide à x=%u, y=%u", x, y);
 
 			// On fait explosé la bombe
-			c_joueurs[c_map->getBlock(x, y)->joueur->at(0)-1].armements()->forceTimeOut(x,y);
+			c_joueurs[c_map->getBlock(x, y)->joueur->at(0)-1].armements()->forceTimeOut(x, y);
 			break;
 			return 0;
 		}
@@ -877,7 +1124,7 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 
 /***************************************************************************//*!
 * @fn const char* partie::packIt( uint32_t X, uint32_t Y, map::t_type type, uint32_t nb_MetaDonnee )
-* @brief Empaquette les variable X, Y, type, nb_MetaDonnee pour les envoyer sur le réseau
+* @brief Empaquette les variables X, Y, type, nb_MetaDonnee pour les envoyer sur le réseau
 * @return Les variables formaté dans une chaine de caractère
 */
 const char* partie::packIt( uint32_t X, uint32_t Y, map::t_type type, uint32_t nb_MetaDonnee )
@@ -885,6 +1132,49 @@ const char* partie::packIt( uint32_t X, uint32_t Y, map::t_type type, uint32_t n
 	unsigned int PACK_size = snprintf(c_buffer, PACK_bufferSize, "%u,%u,%u,%u", X, Y, type, nb_MetaDonnee);
 	if( PACK_size >= PACK_bufferSize )
 		stdError("ATTENTION ! Perte de donnees ! %d donnees lues et %d donnees ecrites Maximum ( Ne pas oublier dans les calcules le \\0 ! )", PACK_size, PACK_bufferSize);
+
+	return c_buffer;
+}
+
+
+/***************************************************************************//*!
+* @fn const char* partie::packIt( std::vector<unsigned char>* list )
+* @brief Empaquette tout ce que contient le tableau
+* @return Les variables formaté dans une chaine de caractère
+*/
+const char* partie::packIt( std::vector<unsigned char>* list )
+{
+	// On vide le buffer
+	memset(c_buffer, 0, PACK_bufferSize);
+
+	unsigned int p=0;
+	for( unsigned int i=0; i<list->size(); i++ ){
+		if( p >= PACK_bufferSize )
+			stdErrorE("Dépassement de capacité !");
+
+		c_buffer[p] = list->at(i)+'0';
+		p++;
+		c_buffer[p] = ' ';
+		p++;
+	}
+	c_buffer[p-1] = 0;
+
+	return c_buffer;
+}
+
+
+/***************************************************************************//*!
+* @fn const char* partie::packIt( clavier::t_touche t )
+* @brief Empaquette la touche
+* @return La variable formaté dans une chaine de caractère + un indicateur de contenue
+*/
+const char* partie::packIt( clavier::t_touche t )
+{
+	if( 0 > t || t > 9 )
+		stdError("Erreur lors du packing du clavier ! Le nombre %d ne peut etre pack !", t);
+
+	strcpy(c_buffer, "1 0");
+	c_buffer[2] += (int)t;
 
 	return c_buffer;
 }
@@ -899,16 +1189,20 @@ void partie::unPackIt( uint32_t* X, uint32_t* Y, map::t_type* type, uint32_t* nb
 	unsigned int i=0;
 	bool firstLap = 1;
 
+	stdError("UnPack this: %s", c_buffer);
+
 	*X = 0;
 	firstLap = 1;
 	for( ; c_buffer[i] != ',' ; i++ )
 	{
-		if( firstLap ){
-			firstLap = 0;
-		}else{
-			*X *= 10;
+		if( '0' <= c_buffer[i] && c_buffer[i] <= '9' ){// Pour contrer le bug SOH
+			if( firstLap ){
+				firstLap = 0;
+			}else{
+				*X *= 10;
+			}
+			*X += c_buffer[i]-'0';
 		}
-		*X += c_buffer[i]-'0';
 	}
 	i++;// Pour virer la ,
 
@@ -916,12 +1210,14 @@ void partie::unPackIt( uint32_t* X, uint32_t* Y, map::t_type* type, uint32_t* nb
 	firstLap = 1;
 	for( ; c_buffer[i] != ','; i++ )
 	{
-		if( firstLap ){
-			firstLap = 0;
-		}else{
-			*Y *= 10;
+		if( '0' <= c_buffer[i] && c_buffer[i] <= '9' ){// Pour contrer le bug SOH
+			if( firstLap ){
+				firstLap = 0;
+			}else{
+				*Y *= 10;
+			}
+			*Y += c_buffer[i]-'0';
 		}
-		*Y += c_buffer[i]-'0';
 	}
 	i++;// Pour virer la ,
 
@@ -929,12 +1225,14 @@ void partie::unPackIt( uint32_t* X, uint32_t* Y, map::t_type* type, uint32_t* nb
 	firstLap = 1;
 	for( ; c_buffer[i] != ','; i++ )
 	{
-		if( firstLap ){
-			firstLap = 0;
-		}else{
-			*type = (map::t_type)(*type*10);
+		if( '0' <= c_buffer[i] && c_buffer[i] <= '9' ){// Pour contrer le bug SOH
+			if( firstLap ){
+				firstLap = 0;
+			}else{
+				*type = (map::t_type)(*type*10);
+			}
+			*type = (map::t_type)(*type+(c_buffer[i]-'0'));
 		}
-		*type = (map::t_type)(*type+(c_buffer[i]-'0'));
 	}
 	i++;// Pour virer la ,
 
@@ -942,15 +1240,46 @@ void partie::unPackIt( uint32_t* X, uint32_t* Y, map::t_type* type, uint32_t* nb
 	firstLap = 1;
 	for( ; c_buffer[i] != 0; i++ )
 	{
-		if( firstLap ){
-			firstLap = 0;
-		}else{
-			*nb_MetaDonnee *= 10;
+		if( '0' <= c_buffer[i] && c_buffer[i] <= '9' ){// Pour contrer le bug SOH
+			if( firstLap ){
+				firstLap = 0;
+			}else{
+				*nb_MetaDonnee *= 10;
+			}
+			*nb_MetaDonnee += c_buffer[i]-'0';
 		}
-		*nb_MetaDonnee += c_buffer[i]-'0';
 	}
 
 	//sscanf(c_buffer, "%u,%u,%u,%u", X, Y, type, nb_MetaDonnee );
+	stdError("UnPacked: %u,%u,%u,%u", *X, *Y, *type, *nb_MetaDonnee);
+}
+
+
+/***************************************************************************//*!
+* @fn void partie::unPackIt( uint32_t X, uint32_t Y )
+* @brief Désempaquette le buffer et met les données dans le tableau
+*/
+void partie::unPackIt( uint32_t X, uint32_t Y )
+{
+	stdError("UnPack this: %s at x=%u, y=%u", c_buffer, X, Y);
+
+	for( unsigned int i=0; c_buffer[i]; i++ ){
+		if( i >= PACK_bufferSize )
+			stdErrorE("Dépassement de capacité !");
+
+		if( '0' <= c_buffer[i] && c_buffer[i] <= '9' )
+			c_map->ajouterInfoJoueur(X, Y, c_buffer[i]-'0');
+	}
+}
+
+
+/***************************************************************************//*!
+* @fn void partie::unPackIt( clavier::t_touche* t )
+* @brief Désempaquette le buffer et met les données dans la variable
+*/
+void partie::unPackIt( clavier::t_touche* t )
+{
+	*t = (clavier::t_touche)(c_buffer[2]-'0');
 }
 
 
@@ -975,27 +1304,20 @@ void partie::unPackIt( uint32_t* X, uint32_t* Y, map::t_type* type, uint32_t* nb
 */
 void partie::ajouterNouvelleConnection( SOCKET s )
 {
-	unsigned int	l_isIntel=1,
+	int				l_isIntel=1,
 					l_is32Bits=1;
 	unsigned char	i,
 					idJoueur = 0;
 
-	stdError("Nouvelle connection !");
-
 	// On vide le buffer
 	memset(c_buffer, 0, PACK_bufferSize);
 	c_server->readClient( s, c_buffer, PACK_bufferSize );// On attend les données du client
-	sscanf(c_buffer, "%u %u", &l_is32Bits, &l_isIntel );// Utilisation d'un buffer pour eviter tout problème de lecture
-
-	stdError("Nouvelle connection p2 !");
+	sscanf(c_buffer, "%d %d", &l_is32Bits, &l_isIntel );// Utilisation d'un buffer pour eviter tout problème de lecture
 
 	if( Is32Bits != l_is32Bits || l_isIntel != (int)baseClientServer::isLittleEndian() ){
-		stdError("Attention ! Un client a essayé de se connecté avec les paramètres suivant: is32Bits=%u, isIntel=%u (Paramètre accèpté: is32Bits=%u, isIntel=%u)", l_is32Bits, l_isIntel, Is32Bits, (unsigned int)baseClientServer::isLittleEndian());
 		c_server->rmClient( s );// Connection refusé
 		return ;
 	}
-
-	stdError("Nouvelle connection p1 !");
 
 	c_server->send_message( s, "1", 2);// Connection accèpté
 
@@ -1003,22 +1325,21 @@ void partie::ajouterNouvelleConnection( SOCKET s )
 	memset(c_buffer, 0, PACK_bufferSize);
 	c_server->readClient( s, c_buffer, PACK_bufferSize );// On attend le nom du client
 
-// COMMENTER CETTE LIGNE SI PAS UTILISATION telnet
-//	c_buffer[strlen(c_buffer)] = 0;// Permet de virer le '\n'
-
-
 	// On cherche un SLOT pour notre joueur
 	// Et on vérifit si le nom n'est pas dans la liste
 	for( i=0; i<c_nb_joueurs; i++ ){
 		if( c_joueurs[i].isLocal() ){
-			stdError("%s == %s", (const char*)c_joueurs[i].nom()->c_str(), c_buffer)
 			if( *c_joueurs[i].nom() == c_buffer ){// Nom déjà utilisé
 				c_server->rmClient( s );// Nom refusé => Déco
 				return ;
 			}
-		}else{
+		}else{// isLocal() == false
 			if( c_joueurs[i].socket() == INVALID_SOCKET ){// Note, on est obligé de trouver un slot libre, sinon le server n'aurait pas accèpté la connection
 				idJoueur = i;
+				c_joueurs[i].defSocket( s );
+				c_joueurs[i].defNom( c_buffer );
+				c_joueurs[i].defArmements( new bonus() );
+				c_joueurs[i].armements()->param_Par_Defaut();
 			}
 		}
 	}
@@ -1030,14 +1351,13 @@ void partie::ajouterNouvelleConnection( SOCKET s )
 	// Envoie de la map
 	for( unsigned int x=0, y=0; y<c_map->Y(); y++ )
 	{
-		for( x=0; x< c_map->X(); x++ )
+		for( x=0; x<c_map->X(); x++ )
 		{
-			if( c_map->getBlock(x,y)->joueur ){
-				c_server->send_message(s, packIt(x, y, c_map->getBlock(x,y)->element, c_map->getBlock(x,y)->joueur->size()), PACK_bufferSize);
-				for( unsigned int k=0; k<c_map->getBlock(x,y)->joueur->size(); k++ )// Envoie du tableau de meta-données
-					c_server->send_message(s, (const char*)(&c_map->getBlock(x,y)->joueur->at(k)), sizeof(uint8_t));
+			if( c_map->getBlock(x, y)->joueur && c_map->getBlock(x, y)->joueur->size() ){
+				c_server->send_message(s, packIt(x, y, c_map->getBlock(x, y)->element, c_map->getBlock(x, y)->joueur->size()), PACK_bufferSize);
+				c_server->send_message(s, packIt( c_map->getBlock(x, y)->joueur ), PACK_bufferSize);
 			}else{
-				c_server->send_message(s, packIt(x, y, c_map->getBlock(x,y)->element, 0), PACK_bufferSize);
+				c_server->send_message(s, packIt(x, y, c_map->getBlock(x, y)->element, 0), PACK_bufferSize);
 			}
 		}
 	}

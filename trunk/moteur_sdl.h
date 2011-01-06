@@ -47,9 +47,16 @@ class moteur_sdl
 			bout_flamme_droite,
 			bombe,
 			bombe_explosion,
+			// Bonus
+			gain_bombe,
+			gain_declancheur,
 			gain_puissance_flamme,
-			gain_bombe
+			gain_vitesse_vitesse,
+			gain_vie,
+
+			__nombre_de_decors__
 		};
+
 
 	private:
 		static moteur_sdl* c_Instance;
@@ -57,7 +64,6 @@ class moteur_sdl
 		SDL_Surface* c_background;
 		TTF_Font* c_policeGeneral;
 		SDL_Surface** c_Decor;
-		unsigned int c_nb_Decor;
 		bool c_premierAffichage;
 
 	private:

@@ -63,11 +63,23 @@ inline unsigned char map::nb_MAX_Joueur() const
 
 
 /***************************************************************************//*!
-* @fn const std::vector<s_Coordonnees>* readModification() const
-* @brief Retourne la liste des modifications
-* @note Pour une utilisation plus correcte de la liste, préférez l'utilisation de map::getModification( s_Coordonnees& pos )
+* @fn const std::vector<s_Coordonnees>* getModifications() const
+* @brief Retourne la liste des modifications.
+* @warning NE pas oublier d'appeler map::cleanModifications() après totale utilisation de cette fonction
+* @note Si vous n'utiliser cette fonction qu'a un seul endroit, pour une utilisation plus correcte de la liste, préférez l'utilisation de map::getModifications( s_Coordonnees& pos )
 */
-inline const std::vector<s_Coordonnees>* map::readModification() const
+inline const std::vector<s_Coordonnees>* map::getModifications() const
 {
 	return &c_listDesChangement;
+}
+
+
+/***************************************************************************//*!
+* @fn const void map::cleanModifications()
+* @brief Vide la liste des modifications.
+* @see std::vector<s_Coordonnees>* getModifications()
+*/
+inline void map::cleanModifications()
+{
+	c_listDesChangement.clear();
 }

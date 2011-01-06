@@ -247,28 +247,6 @@ SOCKET server::lookupNewConnection()
 
 
 /***************************************************************************//*!
-* @fn bool server::lookupConnectionClient( unsigned int client )
-* @brief Recherche une activité pour le client
-* @param[in] client L'id du client dont on veut voir l'activité
-* @return True si le client a une une activité, Flase sinon
-*
-* Pour récup l'activité server::readClient( SOCKET sock, char* buffer, unsigned int bufferSize )
-*
-* @warning Veuillez executer server::lookupNewConnection() avant !
-*/
-bool server::lookupConnectionClient( unsigned int client )
-{
-	if( client >= c_nb_clientConnecter )
-		reportError("Le client(%u) demandé n'existe pas ! Il y a actuellement %u client connecté. Le numéro client doit donc être compris entre : 0 <= client < %u", client, c_nb_clientConnecter, c_nb_clientConnecter);
-
-	if( FD_ISSET(c_listClient[client].listenSocket, &c_rdfs) )
-		return true;
-
-	return false;
-}
-
-
-/***************************************************************************//*!
 * @fn SOCKET server::lookupConnectionClient()
 * @brief Recherche une activité pour tout les clients
 * @return Le SOCKET du client qui a eu une activité OU INVALID_SOCKET si pas d'activité

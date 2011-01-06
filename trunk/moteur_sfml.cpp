@@ -1158,7 +1158,7 @@ SYS_CLAVIER moteur_sfml::afficherMapEtEvent( const partie* p )
 		SDL_Flip(c_Instance->c_ecranGeneral);// afficher la map
 	}else{
 		s_Coordonnees v_pos;
-		while( l_map->getModification(v_pos) )
+		while( l_map->getModifications(v_pos) )
 		{
 			dessiner = 1;
 			pos.x=v_pos.x*32+xpos;
