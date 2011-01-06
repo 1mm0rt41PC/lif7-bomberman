@@ -21,7 +21,7 @@
 *
 *	do {
 *		if( cli.lookupConnection() ){// A faire en 1er !
-*			memset(c_buffer, 0, 20);// On vide le buffer
+*			memset(buffer, 0, 20);// On vide le buffer
 *			if( cli.readServer(buffer, 20) ){
 *				printf("%s", buffer);
 *			}else{

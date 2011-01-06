@@ -131,11 +131,11 @@ void perso::defLocal( bool isLocal )
 
 
 /***************************************************************************//*!
-* @fn void perso::defSocket( bool MySocket )
+* @fn void perso::defSocket( SOCKET MySocket )
 * @brief Permet de definir le socket utilisé par le perso
 * @note Valeur par défaut: INVALID_SOCKET
 */
-void perso::defSocket( bool MySocket )
+void perso::defSocket( SOCKET MySocket )
 {
 	c_MySocket = MySocket;
 }

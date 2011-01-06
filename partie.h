@@ -9,6 +9,11 @@
 #include "metaProg.inl"
 
 
+/*!
+* @class partie
+* @brief Permet de gérer une partie offline ou online ( host et client )
+* @todo Ajouter au protocole de connection une vérification de la version
+*/
 class partie
 {
 	private:
@@ -74,12 +79,13 @@ class partie
 			t_Connection					c_connection;//!< Partie en Host, Client
 			t_MODE							c_mode;
 			unsigned char					c_nb_joueurs;//!< Le nombre de joueur dans la partie
-			unsigned char					c_nb_MAX_joueurs;
 			union {// Rien ne sert de prendre 2 fois la taille d'un pointeur, si on en a besoin que d'un seul.
 				client*						c_client;
 				server*						c_server;
 			};
 			char							c_buffer[PACK_bufferSize];//!< Buffer pour communiquer sur le réseau
+			std::string						c_winnerName;
+			clock_t							c_timeOut;
 		// }
 
 		void deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned char joueur );
@@ -89,7 +95,11 @@ class partie
 
 		// Réseau
 		const char* packIt( uint32_t X, uint32_t Y, map::t_type type, uint32_t nb_MetaDonnee );
+		const char* packIt( std::vector<unsigned char>* list );
+		const char* packIt( clavier::t_touche t );
 		void unPackIt( uint32_t* X, uint32_t* Y, map::t_type* type, uint32_t* nb_MetaDonnee );
+		void unPackIt( uint32_t X, uint32_t Y );
+		void unPackIt( clavier::t_touche* t );
 		void ajouterNouvelleConnection( SOCKET s );
 
 
@@ -99,14 +109,12 @@ class partie
 		// Modificateurs
 		void genMap();
 		void def_nbJoueurs( unsigned char nb );
-		inline void def_nbMAX_joueurs( unsigned char nb );
 		inline void def_modeJeu( t_MODE m );
 		void def_connection( t_Connection cnx );
 
 
 		// Accesseurs
 		inline unsigned char nbJoueurs() const;
-		inline unsigned char nbMAX_joueurs() const;
 		inline t_MODE modeJeu() const;
 		inline t_Connection connection() const;
 		perso* joueur( unsigned int joueur_numero ) const;
@@ -114,9 +122,11 @@ class partie
 		unsigned char nbJoueurVivant() const;
 		server* getServeur() const;
 		client* getClient() const;
+		inline std::string getWinnerName() const;
+		inline clock_t timeOut() const;
 
 		// Autres
-		void main( libAff * afficherMapEtEvent );
+		char main( libAff * afficherMapEtEvent );
 };
 
 

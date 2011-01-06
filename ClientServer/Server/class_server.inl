@@ -50,3 +50,17 @@ inline const server::sClient* server::listClient() const
 {
 	return c_listClient;
 }
+
+
+/***************************************************************************//*!
+* @fn bool server::lookupConnectionClient( SOCKET client )
+* @brief Recherche une activité pour le client
+* @param[in] client Le socket du client dont on veut voir l'activité
+* @return True si le client a une une activité, False sinon
+*
+* @warning Veuillez executer server::lookupNewConnection() avant !
+*/
+inline bool server::lookupConnectionClient( SOCKET client )
+{
+	return FD_ISSET(client, &c_rdfs);
+}

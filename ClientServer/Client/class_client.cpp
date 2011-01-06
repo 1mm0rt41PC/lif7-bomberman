@@ -185,18 +185,10 @@ bool client::lookupConnection()
 */
 int client::readServer( char* buffer, unsigned int bufferSize )
 {
-   int nbByte = recv(c_listenSocket, buffer, bufferSize, 0);
-
-   if( nbByte == SOCKET_ERROR ){
-	  stdError("Erreur(%d) lors de la lecture du serveur. Detail: <%s>", SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
-	  nbByte = 0;// if recv error we disonnect the client
-   }
-
-   buffer[nbByte] = 0;
-
-   if( !nbByte )
+	int nbByte = baseClientServer::readClient( c_listenSocket, buffer, bufferSize );
+	if( !nbByte )
 		disconnection();
 		//stdError("Le serveur nous a deco !");
 
-   return nbByte;
+	return nbByte;
 }

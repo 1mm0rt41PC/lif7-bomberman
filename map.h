@@ -12,6 +12,7 @@
 /*!
 * @class map
 * @brief Gère une map.
+* @todo Modifier le système getModifications pour accèlerer les calcules ( Ajouter un clean modifications )
 */
 class map
 {
@@ -109,7 +110,7 @@ class map
 		map( unsigned int tailleX, unsigned int tailleY );
 		~map();
 		void setBlock( unsigned int X, unsigned int Y, map::t_type what );
-		void setBlock( s_Coordonnees& pos, map::t_type what );
+		inline void setBlock( s_Coordonnees& pos, map::t_type what );
 		void ajouterInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierePosition=0 );
 		void rmInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierEltInclu );
 		void rmInfoJoueur( unsigned int X, unsigned int Y );
@@ -119,15 +120,16 @@ class map
 
 		// Accesseurs
 		const s_Case* getBlock( unsigned int X, unsigned int Y ) const;
-		const s_Case* getBlock( s_Coordonnees& pos ) const;
-		unsigned int X() const;
-		unsigned int Y() const;
+		inline const s_Case* getBlock( s_Coordonnees& pos ) const;
+		inline unsigned int X() const;
+		inline unsigned int Y() const;
 		s_Coordonnees positionInitialJoueur( unsigned char joueur ) const;
-		unsigned char nb_PointDeDepartJoueur() const;
-		unsigned char nb_MAX_Joueur() const;
+		inline unsigned char nb_PointDeDepartJoueur() const;
+		inline unsigned char nb_MAX_Joueur() const;
 		unsigned int nb_InfoJoueur( unsigned int X, unsigned int Y ) const;
-		bool getModification( s_Coordonnees& pos );
-		const std::vector<s_Coordonnees>* readModification() const;
+		bool getModifications( s_Coordonnees& pos );
+		inline const std::vector<s_Coordonnees>* getModifications() const;
+		inline void cleanModifications();
 
 		// Autres
 		static void readDir( std::vector<std::string>* files );

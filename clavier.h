@@ -28,13 +28,13 @@ class clavier
 		* @brief Les actions possibles avec les touches
 		*/
 		enum t_touche {
-			NUL = -1,
 			haut = 0,
 			bas,
 			droite,
 			gauche,
 			lancerBombe,
-			declancheur
+			declancheur,
+			NUL//!< En cas de bug
 		};
 
 		clavier();

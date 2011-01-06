@@ -428,7 +428,7 @@ unsigned int map::nb_InfoJoueur( unsigned int X, unsigned int Y ) const
 
 
 /***************************************************************************//*!
-* @fn bool map::getModification( s_Coordonnees& pos )
+* @fn bool map::getModifications( s_Coordonnees& pos )
 * @brief Retourne les positions X,Y des case modifiées depuis le dernier cycle
 * @param[out] pos La variables où sera stockée les données de retour
 * @return True s'il y a eu des modifications
@@ -439,7 +439,7 @@ unsigned int map::nb_InfoJoueur( unsigned int X, unsigned int Y ) const
 * s_Coordonnees pos={0,0};
 * // Charger une map ici + traitement divers
 * // ...
-* while( myMap.getModification(pos) )
+* while( myMap.getModifications(pos) )
 * {
 *	// pos contient les coodonnées d'un block modifié
 *	printf("Le block a l'adresse: X=%u, Y=%u a été modifié.\n", pos.x, pos.y);
@@ -448,7 +448,7 @@ unsigned int map::nb_InfoJoueur( unsigned int X, unsigned int Y ) const
 * @endcode
 * @note A chaque appel de la fonction l'element qui est envoyé a pos est enlevé de la liste des modification (First In Last Out)
 */
-bool map::getModification( s_Coordonnees& pos )
+bool map::getModifications( s_Coordonnees& pos )
 {
 	if( !c_listDesChangement.size() )
 		return false;

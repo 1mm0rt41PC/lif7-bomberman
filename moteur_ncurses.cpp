@@ -892,7 +892,8 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 						wattroff(win, couleur);
 						break;
 					}
-					case map::bombe_poser_AVEC_UN_joueur: {
+					case map::bombe_poser_AVEC_UN_joueur:
+					case map::bombe_poser_AVEC_plusieurs_joueurs: {
 						if( !l_map->getBlock(x,y)->joueur )
 							stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y).joueur=0", x, y);
 
@@ -940,7 +941,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 						wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
 						break;
 					}
-					case map::bonus:{
+					case map::bonus: {
 						wattron(win, COLOR_PAIR(MU_BLACK_MAGENTA));
 						if( !l_map->getBlock(x,y)->joueur )
 							stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y).joueur=0", x, y);
@@ -985,7 +986,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 		c_premierAffichage = false;
 	}else{
 		s_Coordonnees pos;
-		while( l_map->getModification(pos) )
+		while( l_map->getModifications(pos) )
 		{
 			switch( l_map->getBlock(pos)->element )
 			{
@@ -1020,7 +1021,8 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 					wattroff(win, couleur);
 					break;
 				}
-				case map::bombe_poser_AVEC_UN_joueur: {
+				case map::bombe_poser_AVEC_UN_joueur:
+				case map::bombe_poser_AVEC_plusieurs_joueurs: {
 					if( !l_map->getBlock(pos)->joueur )
 						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(pos).joueur=0", pos.x, pos.y);
 
@@ -1068,7 +1070,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 					wattroff(win, COLOR_PAIR(MU_BLACK_YELLOW));
 					break;
 				}
-				case map::bonus:{
+				case map::bonus: {
 					wattron(win, COLOR_PAIR(MU_BLACK_MAGENTA));
 					if( !l_map->getBlock(pos)->joueur )
 						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(pos).joueur=0", pos.x, pos.y);
@@ -1111,6 +1113,73 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 
 		}
 	}
+
+	// Affichage du timer
+	if( p->timeOut() > clock() )
+		mvwprintw(win, 3, 2, "Temps restant %dmin:%dsecs", (p->timeOut()-clock())/(CLOCKS_PER_SEC*60), ((p->timeOut()%(CLOCKS_PER_SEC*60))-clock())/CLOCKS_PER_SEC);
+	else
+		mvwaddstr(win, 3, 2, "Temps restant 0min:0secs");
+
+	// Joueur 1
+	couleur = getCouleurJoueur( 1 );
+	wattron(win, couleur);
+	mvwprintw(win, 5, 2, "%s", p->joueur(0)->nom()->c_str());
+	wattroff(win, couleur);
+	if( p->joueur(0)->armements() ){
+		mvwprintw(win, 6, 4, "Nombre de bombe: %d", p->joueur(0)->armements()->quantiteMAX(bonus::bombe));
+		mvwprintw(win, 7, 4, "Puissance de flamme: %d", p->joueur(0)->armements()->quantiteMAX(bonus::puissance_flamme));
+		mvwprintw(win, 8, 4, "Declancheur manuel: %d", p->joueur(0)->armements()->quantiteMAX(bonus::declancheur));
+		mvwprintw(win, 9, 4, "Vitesse: %d", p->joueur(0)->armements()->quantiteMAX(bonus::vitesse));
+		mvwprintw(win, 10, 4, "Nombre de vie: %d", p->joueur(0)->armements()->quantiteMAX(bonus::vie));
+	}
+
+	// Joueur 2
+	if( p->nbJoueurs() > 1 ){
+		couleur = getCouleurJoueur( 2 );
+		wattron(win, couleur);
+		mvwprintw(win, 14, 53, "%s", p->joueur(1)->nom()->c_str());
+		wattroff(win, couleur);
+		if( p->joueur(1)->armements() ){
+			mvwprintw(win, 15, 55, "Nombre de bombe: %d", p->joueur(1)->armements()->quantiteMAX(bonus::bombe));
+			mvwprintw(win, 16, 55, "Puissance de flamme: %d", p->joueur(1)->armements()->quantiteMAX(bonus::puissance_flamme));
+			mvwprintw(win, 17, 55, "Declancheur manuel: %d", p->joueur(1)->armements()->quantiteMAX(bonus::declancheur));
+			mvwprintw(win, 18, 55, "Vitesse: %d", p->joueur(1)->armements()->quantiteMAX(bonus::vitesse));
+			mvwprintw(win, 19, 55, "Nombre de vie: %d", p->joueur(1)->armements()->quantiteMAX(bonus::vie));
+		}
+	}
+
+	// Joueur 3
+	if( p->nbJoueurs() > 2 ){
+		couleur = getCouleurJoueur( 3 );
+		wattron(win, couleur);
+		mvwprintw(win, 5, 53, "%s", p->joueur(2)->nom()->c_str());
+		wattroff(win, couleur);
+		if( p->joueur(2)->armements() ){
+			mvwprintw(win, 6, 55, "Nombre de bombe: %d", p->joueur(2)->armements()->quantiteMAX(bonus::bombe));
+			mvwprintw(win, 7, 55, "Puissance de flamme: %d", p->joueur(2)->armements()->quantiteMAX(bonus::puissance_flamme));
+			mvwprintw(win, 8, 55, "Declancheur manuel: %d", p->joueur(2)->armements()->quantiteMAX(bonus::declancheur));
+			mvwprintw(win, 9, 55, "Vitesse: %d", p->joueur(2)->armements()->quantiteMAX(bonus::vitesse));
+			mvwprintw(win, 10, 55, "Nombre de vie: %d", p->joueur(2)->armements()->quantiteMAX(bonus::vie));
+		}
+	}
+
+	// Joueur 4
+	if( p->nbJoueurs() == 4 ){
+		couleur = getCouleurJoueur( 4 );
+		wattron(win, couleur);
+		mvwprintw(win, 14, 2, "%s", p->joueur(3)->nom()->c_str());
+		wattroff(win, couleur);
+		if( p->joueur(3)->armements() ){
+			mvwprintw(win, 15, 4, "Nombre de bombe: %d", p->joueur(3)->armements()->quantiteMAX(bonus::bombe));
+			mvwprintw(win, 16, 4, "Puissance de flamme: %d", p->joueur(3)->armements()->quantiteMAX(bonus::puissance_flamme));
+			mvwprintw(win, 17, 4, "Declancheur manuel: %d", p->joueur(3)->armements()->quantiteMAX(bonus::declancheur));
+			mvwprintw(win, 18, 4, "Vitesse: %d", p->joueur(3)->armements()->quantiteMAX(bonus::vitesse));
+			mvwprintw(win, 19, 4, "Nombre de vie: %d", p->joueur(3)->armements()->quantiteMAX(bonus::vie));
+		}
+	}
+
+
+
 	//refresh(); /* Print it on to the real screen */
 	wrefresh(win);
 
