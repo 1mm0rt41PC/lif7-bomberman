@@ -19,8 +19,9 @@ enum {
 * Lib SFML
 */
 #ifdef __LIB_SFML__
-	#include <SFML/...>
-	#define SYS_CLAVIER
+	#include <SFML/Window.hpp>
+	#include <SFML/Graphics.hpp>
+	#define SYS_CLAVIER sf::Key::Code
 
 
 /*******************************************************************************
@@ -47,6 +48,10 @@ enum {
 
 	#ifndef PADMINUS
 		#define PADMINUS '-'
+	#endif
+
+	#ifndef PADENTER
+		#define PADENTER 0x1CB
 	#endif
 
 

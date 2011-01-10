@@ -426,6 +426,11 @@ int moteur_ncurses::getNombre( const char titre[], int valeurParDefaut, int vale
 					highLight=2;
 	WINDOW* win_menu = 0;
 
+	if( valeurMin > valeurParDefaut || valeurParDefaut > valeurMax ){
+		stdError("Valeur incorrect ! valeurMin(%d) <= valeurParDefaut(%d) && valeurParDefaut(%d) <= valeurMax(%d)", valeurMin, valeurParDefaut, valeurParDefaut, valeurMax);
+		valeurParDefaut = (valeurMax - valeurMin)/2+valeurMin;
+	}
+
 	*returnValue = valeurParDefaut;
 
 	// On affiche le super cadre :D
@@ -828,12 +833,12 @@ chtype moteur_ncurses::getCouleurJoueur( unsigned char joueur )
 
 
 /***************************************************************************//*!
-* @fn SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
+* @fn SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( partie* p )
 * @brief Affiche une map
 * @param[in] p	La partie en cours a afficher
 * @return La touche actuellement appuyé
 */
-SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
+SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( partie* p )
 {
 	map* l_map = p->getMap();// l_map pour local variable map
 	// Décalage

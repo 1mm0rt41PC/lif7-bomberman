@@ -74,7 +74,7 @@ class moteur_ncurses
 		inline void forcerRafraichissement() { c_premierAffichage = 1; }
 
 		// Autres :: Affichage map
-		static SYS_CLAVIER afficherMapEtEvent( const partie* p );
+		static SYS_CLAVIER afficherMapEtEvent( partie* p );
 };
 
 #endif
