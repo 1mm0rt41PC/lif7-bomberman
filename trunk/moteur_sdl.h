@@ -92,7 +92,7 @@ class moteur_sdl
 		inline void forcerRafraichissement() { c_premierAffichage = 1; }
 
 		// Autre :: Affichage
-		static SYS_CLAVIER afficherMapEtEvent( const partie* p );
+		static SYS_CLAVIER afficherMapEtEvent( partie* p );
 
 		// Clavier
 		static SDLKey traductionClavier( const SDL_KeyboardEvent* touche );

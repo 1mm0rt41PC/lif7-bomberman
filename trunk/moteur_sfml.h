@@ -46,8 +46,14 @@ class moteur_sfml
 			bout_flamme_droite,
 			bombe,
 			bombe_explosion,
+			// Bonus
+			gain_bombe,
+			gain_declancheur,
 			gain_puissance_flamme,
-			gain_bombe
+			gain_vitesse_vitesse,
+			gain_vie,
+
+			__nombre_de_decors__
 		};
 
 	private:
@@ -56,16 +62,16 @@ class moteur_sfml
 		sf::Image c_background;
 		sf::Font c_policeGeneral;
 		sf::Image* c_Decor;
-		unsigned int c_nb_Decor;
 		bool c_premierAffichage;
 
 	private:
+		/*
 		SDL_Surface* ecritTexte( const char texte[] );
 		SDL_Surface* ecritTexte( const char texte[], const SDL_Color& couleur );
 		SDL_Surface* ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8 b );
 		SDL_Surface* ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille );
 		void joueur_orientation( perso::t_Orientation ori, unsigned char joueur, SDL_Rect* pos ) const;
-
+		*/
 		static char* completerMot( char texte[], unsigned int taille );
 
 		moteur_sfml();

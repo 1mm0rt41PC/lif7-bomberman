@@ -35,6 +35,9 @@ moteur_sdl::moteur_sdl()
 	* On charge ici le décor
 	*/
 	c_Decor = new SDL_Surface*[__nombre_de_decors__];
+	// Initialisation du décor
+	for( unsigned int i=0; i<__nombre_de_decors__; i++ )
+		c_Decor[i] = 0;
 
 	//murs
 	c_Decor[vide] = chargerImage("images/vide.png");
@@ -74,7 +77,7 @@ moteur_sdl::moteur_sdl()
 	c_Decor[gain_declancheur]= chargerImage("images/detonateur.png");
 	c_Decor[gain_puissance_flamme]= chargerImage("images/gain_puissance_flamme.png");
 	c_Decor[gain_vitesse_vitesse]= chargerImage("images/vitesse.png");
-	c_Decor[gain_vie]= chargerImage("images/bomberman3_bas.png");
+	c_Decor[gain_vie]= chargerImage("images/gain_vie.gif");
 }
 
 
@@ -93,10 +96,10 @@ moteur_sdl& moteur_sdl::getInstance()
 */
 moteur_sdl::~moteur_sdl()
 {
-	// FONCTIONNE PARTIELLEMENT -> EN ATTENTE DES IMAGES MANQUANTES
 	for( unsigned int i=0; i<__nombre_de_decors__; i++ )
 	{
-		if(c_Decor[i]) SDL_FreeSurface(c_Decor[i]);
+		if(c_Decor[i])
+			SDL_FreeSurface(c_Decor[i]);
 	}
 	delete[] c_Decor;
 
@@ -595,8 +598,10 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 	bool dessiner = 1;
 	char valeurRetourTexte[20];// <- Valable 32bit ONLY ! Calcule :: lenght(2^(sizeof(int)*8))+4*2
 
-	if( !(valeurMin <= valeurParDefaut && valeurParDefaut <= valeurMax) )
-		stdErrorE("Valeur incorrect ! valeurMin(%d) <= valeurParDefaut(%d) && valeurParDefaut(%d) <= valeurMax(%d)", valeurMin, valeurParDefaut, valeurParDefaut, valeurMax);
+	if( valeurMin > valeurParDefaut || valeurParDefaut > valeurMax ){
+		stdError("Valeur incorrect ! valeurMin(%d) <= valeurParDefaut(%d) && valeurParDefaut(%d) <= valeurMax(%d)", valeurMin, valeurParDefaut, valeurParDefaut, valeurMax);
+		valeurParDefaut = (valeurMax - valeurMin)/2+valeurMin;
+	}
 
 	*valeurRetour = valeurParDefaut;
 	sprintf(valeurRetourTexte, "<-- %d -->", *valeurRetour);
@@ -696,6 +701,7 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 									case SDLK_RETURN: {
 										if( !(valeurMin <= *valeurRetour && *valeurRetour <= valeurMax) )
 											*valeurRetour = valeurMin;
+										highLight = 2;
 										continuer = 0;
 										break;
 									}
@@ -1064,26 +1070,35 @@ int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
 	if( sfr_msg )
 		SDL_FreeSurface(sfr_msg);
 
+	texteRetour[tailleTexteRetour] = 0;
+	trimString(texteRetour);
+	tailleTexteRetour = strlen(texteRetour);
+
 	return highLight;
 }
 
 
 /***************************************************************************//*!
-* @fn SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
+* @fn SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 * @brief Affiche une map
 * @param[in] p	La partie en cours a afficher
 * @return La touche actuellement appuyé
 */
-SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
+SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 {
 	if( !c_Instance )
 		stdErrorE("Veuillez instancier la class moteur_sdl !");
 
 	bool dessiner = 0;
+	bool refresh = 0;
+	SDL_Surface *sfr_bg;
+	SDL_Surface* sfr_tmp;
 	map* l_map = p->getMap();// l_map pour local variable map
 	// Décalage
-	static unsigned int	xpos=(((c_Instance->c_ecranGeneral->w/32)-l_map->X())/2)*32,
-						ypos=(((c_Instance->c_ecranGeneral->h/32)-l_map->Y())/2)*32;
+	unsigned int	xpos=(((c_Instance->c_ecranGeneral->w/32)-l_map->X())/2)*32,
+					ypos=(((c_Instance->c_ecranGeneral->h/32)-l_map->Y())/2)*32;
+	ypos = ypos+ypos/2;
+
 	SDL_Rect pos;
 
 	// Tester ici si la taille de la map n'est pas trop grande pour la fenetre.
@@ -1093,6 +1108,12 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 	if( c_Instance->c_premierAffichage ){
 		// Traitement a faire sur les cadres ICI
 		// A FAIRE
+		pos.x = 0;
+		pos.y = 0;
+		sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, 1024, 768, 32, 0, 0, 0, 0);
+		SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+		SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+		SDL_FreeSurface(sfr_bg);
 
 		for( unsigned int x,y=0; y<l_map->Y(); y++ )
 		{
@@ -1215,7 +1236,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 				}
 			}
 		}
-		c_Instance->c_premierAffichage = false;
+
 		SDL_Flip(c_Instance->c_ecranGeneral);// afficher la map
 	}else{
 		s_Coordonnees v_pos;
@@ -1341,6 +1362,501 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-32, pos.y-32, 32*3, 32*3);
 		}
 	}
+
+	static SDL_Color couleurBlanche = {255,255,255,0/*unused*/};
+	static SDL_Color couleurNoire = {0,0,0,0/*unused*/};
+
+	/***************************************************************************
+	* Affichage du temps de jeu restant
+	*/
+	pos.x = 0;
+	pos.y = 0;
+	char tempsAff[30];
+	if( p->timeOut() > clock() ){
+		sprintf(tempsAff, "%02ldmin:%02ldsecs", (p->timeOut()-clock())/(CLOCKS_PER_SEC*60), ((p->timeOut()-clock())%(CLOCKS_PER_SEC*60))/CLOCKS_PER_SEC);
+		sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurNoire, 40);
+	}else {
+		sfr_tmp = c_Instance->ecritTexte("00min:00secs", couleurNoire, 40);
+	}
+	sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w, sfr_tmp->h, 32, 0, 0, 0, 0);
+	SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+	SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+	SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+	SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x, pos.y, sfr_tmp->w, sfr_tmp->h);
+	SDL_FreeSurface(sfr_bg);
+	SDL_FreeSurface(sfr_tmp);
+
+	/***************************************************************************
+	* Affichage du joueur 1
+	*/
+	// Affichage du nom du joueur 1
+	pos.x = 10;
+	pos.y = ypos+15;
+	refresh = p->playerNeedRefresh(0);
+	if( refresh ){
+		// Affichage du nom du joueur 1
+		sfr_tmp = c_Instance->ecritTexte(p->joueur(0)->nom()->c_str(), couleurNoire, 55);
+		sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w, sfr_tmp->h, 32, 0, 0, 0, 0);
+		SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+		SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+		SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+		SDL_FreeSurface(sfr_tmp);
+		SDL_FreeSurface(sfr_bg);
+	}
+	pos.y += 25;// Espacement
+	if( p->joueur(0)->armements() ){
+		// Bombe
+		static unsigned char nbBombe = 0;
+		pos.x = 40;
+		pos.y += 35;
+		if( nbBombe != p->joueur(0)->armements()->quantiteMAX(bonus::bombe) || c_Instance->c_premierAffichage || refresh ){
+			sprintf(tempsAff,"%d", p->joueur(0)->armements()->quantiteMAX(bonus::bombe) );
+			sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+			// Blit background
+			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_FreeSurface(sfr_bg);
+
+			SDL_BlitSurface(c_Instance->c_Decor[gain_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
+			pos.x += 40;
+			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_FreeSurface(sfr_tmp);
+			nbBombe = p->joueur(0)->armements()->quantiteMAX(bonus::bombe);
+		}
+
+		// Puissance de flamme
+		static unsigned char PuissFlamme = 0;
+		pos.x = 40;
+		pos.y += 35;
+		if( PuissFlamme != p->joueur(0)->armements()->quantiteMAX(bonus::puissance_flamme) || c_Instance->c_premierAffichage || refresh ){
+			sprintf(tempsAff,"%d", p->joueur(0)->armements()->quantiteMAX(bonus::puissance_flamme) );
+			sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+			// Blit background
+			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_FreeSurface(sfr_bg);
+
+			SDL_BlitSurface(c_Instance->c_Decor[gain_puissance_flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+			pos.x += 40;
+			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_FreeSurface(sfr_tmp);
+			PuissFlamme = p->joueur(0)->armements()->quantiteMAX(bonus::puissance_flamme);
+		}
+
+		// Déclancheur
+		static unsigned char Declancheur = 0;
+		pos.x = 40;
+		pos.y += 35;
+		if( Declancheur != p->joueur(0)->armements()->quantiteMAX(bonus::declancheur) || c_Instance->c_premierAffichage || refresh ){
+			sprintf(tempsAff,"%d", p->joueur(0)->armements()->quantiteMAX(bonus::declancheur) );
+			sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+			// Blit background
+			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_FreeSurface(sfr_bg);
+
+			SDL_BlitSurface(c_Instance->c_Decor[gain_declancheur], NULL, c_Instance->c_ecranGeneral, &pos);
+			pos.x += 40;
+			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_FreeSurface(sfr_tmp);
+			Declancheur = p->joueur(0)->armements()->quantiteMAX(bonus::declancheur);
+		}
+
+		// Vie
+		static unsigned char nbVie = 0;
+		pos.x = 40;
+		pos.y += 35;
+		if( nbVie != p->joueur(0)->armements()->quantiteMAX(bonus::vie) || c_Instance->c_premierAffichage || refresh ){
+			sprintf(tempsAff,"%d", p->joueur(0)->armements()->quantiteMAX(bonus::vie) );
+			sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+			// Blit background
+			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w, sfr_tmp->h, 32, 0, 0, 0, 0);
+			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_FreeSurface(sfr_bg);
+
+			SDL_BlitSurface(c_Instance->c_Decor[gain_vie], NULL, c_Instance->c_ecranGeneral, &pos);
+			pos.x += 40;
+			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_FreeSurface(sfr_tmp);
+			nbVie = p->joueur(0)->armements()->quantiteMAX(bonus::vie);
+		}
+	}
+
+	/***************************************************************************
+	* Affichage du joueur 4
+	*/
+	static bool cleanPlayer4=0;
+	if( p->nbJoueurs() == 4 && (p->connection() == partie::CNX_None || ( p->connection() != partie::CNX_None && (p->joueur(3)->isLocal() || ( !p->joueur(3)->isLocal() && p->joueur(3)->socket() != INVALID_SOCKET )))) ){
+		refresh = p->playerNeedRefresh(3);
+		// Affichage du nom du joueur 4
+		pos.x = 10;
+		pos.y = l_map->Y()*32-(25+35*4);
+		if( refresh ){
+			// Affichage du nom du joueur 4
+			sfr_tmp = c_Instance->ecritTexte(p->joueur(3)->nom()->c_str(), couleurNoire, 55);
+			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w, sfr_tmp->h, 32, 0, 0, 0, 0);
+			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_FreeSurface(sfr_tmp);
+			SDL_FreeSurface(sfr_bg);
+		}
+		pos.y += 25;// Espacement
+		if( p->joueur(3)->armements() ){
+			// Bombe
+			static unsigned char nbBombe = 0;
+			pos.x = 40;
+			pos.y += 35;
+			if( nbBombe != p->joueur(3)->armements()->quantiteMAX(bonus::bombe) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff,"%d", p->joueur(3)->armements()->quantiteMAX(bonus::bombe) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_bg);
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_tmp);
+				nbBombe = p->joueur(3)->armements()->quantiteMAX(bonus::bombe);
+			}
+
+			// Puissance de flamme
+			static unsigned char PuissFlamme = 0;
+			pos.x = 40;
+			pos.y += 35;
+			if( PuissFlamme != p->joueur(3)->armements()->quantiteMAX(bonus::puissance_flamme) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff,"%d", p->joueur(3)->armements()->quantiteMAX(bonus::puissance_flamme) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_bg);
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_puissance_flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_tmp);
+				PuissFlamme = p->joueur(3)->armements()->quantiteMAX(bonus::puissance_flamme);
+			}
+
+			// Déclancheur
+			static unsigned char Declancheur = 0;
+			pos.x = 40;
+			pos.y += 35;
+			if( Declancheur != p->joueur(3)->armements()->quantiteMAX(bonus::declancheur) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff,"%d", p->joueur(3)->armements()->quantiteMAX(bonus::declancheur) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_bg);
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_declancheur], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_tmp);
+				Declancheur = p->joueur(3)->armements()->quantiteMAX(bonus::declancheur);
+			}
+
+			// Vie
+			static unsigned char nbVie = 0;
+			pos.x = 40;
+			pos.y += 35;
+			if( nbVie != p->joueur(3)->armements()->quantiteMAX(bonus::vie) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff,"%d", p->joueur(3)->armements()->quantiteMAX(bonus::vie) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_bg);
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_vie], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_tmp);
+				nbVie = p->joueur(3)->armements()->quantiteMAX(bonus::vie);
+			}
+		}
+		cleanPlayer4 = 1;
+	}else{
+		if( cleanPlayer4 ){
+			// Blit background
+			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, xpos, 25+35*5, 32, 0, 0, 0, 0);
+			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			pos.x = 10;
+			pos.y = l_map->Y()*32;
+			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_FreeSurface(sfr_bg);
+			cleanPlayer4 = 0;
+		}
+	}
+
+
+	/***************************************************************************
+	* Affichage du joueur 3
+	*/
+	static bool cleanPlayer3=0;
+	if( p->nbJoueurs() > 2 && (p->connection() == partie::CNX_None || ( p->connection() != partie::CNX_None && (p->joueur(2)->isLocal() || ( !p->joueur(2)->isLocal() && p->joueur(2)->socket() != INVALID_SOCKET )))) ){
+		refresh = p->playerNeedRefresh(2);
+		// Affichage du nom du joueur 3
+		pos.x = l_map->X()*32+xpos+10;
+		pos.y = ypos+15;
+		if( refresh ){
+			// Affichage du nom du joueur 3
+			sfr_tmp = c_Instance->ecritTexte(p->joueur(2)->nom()->c_str(), couleurNoire, 55);
+			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w, sfr_tmp->h, 32, 0, 0, 0, 0);
+			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_FreeSurface(sfr_tmp);
+			SDL_FreeSurface(sfr_bg);
+		}
+		pos.y += 25;// Espacement
+		if( p->joueur(2)->armements() ){
+			// Bombe
+			static unsigned char nbBombe = 0;
+			pos.x = l_map->X()*32+xpos+10+40;
+			pos.y += 35;
+			if( nbBombe != p->joueur(2)->armements()->quantiteMAX(bonus::bombe) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff,"%d", p->joueur(2)->armements()->quantiteMAX(bonus::bombe) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_bg);
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_tmp);
+				nbBombe = p->joueur(2)->armements()->quantiteMAX(bonus::bombe);
+			}
+
+			// Puissance de flamme
+			static unsigned char PuissFlamme = 0;
+			pos.x = l_map->X()*32+xpos+10+40;
+			pos.y += 35;
+			if( PuissFlamme != p->joueur(2)->armements()->quantiteMAX(bonus::puissance_flamme) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff,"%d", p->joueur(2)->armements()->quantiteMAX(bonus::puissance_flamme) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_bg);
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_puissance_flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_tmp);
+				PuissFlamme = p->joueur(2)->armements()->quantiteMAX(bonus::puissance_flamme);
+			}
+
+			// Déclancheur
+			static unsigned char Declancheur = 0;
+			pos.x = l_map->X()*32+xpos+10+40;
+			pos.y += 35;
+			if( Declancheur != p->joueur(2)->armements()->quantiteMAX(bonus::declancheur) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff,"%d", p->joueur(2)->armements()->quantiteMAX(bonus::declancheur) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_bg);
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_declancheur], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_tmp);
+				Declancheur = p->joueur(2)->armements()->quantiteMAX(bonus::declancheur);
+			}
+
+			// Vie
+			static unsigned char nbVie = 0;
+			pos.x = l_map->X()*32+xpos+10+40;
+			pos.y += 35;
+			if( nbVie != p->joueur(2)->armements()->quantiteMAX(bonus::vie) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff,"%d", p->joueur(2)->armements()->quantiteMAX(bonus::vie) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_bg);
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_vie], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_tmp);
+				nbVie = p->joueur(2)->armements()->quantiteMAX(bonus::vie);
+			}
+		}
+		cleanPlayer3 = 1;
+	}else{
+		if( cleanPlayer3 ){
+			// Blit background
+			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, xpos, 25+35*5, 32, 0, 0, 0, 0);
+			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			pos.x = l_map->X()*32+xpos+10;
+			pos.y = ypos+15;
+			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_FreeSurface(sfr_bg);
+			cleanPlayer3 = 0;
+		}
+	}
+
+
+	/***************************************************************************
+	* Affichage du joueur 2
+	*/
+	static bool cleanPlayer2=0;
+	if( p->nbJoueurs() > 1 && (p->connection() == partie::CNX_None || ( p->connection() != partie::CNX_None && (p->joueur(1)->isLocal() || ( !p->joueur(1)->isLocal() && p->joueur(1)->socket() != INVALID_SOCKET )))) ){
+		refresh = p->playerNeedRefresh(1);
+		// Affichage du nom du joueur 2
+		pos.x = l_map->X()*32+xpos+10;
+		pos.y = l_map->Y()*32-(25+35*4);
+		if( refresh ){
+			// Affichage du nom du joueur 2
+			sfr_tmp = c_Instance->ecritTexte(p->joueur(1)->nom()->c_str(), couleurNoire, 55);
+			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w, sfr_tmp->h, 32, 0, 0, 0, 0);
+			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_FreeSurface(sfr_tmp);
+			SDL_FreeSurface(sfr_bg);
+		}
+		pos.y += 25;// Espacement
+		if( p->joueur(1)->armements() ){
+			// Bombe
+			static unsigned char nbBombe = 0;
+			pos.x = l_map->X()*32+xpos+10+40;
+			pos.y += 35;
+			if( nbBombe != p->joueur(1)->armements()->quantiteMAX(bonus::bombe) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff,"%d", p->joueur(1)->armements()->quantiteMAX(bonus::bombe) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_bg);
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_tmp);
+				nbBombe = p->joueur(1)->armements()->quantiteMAX(bonus::bombe);
+			}
+
+			// Puissance de flamme
+			static unsigned char PuissFlamme = 0;
+			pos.x = l_map->X()*32+xpos+10+40;
+			pos.y += 35;
+			if( PuissFlamme != p->joueur(1)->armements()->quantiteMAX(bonus::puissance_flamme) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff,"%d", p->joueur(1)->armements()->quantiteMAX(bonus::puissance_flamme) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_bg);
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_puissance_flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_tmp);
+				PuissFlamme = p->joueur(1)->armements()->quantiteMAX(bonus::puissance_flamme);
+			}
+
+			// Déclancheur
+			static unsigned char Declancheur = 255;
+			pos.x = l_map->X()*32+xpos+10+40;
+			pos.y += 35;
+			if( Declancheur != p->joueur(1)->armements()->quantiteMAX(bonus::declancheur) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff,"%d", p->joueur(1)->armements()->quantiteMAX(bonus::declancheur) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_bg);
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_declancheur], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_tmp);
+				Declancheur = p->joueur(1)->armements()->quantiteMAX(bonus::declancheur);
+			}
+
+			// Vie
+			static unsigned char nbVie = 0;
+			pos.x = l_map->X()*32+xpos+10+40;
+			pos.y += 35;
+			if( nbVie != p->joueur(1)->armements()->quantiteMAX(bonus::vie) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff,"%d", p->joueur(1)->armements()->quantiteMAX(bonus::vie) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
+				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_bg);
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_vie], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				SDL_FreeSurface(sfr_tmp);
+				nbVie = p->joueur(1)->armements()->quantiteMAX(bonus::vie);
+			}
+		}
+		cleanPlayer2 = 1;
+	}else{
+		if( cleanPlayer2 ){
+			// Blit background
+			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, xpos, 25+35*5, 32, 0, 0, 0, 0);
+			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			pos.x = l_map->X()*32+xpos+10;
+			pos.y = l_map->Y()*32-(25+35*4);
+			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
+			SDL_FreeSurface(sfr_bg);
+			cleanPlayer2 = 0;
+		}
+	}
+
+
+	// On update tout le coté gauche
+	SDL_UpdateRect(c_Instance->c_ecranGeneral, 0, ypos, xpos, c_Instance->c_ecranGeneral->h-ypos);
+	// On update tout le coté droite
+	SDL_UpdateRect(c_Instance->c_ecranGeneral, l_map->X()*32+xpos, ypos, xpos, c_Instance->c_ecranGeneral->h-ypos);
+
+	if( c_Instance->c_premierAffichage )
+		c_Instance->c_premierAffichage = 0;
 
 	SDL_Event event;
 	SDL_PollEvent(&event);

@@ -8,8 +8,8 @@ moteur_sfml* moteur_sfml::c_Instance = 0;
 
 
 /***************************************************************************//*!
-* @fn moteur_sfml::moteur_sdl()
-* @brief Initialise la class moteur_sdl
+* @fn moteur_sfml::moteur_sfml()
+* @brief Initialise la class moteur_sfml
 *
 * Initialise l'écran sdl et prépare le "terrain" pour les traitements futurs
 */
@@ -26,8 +26,10 @@ moteur_sfml::moteur_sfml()
 	/***************************************************************************
 	* On charge ici le décor
 	*/
-	c_nb_Decor = gain_bombe+1;// mettre ici le dernier element de la liste enum
-	c_Decor = new Image[c_nb_Decor];
+	c_Decor = new SDL_Surface*[__nombre_de_decors__];
+	// Initialisation du décor
+	for( unsigned int i=0; i<__nombre_de_decors__; i++ )
+		c_Decor[i] = 0;
 
 	//murs
 	chargerImage(c_Decor[vide], "images/vide.png");
@@ -79,8 +81,8 @@ moteur_sfml& moteur_sfml::getInstance()
 
 
 /***************************************************************************//*!
-* @fn moteur_sfml::~moteur_sdl()
-* @brief Désinitialise la class moteur_sdl
+* @fn moteur_sfml::~moteur_sfml()
+* @brief Désinitialise la class moteur_sfml
 */
 moteur_sfml::~moteur_sfml()
 {
@@ -1053,7 +1055,7 @@ int moteur_sfml::getTexte( const char titre[], char texteRetour[21] )
 SYS_CLAVIER moteur_sfml::afficherMapEtEvent( const partie* p )
 {
 	if( !c_Instance )
-		stdErrorE("Veuillez instancier la class moteur_sdl !");
+		stdErrorE("Veuillez instancier la class moteur_sfml !");
 
 	bool dessiner = 0;
 	map* l_map = p->getMap();// l_map pour local variable map

@@ -102,7 +102,7 @@ int baseClientServer::readClient( SOCKET sock, char* buffer, unsigned int buffer
 {
 	int nbByte = recv(sock, buffer, bufferSize, 0);
 
-	stdError("rcv %s", buffer);
+	//stdError("rcv %s", buffer);
 
 	if( nbByte == SOCKET_ERROR ){
 		stdError("Erreur(%d) lors de la lecture du client %d. Detail: <%s>", SOCKET_REPPORT_ERROR, sock, strerror(SOCKET_REPPORT_ERROR));
@@ -122,7 +122,7 @@ int baseClientServer::readClient( SOCKET sock, char* buffer, unsigned int buffer
 */
 void baseClientServer::send_message( SOCKET sock, const char* buffer, unsigned int bufferSize )
 {
-	stdError("send %s", buffer);
+	//stdError("send %s", buffer);
 	if( send(sock, buffer, bufferSize, 0) == SOCKET_ERROR )
 	   stdError("Erreur(%d) lors de l'envoie du message. Detail: <%s>", SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
 }

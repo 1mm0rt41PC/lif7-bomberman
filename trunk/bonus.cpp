@@ -56,7 +56,7 @@ bonus::s_bonus_proprieter* bonus::bonusProp()
 
 	C_bonusProp[bombe].probabiliter_pop = 40;// 40% de pop
 	C_bonusProp[bombe].quantite_MAX_Ramassable = 20;
-	C_bonusProp[bombe].duree = 2*CLOCKS_PER_SEC;// 2secs avant explosion
+	C_bonusProp[bombe].duree = CLOCKS_PER_SEC+CLOCKS_PER_SEC/2;// 1.5secs avant explosion
 
 	C_bonusProp[puissance_flamme].probabiliter_pop = 60;// 60% de pop
 	C_bonusProp[puissance_flamme].quantite_MAX_Ramassable = 10;

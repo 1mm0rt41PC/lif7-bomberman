@@ -5,6 +5,8 @@
 	#include "moteur_ncurses.h"
 #elif __LIB_SDL__
 	#include "moteur_sdl.h"
+#elif __LIB_SFML__
+	#include "moteur_sfml.h"
 #endif
 
 #include "debug.h"

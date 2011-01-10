@@ -73,7 +73,7 @@ else
 	ifeq ($(findstring sdl,$(MAKECMDGOALS)) ,sdl)
 		LIB_AFF = SDL
 	else
-		ifeq ($(findstring sdl,$(MAKECMDGOALS)) ,sfml)
+		ifeq ($(findstring sfml,$(MAKECMDGOALS)) ,sfml)
 			LIB_AFF = SFML
 		endif
 	endif

@@ -205,6 +205,27 @@ client* partie::getClient() const
 
 
 /***************************************************************************//*!
+* @fn bool partie::playerNeedRefresh( unsigned char idJoueur )
+* @brief Indique si les données graphiques du joueur ont besoin d'un raffraichissement graphique.
+*/
+bool partie::playerNeedRefresh( unsigned char idJoueur )
+{
+	if( idJoueur >= c_nb_joueurs )
+		stdErrorE("idJoueur=%u alors qu'il n'y a que %d joueur ! Donnez un nombre entre [0 et %d]", idJoueur, c_nb_joueurs, c_nb_joueurs-1);
+
+	for( unsigned int i=0; i<c_listPlayerRefresh.size(); i++ )
+	{
+		if( c_listPlayerRefresh.at(i) == idJoueur ){
+			c_listPlayerRefresh.erase(c_listPlayerRefresh.begin()+i);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+/***************************************************************************//*!
 * @fn char partie::main( libAff * afficherMapEtEvent )
 * @brief Lance le jeu
 * @param[in] afficherMapEtEvent La fonction qui va servir à afficher la map
@@ -430,6 +451,7 @@ char partie::main( libAff * afficherMapEtEvent )
 	{
 		c_joueurs[i].defArmements( new bonus() );
 		c_joueurs[i].armements()->param_Par_Defaut();
+		c_listPlayerRefresh.push_back(i);
 	}
 
 	// On génère la map
@@ -456,8 +478,13 @@ char partie::main( libAff * afficherMapEtEvent )
 		if( nbLocal == 1 ){
 			c_server->setWait(0,100000);// 0.1 secondes
 			// Ajout des player
-			while( (s = c_server->lookupNewConnection()) == INVALID_SOCKET && key != RETOUR_MENU_PRECEDENT )
+			while( (s = c_server->lookupNewConnection()) == INVALID_SOCKET && key != RETOUR_MENU_PRECEDENT ){
+				c_timeOut = clock();
 				key = afficherMapEtEvent( this );// Pour récup les touches
+			}
+
+			if( key == RETOUR_MENU_PRECEDENT )
+				return -1;
 
 			// On a enfin un player, on lui envoie la map
 			ajouterNouvelleConnection( s );
@@ -641,24 +668,28 @@ char partie::main( libAff * afficherMapEtEvent )
 								case clavier::haut: {
 									c_joueurs[i].defOrientation(perso::ORI_haut);
 									deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()-1, i );
+									c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
 									envoyerInfoJoueur = 1;
 									break;
 								}
 								case clavier::bas: {
 									c_joueurs[i].defOrientation(perso::ORI_bas);
 									deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()+1, i );
+									c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
 									envoyerInfoJoueur = 1;
 									break;
 								}
 								case clavier::droite: {
 									c_joueurs[i].defOrientation(perso::ORI_droite);
 									deplacer_le_Perso_A( c_joueurs[i].X()+1, c_joueurs[i].Y(), i );
+									c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
 									envoyerInfoJoueur = 1;
 									break;
 								}
 								case clavier::gauche: {
 									c_joueurs[i].defOrientation(perso::ORI_gauche);
 									deplacer_le_Perso_A( c_joueurs[i].X()-1, c_joueurs[i].Y(), i );
+									c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
 									envoyerInfoJoueur = 1;
 									break;
 								}
@@ -836,8 +867,10 @@ char partie::main( libAff * afficherMapEtEvent )
 						if( c_map->getBlock(X, Y)->joueur && c_map->getBlock(X, Y)->joueur->size() )
 							c_server->send_message(c_joueurs[j].socket(), packIt( c_map->getBlock(X, Y)->joueur ), PACK_bufferSize);
 					}
-					strcpy(c_buffer, "0:end");
-					c_server->send_message(c_joueurs[j].socket(), c_buffer, PACK_bufferSize);// Fin de transmition
+					if( !envoyerInfoJoueur ){
+						strcpy(c_buffer, "0:end");
+						c_server->send_message(c_joueurs[j].socket(), c_buffer, PACK_bufferSize);// Fin de transmition
+					}
 				}
 			}
 
@@ -1194,10 +1227,21 @@ void partie::checkInternalEvent()
 		}else{
 			unsigned x=0, y=0;
 			if( c_timerAttak > 5 ){
+				bool positionInitial = 0;
 				do{
 					y = myRand(0, c_map->Y()-1);
 					x = myRand(0, c_map->X()-1);
-				}while( c_map->getBlock(x, y)->element != map::vide );
+					for( i=0; i<c_map->nb_PointDeDepartJoueur(); i++ )
+					{
+						if( c_map->positionInitialJoueur(i+1).x == x && c_map->positionInitialJoueur(i+1).y == y ){
+							positionInitial = 1;
+							break;
+						}else{
+							positionInitial = 0;
+						}
+					}
+
+				}while( c_map->getBlock(x, y)->element != map::vide || positionInitial == true );
 				c_map->setBlock(x, y, map::Mur_INdestructible);
 
 				c_timeOut = clock()+ CLOCKS_PER_SEC;
@@ -1826,6 +1870,7 @@ void partie::unPackIt()
 	if( idJoueur > c_nb_joueurs )
 		stdErrorE("Erreur ! idJoueur incorrect ! idJoueur=%u, c_nb_joueurs=%u", idJoueur, c_nb_joueurs);
 
+	c_listPlayerRefresh.push_back(idJoueur);
 
 	/***************************************************************************
 	* On détermine l'orientation du joueur
@@ -2055,4 +2100,6 @@ void partie::ajouterNouvelleConnection( SOCKET s )
 
 	strcpy(c_buffer, "0:end");
 	c_server->send_message( s, c_buffer, PACK_bufferSize);// Fin de transmition
+
+	c_listPlayerRefresh.push_back(idJoueur);
 }

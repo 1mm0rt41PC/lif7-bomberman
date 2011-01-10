@@ -62,16 +62,17 @@ class partie
 		*
 		* @see partie::main(libAff * afficherMapEtEvent);
 		*/
-		//typedef SYS_CLAVIER(CLASS_TO_USE::*fctAff)(const partie*);
-		typedef SYS_CLAVIER(libAff)(const partie*);
+		//typedef SYS_CLAVIER(CLASS_TO_USE::*fctAff)(partie*);
+		typedef SYS_CLAVIER(libAff)(partie*);
 
 
 	private:
 		// struct {
 			std::vector<s_Event>			c_listEvent;
+			std::vector<unsigned char>		c_listPlayerRefresh;
 			map*							c_map;//!< SIMPLE POINTEUR !
 			perso*							c_joueurs;//!< Tableau de joueur (utilisé si offline ou si host)
-			SOCKET*							c_listClient;
+			//SOCKET*							c_listClient;
 			t_Connection					c_connection;//!< Partie en Host, Client
 			t_MODE							c_mode;
 			unsigned char					c_nb_joueurs;//!< Le nombre de joueur dans la partie
@@ -127,6 +128,7 @@ class partie
 		inline std::string getWinnerName() const;
 		inline clock_t timeOut() const;
 		inline unsigned char getUniqueJoueurID() const;
+		bool playerNeedRefresh( unsigned char idJoueur );
 
 		// Autres
 		char main( libAff * afficherMapEtEvent );
