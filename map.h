@@ -12,7 +12,6 @@
 /*!
 * @class map
 * @brief Gère une map.
-* @todo Modifier le système getModifications pour accèlerer les calcules ( Ajouter un clean modifications )
 */
 class map
 {

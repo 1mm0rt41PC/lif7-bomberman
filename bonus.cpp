@@ -189,7 +189,7 @@ unsigned char bonus::quantiteMAX( t_Bonus b ) const
 {
 	int pos=0;
 	if( (pos=est_Dans_La_Liste( b )) == -1 || pos >= c_nb ){
-		stdError("Bonus non trouvé ou erreur > bonus=%d, pos=%d", b, pos);
+		//stdError("Bonus non trouvé ou erreur > bonus=%d, pos=%d", b, pos);
 		return 0;
 	}
 
@@ -390,8 +390,8 @@ void bonus::defQuantiteUtilisable( t_Bonus b, unsigned char quantite_utilisable 
 void bonus::defQuantiteMAX( t_Bonus b, unsigned char quantite_MAX_en_stock )
 {
 	int pos = est_Dans_La_Liste( b );
-	if( pos >= c_nb || pos == -1 || C_bonusProp[b].quantite_MAX_Ramassable >= quantite_MAX_en_stock ){
-		stdError("Bonus non trouvé ou erreur > bonus=%d, pos=%d, C_bonusProp[%d].quantite_MAX_Ramassable=%d, quantite_MAX_en_stock=%d", b, pos, b, (int)C_bonusProp[b].quantite_MAX_Ramassable, (int)quantite_MAX_en_stock);
+	if( pos >= c_nb || pos == -1 || C_bonusProp[b].quantite_MAX_Ramassable < quantite_MAX_en_stock ){
+		stdError("Bonus non trouvé ou erreur > bonus=%d, pos=%d, c_nb=%d, C_bonusProp[%d].quantite_MAX_Ramassable=%d, quantite_MAX_en_stock=%d", b, pos, c_nb, b, (int)C_bonusProp[b].quantite_MAX_Ramassable, (int)quantite_MAX_en_stock);
 		return ;
 	}
 
@@ -531,7 +531,7 @@ bool bonus::isEvent( s_Event* e )
 				return true;
 			}
 		}
-		//if( !c_listEvent.size() )
+
 	}else{// Partie SANS déclancheur
 		for( unsigned int i=0; i<c_listEvent.size(); i++ )
 		{
@@ -542,10 +542,6 @@ bool bonus::isEvent( s_Event* e )
 				return true;
 			}
 		}
-	}
-	if( !c_listEvent.size() )
-	{
-
 	}
 	return false;
 }
@@ -602,4 +598,26 @@ void bonus::forceTimeOut( unsigned int x, unsigned int y )
 			return ;
 		}
 	}
+}
+
+
+/***************************************************************************//*!
+* @fn void bonus::kill()
+* @brief Met fin au temps d'attente de tous les event et ajoute le signal kill,
+* qui signifit, qu'il faut supprimer l'armement
+*/
+void bonus::kill()
+{
+	for( unsigned int i=0; i<c_listEvent.size(); i++ )
+	{
+		c_listEvent.at(i).finEvent = 0;
+	}
+
+	// Création de l'event
+	s_Event e;
+	e.type = SIGNAL_kill;
+	e.pos.x = 0;
+	e.pos.y = 0;
+	e.finEvent = 0;
+	c_listEvent.push_back( e );// On ajout l'event à la liste des event
 }

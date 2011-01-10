@@ -144,6 +144,7 @@ class bonus
 		inline std::vector<s_Event>* modEvent();
 		void forceTimeOut();
 		void forceTimeOut( unsigned int x, unsigned int y );
+		void kill();
 
 		// Autres
 		bool isEvent( s_Event* pos );
@@ -151,15 +152,6 @@ class bonus
 		static t_Bonus getBonusAleatoire();
 };
 
-
-/***************************************************************************//*!
-* @fn std::vector<bonus::s_Event>* bonus::modEvent()
-* @brief La liste des events non terminé
-* @return Renvoie La liste des events non terminé
-*/
-std::vector<bonus::s_Event>* bonus::modEvent()
-{
-	return &c_listEvent;
-}
+#include "bonus.inl"
 
 #endif

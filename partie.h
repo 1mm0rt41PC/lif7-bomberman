@@ -12,7 +12,6 @@
 /*!
 * @class partie
 * @brief Permet de gérer une partie offline ou online ( host et client )
-* @todo Ajouter au protocole de connection une vérification de la version
 */
 class partie
 {
@@ -51,7 +50,7 @@ class partie
 		} t_Connection;
 		// Réseau ( Variable constante )
 		enum {
-			PACK_bufferSize = getSizeOfNumber<-1>::value*3/*3 uint32*/+getSizeOfNumber<map::bombe_poser_AVEC_plusieurs_joueurs>::value/*1 type*/+3/*virgule*/+1/*0*/
+			PACK_bufferSize = getSizeOfNumber<-1>::value*4/*4 uint32*/+getSizeOfNumber<map::bombe_poser_AVEC_plusieurs_joueurs>::value/*1 type*/+4/*virgule*/+1/*0*/
 		};
 		/*!
 		* @typedef libAff
@@ -71,10 +70,7 @@ class partie
 		// struct {
 			std::vector<s_Event>			c_listEvent;
 			map*							c_map;//!< SIMPLE POINTEUR !
-			union{
-				perso*						c_joueurs;//!< Tableau de joueur (utilisé si offline ou si host)
-				perso::t_Orientation*		c_joueursOrientation;//!< Tableau d'orientation (Utilisé si online + client)
-			};
+			perso*							c_joueurs;//!< Tableau de joueur (utilisé si offline ou si host)
 			SOCKET*							c_listClient;
 			t_Connection					c_connection;//!< Partie en Host, Client
 			t_MODE							c_mode;
@@ -83,23 +79,28 @@ class partie
 				client*						c_client;
 				server*						c_server;
 			};
-			char							c_buffer[PACK_bufferSize];//!< Buffer pour communiquer sur le réseau
+			char							c_buffer[PACK_bufferSize+1];//!< Buffer pour communiquer sur le réseau
 			std::string						c_winnerName;
 			clock_t							c_timeOut;
+			unsigned int					c_timerAttak;
+			unsigned char					c_uniqueJoueurID;//!< Si connection client -> ID du joueur (correspond au numéro dans le tableau c_joueur)
 		// }
 
+		void placer_perso_position_initial( unsigned char joueur );
 		void deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned char joueur );
 		void checkInternalEvent();
 		char actionSurLesElements( s_Event* e, unsigned int x, unsigned int y, char direction );
 		char killPlayers( s_Event* e, unsigned int x, unsigned int y );
 
 		// Réseau
-		const char* packIt( uint32_t X, uint32_t Y, map::t_type type, uint32_t nb_MetaDonnee );
+		const char* packIt( uint32_t X, uint32_t Y, map::t_type type );
 		const char* packIt( std::vector<unsigned char>* list );
 		const char* packIt( clavier::t_touche t );
-		void unPackIt( uint32_t* X, uint32_t* Y, map::t_type* type, uint32_t* nb_MetaDonnee );
+		const char* packIt( unsigned char joueur, bool includeWeapon );
+		void unPackIt( uint32_t* X, uint32_t* Y, map::t_type* type );
 		void unPackIt( uint32_t X, uint32_t Y );
 		void unPackIt( clavier::t_touche* t );
+		void unPackIt();
 		void ajouterNouvelleConnection( SOCKET s );
 
 
@@ -115,6 +116,7 @@ class partie
 
 		// Accesseurs
 		inline unsigned char nbJoueurs() const;
+		unsigned char nbJoueursReel() const;
 		inline t_MODE modeJeu() const;
 		inline t_Connection connection() const;
 		perso* joueur( unsigned int joueur_numero ) const;
@@ -124,11 +126,11 @@ class partie
 		client* getClient() const;
 		inline std::string getWinnerName() const;
 		inline clock_t timeOut() const;
+		inline unsigned char getUniqueJoueurID() const;
 
 		// Autres
 		char main( libAff * afficherMapEtEvent );
 };
-
 
 #include "partie.inl"
 

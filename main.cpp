@@ -127,8 +127,10 @@ int main( int argc, char* arvg[] )
 										tmp = jeu.main( m.afficherMapEtEvent );
 										if( tmp >= 1 )
 											sprintf(finPartie, "Le joueur(%d) %s a gagne !", tmp, jeu.getWinnerName().c_str());
+										if( tmp == 0 )
+											sprintf(finPartie, "Match nul ! Pas de gagnant !");
 
-									}while( tmp >= 1 && m.menu(finPartie, menu_replay, 3) != 3 );
+									}while( tmp >= 0 && m.menu(finPartie, menu_replay, 3) != 3 );
 								}
 								retourMenuAudessus = 0;
 							}
@@ -180,8 +182,10 @@ int main( int argc, char* arvg[] )
 														tmp = jeu.main( m.afficherMapEtEvent );
 														if( tmp >= 1 )
 															sprintf(finPartie, "Le joueur(%d) %s a gagne !", tmp, jeu.getWinnerName().c_str());
+														if( tmp == 0 )
+															sprintf(finPartie, "Match nul ! Pas de gagnant !");
 
-													}while( tmp >= 1 && m.menu(finPartie, menu_replay, 3) != 3 );
+													}while( tmp >= 0 && m.menu(finPartie, menu_replay, 3) != 3 );
 												}
 												retourMenuAudessus = 0;
 											}
@@ -216,8 +220,10 @@ int main( int argc, char* arvg[] )
 													tmp = jeu.main( m.afficherMapEtEvent );
 													if( tmp >= 1 )
 														sprintf(finPartie, "Le joueur(%d) %s a gagne !", tmp, jeu.getWinnerName().c_str());
+													if( tmp == 0 )
+														sprintf(finPartie, "Match nul ! Pas de gagnant !");
 
-												}while( tmp >= 1 && m.menu(finPartie, menu_replay, 3) != 3 );
+												}while( tmp >= 0 && m.menu(finPartie, menu_replay, 3) != 3 );
 											}
 											retourMenuAudessus = 0;
 										}

@@ -8,7 +8,7 @@ inline void partie::def_modeJeu( partie::t_MODE m )
 
 
 /***************************************************************************//*!
-* @fn inline unsigned char partie::nbJoueurs() const
+* @fn unsigned char partie::nbJoueurs() const
 * @brief Retourne le nombre de joueur.
 */
 inline unsigned char partie::nbJoueurs() const
@@ -63,4 +63,14 @@ inline std::string partie::getWinnerName() const
 inline clock_t partie::timeOut() const
 {
 	return c_timeOut;
+}
+
+
+/***************************************************************************//*!
+* @fn unsigned char partie::getUniqueJoueurID() const
+* @brief Renvoie l'id du joueur de ce PC (client)
+*/
+inline unsigned char partie::getUniqueJoueurID() const
+{
+	return c_uniqueJoueurID;
 }

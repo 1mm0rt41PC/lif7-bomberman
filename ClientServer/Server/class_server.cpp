@@ -134,7 +134,7 @@ void server::Listening()
 	if( setsockopt(c_listenSocket, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse)) == SOCKET_ERROR )
 		reportError("Erreur(%d). Impossible de permettre la réutilisation du port ! setsockopt(). Detail: <%s>", SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
 
-	setTCP_NoDelay( true );
+	setTCP_NoDelay( false );
 
 	// Bind lie un socket avec une structure sockaddr.
 	if( bind(c_listenSocket, (SOCKADDR*)&c_addr, sizeof(c_addr)) == SOCKET_ERROR )
@@ -226,7 +226,7 @@ SOCKET server::lookupNewConnection()
 				c_listClient[c_nb_clientConnecter-1].listenSocket = newClient.listenSocket;
 				c_listClient[c_nb_clientConnecter-1].addr = newClient.addr;
 
-				setTCP_NoDelay( newClient.listenSocket, true );
+				setTCP_NoDelay( newClient.listenSocket, TCP_NoDelay() );
 
 				// Ne pas oublier de changer le fd maximum !
 				if( newClient.listenSocket > (SOCKET)c_max_fd )

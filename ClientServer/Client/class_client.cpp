@@ -173,9 +173,8 @@ bool client::lookupConnection()
 
 
 /***************************************************************************//*!
-* @fn int client::readServer( SOCKET sock, char* buffer, unsigned int bufferSize )
+* @fn int client::readServer( char* buffer, unsigned int bufferSize )
 * @brief Récupère les données envoyées par le serveur
-* @param[in] sock Le socket du serveur
 * @param[in,out] buffer La variables où seront stockées les données
 * @param[in] bufferSize Taille du buffer
 * @return Le nombre de byte reçut

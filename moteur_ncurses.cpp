@@ -187,7 +187,7 @@ unsigned int moteur_ncurses::menu( const char titre[], const char *choix[], unsi
 			default:
 				break;
 		}
-	}while( key != KEY_ENTER_bis && key != KEY_ESCAP );
+	}while( key != KEY_ENTER_bis && key != PADENTER && key != KEY_ESCAP );
 
 	if( key == KEY_ESCAP )
 		highLight = nb_choix;
@@ -304,6 +304,7 @@ void moteur_ncurses::afficherConfigurationClavier( unsigned char joueur )
 				break;
 
 			// Touche Entrer pressée
+			case PADENTER:
 			case KEY_ENTER_bis: {
 				if( highLight <= (unsigned int)nbLiens ){// On a selectionné un lien de modification de touche
 					cleanline(win_menu, 2);
@@ -511,6 +512,7 @@ int moteur_ncurses::getNombre( const char titre[], int valeurParDefaut, int vale
 				break;
 
 			// Touche Entrer pressée
+			case PADENTER:
 			case KEY_ENTER_bis: {
 				if( highLight == 1 ){// On a selectionné un lien de modification de texte
 					do{
@@ -551,6 +553,7 @@ int moteur_ncurses::getNombre( const char titre[], int valeurParDefaut, int vale
 								*returnValue = valeurParDefaut;
 								break;
 							}
+							case PADENTER:
 							case KEY_ENTER_bis: {
 								if( !(valeurMin <= *returnValue && *returnValue <= valeurMax) ){
 									key = 0;
@@ -575,7 +578,7 @@ int moteur_ncurses::getNombre( const char titre[], int valeurParDefaut, int vale
 								break;
 							}
 						}
-					}while( key != KEY_ESCAP && key != KEY_ENTER_bis );
+					}while( key != KEY_ESCAP && key != KEY_ENTER_bis && key != PADENTER );
 					cleanline(win_menu, 2);
 					key = 0;// Pas d'exit du menu accidentel
 				}
@@ -592,7 +595,7 @@ int moteur_ncurses::getNombre( const char titre[], int valeurParDefaut, int vale
 			default:
 				break;
 		}
-	}while( key != KEY_ESCAP && !(key == KEY_ENTER_bis && highLight == 2) );
+	}while( key != KEY_ESCAP && !((key == KEY_ENTER_bis || key == PADENTER) && highLight == 2) );
 
 	delwin(win_menu);
 
@@ -697,6 +700,7 @@ int moteur_ncurses::getTexte( const char titre[], char texteRetour[21] )
 				break;
 
 			// Touche Entrer pressée
+			case PADENTER:
 			case KEY_ENTER_bis: {
 				if( highLight == 1 ){// On a selectionné un lien de modification de texte
 					do{
@@ -721,6 +725,7 @@ int moteur_ncurses::getTexte( const char titre[], char texteRetour[21] )
 									texteRetour[strlen(texteRetour)-1] = 0;
 								break;
 							}
+							case PADENTER:
 							case KEY_ENTER_bis: {
 								trimString(texteRetour);
 								erreurTexteVide = 0;
@@ -735,7 +740,7 @@ int moteur_ncurses::getTexte( const char titre[], char texteRetour[21] )
 								break;
 							}
 						}
-					}while( key != KEY_ESCAP && key != KEY_ENTER_bis );
+					}while( key != KEY_ESCAP && key != KEY_ENTER_bis && key != PADENTER );
 					cleanline(win_menu, 2);
 					if( strlen(trimString(texteRetour)) ){// IL FAUT AU MOINS 1 CARACTRERES
 						highLight = 2;// On déplace sur le ok le cursor
@@ -762,7 +767,7 @@ int moteur_ncurses::getTexte( const char titre[], char texteRetour[21] )
 			default:
 				break;
 		}
-	}while( key != KEY_ESCAP && !(key == KEY_ENTER_bis && highLight == 2) );
+	}while( key != KEY_ESCAP && !((key == KEY_ENTER_bis || key == PADENTER) && highLight == 2) );
 
 	delwin(win_menu);
 
@@ -1116,16 +1121,17 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 
 	// Affichage du timer
 	if( p->timeOut() > clock() )
-		mvwprintw(win, 3, 2, "Temps restant %dmin:%dsecs", (p->timeOut()-clock())/(CLOCKS_PER_SEC*60), ((p->timeOut()%(CLOCKS_PER_SEC*60))-clock())/CLOCKS_PER_SEC);
+		mvwprintw(win, 3, 2, "Temps restant %02dmin:%02dsecs", (p->timeOut()-clock())/(CLOCKS_PER_SEC*60), ((p->timeOut()-clock())%(CLOCKS_PER_SEC*60))/CLOCKS_PER_SEC);
 	else
 		mvwaddstr(win, 3, 2, "Temps restant 0min:0secs");
+
 
 	// Joueur 1
 	couleur = getCouleurJoueur( 1 );
 	wattron(win, couleur);
 	mvwprintw(win, 5, 2, "%s", p->joueur(0)->nom()->c_str());
 	wattroff(win, couleur);
-	if( p->joueur(0)->armements() ){
+	if( p->joueur(0)->armements() && p->connection() != partie::CNX_Client ){
 		mvwprintw(win, 6, 4, "Nombre de bombe: %d", p->joueur(0)->armements()->quantiteMAX(bonus::bombe));
 		mvwprintw(win, 7, 4, "Puissance de flamme: %d", p->joueur(0)->armements()->quantiteMAX(bonus::puissance_flamme));
 		mvwprintw(win, 8, 4, "Declancheur manuel: %d", p->joueur(0)->armements()->quantiteMAX(bonus::declancheur));
@@ -1133,8 +1139,10 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 		mvwprintw(win, 10, 4, "Nombre de vie: %d", p->joueur(0)->armements()->quantiteMAX(bonus::vie));
 	}
 
+
+	static bool cleanPlayer2=0;
 	// Joueur 2
-	if( p->nbJoueurs() > 1 ){
+	if( p->nbJoueurs() > 1 && (p->connection() == partie::CNX_None || ( p->connection() != partie::CNX_None && (p->joueur(1)->isLocal() || ( !p->joueur(1)->isLocal() && p->joueur(1)->socket() != INVALID_SOCKET )))) ){
 		couleur = getCouleurJoueur( 2 );
 		wattron(win, couleur);
 		mvwprintw(win, 14, 53, "%s", p->joueur(1)->nom()->c_str());
@@ -1146,10 +1154,22 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 			mvwprintw(win, 18, 55, "Vitesse: %d", p->joueur(1)->armements()->quantiteMAX(bonus::vitesse));
 			mvwprintw(win, 19, 55, "Nombre de vie: %d", p->joueur(1)->armements()->quantiteMAX(bonus::vie));
 		}
+		cleanPlayer2 = 1;
+	}else{
+		if( cleanPlayer2 ){
+			cleanline(win, 14, 53, getmaxx(win)-2 );
+			cleanline(win, 15, 53, getmaxx(win)-2 );
+			cleanline(win, 16, 53, getmaxx(win)-2 );
+			cleanline(win, 17, 53, getmaxx(win)-2 );
+			cleanline(win, 18, 53, getmaxx(win)-2 );
+			cleanline(win, 19, 53, getmaxx(win)-2 );
+			cleanPlayer2 = 0;
+		}
 	}
 
+	static bool cleanPlayer3=0;
 	// Joueur 3
-	if( p->nbJoueurs() > 2 ){
+	if( p->nbJoueurs() > 2 && (p->connection() == partie::CNX_None || ( p->connection() != partie::CNX_None && (p->joueur(2)->isLocal() || ( !p->joueur(2)->isLocal() && p->joueur(2)->socket() != INVALID_SOCKET )))) ){
 		couleur = getCouleurJoueur( 3 );
 		wattron(win, couleur);
 		mvwprintw(win, 5, 53, "%s", p->joueur(2)->nom()->c_str());
@@ -1161,10 +1181,22 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 			mvwprintw(win, 9, 55, "Vitesse: %d", p->joueur(2)->armements()->quantiteMAX(bonus::vitesse));
 			mvwprintw(win, 10, 55, "Nombre de vie: %d", p->joueur(2)->armements()->quantiteMAX(bonus::vie));
 		}
+		cleanPlayer3 = 1;
+	}else{
+		if( cleanPlayer3 ){
+			cleanline(win, 5, 53, getmaxx(win)-2 );
+			cleanline(win, 6, 53, getmaxx(win)-2 );
+			cleanline(win, 7, 53, getmaxx(win)-2 );
+			cleanline(win, 8, 53, getmaxx(win)-2 );
+			cleanline(win, 9, 53, getmaxx(win)-2 );
+			cleanline(win, 10, 53, getmaxx(win)-2 );
+			cleanPlayer3 = 0;
+		}
 	}
 
+	static bool cleanPlayer4=0;
 	// Joueur 4
-	if( p->nbJoueurs() == 4 ){
+	if( p->nbJoueurs() == 4 && (p->connection() == partie::CNX_None || ( p->connection() != partie::CNX_None && (p->joueur(3)->isLocal() || ( !p->joueur(3)->isLocal() && p->joueur(3)->socket() != INVALID_SOCKET )))) ){
 		couleur = getCouleurJoueur( 4 );
 		wattron(win, couleur);
 		mvwprintw(win, 14, 2, "%s", p->joueur(3)->nom()->c_str());
@@ -1175,6 +1207,17 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( const partie* p )
 			mvwprintw(win, 17, 4, "Declancheur manuel: %d", p->joueur(3)->armements()->quantiteMAX(bonus::declancheur));
 			mvwprintw(win, 18, 4, "Vitesse: %d", p->joueur(3)->armements()->quantiteMAX(bonus::vitesse));
 			mvwprintw(win, 19, 4, "Nombre de vie: %d", p->joueur(3)->armements()->quantiteMAX(bonus::vie));
+		}
+		cleanPlayer4 = 1;
+	}else{
+		if( cleanPlayer4 ){
+			cleanline(win, 14, 2, 24 );
+			cleanline(win, 15, 4, 24 );
+			cleanline(win, 16, 4, 24 );
+			cleanline(win, 17, 4, 24 );
+			cleanline(win, 18, 4, 24 );
+			cleanline(win, 19, 4, 24 );
+			cleanPlayer4 = 0;
 		}
 	}
 
