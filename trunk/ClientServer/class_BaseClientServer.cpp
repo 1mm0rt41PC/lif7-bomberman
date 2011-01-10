@@ -128,13 +128,13 @@ void baseClientServer::send_message( SOCKET sock, const char* buffer, unsigned i
 }
 
 
-/***************************************************************************//*!
-* @fn template<class Type> Type baseClientServer::reverseBit( Type var )
-* @brief Inverse les bits.
-* @param[in] var La variable a qui il faut inversé les bits
-* @return Renvoie la {var} avec les bits inversé
-* @warning FONCTION commenté car Innutile pour l'instant
-*/
+//***************************************************************************//*!
+//* @fn template<class Type> Type baseClientServer::reverseBit( Type var )
+//* @brief Inverse les bits.
+//* @param[in] var La variable a qui il faut inversé les bits
+//* @return Renvoie la {var} avec les bits inversé
+//* @warning FONCTION commenté car Innutile pour l'instant
+//*/
 /*
 template<class Type> Type baseClientServer::reverseBit( Type var )// Inverse les bits
 {
@@ -178,12 +178,12 @@ template<class Type> Type baseClientServer::reverseByte( Type var )// Inverse le
 
 
 /***************************************************************************//*!
-* @fn bool baseClientServer::isLittleEndian(void)
+* @fn bool baseClientServer::isLittleEndian()
 * @brief Permet de savoir si l'on est sur une machine Intel, une machine qui lit
 * les octects en Little Endian.
 * @see baseClientServer::reverseByte( Type var )
 */
-bool baseClientServer::isLittleEndian(void)// isIntel
+bool baseClientServer::isLittleEndian()// isIntel
 {
 	long l = 1;
 	return (bool) *((char *)(&l));
@@ -194,6 +194,7 @@ bool baseClientServer::isLittleEndian(void)// isIntel
 * @fn void baseClientServer::setTCP_NoDelay( SOCKET s, bool activer )
 * @brief Permet de modifier le paramètre TCP_NoDelay ( Algorithme de Nagle )
 * @param[in] s Le socket a modifier
+* @param[in] activer Désactiver ?
 */
 void baseClientServer::setTCP_NoDelay( SOCKET s, bool activer )
 {

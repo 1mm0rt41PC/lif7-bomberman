@@ -56,7 +56,7 @@ class moteur_ncurses
 	private:
 		void cadre();
 		void affichageTouche( WINDOW* win, int y, int x, int key );
-		void cleanline( WINDOW* win, int y, int x_begin, int x_end );
+		static void cleanline( WINDOW* win, int y, int x_begin, int x_end );
 		inline void cleanline( WINDOW* win, int y ){ cleanline( win, y, 1, getmaxx(win)-2 ); }
 		static chtype getCouleurJoueur( unsigned char joueur );
 

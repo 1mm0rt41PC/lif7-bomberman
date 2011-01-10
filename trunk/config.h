@@ -1,6 +1,14 @@
+#ifndef CONFIG_h
+#define CONFIG_h
+
+
 // Define LIB : __LIB_ncurses__, __LIB_SDL__, __LIB_SFML__
 
 //#define __LIB_SDL__ 1
+
+enum {
+	__BOMBERMAN_VERSION__ = 1
+};
 
 #if defined(_WIN32) || defined(WIN32) || defined(WIN64) || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__BORLANDC__)
 	#define OS_WINDOWS 1
@@ -57,4 +65,6 @@
 */
 #else
 	#error "Veuillez definir la lib d'affichage ! ( __LIB_ncurses__, __LIB_SDL__, __LIB_SFML__ ) !"
+#endif
+
 #endif

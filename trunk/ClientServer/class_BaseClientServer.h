@@ -99,7 +99,7 @@ class baseClientServer
 			inline const char* strerror( int ){ return "?"; }
 		)
 
-		static bool isLittleEndian(void);// isIntel
+		static bool isLittleEndian();// isIntel
 		// Conversion Little Endian <-> Big Endian
 		template<class Type> static Type reverseByte( Type var );// Inverse les octets
 		//template<class Type> Type reverseBit( Type var );// Inverse les bits

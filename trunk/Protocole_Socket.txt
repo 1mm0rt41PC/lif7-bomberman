@@ -1,0 +1,71 @@
+Listre des entête
+0: FIN DE TRANSMITION
+1: Map
+2: Map info joueur ( meta données )
+3: Clavier
+4: Fin de partie
+5: Nb joueur
+6: Infos Joueur
+7: Infos mon joueur
+8: Supprimer le joueur
+9: Timer
+
+--> Protocole lors d'une nouvelle connection <--
+Client: 0-1 0-1 1-...				{is32Bits isIntel bufferSize}
+>Le serveur regarde si les valeur sont correct pour un transfert de donnée. Et accèpte ou déconnecte
+Server: 1 / {Déconnection}
+
+Client: [A-Za-z0-9...]				{Nom du perso}
+>Le serveur regarde si le nom est déjà dans la liste. Si déjà dans la liste Déconnection. Sinon réponse 1
+>Puis le serveur créer la place pour le joueur.
+Server: 1 / {Déconnection}
+
+{Envoie de toute la map au nouveau client}
+Server: 1:
+Server: 2:
+...
+Server: 1:
+Server: 0:end						{Fin de transmition}
+
+
+
+--> Protocole lors de la modifications de la map <--
+{Envoie des parties de la map modifiée aux clients}
+Server: 1:
+Server: 2:
+...
+Server: 1:
+Server: 0:end						{Fin de transmition}
+
+
+
+--> Protocole lors d'envoie d'une touche (client) <--
+Client: 3:XXX						{XXX=l'action a effectuer}
+
+
+
+--> Protocole lors d'une fin de partie <--
+Server: 4:X,YYYYY					{X= id du player qui a gagné, YYY= nom du player qui a gagné}
+
+
+
+--> Protocole de mise à jours du nombre de joueur <--
+Server: 5: XXX						{Nombre de joueur}
+Server: 6: 							{Infos Joueur}
+...
+Server: 7: 							{Infos mon joueur}
+Server: 6: 							{Infos Joueur}
+...
+Server: 0:end						{Fin de transmition}
+
+
+
+--> Protocole de mise à jours du timer <--
+Server: 9:XXXX
+Server: 0:end						{Fin de transmition}
+
+
+
+--> Protocole de suppression d'un joueur <--
+Server: 8:XXXX						{Id d'un joueur}
+Server: 0:end						{Fin de transmition}

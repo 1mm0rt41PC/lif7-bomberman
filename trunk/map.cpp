@@ -26,6 +26,9 @@ map::map()
 */
 map::map( unsigned int tailleX, unsigned int tailleY )
 {
+	if( tailleX != tailleY )
+		stdErrorE("Erreur ! La map doit être carrée ! %u != %u", tailleX, tailleY);
+
 	c_taille.x = tailleX;
 	c_taille.y = tailleY;
 	c_block = new s_Case[ tailleX * tailleY ];
@@ -182,6 +185,9 @@ void map::rmInfoJoueur( unsigned int X, unsigned int Y )
 */
 void map::setTaille( unsigned int tailleX, unsigned int tailleY )
 {
+	if( tailleX != tailleY )
+		stdErrorE("Erreur ! La map doit être carrée ! %u != %u", tailleX, tailleY);
+
 	// Suppression de la map si elle existe
 	if( c_block ){
 		// Suppression des meta données
@@ -247,8 +253,8 @@ int map::chargerMap( const char fichier[] )
 	}
 
 	// Bonne dimension ?
-	if( !c_taille.x || !c_taille.y )
-		stdErrorE("Les dimensions de la map sont incorrect ! c_taille=(%u,%u)", c_taille.x, c_taille.y);
+	if( !c_taille.x || !c_taille.y || c_taille.x != c_taille.y )
+		stdErrorE("Les dimensions de la map sont incorrect ! c_taille=(%u,%u) La map doit être carrée !", c_taille.x, c_taille.y);
 
 	// Nombre de joueur correct
 	if( !c_nb_PointDeDepartJoueur )
@@ -399,7 +405,7 @@ s_Coordonnees map::positionInitialJoueur( unsigned char joueur ) const
 	if( joueur == 0 )
 		stdErrorE("positionInitialJoueur( 0 ) INTERDIT !");
 
-	if( c_PointDeDepartJoueur )
+	if( !c_PointDeDepartJoueur )
 		stdErrorE("Charger une map correct avant d'appeler positionInitialJoueur() ! Il n'existe aucun point de départ !");
 
 	if( joueur > c_nb_PointDeDepartJoueur )

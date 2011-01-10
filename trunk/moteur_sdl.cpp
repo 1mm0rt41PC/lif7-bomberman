@@ -1126,16 +1126,16 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 						break;
 					}
 					case map::bombe_poser: {
-						//couleur = getCouleurJoueur( l_map->getBlock(x,y)->joueur->at(0) );
 						SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
 						SDL_BlitSurface(c_Instance->c_Decor[bombe], NULL, c_Instance->c_ecranGeneral, &pos);
 						break;
 					}
-					case map::bombe_poser_AVEC_UN_joueur: {
+					case map::bombe_poser_AVEC_UN_joueur:
+					case map::bombe_poser_AVEC_plusieurs_joueurs: {
 						if( !l_map->getBlock(x,y)->joueur )
 							stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y).joueur=0", x, y);
 
-						unsigned char joueur = l_map->getBlock(x,y)->joueur->at(0);// renvoie un numéro de joueur [1-...]
+						unsigned char joueur = l_map->getBlock(x,y)->joueur->at(1);// renvoie un numéro de joueur [1-...]
 
 						SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
 						SDL_BlitSurface(c_Instance->c_Decor[bombe], NULL, c_Instance->c_ecranGeneral, &pos);
@@ -1144,14 +1144,17 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 						break;
 					}
 					case map::flamme_origine: {
+						SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
 						SDL_BlitSurface(c_Instance->c_Decor[flamme_origine], NULL, c_Instance->c_ecranGeneral, &pos);
 						break;
 					}
 					case map::flamme_horizontal: {
+						SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
 						SDL_BlitSurface(c_Instance->c_Decor[flamme_horizontal], NULL, c_Instance->c_ecranGeneral, &pos);
 						break;
 					}
 					case map::flamme_vertical: {
+						SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
 						SDL_BlitSurface(c_Instance->c_Decor[flamme_vertical], NULL, c_Instance->c_ecranGeneral, &pos);
 						break;
 					}
@@ -1252,11 +1255,12 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 					SDL_BlitSurface(c_Instance->c_Decor[bombe], NULL, c_Instance->c_ecranGeneral, &pos);
 					break;
 				}
-				case map::bombe_poser_AVEC_UN_joueur: {
+				case map::bombe_poser_AVEC_UN_joueur:
+				case map::bombe_poser_AVEC_plusieurs_joueurs: {
 					if( !l_map->getBlock(v_pos)->joueur )
 						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(v_pos).joueur=0", v_pos.x, v_pos.y);
 
-					unsigned char joueur = l_map->getBlock(v_pos)->joueur->at(0);
+					unsigned char joueur = l_map->getBlock(v_pos)->joueur->at(1);
 
 					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
 					SDL_BlitSurface(c_Instance->c_Decor[bombe], NULL, c_Instance->c_ecranGeneral, &pos);
@@ -1270,10 +1274,12 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( const partie* p )
 					break;
 				}
 				case map::flamme_horizontal: {
-						SDL_BlitSurface(c_Instance->c_Decor[flamme_horizontal], NULL, c_Instance->c_ecranGeneral, &pos);
-						break;
+					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
+					SDL_BlitSurface(c_Instance->c_Decor[flamme_horizontal], NULL, c_Instance->c_ecranGeneral, &pos);
+					break;
 				}
 				case map::flamme_vertical: {
+					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
 					SDL_BlitSurface(c_Instance->c_Decor[flamme_vertical], NULL, c_Instance->c_ecranGeneral, &pos);
 					break;
 				}

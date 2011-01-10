@@ -2,19 +2,6 @@
 
 - Faire un WikiCodingStyle
 
-- Réglèe le bug d'affichages des flammes ( partie.cpp )
-
-- getText NCurses -> la touche Entrée du numpad ne valide pas une fin de texte
-
 - SDL: Ajouter le clique sourie sur les menu
 
 - Si affichage graphique, Ajouter une variable qui permet detester si on veux fermet la window ou pas
-
-- NCurses : Utiliser la meta-prog
-
-
-
-
--- FAIT --
-MOMO > Débug oientation perso.
-> Ajout d'une fonction pour blitter le perso
