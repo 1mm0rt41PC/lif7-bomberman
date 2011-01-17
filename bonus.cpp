@@ -59,7 +59,7 @@ bonus::s_bonus_proprieter* bonus::bonusProp()
 	C_bonusProp[bombe].duree = CLOCKS_PER_SEC+CLOCKS_PER_SEC/2;// 1.5secs avant explosion
 
 	C_bonusProp[puissance_flamme].probabiliter_pop = 60;// 60% de pop
-	C_bonusProp[puissance_flamme].quantite_MAX_Ramassable = 10;
+	C_bonusProp[puissance_flamme].quantite_MAX_Ramassable = 15;
 	C_bonusProp[puissance_flamme].duree = -1;
 
 	C_bonusProp[declancheur].probabiliter_pop = 25;// 25% de pop
@@ -70,7 +70,7 @@ bonus::s_bonus_proprieter* bonus::bonusProp()
 	C_bonusProp[vitesse].quantite_MAX_Ramassable = 5;
 
 	C_bonusProp[vie].probabiliter_pop = 5;// 5% de pop
-	C_bonusProp[vie].quantite_MAX_Ramassable = 3;
+	C_bonusProp[vie].quantite_MAX_Ramassable = 10;
 	C_bonusProp[vie].duree = -1;
 
 	return C_bonusProp;
@@ -124,8 +124,8 @@ void bonus::param_Par_Defaut()// Pour une partie classique ( F4A )
 	c_liste[2].quantite_MAX_en_stock = 1;
 
 	c_liste[3].type = vie;
-	c_liste[3].quantite_utilisable = 1;
-	c_liste[3].quantite_MAX_en_stock = 1;
+	c_liste[3].quantite_utilisable = 0;
+	c_liste[3].quantite_MAX_en_stock = 0;
 }
 
 
