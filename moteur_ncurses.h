@@ -69,6 +69,7 @@ class moteur_ncurses
 		void afficherConfigurationClavier( unsigned char joueur );
 		int getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* returnValue );
 		int getTexte( const char titre[], char texteRetour[21] );
+		inline bool isWindowOpen(){ return true; }
 
 		// Modificateur
 		inline void forcerRafraichissement() { c_premierAffichage = 1; }

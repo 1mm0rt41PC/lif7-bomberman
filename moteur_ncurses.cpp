@@ -1134,14 +1134,17 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( partie* p )
 	// Joueur 1
 	couleur = getCouleurJoueur( 1 );
 	wattron(win, couleur);
-	mvwprintw(win, 5, 2, "%s", p->joueur(0)->nom()->c_str());
+	if( (int)xpos-26 < 0 )
+		stdErrorE("Fenêtre trop petite pour afficher toutes les informations nécéssaire !");
+
+	mvwprintw(win, ypos, xpos-26, "%s", p->joueur(0)->nom()->c_str());
 	wattroff(win, couleur);
 	if( p->joueur(0)->armements() && p->connection() != partie::CNX_Client ){
-		mvwprintw(win, 6, 4, "Nombre de bombe: %d", p->joueur(0)->armements()->quantiteMAX(bonus::bombe));
-		mvwprintw(win, 7, 4, "Puissance de flamme: %d", p->joueur(0)->armements()->quantiteMAX(bonus::puissance_flamme));
-		mvwprintw(win, 8, 4, "Declancheur manuel: %d", p->joueur(0)->armements()->quantiteMAX(bonus::declancheur));
-		mvwprintw(win, 9, 4, "Vitesse: %d", p->joueur(0)->armements()->quantiteMAX(bonus::vitesse));
-		mvwprintw(win, 10, 4, "Nombre de vie: %d", p->joueur(0)->armements()->quantiteMAX(bonus::vie));
+		mvwprintw(win, ypos+1, xpos-24, "Nombre de bombe: %d", p->joueur(0)->armements()->quantiteMAX(bonus::bombe));
+		mvwprintw(win, ypos+2, xpos-24, "Puissance de flamme: %d", p->joueur(0)->armements()->quantiteMAX(bonus::puissance_flamme));
+		mvwprintw(win, ypos+3, xpos-24, "Declancheur manuel: %d", p->joueur(0)->armements()->quantiteMAX(bonus::declancheur));
+		mvwprintw(win, ypos+4, xpos-24, "Vitesse: %d", p->joueur(0)->armements()->quantiteMAX(bonus::vitesse));
+		mvwprintw(win, ypos+5, xpos-24, "Nombre de vie: %d", p->joueur(0)->armements()->quantiteMAX(bonus::vie));
 	}
 
 
@@ -1150,24 +1153,24 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( partie* p )
 	if( p->nbJoueurs() > 1 && (p->connection() == partie::CNX_None || ( p->connection() != partie::CNX_None && (p->joueur(1)->isLocal() || ( !p->joueur(1)->isLocal() && p->joueur(1)->socket() != INVALID_SOCKET )))) ){
 		couleur = getCouleurJoueur( 2 );
 		wattron(win, couleur);
-		mvwprintw(win, 14, 53, "%s", p->joueur(1)->nom()->c_str());
+		mvwprintw(win, ypos+l_map->Y()-6, xpos+l_map->X()+2, "%s", p->joueur(1)->nom()->c_str());
 		wattroff(win, couleur);
 		if( p->joueur(1)->armements() ){
-			mvwprintw(win, 15, 55, "Nombre de bombe: %d", p->joueur(1)->armements()->quantiteMAX(bonus::bombe));
-			mvwprintw(win, 16, 55, "Puissance de flamme: %d", p->joueur(1)->armements()->quantiteMAX(bonus::puissance_flamme));
-			mvwprintw(win, 17, 55, "Declancheur manuel: %d", p->joueur(1)->armements()->quantiteMAX(bonus::declancheur));
-			mvwprintw(win, 18, 55, "Vitesse: %d", p->joueur(1)->armements()->quantiteMAX(bonus::vitesse));
-			mvwprintw(win, 19, 55, "Nombre de vie: %d", p->joueur(1)->armements()->quantiteMAX(bonus::vie));
+			mvwprintw(win, ypos+l_map->Y()-5, xpos+l_map->X()+4, "Nombre de bombe: %d", p->joueur(1)->armements()->quantiteMAX(bonus::bombe));
+			mvwprintw(win, ypos+l_map->Y()-4, xpos+l_map->X()+4, "Puissance de flamme: %d", p->joueur(1)->armements()->quantiteMAX(bonus::puissance_flamme));
+			mvwprintw(win, ypos+l_map->Y()-3, xpos+l_map->X()+4, "Declancheur manuel: %d", p->joueur(1)->armements()->quantiteMAX(bonus::declancheur));
+			mvwprintw(win, ypos+l_map->Y()-2, xpos+l_map->X()+4, "Vitesse: %d", p->joueur(1)->armements()->quantiteMAX(bonus::vitesse));
+			mvwprintw(win, ypos+l_map->Y()-1, xpos+l_map->X()+4, "Nombre de vie: %d", p->joueur(1)->armements()->quantiteMAX(bonus::vie));
 		}
 		cleanPlayer2 = 1;
 	}else{
 		if( cleanPlayer2 ){
-			cleanline(win, 14, 53, getmaxx(win)-2 );
-			cleanline(win, 15, 53, getmaxx(win)-2 );
-			cleanline(win, 16, 53, getmaxx(win)-2 );
-			cleanline(win, 17, 53, getmaxx(win)-2 );
-			cleanline(win, 18, 53, getmaxx(win)-2 );
-			cleanline(win, 19, 53, getmaxx(win)-2 );
+			cleanline(win, ypos+l_map->Y()-6, xpos+l_map->X()+2, getmaxx(win)-2 );
+			cleanline(win, ypos+l_map->Y()-5, xpos+l_map->X()+2, getmaxx(win)-2 );
+			cleanline(win, ypos+l_map->Y()-4, xpos+l_map->X()+2, getmaxx(win)-2 );
+			cleanline(win, ypos+l_map->Y()-3, xpos+l_map->X()+2, getmaxx(win)-2 );
+			cleanline(win, ypos+l_map->Y()-2, xpos+l_map->X()+2, getmaxx(win)-2 );
+			cleanline(win, ypos+l_map->Y()-1, xpos+l_map->X()+2, getmaxx(win)-2 );
 			cleanPlayer2 = 0;
 		}
 	}
@@ -1177,24 +1180,24 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( partie* p )
 	if( p->nbJoueurs() > 2 && (p->connection() == partie::CNX_None || ( p->connection() != partie::CNX_None && (p->joueur(2)->isLocal() || ( !p->joueur(2)->isLocal() && p->joueur(2)->socket() != INVALID_SOCKET )))) ){
 		couleur = getCouleurJoueur( 3 );
 		wattron(win, couleur);
-		mvwprintw(win, 5, 53, "%s", p->joueur(2)->nom()->c_str());
+		mvwprintw(win, ypos, xpos+l_map->X()+2, "%s", p->joueur(2)->nom()->c_str());
 		wattroff(win, couleur);
 		if( p->joueur(2)->armements() ){
-			mvwprintw(win, 6, 55, "Nombre de bombe: %d", p->joueur(2)->armements()->quantiteMAX(bonus::bombe));
-			mvwprintw(win, 7, 55, "Puissance de flamme: %d", p->joueur(2)->armements()->quantiteMAX(bonus::puissance_flamme));
-			mvwprintw(win, 8, 55, "Declancheur manuel: %d", p->joueur(2)->armements()->quantiteMAX(bonus::declancheur));
-			mvwprintw(win, 9, 55, "Vitesse: %d", p->joueur(2)->armements()->quantiteMAX(bonus::vitesse));
-			mvwprintw(win, 10, 55, "Nombre de vie: %d", p->joueur(2)->armements()->quantiteMAX(bonus::vie));
+			mvwprintw(win, ypos+1, xpos+l_map->X()+4, "Nombre de bombe: %d", p->joueur(2)->armements()->quantiteMAX(bonus::bombe));
+			mvwprintw(win, ypos+2, xpos+l_map->X()+4, "Puissance de flamme: %d", p->joueur(2)->armements()->quantiteMAX(bonus::puissance_flamme));
+			mvwprintw(win, ypos+3, xpos+l_map->X()+4, "Declancheur manuel: %d", p->joueur(2)->armements()->quantiteMAX(bonus::declancheur));
+			mvwprintw(win, ypos+4, xpos+l_map->X()+4, "Vitesse: %d", p->joueur(2)->armements()->quantiteMAX(bonus::vitesse));
+			mvwprintw(win, ypos+5, xpos+l_map->X()+4, "Nombre de vie: %d", p->joueur(2)->armements()->quantiteMAX(bonus::vie));
 		}
 		cleanPlayer3 = 1;
 	}else{
 		if( cleanPlayer3 ){
-			cleanline(win, 5, 53, getmaxx(win)-2 );
-			cleanline(win, 6, 53, getmaxx(win)-2 );
-			cleanline(win, 7, 53, getmaxx(win)-2 );
-			cleanline(win, 8, 53, getmaxx(win)-2 );
-			cleanline(win, 9, 53, getmaxx(win)-2 );
-			cleanline(win, 10, 53, getmaxx(win)-2 );
+			cleanline(win, ypos, xpos+l_map->X()+2, getmaxx(win)-2 );
+			cleanline(win, ypos+1, xpos+l_map->X()+2, getmaxx(win)-2 );
+			cleanline(win, ypos+2, xpos+l_map->X()+2, getmaxx(win)-2 );
+			cleanline(win, ypos+3, xpos+l_map->X()+2, getmaxx(win)-2 );
+			cleanline(win, ypos+4, xpos+l_map->X()+2, getmaxx(win)-2 );
+			cleanline(win, ypos+5, xpos+l_map->X()+2, getmaxx(win)-2 );
 			cleanPlayer3 = 0;
 		}
 	}
@@ -1204,24 +1207,24 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( partie* p )
 	if( p->nbJoueurs() == 4 && (p->connection() == partie::CNX_None || ( p->connection() != partie::CNX_None && (p->joueur(3)->isLocal() || ( !p->joueur(3)->isLocal() && p->joueur(3)->socket() != INVALID_SOCKET )))) ){
 		couleur = getCouleurJoueur( 4 );
 		wattron(win, couleur);
-		mvwprintw(win, 14, 2, "%s", p->joueur(3)->nom()->c_str());
+		mvwprintw(win, ypos+l_map->Y()-6, xpos-26, "%s", p->joueur(3)->nom()->c_str());
 		wattroff(win, couleur);
 		if( p->joueur(3)->armements() ){
-			mvwprintw(win, 15, 4, "Nombre de bombe: %d", p->joueur(3)->armements()->quantiteMAX(bonus::bombe));
-			mvwprintw(win, 16, 4, "Puissance de flamme: %d", p->joueur(3)->armements()->quantiteMAX(bonus::puissance_flamme));
-			mvwprintw(win, 17, 4, "Declancheur manuel: %d", p->joueur(3)->armements()->quantiteMAX(bonus::declancheur));
-			mvwprintw(win, 18, 4, "Vitesse: %d", p->joueur(3)->armements()->quantiteMAX(bonus::vitesse));
-			mvwprintw(win, 19, 4, "Nombre de vie: %d", p->joueur(3)->armements()->quantiteMAX(bonus::vie));
+			mvwprintw(win, ypos+l_map->Y()-5, xpos-24, "Nombre de bombe: %d", p->joueur(3)->armements()->quantiteMAX(bonus::bombe));
+			mvwprintw(win, ypos+l_map->Y()-4, xpos-24, "Puissance de flamme: %d", p->joueur(3)->armements()->quantiteMAX(bonus::puissance_flamme));
+			mvwprintw(win, ypos+l_map->Y()-3, xpos-24, "Declancheur manuel: %d", p->joueur(3)->armements()->quantiteMAX(bonus::declancheur));
+			mvwprintw(win, ypos+l_map->Y()-2, xpos-24, "Vitesse: %d", p->joueur(3)->armements()->quantiteMAX(bonus::vitesse));
+			mvwprintw(win, ypos+l_map->Y()-1, xpos-24, "Nombre de vie: %d", p->joueur(3)->armements()->quantiteMAX(bonus::vie));
 		}
 		cleanPlayer4 = 1;
 	}else{
 		if( cleanPlayer4 ){
-			cleanline(win, 14, 2, 24 );
-			cleanline(win, 15, 4, 24 );
-			cleanline(win, 16, 4, 24 );
-			cleanline(win, 17, 4, 24 );
-			cleanline(win, 18, 4, 24 );
-			cleanline(win, 19, 4, 24 );
+			cleanline(win, ypos+l_map->Y()-6, xpos-26, 26 );
+			cleanline(win, ypos+l_map->Y()-5, xpos-26, 26 );
+			cleanline(win, ypos+l_map->Y()-4, xpos-26, 26 );
+			cleanline(win, ypos+l_map->Y()-3, xpos-26, 26 );
+			cleanline(win, ypos+l_map->Y()-2, xpos-26, 26 );
+			cleanline(win, ypos+l_map->Y()-1, xpos-26, 26 );
 			cleanPlayer4 = 0;
 		}
 	}

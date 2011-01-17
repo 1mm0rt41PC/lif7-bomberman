@@ -5,7 +5,13 @@
 #include "clavier.h"
 
 #define DEFAULT_PORT 947 // 947 = 'b'+'o'+'m'+'b'+'e'+'r'+'m'+'a'+'n' °(^_^)°
-#define CONFIG_FILE "config.conf"
+#ifdef __LIB_ncurses__
+	#define CONFIG_FILE "config_ncurses.conf"
+#elif __LIB_SDL__
+	#define CONFIG_FILE "config_sdl.conf"
+#elif __LIB_SFML__
+	#define CONFIG_FILE "config_sfml.conf"
+#endif
 
 
 /*!
