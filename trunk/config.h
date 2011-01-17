@@ -4,7 +4,7 @@
 
 // Define LIB : __LIB_ncurses__, __LIB_SDL__, __LIB_SFML__
 
-//#define __LIB_SDL__ 1
+#define __LIB_SDL__ 1
 
 enum {
 	__BOMBERMAN_VERSION__ = 1
@@ -22,6 +22,7 @@ enum {
 	#include <SFML/Window.hpp>
 	#include <SFML/Graphics.hpp>
 	#define SYS_CLAVIER sf::Key::Code
+	#define RETOUR_MENU_PRECEDENT sf::Key::Escape// Permet de faire la liaison pour quitter le menu principal
 
 
 /*******************************************************************************
@@ -34,7 +35,6 @@ enum {
 		#include <ncurses.h>
 	#endif
 	#define SYS_CLAVIER int
-	#define CLASS_TO_USE moteur_ncurses
 
 	// Touches
 	#define KEY_ESCAP 27
@@ -60,8 +60,9 @@ enum {
 */
 #elif __LIB_SDL__
 	#include <SDL/SDL.h>
+	#include <SDL/SDL_ttf.h>
+	#include <SDL/SDL_image.h>
 	#define SYS_CLAVIER SDLKey //Uint8 || SDLKey
-	#define CLASS_TO_USE moteur_sdl
 	#define RETOUR_MENU_PRECEDENT SDLK_ESCAPE// Permet de faire la liaison pour quitter le menu principal
 
 

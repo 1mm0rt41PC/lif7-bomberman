@@ -16,7 +16,7 @@ LDFLAGS :=
 # Lancer automatiquement gdb après chaque compilation en mode debug ( make exec ! )
 DEBUG_AUTO_EXEC_GDB = oui
 # Tracage mémoire (no leaks) (décommenter cette ligne pour activer le mode debug forcé) (identique a la commande: make memcheck)
-DEBUG_MEMORY = 1
+#DEBUG_MEMORY = 1
 
 # Fichiers contenant les dépendances
 DEP = .depend

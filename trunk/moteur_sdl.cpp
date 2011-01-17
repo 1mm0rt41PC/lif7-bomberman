@@ -41,46 +41,53 @@ moteur_sdl::moteur_sdl()
 
 	//murs
 	c_Decor[vide] = chargerImage("images/vide.png");
-	c_Decor[mur_destructible]= chargerImage("images/mur_destructible.png");
-	c_Decor[mur_indestructible]= chargerImage("images/mur_indestructible.png");
+	c_Decor[mur_destructible] = chargerImage("images/mur_destructible.png");
+	c_Decor[mur_indestructible] = chargerImage("images/mur_indestructible.png");
 	//joueur1
-	c_Decor[joueur1_haut]= chargerImage("images/bomberman1_haut.png");
-	c_Decor[joueur1_bas]= chargerImage("images/bomberman1_bas.png");
-	c_Decor[joueur1_gauche]= chargerImage("images/bomberman1_gauche.png");
-	c_Decor[joueur1_droite]= chargerImage("images/bomberman1_droite.png");
+	c_Decor[joueur1_haut] = chargerImage("images/bomberman1_haut.png");
+	c_Decor[joueur1_bas] = chargerImage("images/bomberman1_bas.png");
+	c_Decor[joueur1_gauche] = chargerImage("images/bomberman1_gauche.png");
+	c_Decor[joueur1_droite] = chargerImage("images/bomberman1_droite.png");
 	//joueur2
-	c_Decor[joueur2_haut]= chargerImage("images/bomberman2_haut.png");
-	c_Decor[joueur2_bas]= chargerImage("images/bomberman2_bas.png");
-	c_Decor[joueur2_gauche]= chargerImage("images/bomberman2_gauche.png");
-	c_Decor[joueur2_droite]= chargerImage("images/bomberman2_droite.png");
+	c_Decor[joueur2_haut] = chargerImage("images/bomberman2_haut.png");
+	c_Decor[joueur2_bas] = chargerImage("images/bomberman2_bas.png");
+	c_Decor[joueur2_gauche] = chargerImage("images/bomberman2_gauche.png");
+	c_Decor[joueur2_droite] = chargerImage("images/bomberman2_droite.png");
 	//joueur3
-	c_Decor[joueur3_haut]= chargerImage("images/bomberman3_haut.png");
-	c_Decor[joueur3_bas]= chargerImage("images/bomberman3_bas.png");
-	c_Decor[joueur3_gauche]= chargerImage("images/bomberman3_gauche.png");
-	c_Decor[joueur3_droite]= chargerImage("images/bomberman3_droite.png");
+	c_Decor[joueur3_haut] = chargerImage("images/bomberman3_haut.png");
+	c_Decor[joueur3_bas] = chargerImage("images/bomberman3_bas.png");
+	c_Decor[joueur3_gauche] = chargerImage("images/bomberman3_gauche.png");
+	c_Decor[joueur3_droite] = chargerImage("images/bomberman3_droite.png");
 	//joueur4
-	c_Decor[joueur4_haut]= chargerImage("images/bomberman4_haut.png");
-	c_Decor[joueur4_bas]= chargerImage("images/bomberman4_bas.png");
-	c_Decor[joueur4_gauche]= chargerImage("images/bomberman4_gauche.png");
-	c_Decor[joueur4_droite]= chargerImage("images/bomberman4_droite.png");
+	c_Decor[joueur4_haut] = chargerImage("images/bomberman4_haut.png");
+	c_Decor[joueur4_bas] = chargerImage("images/bomberman4_bas.png");
+	c_Decor[joueur4_gauche] = chargerImage("images/bomberman4_gauche.png");
+	c_Decor[joueur4_droite] = chargerImage("images/bomberman4_droite.png");
 	//armes
-	c_Decor[flamme_origine]= chargerImage("images/flamme_origine.png");
-	c_Decor[flamme_vertical]= chargerImage("images/milieu_flamme_verticale.png");
-	c_Decor[flamme_horizontal]= chargerImage("images/milieu_flamme_horizontale.png");
-	c_Decor[bout_flamme_haut]= chargerImage("images/flamme_haut.png");
-	c_Decor[bout_flamme_bas]= chargerImage("images/flamme_bas.png");
-	c_Decor[bout_flamme_gauche]= chargerImage("images/flamme_gauche.png");
-	c_Decor[bout_flamme_droite]= chargerImage("images/flamme_droite.png");
-	c_Decor[bombe]= chargerImage("images/bombe.gif");
+	c_Decor[flamme_origine] = chargerImage("images/flamme_origine.png");
+	c_Decor[flamme_vertical] = chargerImage("images/milieu_flamme_verticale.png");
+	c_Decor[flamme_horizontal] = chargerImage("images/milieu_flamme_horizontale.png");
+	c_Decor[flamme_pointe_haut] = chargerImage("images/flamme_haut.png");
+	c_Decor[bout_flamme_bas] = chargerImage("images/flamme_bas.png");
+	c_Decor[bout_flamme_gauche] = chargerImage("images/flamme_gauche.png");
+	c_Decor[bout_flamme_droite] = chargerImage("images/flamme_droite.png");
+	c_Decor[bombe] = chargerImage("images/bombeSprite.png");
+	//c_Decor[bombe] = chargerImage("images/bombe.gif");
 	// Bonus
-	c_Decor[gain_bombe]= chargerImage("images/gain_bombe.png");
-	c_Decor[gain_declancheur]= chargerImage("images/detonateur.png");
-	c_Decor[gain_puissance_flamme]= chargerImage("images/gain_puissance_flamme.png");
-	c_Decor[gain_vitesse_vitesse]= chargerImage("images/vitesse.png");
-	c_Decor[gain_vie]= chargerImage("images/gain_vie.gif");
+	c_Decor[gain_bombe] = chargerImage("images/gain_bombe.png");
+	c_Decor[gain_declancheur] = chargerImage("images/detonateur.png");
+	c_Decor[gain_puissance_flamme] = chargerImage("images/gain_puissance_flamme.png");
+	c_Decor[gain_vitesse_vitesse] = chargerImage("images/vitesse.png");
+	c_Decor[gain_vie] = chargerImage("images/gain_vie.gif");
+
+	c_fenetreOuverte = true;
 }
 
 
+/***************************************************************************//*!
+* @fn moteur_sdl& moteur_sdl::getInstance()
+* @brief Renvoie l'instance de la class. Si pas d'instance, alors création d'une instance
+*/
 moteur_sdl& moteur_sdl::getInstance()
 {
 	if( !c_Instance )
@@ -167,11 +174,13 @@ unsigned int moteur_sdl::menu( const char titre[], const char *choix[], unsigned
 	while( continuer )
 	{
 		SDL_WaitEvent(&event);
+
 		switch( event.type )
 		{
 			case SDL_QUIT: {
 				highLight = nb_choix;// On veux quitter !
 				continuer = 0;
+				c_fenetreOuverte = false;
 				break;
 			}
 			case SDL_KEYDOWN: {
@@ -209,6 +218,26 @@ unsigned int moteur_sdl::menu( const char titre[], const char *choix[], unsigned
 				}
 				break;
 			}
+			/*******************************************************************
+			* Prise en charge de la souris
+			*/
+			case SDL_MOUSEBUTTONUP: {
+				position.y = 200;
+				for( i=0; i<nb_choix; i++ )
+				{
+					position.y += 100;// Espacement entre les textes ( blit )
+					position.x = (c_ecranGeneral->w-textes[i]->w)/2;// Centrage auto des blit ^^
+					if( position.x <= event.button.x && event.button.x <= position.x+textes[i]->w && position.y <= event.button.y && event.button.y <= position.y+textes[i]->h ){
+						if( highLight == i+1 ){
+							continuer = 0;
+						}else{
+							highLight = i+1;
+							dessiner = 1;
+						}
+					}
+				}
+				break;
+			}
 			default:
 				break;
 		}
@@ -230,7 +259,7 @@ unsigned int moteur_sdl::menu( const char titre[], const char *choix[], unsigned
 			// On blit le texte
 			for( i=0; i<nb_choix; i++ )
 			{
-				position.y+=100;// Espacement entre les textes ( blit )
+				position.y += 100;// Espacement entre les textes ( blit )
 				position.x = (c_ecranGeneral->w-textes[i]->w)/2;// Centrage auto des blit ^^
 				if( i == highLight-1 ){
 					SDL_BlitSurface(textes[i+nb_choix], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
@@ -338,6 +367,7 @@ void moteur_sdl::afficherConfigurationClavier( unsigned char joueur )
 			case SDL_QUIT: { /*	si on clique sur la croix rouge de la fenêtre -> on sort et highLight */
 				highLight = 7; /*	passe à 7 (valeur de sortie) */
 				continuer = 0;
+				c_fenetreOuverte = false;
 				break;
 			}
 			case SDL_KEYDOWN: { /* si touche appuyée */
@@ -408,6 +438,7 @@ void moteur_sdl::afficherConfigurationClavier( unsigned char joueur )
 							if( event.type == SDL_QUIT ){ /* si croix rouge -> on sort */
 								continuer = 0;
 								highLight = 7;
+								c_fenetreOuverte = false;
 								break;
 							}
 							/* sinon lire la touche et l'enregistrer */
@@ -596,7 +627,9 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 	SDL_Surface** textes;
 	unsigned int i;
 	bool dessiner = 1;
-	char valeurRetourTexte[20];// <- Valable 32bit ONLY ! Calcule :: lenght(2^(sizeof(int)*8))+4*2
+	bool dessinerNombre = 0;
+
+	char valeurRetourTexte[/*Taille max d'un unsigned int*/getSizeOfNumber<-1>::value+1/*Pour le signe*/+4*2/*Pour les <--*/+1/*Le \0*/];// <- Calcule :: lenght(2^(sizeof(int)*8))+4*2
 
 	if( valeurMin > valeurParDefaut || valeurParDefaut > valeurMax ){
 		stdError("Valeur incorrect ! valeurMin(%d) <= valeurParDefaut(%d) && valeurParDefaut(%d) <= valeurMax(%d)", valeurMin, valeurParDefaut, valeurParDefaut, valeurMax);
@@ -624,7 +657,7 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 	TTF_SetFontStyle(c_policeGeneral, TTF_STYLE_NORMAL);
 
 
-	while( continuer )
+	while( continuer && c_fenetreOuverte )
 	{
 		SDL_WaitEvent(&event);
 		switch( event.type )
@@ -632,6 +665,7 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 			case SDL_QUIT: {
 				highLight = 3;// On veut quitter !
 				continuer = 0;
+				c_fenetreOuverte = false;
 				break;
 			}
 			case SDL_KEYDOWN: {
@@ -655,6 +689,34 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 						dessiner = 1;// On redessine
 						break;
 					}
+					case SDLK_RIGHT: {
+						if( highLight != 1 )// Pour être certain que l'on ne change les nombre que si l'on est sur le 1er element
+							break;
+
+						if( *valeurRetour+1 > valeurMax )
+							*valeurRetour = valeurMin;
+						else
+							(*valeurRetour)++;
+
+						// On redessine le nombre
+						dessinerNombre = 1;
+						dessiner = 1;
+						break;
+					}
+					case SDLK_LEFT: {
+						if( highLight != 1 )// Pour être certain que l'on ne change les nombre que si l'on est sur le 1er element
+							break;
+
+						if( *valeurRetour-1 < valeurMin )
+							*valeurRetour = valeurMax;
+						else
+							(*valeurRetour)--;
+
+						// On redessine le nombre
+						dessinerNombre = 1;
+						dessiner = 1;
+						break;
+					}
 					case SDLK_RETURN: {// On a validé notre choix par entrer
 						if( highLight == 1 ){// On a selectionné un lien de modification de texte
 							dessiner = 1;
@@ -664,6 +726,7 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 								if( event.type == SDL_QUIT ){
 									continuer = 0;
 									highLight = 3;
+									c_fenetreOuverte = false;
 								}
 
 								if( event.type == SDL_KEYDOWN )
@@ -699,9 +762,13 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 										break;
 									}
 									case SDLK_RETURN: {
-										if( !(valeurMin <= *valeurRetour && *valeurRetour <= valeurMax) )
+										if( !(valeurMin <= *valeurRetour && *valeurRetour <= valeurMax) ){
 											*valeurRetour = valeurMin;
-										highLight = 2;
+											// On redessine le nombre
+											dessinerNombre = 1;
+										}else{
+											highLight = 2;
+										}
 										continuer = 0;
 										break;
 									}
@@ -747,7 +814,7 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 									// On blit le texte
 									for( i=0; i<3; i++ )
 									{
-										position.y+=100;// Espacement entre les textes ( blit )
+										position.y += 100;// Espacement entre les textes ( blit )
 										position.x = (c_ecranGeneral->w-textes[i]->w)/2;// Centrage auto des blit ^^
 										if( i == highLight-1 ){
 											SDL_BlitSurface(textes[i+3], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
@@ -779,6 +846,49 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 				}
 				break;
 			}
+			/*******************************************************************
+			* Prise en charge de la souris
+			*/
+			case SDL_MOUSEBUTTONUP: {
+				position.y = 200;
+				for( i=0; i<3; i++ )
+				{
+					position.y += 100;// Espacement entre les textes ( blit )
+					position.x = (c_ecranGeneral->w-textes[i]->w)/2;// Centrage auto des blit ^^
+					if( position.x <= event.button.x && event.button.x <= position.x+textes[i]->w && position.y <= event.button.y && event.button.y <= position.y+textes[i]->h ){
+						if( highLight == i+1 ){
+							if( highLight == 1 ){
+								if( position.x <= event.button.x && event.button.x <= position.x+35 && position.y <= event.button.y && event.button.y <= position.y+textes[i]->h ){
+									if( *valeurRetour-1 < valeurMin )
+										*valeurRetour = valeurMax;
+									else
+										(*valeurRetour)--;
+
+									// On redessine le nombre
+									dessinerNombre = 1;
+									dessiner = 1;
+								}
+								if( position.x+textes[i]->w-35 <= event.button.x && event.button.x <= position.x+textes[i]->w && position.y <= event.button.y && event.button.y <= position.y+textes[i]->h ){
+									if( *valeurRetour+1 > valeurMax )
+										*valeurRetour = valeurMin;
+									else
+										(*valeurRetour)++;
+
+									// On redessine le nombre
+									dessinerNombre = 1;
+									dessiner = 1;
+								}
+							}else{
+								continuer = 0;
+							}
+						}else{
+							highLight = i+1;
+							dessiner = 1;
+						}
+					}
+				}
+				break;
+			}
 			default:
 				break;
 		}
@@ -788,6 +898,16 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 		* > On blit uniquement s'il y a eu une modification
 		*/
 		if( dessiner ){
+			if( dessinerNombre ){
+				// On redessine le nombre
+				sprintf(valeurRetourTexte, "<-- %d -->", *valeurRetour);
+				SDL_FreeSurface(textes[0]);
+				SDL_FreeSurface(textes[3]);
+				textes[0] = ecritTexte(valeurRetourTexte);
+				textes[3] = ecritTexte(valeurRetourTexte, couleurOrange);
+				dessinerNombre = 0;
+			}
+
 			position.x = 0;
 			position.y = 0;
 			SDL_BlitSurface(c_background, NULL, c_ecranGeneral, &position);// Blit background
@@ -799,7 +919,7 @@ int moteur_sdl::getNombre( const char titre[], int valeurParDefaut, int valeurMi
 			// On blit le texte
 			for( i=0; i<3; i++ )
 			{
-				position.y+=100;// Espacement entre les textes ( blit )
+				position.y += 100;// Espacement entre les textes ( blit )
 				position.x = (c_ecranGeneral->w-textes[i]->w)/2;// Centrage auto des blit ^^
 				if( i == highLight-1 ){
 					SDL_BlitSurface(textes[i+3], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
@@ -846,6 +966,7 @@ int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
 	unsigned int tailleTexteRetour;
 	unsigned int i;
 	bool dessiner = 1;
+	bool dessinerMot = 0;
 
 	tailleTexteRetour = strlen(texteRetour);
 
@@ -875,10 +996,11 @@ int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
 			case SDL_QUIT: {
 				highLight = 3;// On veut quitter !
 				continuer = 0;
+				c_fenetreOuverte = false;
 				break;
 			}
 			case SDL_KEYDOWN: {
-				switch( event.key.keysym.sym )
+				switch( traductionClavier(&event.key) )
 				{
 					case SDLK_UP: { /* Appui sur la touche Echap, on arrête le programme */
 						if( highLight == 1 ){// On bouge notre highLight vers le haut
@@ -898,112 +1020,36 @@ int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
 						dessiner = 1;// On redessine
 						break;
 					}
+					case SDLK_BACKSPACE: {
+						if( highLight != 1 )// Si on est pas sur le texte => on fait rien
+							break;
+
+						if( tailleTexteRetour == 0 )
+							break;
+						tailleTexteRetour--;
+						texteRetour[tailleTexteRetour] = '_';
+						dessiner = 1;// On redessine
+						dessinerMot = 1;
+						break;
+					}
 					case SDLK_RETURN: {// On a validé notre choix par entrer
 						if( highLight == 1 ){// On a selectionné un lien de modification de texte
-							dessiner = 1;
-							sfr_msg = ecritTexte("Entrez le texte manuellement", couleurRouge);
-							textes[3] = ecritTexte(completerMot(texteRetour, tailleTexteRetour), couleurOrange);
-							do{
-								SDL_WaitEvent(&event);
-								if( event.type == SDL_QUIT ){
-									continuer = 0;
-									highLight = 3;
-								}
-
-								if( event.type == SDL_KEYDOWN )
-								switch( traductionClavier(&event.key) )
-								{
-									case SDLK_BACKSPACE: {
-										if( tailleTexteRetour == 0 )
-											break;
-										tailleTexteRetour--;
-										texteRetour[tailleTexteRetour] = '_';
-										dessiner = 1;// On redessine
-										break;
-									}
-									case SDLK_ESCAPE: {
-										continuer = 0;
-										dessiner = 1;// On redessine
-										break;
-									}
-									case SDLK_RETURN: {
-										continuer = 0;
-										break;
-									}
-									default: {
-											//' ' <= key && key <= '~'
-										// Ajout de chiffre à la main
-										if( SDLK_SPACE <= event.key.keysym.unicode && event.key.keysym.unicode <= 126 && tailleTexteRetour+1 < 21  ){
-											texteRetour[tailleTexteRetour] = event.key.keysym.unicode;
-											tailleTexteRetour++;
-											completerMot(texteRetour, tailleTexteRetour);
-										}
-									//	if( SDLK_KP0 <= event.key.keysym.unicode && event.key.keysym.unicode <= SDLK_KP0 && *valeurRetour*10+(int)(event.key.keysym.unicode-SDLK_KP0) <= valeurMax )
-									//		*valeurRetour = *valeurRetour*10+(event.key.keysym.unicode-SDLK_KP0);
-										dessiner = 1;// On redessine
-										break;
-									}
-								}
-
-								/***********************************************************************
-								* Blitage général
-								* > On blit uniquement s'il y a eu une modification
-								*/
-								if( dessiner ){
-									SDL_FreeSurface(textes[0]);
-									SDL_FreeSurface(textes[3]);
-									textes[0] = ecritTexte(texteRetour);
-									textes[3] = ecritTexte(texteRetour, couleurRouge);
-
-									position.x = 0;
-									position.y = 0;
-									SDL_BlitSurface(c_background, NULL, c_ecranGeneral, &position);// Blit background
-
-									position.y = 200;
-									position.x = (c_ecranGeneral->w-sfr_msg->w)/2;// Centrage auto des blit ^^
-									SDL_BlitSurface(sfr_msg, NULL, c_ecranGeneral, &position);// Blit background
-
-									// On blit le texte
-									for( i=0; i<3; i++ )
-									{
-										position.y+=100;// Espacement entre les textes ( blit )
-										position.x = (c_ecranGeneral->w-textes[i]->w)/2;// Centrage auto des blit ^^
-										if( i == highLight-1 ){
-											SDL_BlitSurface(textes[i+3], NULL, c_ecranGeneral, &position); // Blit du texte par-dessus
-										}else{
-											SDL_BlitSurface(textes[i], NULL, c_ecranGeneral, &position); // Blit du texte par-dessus
-										}
-									}
-
-									SDL_Flip(c_ecranGeneral);
-									dessiner = 0;
-								}
-							}while( continuer );
-							SDL_FreeSurface(sfr_msg);
-							sfr_msg = 0;
-							SDL_FreeSurface(textes[0]);
-							SDL_FreeSurface(textes[3]);
-							// On vire les espaces
+							trimString(texteRetour);
 							if( tailleTexteRetour ){
-								texteRetour[tailleTexteRetour] = 0;
-								trimString(texteRetour);
-								tailleTexteRetour = strlen(texteRetour);
-							}
-							if( tailleTexteRetour ){
-								textes[0] = ecritTexte(texteRetour);
-								textes[3] = ecritTexte(texteRetour, couleurOrange);
 								highLight = 2;
 							}else{
-								textes[0] = ecritTexte(completerMot(texteRetour, tailleTexteRetour));
-								textes[3] = ecritTexte(completerMot(texteRetour, tailleTexteRetour), couleurOrange);
+								if( sfr_msg )
+									SDL_FreeSurface(sfr_msg);
+								sfr_msg = ecritTexte("Le texte dois avoir 1 caractere min", couleurRouge);
 							}
 							dessiner = 1;
-							continuer = 1;
 						}else{
 							if( highLight == 2 ){
 								if( tailleTexteRetour ){
 									continuer = 0;// On sort de la boucle
 								}else{
+									if( sfr_msg )
+										SDL_FreeSurface(sfr_msg);
 									sfr_msg = ecritTexte("Le texte dois avoir 1 caractere min", couleurRouge);
 									dessiner = 1;
 								}
@@ -1018,8 +1064,44 @@ int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
 						continuer = 0;
 						break;
 					}
-					default:
+					default: {
+						if( highLight != 1 )// Si on est pas sur le texte => on fait rien
+							break;
+
+						//' ' <= key && key <= '~'
+						// Ajout de chiffre à la main
+						if( SDLK_SPACE <= event.key.keysym.unicode && event.key.keysym.unicode <= 126 && tailleTexteRetour+1 < 21  ){
+							texteRetour[tailleTexteRetour] = event.key.keysym.unicode;
+							tailleTexteRetour++;
+							completerMot(texteRetour, tailleTexteRetour);
+						}
+					//	if( SDLK_KP0 <= event.key.keysym.unicode && event.key.keysym.unicode <= SDLK_KP0 && *valeurRetour*10+(int)(event.key.keysym.unicode-SDLK_KP0) <= valeurMax )
+					//		*valeurRetour = *valeurRetour*10+(event.key.keysym.unicode-SDLK_KP0);
+						dessiner = 1;// On redessine
+						dessinerMot = 1;
 						break;
+					}
+				}
+				break;
+			}
+			/*******************************************************************
+			* Prise en charge de la souris
+			*/
+			case SDL_MOUSEBUTTONUP: {
+				position.y = 200;
+				for( i=0; i<3; i++ )
+				{
+					position.y += 100;// Espacement entre les textes ( blit )
+					position.x = (c_ecranGeneral->w-textes[i]->w)/2;// Centrage auto des blit ^^
+					if( position.x <= event.button.x && event.button.x <= position.x+textes[i]->w && position.y <= event.button.y && event.button.y <= position.y+textes[i]->h ){
+						if( highLight == i+1 ){
+							if( highLight != 1 )
+								continuer = 0;
+						}else{
+							highLight = i+1;
+							dessiner = 1;
+						}
+					}
 				}
 				break;
 			}
@@ -1032,6 +1114,22 @@ int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
 		* > On blit uniquement s'il y a eu une modification
 		*/
 		if( dessiner ){
+			if( dessinerMot ){
+				SDL_FreeSurface(textes[0]);
+				SDL_FreeSurface(textes[3]);
+
+				texteRetour[tailleTexteRetour] = 0;
+				trimString(texteRetour);
+				tailleTexteRetour = strlen(texteRetour);
+
+				if( tailleTexteRetour )
+					textes[0] = ecritTexte(texteRetour);
+				else
+					textes[0] = ecritTexte(completerMot(texteRetour, tailleTexteRetour));
+				textes[3] = ecritTexte(completerMot(texteRetour, tailleTexteRetour), couleurOrange);
+				dessinerMot = 0;
+			}
+
 			position.x = 0;
 			position.y = 0;
 			SDL_BlitSurface(c_background, NULL, c_ecranGeneral, &position);// Blit background
@@ -1047,11 +1145,12 @@ int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
 			// On blit le texte
 			for( i=0; i<3; i++ )
 			{
-				position.y+=100;// Espacement entre les textes ( blit )
-				position.x = (c_ecranGeneral->w-textes[i]->w)/2;// Centrage auto des blit ^^
+				position.y += 100;// Espacement entre les textes ( blit )
 				if( i == highLight-1 ){
+					position.x = (c_ecranGeneral->w-textes[i+3]->w)/2;// Centrage auto des blit ^^
 					SDL_BlitSurface(textes[i+3], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
 				}else{
+					position.x = (c_ecranGeneral->w-textes[i]->w)/2;// Centrage auto des blit ^^
 					SDL_BlitSurface(textes[i], NULL, c_ecranGeneral, &position); /* Blit du texte par-dessus */
 				}
 			}
@@ -1091,15 +1190,15 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 
 	bool dessiner = 0;
 	bool refresh = 0;
-	SDL_Surface *sfr_bg;
 	SDL_Surface* sfr_tmp;
 	map* l_map = p->getMap();// l_map pour local variable map
 	// Décalage
-	unsigned int	xpos=(((c_Instance->c_ecranGeneral->w/32)-l_map->X())/2)*32,
-					ypos=(((c_Instance->c_ecranGeneral->h/32)-l_map->Y())/2)*32;
+	unsigned int	xpos=(c_Instance->c_ecranGeneral->w-l_map->X()*32)/2,
+					ypos=(c_Instance->c_ecranGeneral->h-l_map->Y()*32)/2;
 	ypos = ypos+ypos/2;
 
 	SDL_Rect pos;
+	SDL_Rect imgRect;
 
 	// Tester ici si la taille de la map n'est pas trop grande pour la fenetre.
 	if ( l_map->X() > (unsigned int)c_Instance->c_ecranGeneral->w/32 || l_map->Y() > (unsigned int)c_Instance->c_ecranGeneral->h/32 )
@@ -1110,10 +1209,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 		// A FAIRE
 		pos.x = 0;
 		pos.y = 0;
-		sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, 1024, 768, 32, 0, 0, 0, 0);
-		SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-		SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-		SDL_FreeSurface(sfr_bg);
+		SDL_FillRect(c_Instance->c_ecranGeneral, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 
 		for( unsigned int x,y=0; y<l_map->Y(); y++ )
 		{
@@ -1147,21 +1243,49 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 						break;
 					}
 					case map::bombe_poser: {
+						if( c_Instance->isInSpriteList(coordonneeConvert(x,y)) == -1 ){
+							Sprite b;
+							b.pos = coordonneeConvert(x,y);
+							b.objet = bombe;
+							b.frame = 0;
+							b.refresh = 0;
+							c_Instance->c_ListSprite.push_back(b);
+						}
+
+						imgRect.x = 0;
+						imgRect.y = 0;
+						imgRect.w = 32;
+						imgRect.h = 32;
 						SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
-						SDL_BlitSurface(c_Instance->c_Decor[bombe], NULL, c_Instance->c_ecranGeneral, &pos);
+						SDL_BlitSurface(c_Instance->c_Decor[bombe], &imgRect, c_Instance->c_ecranGeneral, &pos);
 						break;
 					}
 					case map::bombe_poser_AVEC_UN_joueur:
 					case map::bombe_poser_AVEC_plusieurs_joueurs: {
-						if( !l_map->getBlock(x,y)->joueur )
-							stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y).joueur=0", x, y);
+						if( !l_map->getBlock(x, y)->joueur )
+							stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x, y)->joueur=0", x, y);
 
-						unsigned char joueur = l_map->getBlock(x,y)->joueur->at(1);// renvoie un numéro de joueur [1-...]
+						if( l_map->getBlock(x, y)->joueur->size() <= 1 )
+							stdErrorE("Nombre d'info joueur (%u) incorrect !", l_map->getBlock(x, y)->joueur->size());
 
+						unsigned char joueur = l_map->getBlock(x, y)->joueur->at(1);
+
+						if( c_Instance->isInSpriteList(coordonneeConvert(x,y)) == -1 ){
+							Sprite b;
+							b.pos = coordonneeConvert(x,y);
+							b.objet = bombe;
+							b.frame = 0;
+							b.refresh = 0;
+							c_Instance->c_ListSprite.push_back(b);
+						}
+
+						imgRect.x = 0;
+						imgRect.y = 0;
+						imgRect.w = 32;
+						imgRect.h = 32;
 						SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
-						SDL_BlitSurface(c_Instance->c_Decor[bombe], NULL, c_Instance->c_ecranGeneral, &pos);
+						SDL_BlitSurface(c_Instance->c_Decor[bombe], &imgRect, c_Instance->c_ecranGeneral, &pos);
 						c_Instance->joueur_orientation( p->joueur(joueur-1)->orientation(), joueur, &pos );
-
 						break;
 					}
 					case map::flamme_origine: {
@@ -1180,7 +1304,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 						break;
 					}
 					case map::flamme_pointe_haut: {
-						SDL_BlitSurface(c_Instance->c_Decor[bout_flamme_haut], NULL, c_Instance->c_ecranGeneral, &pos);
+						SDL_BlitSurface(c_Instance->c_Decor[flamme_pointe_haut], NULL, c_Instance->c_ecranGeneral, &pos);
 						break;
 					}
 					case map::flamme_pointe_bas: {
@@ -1271,22 +1395,49 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 					break;
 				}
 				case map::bombe_poser: {
-					//couleur = getCouleurJoueur( l_map->getBlock(v_pos)->joueur->at(0) );
+					if( c_Instance->isInSpriteList(v_pos) == -1 ){
+						Sprite b;
+						b.pos = v_pos;
+						b.objet = bombe;
+						b.frame = 0;
+						b.refresh = 0;
+						c_Instance->c_ListSprite.push_back(b);
+					}
+
+					imgRect.x = 0;
+					imgRect.y = 0;
+					imgRect.w = 32;
+					imgRect.h = 32;
 					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
-					SDL_BlitSurface(c_Instance->c_Decor[bombe], NULL, c_Instance->c_ecranGeneral, &pos);
+					SDL_BlitSurface(c_Instance->c_Decor[bombe], &imgRect, c_Instance->c_ecranGeneral, &pos);
 					break;
 				}
 				case map::bombe_poser_AVEC_UN_joueur:
 				case map::bombe_poser_AVEC_plusieurs_joueurs: {
 					if( !l_map->getBlock(v_pos)->joueur )
-						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(v_pos).joueur=0", v_pos.x, v_pos.y);
+						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(v_pos)->joueur=0", v_pos.x, v_pos.y);
+
+					if( l_map->getBlock(v_pos)->joueur->size() <= 1 )
+						stdErrorE("Nombre d'info joueur (%u) incorrect !", l_map->getBlock(v_pos)->joueur->size());
 
 					unsigned char joueur = l_map->getBlock(v_pos)->joueur->at(1);
 
-					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
-					SDL_BlitSurface(c_Instance->c_Decor[bombe], NULL, c_Instance->c_ecranGeneral, &pos);
-					c_Instance->joueur_orientation( p->joueur(joueur-1)->orientation(), joueur, &pos );
+					if( c_Instance->isInSpriteList(v_pos) == -1 ){
+						Sprite b;
+						b.pos = v_pos;
+						b.objet = bombe;
+						b.frame = 0;
+						b.refresh = 0;
+						c_Instance->c_ListSprite.push_back(b);
+					}
 
+					imgRect.x = 0;
+					imgRect.y = 0;
+					imgRect.w = 32;
+					imgRect.h = 32;
+					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
+					SDL_BlitSurface(c_Instance->c_Decor[bombe], &imgRect, c_Instance->c_ecranGeneral, &pos);
+					c_Instance->joueur_orientation( p->joueur(joueur-1)->orientation(), joueur, &pos );
 					break;
 				}
 				case map::flamme_origine: {
@@ -1295,6 +1446,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 					break;
 				}
 				case map::flamme_horizontal: {
+
 					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
 					SDL_BlitSurface(c_Instance->c_Decor[flamme_horizontal], NULL, c_Instance->c_ecranGeneral, &pos);
 					break;
@@ -1305,7 +1457,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 					break;
 				}
 				case map::flamme_pointe_haut: {
-					SDL_BlitSurface(c_Instance->c_Decor[bout_flamme_haut], NULL, c_Instance->c_ecranGeneral, &pos);
+					SDL_BlitSurface(c_Instance->c_Decor[flamme_pointe_haut], NULL, c_Instance->c_ecranGeneral, &pos);
 					break;
 				}
 				case map::flamme_pointe_bas: {
@@ -1359,9 +1511,78 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 					break;
 				}
 			}
-			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-32, pos.y-32, 32*3, 32*3);
+			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x, pos.y, 32, 32);
 		}
 	}
+
+	/***************************************************************************
+	* Blitage des animations
+	*/
+	for( unsigned int i=0; i<c_Instance->c_ListSprite.size(); i++ )
+	{
+		switch( c_Instance->c_ListSprite.at(i).objet )
+		{
+			case bombe: {
+				switch( l_map->getBlock(c_Instance->c_ListSprite.at(i).pos)->element )
+				{
+					case map::bombe_poser: {
+						if( c_Instance->c_ListSprite.at(i).refresh < clock() ){
+							pos.x=c_Instance->c_ListSprite.at(i).pos.x*32+xpos;
+							pos.y=c_Instance->c_ListSprite.at(i).pos.y*32+ypos;
+							imgRect.x = (c_Instance->c_ListSprite.at(i).frame%(c_Instance->c_Decor[bombe]->w/32))*32;
+							imgRect.y = 0;
+							imgRect.w = 32;
+							imgRect.h = 32;
+							SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
+							SDL_BlitSurface(c_Instance->c_Decor[bombe], &imgRect, c_Instance->c_ecranGeneral, &pos);
+							c_Instance->c_ListSprite.at(i).frame++;
+							c_Instance->c_ListSprite.at(i).refresh = clock()+VitesseSpriteBombe;
+
+							SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x, pos.y, 32, 32);
+						}
+						break;
+					}
+					case map::bombe_poser_AVEC_UN_joueur:
+					case map::bombe_poser_AVEC_plusieurs_joueurs: {
+						if( c_Instance->c_ListSprite.at(i).refresh < clock() ){
+							if( !l_map->getBlock(c_Instance->c_ListSprite.at(i).pos)->joueur )
+								stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(pos).joueur=0", c_Instance->c_ListSprite.at(i).pos.x, c_Instance->c_ListSprite.at(i).pos.y);
+
+							unsigned char joueur = l_map->getBlock(c_Instance->c_ListSprite.at(i).pos)->joueur->at(1);
+
+							pos.x=c_Instance->c_ListSprite.at(i).pos.x*32+xpos;
+							pos.y=c_Instance->c_ListSprite.at(i).pos.y*32+ypos;
+							imgRect.x = (c_Instance->c_ListSprite.at(i).frame%(c_Instance->c_Decor[bombe]->w/32))*32;
+							imgRect.y = 0;
+							imgRect.w = 32;
+							imgRect.h = 32;
+							SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
+							SDL_BlitSurface(c_Instance->c_Decor[bombe], &imgRect, c_Instance->c_ecranGeneral, &pos);
+							c_Instance->joueur_orientation( p->joueur(joueur-1)->orientation(), joueur, &pos );
+							c_Instance->c_ListSprite.at(i).frame++;
+							c_Instance->c_ListSprite.at(i).refresh = clock()+VitesseSpriteBombe;
+
+							SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x, pos.y, 32, 32);
+						}
+						break;
+					}
+					default: {
+						c_Instance->c_ListSprite.erase(c_Instance->c_ListSprite.begin()+i);
+						i--;
+						break;
+					}
+				}
+				break;
+			}
+			default: {
+				stdError("Attention objet animé inconnu ! X=%u, Y=%u, objet=%d", c_Instance->c_ListSprite.at(i).pos.x, c_Instance->c_ListSprite.at(i).pos.y, c_Instance->c_ListSprite.at(i).objet);
+				c_Instance->c_ListSprite.erase(c_Instance->c_ListSprite.begin()+i);
+				i--;
+				break;
+			}
+		}
+	}
+
 
 	static SDL_Color couleurBlanche = {255,255,255,0/*unused*/};
 	static SDL_Color couleurNoire = {0,0,0,0/*unused*/};
@@ -1378,13 +1599,15 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 	}else {
 		sfr_tmp = c_Instance->ecritTexte("00min:00secs", couleurNoire, 40);
 	}
-	sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w, sfr_tmp->h, 32, 0, 0, 0, 0);
-	SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-	SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-	SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
-	SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x, pos.y, sfr_tmp->w, sfr_tmp->h);
-	SDL_FreeSurface(sfr_bg);
+	imgRect.x = 0;
+	imgRect.y = 0;
+	imgRect.w = sfr_tmp->w+15;
+	imgRect.h = sfr_tmp->h;
+	SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+	SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+	SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x, pos.y, imgRect.w, sfr_tmp->h);
 	SDL_FreeSurface(sfr_tmp);
+
 
 	/***************************************************************************
 	* Affichage du joueur 1
@@ -1396,32 +1619,48 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 	if( refresh ){
 		// Affichage du nom du joueur 1
 		sfr_tmp = c_Instance->ecritTexte(p->joueur(0)->nom()->c_str(), couleurNoire, 55);
-		sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w, sfr_tmp->h, 32, 0, 0, 0, 0);
-		SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-		SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-		SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+		// On remplis le fond
+		imgRect.x = pos.x;
+		imgRect.y = pos.y;
+		imgRect.w = xpos-pos.x;
+		imgRect.h = sfr_tmp->h;
+		SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+		if( (unsigned int)pos.x+(unsigned int)sfr_tmp->w > xpos ){
+			imgRect.x = 0;
+			imgRect.y = 0;
+			SDL_BlitSurface(sfr_tmp, &imgRect, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+		}else{
+			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+		}
+		SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x, pos.y, imgRect.w, imgRect.h);
 		SDL_FreeSurface(sfr_tmp);
-		SDL_FreeSurface(sfr_bg);
 	}
 	pos.y += 25;// Espacement
 	if( p->joueur(0)->armements() ){
+		// Background
+		imgRect.w = xpos-40;// 40 (espacement bonus)
+		imgRect.h = 32;
+
 		// Bombe
 		static unsigned char nbBombe = 0;
 		pos.x = 40;
 		pos.y += 35;
 		if( nbBombe != p->joueur(0)->armements()->quantiteMAX(bonus::bombe) || c_Instance->c_premierAffichage || refresh ){
-			sprintf(tempsAff,"%d", p->joueur(0)->armements()->quantiteMAX(bonus::bombe) );
+			sprintf(tempsAff, "%d", p->joueur(0)->armements()->quantiteMAX(bonus::bombe) );
 			sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
 
 			// Blit background
-			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-			SDL_FreeSurface(sfr_bg);
+			imgRect.x = pos.x;
+			imgRect.y = pos.y;
+			SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 
 			SDL_BlitSurface(c_Instance->c_Decor[gain_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
 			pos.x += 40;
-			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+			pos.y -= 6;
+			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+			pos.y += 6;
+
+			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
 			SDL_FreeSurface(sfr_tmp);
 			nbBombe = p->joueur(0)->armements()->quantiteMAX(bonus::bombe);
 		}
@@ -1431,18 +1670,21 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 		pos.x = 40;
 		pos.y += 35;
 		if( PuissFlamme != p->joueur(0)->armements()->quantiteMAX(bonus::puissance_flamme) || c_Instance->c_premierAffichage || refresh ){
-			sprintf(tempsAff,"%d", p->joueur(0)->armements()->quantiteMAX(bonus::puissance_flamme) );
+			sprintf(tempsAff, "%d", p->joueur(0)->armements()->quantiteMAX(bonus::puissance_flamme) );
 			sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
 
 			// Blit background
-			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-			SDL_FreeSurface(sfr_bg);
+			imgRect.x = pos.x;
+			imgRect.y = pos.y;
+			SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 
 			SDL_BlitSurface(c_Instance->c_Decor[gain_puissance_flamme], NULL, c_Instance->c_ecranGeneral, &pos);
 			pos.x += 40;
-			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+			pos.y -= 6;
+			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+			pos.y += 6;
+
+			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
 			SDL_FreeSurface(sfr_tmp);
 			PuissFlamme = p->joueur(0)->armements()->quantiteMAX(bonus::puissance_flamme);
 		}
@@ -1452,18 +1694,21 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 		pos.x = 40;
 		pos.y += 35;
 		if( Declancheur != p->joueur(0)->armements()->quantiteMAX(bonus::declancheur) || c_Instance->c_premierAffichage || refresh ){
-			sprintf(tempsAff,"%d", p->joueur(0)->armements()->quantiteMAX(bonus::declancheur) );
+			sprintf(tempsAff, "%d", p->joueur(0)->armements()->quantiteMAX(bonus::declancheur) );
 			sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
 
 			// Blit background
-			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-			SDL_FreeSurface(sfr_bg);
+			imgRect.x = pos.x;
+			imgRect.y = pos.y;
+			SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 
 			SDL_BlitSurface(c_Instance->c_Decor[gain_declancheur], NULL, c_Instance->c_ecranGeneral, &pos);
 			pos.x += 40;
-			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+			pos.y -= 6;
+			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+			pos.y += 6;
+
+			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
 			SDL_FreeSurface(sfr_tmp);
 			Declancheur = p->joueur(0)->armements()->quantiteMAX(bonus::declancheur);
 		}
@@ -1473,18 +1718,21 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 		pos.x = 40;
 		pos.y += 35;
 		if( nbVie != p->joueur(0)->armements()->quantiteMAX(bonus::vie) || c_Instance->c_premierAffichage || refresh ){
-			sprintf(tempsAff,"%d", p->joueur(0)->armements()->quantiteMAX(bonus::vie) );
+			sprintf(tempsAff, "%d", p->joueur(0)->armements()->quantiteMAX(bonus::vie) );
 			sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
 
 			// Blit background
-			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w, sfr_tmp->h, 32, 0, 0, 0, 0);
-			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-			SDL_FreeSurface(sfr_bg);
+			imgRect.x = pos.x;
+			imgRect.y = pos.y;
+			SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 
 			SDL_BlitSurface(c_Instance->c_Decor[gain_vie], NULL, c_Instance->c_ecranGeneral, &pos);
 			pos.x += 40;
-			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+			pos.y -= 6;
+			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+			pos.y += 6;
+
+			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
 			SDL_FreeSurface(sfr_tmp);
 			nbVie = p->joueur(0)->armements()->quantiteMAX(bonus::vie);
 		}
@@ -1502,32 +1750,48 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 		if( refresh ){
 			// Affichage du nom du joueur 4
 			sfr_tmp = c_Instance->ecritTexte(p->joueur(3)->nom()->c_str(), couleurNoire, 55);
-			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w, sfr_tmp->h, 32, 0, 0, 0, 0);
-			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+			// On remplis le fond
+			imgRect.x = pos.x;
+			imgRect.y = pos.y;
+			imgRect.w = xpos-pos.x;
+			imgRect.h = sfr_tmp->h;
+			SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			if( (unsigned int)pos.x+(unsigned int)sfr_tmp->w > xpos ){
+				imgRect.x = 0;
+				imgRect.y = 0;
+				SDL_BlitSurface(sfr_tmp, &imgRect, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+			}else{
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+			}
+			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x, pos.y, imgRect.w, imgRect.h);
 			SDL_FreeSurface(sfr_tmp);
-			SDL_FreeSurface(sfr_bg);
 		}
 		pos.y += 25;// Espacement
 		if( p->joueur(3)->armements() ){
+			// Background
+			imgRect.w = xpos-40;// 40 (espacement bonus)
+			imgRect.h = 32;
+
 			// Bombe
 			static unsigned char nbBombe = 0;
 			pos.x = 40;
 			pos.y += 35;
 			if( nbBombe != p->joueur(3)->armements()->quantiteMAX(bonus::bombe) || c_Instance->c_premierAffichage || refresh ){
-				sprintf(tempsAff,"%d", p->joueur(3)->armements()->quantiteMAX(bonus::bombe) );
+				sprintf(tempsAff, "%d", p->joueur(3)->armements()->quantiteMAX(bonus::bombe) );
 				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
 
 				// Blit background
-				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_bg);
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 
 				SDL_BlitSurface(c_Instance->c_Decor[gain_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
 				pos.x += 40;
-				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
 				SDL_FreeSurface(sfr_tmp);
 				nbBombe = p->joueur(3)->armements()->quantiteMAX(bonus::bombe);
 			}
@@ -1537,18 +1801,21 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 			pos.x = 40;
 			pos.y += 35;
 			if( PuissFlamme != p->joueur(3)->armements()->quantiteMAX(bonus::puissance_flamme) || c_Instance->c_premierAffichage || refresh ){
-				sprintf(tempsAff,"%d", p->joueur(3)->armements()->quantiteMAX(bonus::puissance_flamme) );
+				sprintf(tempsAff, "%d", p->joueur(3)->armements()->quantiteMAX(bonus::puissance_flamme) );
 				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
 
 				// Blit background
-				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_bg);
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 
 				SDL_BlitSurface(c_Instance->c_Decor[gain_puissance_flamme], NULL, c_Instance->c_ecranGeneral, &pos);
 				pos.x += 40;
-				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
 				SDL_FreeSurface(sfr_tmp);
 				PuissFlamme = p->joueur(3)->armements()->quantiteMAX(bonus::puissance_flamme);
 			}
@@ -1558,18 +1825,21 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 			pos.x = 40;
 			pos.y += 35;
 			if( Declancheur != p->joueur(3)->armements()->quantiteMAX(bonus::declancheur) || c_Instance->c_premierAffichage || refresh ){
-				sprintf(tempsAff,"%d", p->joueur(3)->armements()->quantiteMAX(bonus::declancheur) );
+				sprintf(tempsAff, "%d", p->joueur(3)->armements()->quantiteMAX(bonus::declancheur) );
 				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
 
 				// Blit background
-				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_bg);
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 
 				SDL_BlitSurface(c_Instance->c_Decor[gain_declancheur], NULL, c_Instance->c_ecranGeneral, &pos);
 				pos.x += 40;
-				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
 				SDL_FreeSurface(sfr_tmp);
 				Declancheur = p->joueur(3)->armements()->quantiteMAX(bonus::declancheur);
 			}
@@ -1579,18 +1849,21 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 			pos.x = 40;
 			pos.y += 35;
 			if( nbVie != p->joueur(3)->armements()->quantiteMAX(bonus::vie) || c_Instance->c_premierAffichage || refresh ){
-				sprintf(tempsAff,"%d", p->joueur(3)->armements()->quantiteMAX(bonus::vie) );
+				sprintf(tempsAff, "%d", p->joueur(3)->armements()->quantiteMAX(bonus::vie) );
 				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
 
 				// Blit background
-				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_bg);
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 
 				SDL_BlitSurface(c_Instance->c_Decor[gain_vie], NULL, c_Instance->c_ecranGeneral, &pos);
 				pos.x += 40;
-				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
 				SDL_FreeSurface(sfr_tmp);
 				nbVie = p->joueur(3)->armements()->quantiteMAX(bonus::vie);
 			}
@@ -1599,16 +1872,166 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 	}else{
 		if( cleanPlayer4 ){
 			// Blit background
-			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, xpos, 25+35*5, 32, 0, 0, 0, 0);
-			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			imgRect.x = 10;
+			imgRect.y = l_map->Y()*32-(25+35*4);
+			imgRect.w = xpos;
+			imgRect.h = 25+35*5;
+			SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 			pos.x = 10;
 			pos.y = l_map->Y()*32;
-			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-			SDL_FreeSurface(sfr_bg);
+			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x, pos.y, imgRect.w, imgRect.h);
 			cleanPlayer4 = 0;
 		}
 	}
 
+	/***************************************************************************
+	* Affichage du joueur 2
+	*/
+	static bool cleanPlayer2=0;
+	if( p->nbJoueurs() > 1 && (p->connection() == partie::CNX_None || ( p->connection() != partie::CNX_None && (p->joueur(1)->isLocal() || ( !p->joueur(1)->isLocal() && p->joueur(1)->socket() != INVALID_SOCKET )))) ){
+		refresh = p->playerNeedRefresh(1);
+		// Affichage du nom du joueur 2
+		pos.x = l_map->X()*32+xpos+10;
+		pos.y = l_map->Y()*32-(25+35*4);
+
+		if( refresh ){
+			// Affichage du nom du joueur 2
+			sfr_tmp = c_Instance->ecritTexte(p->joueur(1)->nom()->c_str(), couleurNoire, 55);
+
+			// On remplis le fond
+			imgRect.x = pos.x;
+			imgRect.y = pos.y;
+			imgRect.w = xpos-10;
+			imgRect.h = sfr_tmp->h;
+			SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			if( pos.x+sfr_tmp->w > c_Instance->c_ecranGeneral->w ){
+				imgRect.x = 0;
+				imgRect.y = 0;
+				SDL_BlitSurface(sfr_tmp, &imgRect, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+			}else{
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+			}
+
+			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x, pos.y, imgRect.w, imgRect.h);
+			SDL_FreeSurface(sfr_tmp);
+		}
+		pos.y += 25;// Espacement
+		if( p->joueur(1)->armements() ){
+			// Background
+			imgRect.w = xpos-40;// 40 (espacement bonus)
+			imgRect.h = 32;
+
+			// Bombe
+			static unsigned char nbBombe = 0;
+			pos.x = l_map->X()*32+xpos+40;
+			pos.y += 35;
+			if( nbBombe != p->joueur(1)->armements()->quantiteMAX(bonus::bombe) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff, "%d", p->joueur(1)->armements()->quantiteMAX(bonus::bombe) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
+				SDL_FreeSurface(sfr_tmp);
+				nbBombe = p->joueur(1)->armements()->quantiteMAX(bonus::bombe);
+			}
+
+			// Puissance de flamme
+			static unsigned char PuissFlamme = 0;
+			pos.x = l_map->X()*32+xpos+40;
+			pos.y += 35;
+			if( PuissFlamme != p->joueur(1)->armements()->quantiteMAX(bonus::puissance_flamme) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff, "%d", p->joueur(1)->armements()->quantiteMAX(bonus::puissance_flamme) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_puissance_flamme], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
+				SDL_FreeSurface(sfr_tmp);
+				PuissFlamme = p->joueur(1)->armements()->quantiteMAX(bonus::puissance_flamme);
+			}
+
+			// Déclancheur
+			static unsigned char Declancheur = 255;
+			pos.x = l_map->X()*32+xpos+40;
+			pos.y += 35;
+			if( Declancheur != p->joueur(1)->armements()->quantiteMAX(bonus::declancheur) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff, "%d", p->joueur(1)->armements()->quantiteMAX(bonus::declancheur) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_declancheur], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
+				SDL_FreeSurface(sfr_tmp);
+				Declancheur = p->joueur(1)->armements()->quantiteMAX(bonus::declancheur);
+			}
+
+			// Vie
+			static unsigned char nbVie = 0;
+			pos.x = l_map->X()*32+xpos+40;
+			pos.y += 35;
+			if( nbVie != p->joueur(1)->armements()->quantiteMAX(bonus::vie) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff, "%d", p->joueur(1)->armements()->quantiteMAX(bonus::vie) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_vie], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
+				SDL_FreeSurface(sfr_tmp);
+				nbVie = p->joueur(1)->armements()->quantiteMAX(bonus::vie);
+			}
+		}
+		cleanPlayer2 = 1;
+	}else{
+		if( cleanPlayer2 ){
+			// Blit background
+			imgRect.x = l_map->X()*32+xpos+10;
+			imgRect.y = l_map->Y()*32-(25+35*4);
+			imgRect.w = c_Instance->c_ecranGeneral->w-(l_map->X()*32+xpos);
+			imgRect.h = 25+35*5;
+			SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			pos.x = l_map->X()*32+xpos+10;
+			pos.y = l_map->Y()*32-(25+35*4);
+			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x, pos.y, imgRect.w, imgRect.h);
+			cleanPlayer2 = 0;
+		}
+	}
 
 	/***************************************************************************
 	* Affichage du joueur 3
@@ -1622,95 +2045,121 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 		if( refresh ){
 			// Affichage du nom du joueur 3
 			sfr_tmp = c_Instance->ecritTexte(p->joueur(2)->nom()->c_str(), couleurNoire, 55);
-			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w, sfr_tmp->h, 32, 0, 0, 0, 0);
-			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+
+			// On remplis le fond
+			imgRect.x = pos.x;
+			imgRect.y = pos.y;
+			imgRect.w = c_Instance->c_ecranGeneral->w-(xpos+l_map->X()*32);
+			imgRect.h = sfr_tmp->h;
+			SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			if( (unsigned int)pos.x+(unsigned int)sfr_tmp->w > imgRect.w ){
+				imgRect.x = 0;
+				imgRect.y = 0;
+				SDL_BlitSurface(sfr_tmp, &imgRect, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+			}else{
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+			}
+			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x, pos.y, imgRect.w, imgRect.h);
 			SDL_FreeSurface(sfr_tmp);
-			SDL_FreeSurface(sfr_bg);
 		}
 		pos.y += 25;// Espacement
 		if( p->joueur(2)->armements() ){
+			// Background
+			imgRect.w = xpos-40;// 40 (espacement bonus)
+			imgRect.h = 32;
+
 			// Bombe
 			static unsigned char nbBombe = 0;
-			pos.x = l_map->X()*32+xpos+10+40;
+			pos.x = l_map->X()*32+xpos+40;
 			pos.y += 35;
 			if( nbBombe != p->joueur(2)->armements()->quantiteMAX(bonus::bombe) || c_Instance->c_premierAffichage || refresh ){
-				sprintf(tempsAff,"%d", p->joueur(2)->armements()->quantiteMAX(bonus::bombe) );
+				sprintf(tempsAff, "%d", p->joueur(2)->armements()->quantiteMAX(bonus::bombe) );
 				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
 
 				// Blit background
-				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_bg);
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 
 				SDL_BlitSurface(c_Instance->c_Decor[gain_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
 				pos.x += 40;
-				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
 				SDL_FreeSurface(sfr_tmp);
 				nbBombe = p->joueur(2)->armements()->quantiteMAX(bonus::bombe);
 			}
 
 			// Puissance de flamme
 			static unsigned char PuissFlamme = 0;
-			pos.x = l_map->X()*32+xpos+10+40;
+			pos.x = l_map->X()*32+xpos+40;
 			pos.y += 35;
 			if( PuissFlamme != p->joueur(2)->armements()->quantiteMAX(bonus::puissance_flamme) || c_Instance->c_premierAffichage || refresh ){
-				sprintf(tempsAff,"%d", p->joueur(2)->armements()->quantiteMAX(bonus::puissance_flamme) );
+				sprintf(tempsAff, "%d", p->joueur(2)->armements()->quantiteMAX(bonus::puissance_flamme) );
 				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
 
 				// Blit background
-				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_bg);
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 
 				SDL_BlitSurface(c_Instance->c_Decor[gain_puissance_flamme], NULL, c_Instance->c_ecranGeneral, &pos);
 				pos.x += 40;
-				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
 				SDL_FreeSurface(sfr_tmp);
 				PuissFlamme = p->joueur(2)->armements()->quantiteMAX(bonus::puissance_flamme);
 			}
 
 			// Déclancheur
 			static unsigned char Declancheur = 0;
-			pos.x = l_map->X()*32+xpos+10+40;
+			pos.x = l_map->X()*32+xpos+40;
 			pos.y += 35;
 			if( Declancheur != p->joueur(2)->armements()->quantiteMAX(bonus::declancheur) || c_Instance->c_premierAffichage || refresh ){
-				sprintf(tempsAff,"%d", p->joueur(2)->armements()->quantiteMAX(bonus::declancheur) );
+				sprintf(tempsAff, "%d", p->joueur(2)->armements()->quantiteMAX(bonus::declancheur) );
 				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
 
 				// Blit background
-				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_bg);
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 
 				SDL_BlitSurface(c_Instance->c_Decor[gain_declancheur], NULL, c_Instance->c_ecranGeneral, &pos);
 				pos.x += 40;
-				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
 				SDL_FreeSurface(sfr_tmp);
 				Declancheur = p->joueur(2)->armements()->quantiteMAX(bonus::declancheur);
 			}
 
 			// Vie
 			static unsigned char nbVie = 0;
-			pos.x = l_map->X()*32+xpos+10+40;
+			pos.x = l_map->X()*32+xpos+40;
 			pos.y += 35;
 			if( nbVie != p->joueur(2)->armements()->quantiteMAX(bonus::vie) || c_Instance->c_premierAffichage || refresh ){
-				sprintf(tempsAff,"%d", p->joueur(2)->armements()->quantiteMAX(bonus::vie) );
+				sprintf(tempsAff, "%d", p->joueur(2)->armements()->quantiteMAX(bonus::vie) );
 				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
 
 				// Blit background
-				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_bg);
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 
 				SDL_BlitSurface(c_Instance->c_Decor[gain_vie], NULL, c_Instance->c_ecranGeneral, &pos);
 				pos.x += 40;
-				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
 				SDL_FreeSurface(sfr_tmp);
 				nbVie = p->joueur(2)->armements()->quantiteMAX(bonus::vie);
 			}
@@ -1719,141 +2168,18 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 	}else{
 		if( cleanPlayer3 ){
 			// Blit background
-			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, xpos, 25+35*5, 32, 0, 0, 0, 0);
-			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+			imgRect.x = l_map->X()*32+xpos+10;
+			imgRect.y = ypos+15;
+			imgRect.w = c_Instance->c_ecranGeneral->w-(l_map->X()*32+xpos);
+			imgRect.h = 25+35*5;
+			SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 			pos.x = l_map->X()*32+xpos+10;
 			pos.y = ypos+15;
-			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-			SDL_FreeSurface(sfr_bg);
+			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x, pos.y, imgRect.w, imgRect.h);
 			cleanPlayer3 = 0;
 		}
 	}
 
-
-	/***************************************************************************
-	* Affichage du joueur 2
-	*/
-	static bool cleanPlayer2=0;
-	if( p->nbJoueurs() > 1 && (p->connection() == partie::CNX_None || ( p->connection() != partie::CNX_None && (p->joueur(1)->isLocal() || ( !p->joueur(1)->isLocal() && p->joueur(1)->socket() != INVALID_SOCKET )))) ){
-		refresh = p->playerNeedRefresh(1);
-		// Affichage du nom du joueur 2
-		pos.x = l_map->X()*32+xpos+10;
-		pos.y = l_map->Y()*32-(25+35*4);
-		if( refresh ){
-			// Affichage du nom du joueur 2
-			sfr_tmp = c_Instance->ecritTexte(p->joueur(1)->nom()->c_str(), couleurNoire, 55);
-			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w, sfr_tmp->h, 32, 0, 0, 0, 0);
-			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
-			SDL_FreeSurface(sfr_tmp);
-			SDL_FreeSurface(sfr_bg);
-		}
-		pos.y += 25;// Espacement
-		if( p->joueur(1)->armements() ){
-			// Bombe
-			static unsigned char nbBombe = 0;
-			pos.x = l_map->X()*32+xpos+10+40;
-			pos.y += 35;
-			if( nbBombe != p->joueur(1)->armements()->quantiteMAX(bonus::bombe) || c_Instance->c_premierAffichage || refresh ){
-				sprintf(tempsAff,"%d", p->joueur(1)->armements()->quantiteMAX(bonus::bombe) );
-				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
-
-				// Blit background
-				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_bg);
-
-				SDL_BlitSurface(c_Instance->c_Decor[gain_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
-				pos.x += 40;
-				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_tmp);
-				nbBombe = p->joueur(1)->armements()->quantiteMAX(bonus::bombe);
-			}
-
-			// Puissance de flamme
-			static unsigned char PuissFlamme = 0;
-			pos.x = l_map->X()*32+xpos+10+40;
-			pos.y += 35;
-			if( PuissFlamme != p->joueur(1)->armements()->quantiteMAX(bonus::puissance_flamme) || c_Instance->c_premierAffichage || refresh ){
-				sprintf(tempsAff,"%d", p->joueur(1)->armements()->quantiteMAX(bonus::puissance_flamme) );
-				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
-
-				// Blit background
-				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_bg);
-
-				SDL_BlitSurface(c_Instance->c_Decor[gain_puissance_flamme], NULL, c_Instance->c_ecranGeneral, &pos);
-				pos.x += 40;
-				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_tmp);
-				PuissFlamme = p->joueur(1)->armements()->quantiteMAX(bonus::puissance_flamme);
-			}
-
-			// Déclancheur
-			static unsigned char Declancheur = 255;
-			pos.x = l_map->X()*32+xpos+10+40;
-			pos.y += 35;
-			if( Declancheur != p->joueur(1)->armements()->quantiteMAX(bonus::declancheur) || c_Instance->c_premierAffichage || refresh ){
-				sprintf(tempsAff,"%d", p->joueur(1)->armements()->quantiteMAX(bonus::declancheur) );
-				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
-
-				// Blit background
-				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_bg);
-
-				SDL_BlitSurface(c_Instance->c_Decor[gain_declancheur], NULL, c_Instance->c_ecranGeneral, &pos);
-				pos.x += 40;
-				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_tmp);
-				Declancheur = p->joueur(1)->armements()->quantiteMAX(bonus::declancheur);
-			}
-
-			// Vie
-			static unsigned char nbVie = 0;
-			pos.x = l_map->X()*32+xpos+10+40;
-			pos.y += 35;
-			if( nbVie != p->joueur(1)->armements()->quantiteMAX(bonus::vie) || c_Instance->c_premierAffichage || refresh ){
-				sprintf(tempsAff,"%d", p->joueur(1)->armements()->quantiteMAX(bonus::vie) );
-				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
-
-				// Blit background
-				sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, sfr_tmp->w+40+32, sfr_tmp->h, 32, 0, 0, 0, 0);
-				SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-				SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_bg);
-
-				SDL_BlitSurface(c_Instance->c_Decor[gain_vie], NULL, c_Instance->c_ecranGeneral, &pos);
-				pos.x += 40;
-				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);
-				SDL_FreeSurface(sfr_tmp);
-				nbVie = p->joueur(1)->armements()->quantiteMAX(bonus::vie);
-			}
-		}
-		cleanPlayer2 = 1;
-	}else{
-		if( cleanPlayer2 ){
-			// Blit background
-			sfr_bg = SDL_CreateRGBSurface(SDL_HWSURFACE, xpos, 25+35*5, 32, 0, 0, 0, 0);
-			SDL_FillRect(sfr_bg, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
-			pos.x = l_map->X()*32+xpos+10;
-			pos.y = l_map->Y()*32-(25+35*4);
-			SDL_BlitSurface(sfr_bg, NULL, c_Instance->c_ecranGeneral, &pos);
-			SDL_FreeSurface(sfr_bg);
-			cleanPlayer2 = 0;
-		}
-	}
-
-
-	// On update tout le coté gauche
-	SDL_UpdateRect(c_Instance->c_ecranGeneral, 0, ypos, xpos, c_Instance->c_ecranGeneral->h-ypos);
-	// On update tout le coté droite
-	SDL_UpdateRect(c_Instance->c_ecranGeneral, l_map->X()*32+xpos, ypos, xpos, c_Instance->c_ecranGeneral->h-ypos);
 
 	if( c_Instance->c_premierAffichage )
 		c_Instance->c_premierAffichage = 0;
@@ -2002,6 +2328,24 @@ char* moteur_sdl::completerMot( char texte[], unsigned int taille )
 		texte[i] = '_';
 	}
 	return texte;
+}
+
+
+
+/***************************************************************************//*!
+* @fn int moteur_sdl::isInSpriteList( s_Coordonnees pos )
+* @brief Complete le texte avec le caractère _ jusqu'a avoir un texte de longueur 20
+* @return Si trouvé, alors renvoie la position dans la liste. Sinon -1
+*/
+int moteur_sdl::isInSpriteList( s_Coordonnees pos )
+{
+	unsigned int i;
+	for( i=0; i<c_ListSprite.size(); i++ )
+	{
+		if( coordonneeEgal(c_ListSprite.at(i).pos, pos) )
+			return i;
+	}
+	return -1;
 }
 
 

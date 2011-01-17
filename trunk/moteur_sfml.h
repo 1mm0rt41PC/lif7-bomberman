@@ -45,7 +45,6 @@ class moteur_sfml
 			bout_flamme_gauche,
 			bout_flamme_droite,
 			bombe,
-			bombe_explosion,
 			// Bonus
 			gain_bombe,
 			gain_declancheur,
@@ -90,7 +89,7 @@ class moteur_sfml
 		inline void forcerRafraichissement() { c_premierAffichage = 1; }
 
 		// Autre :: Affichage
-		static SYS_CLAVIER afficherMapEtEvent( const partie* p );
+		static SYS_CLAVIER afficherMapEtEvent( partie* p );
 };
 
 #endif

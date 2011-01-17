@@ -1,7 +1,7 @@
 #include "partie.h"
 #include "debug.h"
 
-using namespace std;
+typedef std::string string;
 
 /***************************************************************************//*!
 * @fn partie::partie()
@@ -140,13 +140,13 @@ unsigned char partie::nbJoueurVivant() const
 	unsigned char nbJoueurVivant = 0;
 	for( unsigned char i=0; i<c_nb_joueurs; i++ )
 	{
-		if( (c_joueurs[i].isLocal() || (!c_joueurs[i].isLocal() && c_joueurs[i].socket() != INVALID_SOCKET))
-		&& c_joueurs[i].armements()
-		&& (
-			c_joueurs[i].armements()->est_Dans_La_Liste(bonus::vie) == -1
-			|| (c_joueurs[i].armements()->quantiteUtilisable(bonus::vie) > 0
-			|| c_joueurs[i].armements()->quantiteMAX_Ramassable(bonus::vie) == 0)
+		if( (c_joueurs[i].isLocal()
+			|| (
+				!c_joueurs[i].isLocal()
+				&& c_joueurs[i].socket() != INVALID_SOCKET
+				)
 			)
+			&& c_joueurs[i].armements()
 		)
 			nbJoueurVivant++;
 	}
@@ -496,15 +496,17 @@ char partie::main( libAff * afficherMapEtEvent )
 
 	c_timeOut = clock() + 2*60*CLOCKS_PER_SEC+30*CLOCKS_PER_SEC;// 2min:30
 
-	// Envoie du timer à tout les players !
-	for( i=0; i<c_nb_joueurs; i++ )
-	{
-		if( !c_joueurs[i].isLocal() && c_joueurs[i].socket() != INVALID_SOCKET ){
-			// Envoie du timer
-			sprintf(c_buffer, "9:%ld", c_timeOut-clock());
-			c_server->send_message( c_joueurs[i].socket(), c_buffer, PACK_bufferSize);
-			strcpy(c_buffer, "0:end");
-			c_server->send_message( s, c_buffer, PACK_bufferSize);// Fin de transmition
+	if( c_connection == CNX_Host ){// Si on est en mode serveur alors on connecte le serveur
+		// Envoie du timer à tout les players !
+		for( i=0; i<c_nb_joueurs; i++ )
+		{
+			if( !c_joueurs[i].isLocal() && c_joueurs[i].socket() != INVALID_SOCKET ){
+				// Envoie du timer
+				sprintf(c_buffer, "9:%ld", c_timeOut-clock());
+				c_server->send_message( c_joueurs[i].socket(), c_buffer, PACK_bufferSize);
+				strcpy(c_buffer, "0:end");
+				c_server->send_message( s, c_buffer, PACK_bufferSize);// Fin de transmition
+			}
 		}
 	}
 
@@ -917,7 +919,7 @@ char partie::main( libAff * afficherMapEtEvent )
 	// On détermine, qui a gagné
 	for( i=0; i<c_nb_joueurs; i++ )
 	{
-		if( c_joueurs[i].armements() && (c_joueurs[i].armements()->est_Dans_La_Liste(bonus::vie) == -1 || (c_joueurs[i].armements()->quantiteUtilisable(bonus::vie) > 0 || c_joueurs[i].armements()->quantiteMAX_Ramassable(bonus::vie) == 0)) ){
+		if( c_joueurs[i].armements() ){
 			JoueurGagnant = i+1;// ( on veut un nombre entre 1 et ... )
 			c_winnerName = *c_joueurs[i].nom();
 			break;
@@ -1024,6 +1026,13 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 				break;
 			}
 			case map::bombe_poser_AVEC_plusieurs_joueurs: {
+				// On enlève le perso de son ancienne position
+				if( c_map->nb_InfoJoueur(c_joueurs[joueur].X(), c_joueurs[joueur].Y())-2 == 1 ){
+					c_map->setBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y(), map::bombe_poser_AVEC_UN_joueur);
+				}else{
+					c_map->setBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y(), map::bombe_poser_AVEC_plusieurs_joueurs);
+				}
+				c_map->rmInfoJoueur( c_joueurs[joueur].X(), c_joueurs[joueur].Y(), joueur+1, 0 );
 				break;
 			}
 			default: {
@@ -1062,8 +1071,21 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 		case map::flamme_pointe_gauche:
 		case map::flamme_origine: {
 			// Viens d'aller dans le feu -> Boulet ?
-			c_joueurs[joueur].defArmements(0);// Mort
-			c_map->setBlock(c_joueurs[joueur].X(), c_joueurs[joueur].Y(), map::vide);
+			c_joueurs[joueur].defPos(newX, newY);
+
+			if( c_joueurs[joueur].armements()->quantiteUtilisable(bonus::vie) == 0 ){
+				// Le perso n'a plus de vie
+				// On le supprime de la carte
+				// On force tout les events à ce mettre dans la file général
+				// On active toutes les bombes
+				c_joueurs[joueur].armements()->kill();
+			}else{
+				// Il reste une vie au perso
+				// On supprime une vie
+				c_joueurs[joueur].armements()->decQuantiteUtilisable(bonus::vie);
+				c_joueurs[joueur].armements()->decQuantiteMAX_en_stock(bonus::vie);
+				placer_perso_position_initial(joueur);
+			}
 			break;
 		}
 		case map::bonus: {
@@ -1456,7 +1478,7 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 	{
 		case map::UN_joueur: {// Le pauvre joueur qui est au millieu du chemin de la flamme -> dead
 			idJoueur = c_map->getBlock(x, y)->joueur->at(0)-1;
-			if( c_joueurs[idJoueur].armements()->quantiteUtilisable(bonus::vie)-1 == 0 ){
+			if( c_joueurs[idJoueur].armements()->quantiteUtilisable(bonus::vie) == 0 ){
 				// Le perso n'a plus de vie
 				// On le supprime de la carte
 				// On force tout les events à ce mettre dans la file général
@@ -1477,7 +1499,7 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 			for( k=0; k<c_map->getBlock(x, y)->joueur->size(); k++ )
 			{
 				idJoueur = c_map->getBlock(x, y)->joueur->at(k)-1;
-				if( c_joueurs[idJoueur].armements()->quantiteUtilisable(bonus::vie)-1 == 0 ){
+				if( c_joueurs[idJoueur].armements()->quantiteUtilisable(bonus::vie) == 0 ){
 					// Le perso n'a plus de vie
 					// On le supprime de la carte
 					// On force tout les events à ce mettre dans la file général
@@ -1495,31 +1517,15 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 			return 1;
 		}
 		case map::bombe_poser_AVEC_UN_joueur: {// Le pauvre joueur qui est au millieu du chemin de la flamme -> dead
-			// On fait explosé la bombe
 			idJoueur = c_map->getBlock(x, y)->joueur->at(0)-1;
-			if( c_joueurs[idJoueur].armements() ){
-				for( unsigned int h=0; h<c_joueurs[idJoueur].armements()->modEvent()->size(); h++ )
-				{
-					if( c_joueurs[idJoueur].armements()->modEvent()->at(h).pos.x == x && c_joueurs[idJoueur].armements()->modEvent()->at(h).pos.y == y ){
-						eAdd.type = c_joueurs[idJoueur].armements()->modEvent()->at(h).type;
-						eAdd.joueur = idJoueur+1;
-						eAdd.pos = c_joueurs[idJoueur].armements()->modEvent()->at(h).pos;
-						eAdd.repetionSuivante = 0;
-						eAdd.Nb_Repetition = 0;
-						eAdd.Nb_Repetition_MAX = c_joueurs[idJoueur].armements()->quantiteUtilisable(bonus::puissance_flamme);
-						eAdd.continue_X = true;
-						eAdd.continue_negativeX = true;
-						eAdd.continue_Y = true;
-						eAdd.continue_negativeY = true;
-						c_listEvent.push_back( eAdd );
-						c_joueurs[idJoueur].armements()->modEvent()->erase(c_joueurs[idJoueur].armements()->modEvent()->begin()+h);
-					}
-				}
-			}
+
+			// On fait explosé la bombe
+			if( c_joueurs[idJoueur].armements() )
+				c_joueurs[idJoueur].armements()->forceTimeOut(x, y);
 
 			// On tue le player
 			idJoueur = c_map->getBlock(x, y)->joueur->at(1)-1;
-			if( c_joueurs[idJoueur].armements()->quantiteUtilisable(bonus::vie)-1 == 0 ){
+			if( c_joueurs[idJoueur].armements()->quantiteUtilisable(bonus::vie) == 0 ){
 				// Le perso n'a plus de vie
 				// On le supprime de la carte
 				// On force tout les events à ce mettre dans la file général
@@ -1536,37 +1542,25 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 			c_map->rmInfoJoueur(x, y, idJoueur+1, 0);
 
 			// On supprime la bombe (anti-bug)
-			if( !c_joueurs[c_map->getBlock(x, y)->joueur->at(0)-1].armements() )
-				c_map->rmInfoJoueur(x, y, c_map->getBlock(x, y)->joueur->at(0), 1);
+			/*
+			if( !c_joueurs[idJoueur].armements() )
+				c_map->rmInfoJoueur(x, y, idJoueur+1, 1);
+			*/
+
 
 			return 0;
 		}
 		case map::bombe_poser_AVEC_plusieurs_joueurs: {// Les pauvres joueurs qui sont au millieu du chemin de la flamme -> dead
-				// On fait explosé la bombe
 				idJoueur = c_map->getBlock(x, y)->joueur->at(0)-1;
-				if( c_joueurs[idJoueur].armements() ){
-					for( unsigned int h=0; h<c_joueurs[idJoueur].armements()->modEvent()->size(); h++ )
-					{
-						if( c_joueurs[idJoueur].armements()->modEvent()->at(h).pos.x == x && c_joueurs[idJoueur].armements()->modEvent()->at(h).pos.y == y ){
-							eAdd.type = c_joueurs[idJoueur].armements()->modEvent()->at(h).type;
-							eAdd.joueur = idJoueur+1;
-							eAdd.pos = c_joueurs[idJoueur].armements()->modEvent()->at(h).pos;
-							eAdd.repetionSuivante = 0;
-							eAdd.Nb_Repetition = 0;
-							eAdd.Nb_Repetition_MAX = c_joueurs[idJoueur].armements()->quantiteUtilisable(bonus::puissance_flamme);
-							eAdd.continue_X = true;
-							eAdd.continue_negativeX = true;
-							eAdd.continue_Y = true;
-							eAdd.continue_negativeY = true;
-							c_listEvent.push_back( eAdd );
-							c_joueurs[idJoueur].armements()->modEvent()->erase(c_joueurs[idJoueur].armements()->modEvent()->begin()+h);
-						}
-					}
-				}
+
+				// On fait explosé la bombe
+				if( c_joueurs[idJoueur].armements() )
+					c_joueurs[idJoueur].armements()->forceTimeOut(x, y);
+
 				// On tue les players
 				for( unsigned int h=1; h<c_map->getBlock(x, y)->joueur->size(); h++ ){
 					idJoueur = c_map->getBlock(x, y)->joueur->at(h)-1;
-					if( c_joueurs[idJoueur].armements()->quantiteUtilisable(bonus::vie)-1 == 0 ){
+					if( c_joueurs[idJoueur].armements()->quantiteUtilisable(bonus::vie) == 0 ){
 						// Le perso n'a plus de vie
 						// On le supprime de la carte
 						// On force tout les events à ce mettre dans la file général
@@ -1584,8 +1578,10 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 				}
 
 				// On supprime la bombe (anti-bug)
-				if( !c_joueurs[c_map->getBlock(x, y)->joueur->at(0)-1].armements() )
-					c_map->rmInfoJoueur(x, y, c_map->getBlock(x, y)->joueur->at(0), 1);
+				/*
+				if( !c_joueurs[idJoueur].armements() )
+					c_map->rmInfoJoueur(x, y, idJoueur+1, 1);
+				*/
 			return 0;
 		}
 		case map::bombe_poser: {

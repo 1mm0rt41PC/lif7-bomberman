@@ -1,4 +1,3 @@
-using namespace sf;
 #include "moteur_sfml.h"
 #include "debug.h"
 
@@ -6,6 +5,7 @@ moteur_sfml* moteur_sfml::c_Instance = 0;
 
 #define chargerImage( Image, src ) if( !Image.LoadFromFile(src) ) stdErrorE("Erreur lors du chargement de l'image " src)
 
+using namespace sf;
 
 /***************************************************************************//*!
 * @fn moteur_sfml::moteur_sfml()
@@ -15,7 +15,7 @@ moteur_sfml* moteur_sfml::c_Instance = 0;
 */
 moteur_sfml::moteur_sfml()
 {
-	c_App.Create(VideoMode(1024,768,32), "Bomberman");
+	c_App.Create(VideoMode(1024, 768, 32), "Bomberman");
 
 	// 50 : Size of characters in bitmap - the bigger, the higher quality (30 by default)
 	if( !c_policeGeneral.LoadFromFile("Chicken Butt.ttf", 50) )
@@ -26,10 +26,7 @@ moteur_sfml::moteur_sfml()
 	/***************************************************************************
 	* On charge ici le décor
 	*/
-	c_Decor = new SDL_Surface*[__nombre_de_decors__];
-	// Initialisation du décor
-	for( unsigned int i=0; i<__nombre_de_decors__; i++ )
-		c_Decor[i] = 0;
+	c_Decor = new Image[__nombre_de_decors__];
 
 	//murs
 	chargerImage(c_Decor[vide], "images/vide.png");
@@ -55,9 +52,6 @@ moteur_sfml::moteur_sfml()
 	chargerImage(c_Decor[joueur4_bas], "images/bomberman4_bas.png");
 	chargerImage(c_Decor[joueur4_gauche], "images/bomberman4_gauche.png");
 	chargerImage(c_Decor[joueur4_droite], "images/bomberman4_droite.png");
-	//gain
-	chargerImage(c_Decor[gain_puissance_flamme], "images/gain_puissance_flamme.png");
-	chargerImage(c_Decor[gain_bombe], "images/gain_bombe.png");
 	//armes
 	chargerImage(c_Decor[flamme_origine], "images/flamme_origine.png");
 	chargerImage(c_Decor[flamme_vertical], "images/milieu_flamme_verticale.png");
@@ -67,10 +61,19 @@ moteur_sfml::moteur_sfml()
 	chargerImage(c_Decor[bout_flamme_gauche], "images/flamme_gauche.png");
 	chargerImage(c_Decor[bout_flamme_droite], "images/flamme_droite.png");
 	chargerImage(c_Decor[bombe], "images/bombe.gif");
-	//chargerImage(c_Decor[bombe_explosion], "images/bombe_explosion.png");
+	// Bonus
+	chargerImage(c_Decor[gain_bombe], "images/gain_bombe.png");
+	chargerImage(c_Decor[gain_declancheur], "images/detonateur.png");
+	chargerImage(c_Decor[gain_puissance_flamme], "images/gain_puissance_flamme.png");
+	chargerImage(c_Decor[gain_vitesse_vitesse], "images/vitesse.png");
+	chargerImage(c_Decor[gain_vie], "images/gain_vie.gif");
 }
 
 
+/***************************************************************************//*!
+* @fn moteur_sfml& moteur_sfml::getInstance()
+* @brief Renvoie l'instance de la class. Si pas d'instance, alors création d'une instance
+*/
 moteur_sfml& moteur_sfml::getInstance()
 {
 	if( !c_Instance )

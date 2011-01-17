@@ -97,21 +97,21 @@ int main( int argc, char* arvg[] )
 			/*******************************************************************
 			* Jouer :: Type de partie
 			*/
-			case 1:{
+			case 1: {
 				do{
 					switch( entry = m.menu("Type de partie", menu_jeu, 3) )
 					{
 						/*******************************************************
 						* Offline
 						*/
-						case 1:{// Offline
-							while( m.getNombre("Entrez le nombre de joueur", 2, 2, 4, &tmp) != 3 )
+						case 1: {// Offline
+							while( m.isWindowOpen() && m.getNombre("Entrez le nombre de joueur", 2, 2, 4, &tmp) != 3 && m.isWindowOpen() )
 							{
 								// Menu suivant
 								partie jeu;
 								jeu.def_nbJoueurs(tmp);
 
-								for( int i=0; i<tmp; i++ )
+								for( int i=0; i<tmp && m.isWindowOpen(); i++ )
 								{
 									nomJoueurNumI[0] = 0;
 									sprintf(titreNomJoueurNumI, "Joueur %d entrez votre nom", i+1);
@@ -123,7 +123,7 @@ int main( int argc, char* arvg[] )
 									jeu.joueur(i)->defNom(nomJoueurNumI);
 								}
 
-								if( !retourMenuAudessus ){
+								if( !retourMenuAudessus && m.isWindowOpen() ){
 									do{
 										m.forcerRafraichissement();
 										tmp = jeu.main( m.afficherMapEtEvent );
@@ -132,7 +132,7 @@ int main( int argc, char* arvg[] )
 										if( tmp == 0 )
 											sprintf(finPartie, "Match nul ! Pas de gagnant !");
 
-									}while( tmp >= 0 && m.menu(finPartie, menu_replay, 3) != 3 );
+									}while( tmp >= 0 && m.isWindowOpen() && m.menu(finPartie, menu_replay, 3) != 3 && m.isWindowOpen() );
 								}
 								retourMenuAudessus = 0;
 							}
@@ -141,18 +141,18 @@ int main( int argc, char* arvg[] )
 						/*******************************************************
 						* Online
 						*/
-						case 2:{// Online
+						case 2: {// Online
 							do{
 								switch( entry = m.menu("Type de connection", menu_online, 3) )
 								{
 									/***********************************************
 									* Host
 									*/
-									case 1:{// RESTE A DEF: le nb player total, nb player local
+									case 1: {// RESTE A DEF: le nb player total, nb player local
 										/***************************************
 										* Nombre de joueur TOTAL
 										*/
-										while( m.getNombre("Nombre de joueur TOTAL", 2, 2, 4, &tmp) != 3 )
+										while( m.isWindowOpen() && m.getNombre("Nombre de joueur TOTAL", 2, 2, 4, &tmp) != 3 && m.isWindowOpen() )
 										{
 											partie jeu;
 											jeu.def_connection( partie::CNX_Host );
@@ -164,9 +164,9 @@ int main( int argc, char* arvg[] )
 											/***********************************
 											* Nombre de joueur LOCAL
 											*/
-											while( m.getNombre("Nombre de joueur LOCAL", 1, 1, tmp-1, &tmp) != 3 )
+											while( m.isWindowOpen() && m.getNombre("Nombre de joueur LOCAL", 1, 1, tmp-1, &tmp) != 3 && m.isWindowOpen() )
 											{
-												for( int i=0; i<tmp; i++ )
+												for( int i=0; i<tmp && m.isWindowOpen(); i++ )
 												{
 													nomJoueurNumI[0] = 0;
 													sprintf(titreNomJoueurNumI, "Joueur %d entrez votre nom", i+1);
@@ -178,7 +178,7 @@ int main( int argc, char* arvg[] )
 													jeu.joueur(i)->defNom(nomJoueurNumI);
 													jeu.joueur(i)->defLocal( true );
 												}
-												if( !retourMenuAudessus ){
+												if( !retourMenuAudessus && m.isWindowOpen() ){
 													do{
 														m.forcerRafraichissement();
 														tmp = jeu.main( m.afficherMapEtEvent );
@@ -187,7 +187,7 @@ int main( int argc, char* arvg[] )
 														if( tmp == 0 )
 															sprintf(finPartie, "Match nul ! Pas de gagnant !");
 
-													}while( tmp >= 0 && m.menu(finPartie, menu_replay, 3) != 3 );
+													}while( tmp >= 0 && m.isWindowOpen() && m.menu(finPartie, menu_replay, 3) != 3 && m.isWindowOpen() );
 												}
 												retourMenuAudessus = 0;
 											}
@@ -197,9 +197,9 @@ int main( int argc, char* arvg[] )
 									/***********************************************
 									* Client
 									*/
-									case 2:{
+									case 2: {
 										strcpy(nomJoueurNumI, "127.0.0.1");
-										while( m.getTexte( "Veuillez entrez l'adresse IP du serveur", nomJoueurNumI ) != 3 )
+										while( m.isWindowOpen() && m.getTexte( "Veuillez entrez l'adresse IP du serveur", nomJoueurNumI ) != 3 && m.isWindowOpen() )
 										{
 											partie jeu;
 											jeu.def_connection( partie::CNX_Client );
@@ -213,10 +213,11 @@ int main( int argc, char* arvg[] )
 												retourMenuAudessus = 1;
 												break;// Permet de remonter au menu au dessus
 											}
-											jeu.joueur(0)->defNom(nomJoueurNumI);
 
+											jeu.joueur(0)->defNom(nomJoueurNumI);
 											jeu.joueur(0)->defLocal( false );
-											if( !retourMenuAudessus ){
+
+											if( !retourMenuAudessus && m.isWindowOpen() ){
 												do{
 													m.forcerRafraichissement();
 													tmp = jeu.main( m.afficherMapEtEvent );
@@ -225,7 +226,7 @@ int main( int argc, char* arvg[] )
 													if( tmp == 0 )
 														sprintf(finPartie, "Match nul ! Pas de gagnant !");
 
-												}while( tmp >= 0 && m.menu(finPartie, menu_replay, 3) != 3 );
+												}while( tmp >= 0 && m.isWindowOpen() && m.menu(finPartie, menu_replay, 3) != 3 && m.isWindowOpen() );
 											}
 											retourMenuAudessus = 0;
 										}
@@ -234,35 +235,35 @@ int main( int argc, char* arvg[] )
 									/***********************************************
 									* Retour au menu précédant
 									*/
-									case 3:{// Retour
+									case 3: {// Retour
 										break;
 									}
 								}
-							}while( entry != 3 );
+							}while( entry != 3 && m.isWindowOpen() );
 							break;
 						}
 						/*******************************************************
 						* Retour au menu précédant
 						*/
-						case 3:{// Retour
+						case 3: {// Retour
 							break;
 						}
 					}
-				}while( entry != 3 );
+				}while( entry != 3 && m.isWindowOpen() );
 				entry = 0;
 				break;
 			}
 			/*******************************************************************
 			* Menu des options
 			*/
-			case 2:{// Options
+			case 2: {// Options
 				do{
 					switch( entry = m.menu("Options", menu_options, 3) )
 					{
 						/*******************************************************
 						* Menu des options
 						*/
-						case 1:{// Port
+						case 1: {// Port
 								if( m.getNombre("Port pour le serveur", options::getInstance()->port(), 1, 9999, &tmp ) == 2 ){
 									options::getInstance()->defPort( tmp );
 									options::getInstance()->enregistrerConfig();
@@ -273,7 +274,7 @@ int main( int argc, char* arvg[] )
 						/*******************************************************
 						* Menu des claviers
 						*/
-						case 2:{// Claviers
+						case 2: {// Claviers
 							/*******************************************************
 							* Menu des claviers
 							*/
@@ -286,16 +287,16 @@ int main( int argc, char* arvg[] )
 									case 1:
 									case 2:
 									case 3:
-									case 4:{// CONFIG CLAVIERS !
+									case 4: {// CONFIG CLAVIERS !
 										m.afficherConfigurationClavier( entry );
 										options::getInstance()->enregistrerConfig();
 										break;
 									}
-									case 5:{// Retour
+									case 5: {// Retour
 										break;
 									}
 								}
-							}while( entry != 5 );
+							}while( entry != 5 && m.isWindowOpen() );
 							entry=0;
 							break;
 						}
@@ -303,20 +304,20 @@ int main( int argc, char* arvg[] )
 						/*******************************************************
 						* Retour au menu précédant
 						*/
-						case 3:{// Retour
+						case 3: {// Retour
 							break;
 						}
 					}
-				}while( entry != 3 );
+				}while( entry != 3 && m.isWindowOpen() );
 				entry=0;
 				break;
 			}
 
-			case 3:{// Quiter
+			case 3: {// Quiter
 				break;
 			}
 		}
-	}while( entry != 3 );
+	}while( entry != 3 && m.isWindowOpen() );
 
 	//**************************************************************************
 	//**************************************************************************

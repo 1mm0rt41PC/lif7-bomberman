@@ -1,7 +1,8 @@
 #include "map.h"
 #include "debug.h"
 
-using namespace std;
+typedef std::string string;
+
 
 /***************************************************************************//*!
 * @fn map::map()
@@ -117,7 +118,7 @@ void map::ajouterInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Jo
 	s_Case* c = c_block + (X * c_taille.x + Y);
 
 	if( !c->joueur )
-		c->joueur = new vector<unsigned char>;
+		c->joueur = new std::vector<unsigned char>;
 
 	if( premierePosition )
 		c->joueur->insert( c->joueur->begin(), id_Joueur );
@@ -142,7 +143,7 @@ void map::ajouterInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Jo
 */
 void map::rmInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierEltInclu )
 {
-	vector<unsigned char>* vct = NULL;
+	std::vector<unsigned char>* vct = NULL;
 
 	if( !c_block || X >= c_taille.x || Y >= c_taille.y )
 		stdErrorE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, id_Joueur=%u, premierEltInclu=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, (unsigned int)id_Joueur, (int)premierEltInclu);
@@ -231,7 +232,7 @@ int map::chargerMap( const char fichier[] )
 	char *fichierUtiliser = (char*)fichier;
 	FILE* fp=0;
 	char c=0;
-	vector<string> fichiers;
+	std::vector<string> fichiers;
 
 	// Si pas de nom de fichier donnée => map aléatoire
 	if( !fichier ){
@@ -373,7 +374,7 @@ s_Coordonnees map::mettreJoueurA_sa_PositionInitial( unsigned char joueur )
 	s_Case* c = &c_block[ c_PointDeDepartJoueur[joueur-1].x * c_taille.x + c_PointDeDepartJoueur[joueur-1].y ];
 	c->element = UN_joueur;
 	if( !c->joueur )
-		c->joueur = new vector<unsigned char>;
+		c->joueur = new std::vector<unsigned char>;
 	c->joueur->push_back( joueur );
 
 	return c_PointDeDepartJoueur[joueur-1];

@@ -99,7 +99,7 @@ void perso::defX( unsigned int Xpos )
 * @brief Modif l'armement du perso
 *
 * Modifie implicitement l'état : vivant / mort<br />
-* Armé => vivant si (une ou plusieurs vie) ou (quantite_MAX_Ramassable = 0)<br />
+* Armé => vivant<br />
 * Désarmé => mort<br />
 */
 void perso::defArmements( bonus* a )
