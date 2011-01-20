@@ -31,6 +31,8 @@ moteur_sdl::moteur_sdl()
 
 	SDL_EnableUNICODE(1);// On ne veut pas un clavier QWERTY
 
+	SDL_EnableKeyRepeat(0, 0);// Pas de répétition des touches
+
 	/***************************************************************************
 	* On charge ici le décor
 	*/
@@ -77,7 +79,7 @@ moteur_sdl::moteur_sdl()
 	c_Decor[gain_bombe] = chargerImage("images/gain_bombe.png");
 	c_Decor[gain_declancheur] = chargerImage("images/detonateur.png");
 	c_Decor[gain_puissance_flamme] = chargerImage("images/gain_puissance_flamme.png");
-	c_Decor[gain_vitesse_vitesse] = chargerImage("images/vitesse.png");
+	c_Decor[gain_pousse_bombe] = chargerImage("images/kick.png");
 	c_Decor[gain_vie] = chargerImage("images/gain_vie.gif");
 
 	c_fenetreOuverte = true;
@@ -973,7 +975,10 @@ int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
 	textes = new SDL_Surface*[3*2];
 
 	// Ecriture du texte dans la SDL_Surface "texte" en mode Blended (optimal)
-	textes[0] = ecritTexte(completerMot(texteRetour, tailleTexteRetour));
+	if( tailleTexteRetour )
+		textes[0] = ecritTexte(texteRetour);
+	else
+		textes[0] = ecritTexte(completerMot(texteRetour, tailleTexteRetour));
 	textes[1] = ecritTexte("Ok");
 	textes[2] = ecritTexte("Retour");
 
@@ -986,6 +991,21 @@ int moteur_sdl::getTexte( const char titre[], char texteRetour[21] )
 	TTF_SetFontStyle(c_policeGeneral, TTF_STYLE_UNDERLINE);
 	sfr_titre = ecritTexte(titre);
 	TTF_SetFontStyle(c_policeGeneral, TTF_STYLE_NORMAL);
+	int taille = 70;
+	while( sfr_titre->w > c_ecranGeneral->w ){
+		SDL_FreeSurface(sfr_titre);
+
+		TTF_Font* police;
+		if( !(police = TTF_OpenFont("Chicken Butt.ttf", taille)) )
+			stdErrorE("Erreur lors du chargement de la police : %s", TTF_GetError());
+
+		TTF_SetFontStyle(police, TTF_STYLE_UNDERLINE);
+		sfr_titre = ecritTexte(titre, police);
+		TTF_SetFontStyle(police, TTF_STYLE_NORMAL);
+		taille-=5;
+
+		TTF_CloseFont(police);
+	}
 
 
 	while( continuer )
@@ -1211,13 +1231,13 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 		pos.y = 0;
 		SDL_FillRect(c_Instance->c_ecranGeneral, NULL, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 
-		for( unsigned int x,y=0; y<l_map->Y(); y++ )
+		for( unsigned int x, y=0; y<l_map->Y(); y++ )
 		{
 			for( x=0; x<l_map->X(); x++ )
 			{
 				pos.x=x*32+xpos;
 				pos.y=y*32+ypos;
-				switch( l_map->getBlock(x,y)->element )
+				switch( l_map->getBlock(x, y)->element )
 				{
 					case map::vide: {
 						SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
@@ -1231,21 +1251,33 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 						SDL_BlitSurface(c_Instance->c_Decor[mur_indestructible], NULL, c_Instance->c_ecranGeneral, &pos);
 						break;
 					}
-					case map::UN_joueur:
-					case map::plusieurs_joueurs: {
-						if( !l_map->getBlock(x,y)->joueur )
-							stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y)->joueur=0", x, y);
+					case map::UN_joueur: {
+						if( !l_map->getBlock(x, y)->joueur )
+							stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x, y)->joueur=0", x, y);
+						if( !l_map->getBlock(x, y)->joueur->size() )
+							stdErrorE("l_map->getBlock(%u, %u)->joueur->size()=0", x, y);
 
-						unsigned char joueur = l_map->getBlock(x,y)->joueur->at(0);// renvoie un numéro de joueur [1-...]
-
+						unsigned char joueur = l_map->getBlock(x, y)->joueur->at(0);
 						SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
 						c_Instance->joueur_orientation( p->joueur(joueur-1)->orientation(), joueur, &pos );
 						break;
 					}
+					case map::plusieurs_joueurs: {
+						if( !l_map->getBlock(x, y)->joueur )
+							stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x, y)->joueur=0", x, y);
+
+						unsigned char joueur;
+						SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
+						for( int i=l_map->getBlock(x, y)->joueur->size()-1; i>=0; i-- ){
+							joueur = l_map->getBlock(x, y)->joueur->at(i);
+							c_Instance->joueur_orientation( p->joueur(joueur-1)->orientation(), joueur, &pos );
+						}
+						break;
+					}
 					case map::bombe_poser: {
-						if( c_Instance->isInSpriteList(coordonneeConvert(x,y)) == -1 ){
+						if( c_Instance->isInSpriteList(coordonneeConvert(x, y)) == -1 ){
 							Sprite b;
-							b.pos = coordonneeConvert(x,y);
+							b.pos = coordonneeConvert(x, y);
 							b.objet = bombe;
 							b.frame = 0;
 							b.refresh = 0;
@@ -1270,9 +1302,9 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 
 						unsigned char joueur = l_map->getBlock(x, y)->joueur->at(1);
 
-						if( c_Instance->isInSpriteList(coordonneeConvert(x,y)) == -1 ){
+						if( c_Instance->isInSpriteList(coordonneeConvert(x, y)) == -1 ){
 							Sprite b;
-							b.pos = coordonneeConvert(x,y);
+							b.pos = coordonneeConvert(x, y);
 							b.objet = bombe;
 							b.frame = 0;
 							b.refresh = 0;
@@ -1320,11 +1352,11 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 						break;
 					}
 					case map::bonus: {
-						if( !l_map->getBlock(x,y)->joueur )
-							stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y).joueur=0", x, y);
+						if( !l_map->getBlock(x, y)->joueur )
+							stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x, y).joueur=0", x, y);
 
 						SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
-						switch( (bonus::t_Bonus)l_map->getBlock(x,y)->joueur->at(0) )
+						switch( (bonus::t_Bonus)l_map->getBlock(x, y)->joueur->at(0) )
 						{
 							case bonus::bombe: {
 								SDL_BlitSurface(c_Instance->c_Decor[gain_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
@@ -1338,8 +1370,8 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 								SDL_BlitSurface(c_Instance->c_Decor[gain_declancheur], NULL, c_Instance->c_ecranGeneral, &pos);
 								break;
 							}
-							case bonus::vitesse: {
-								SDL_BlitSurface(c_Instance->c_Decor[gain_vitesse_vitesse], NULL, c_Instance->c_ecranGeneral, &pos);
+							case bonus::pousse_bombe: {
+								SDL_BlitSurface(c_Instance->c_Decor[gain_pousse_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
 								break;
 							}
 							case bonus::vie: {
@@ -1347,14 +1379,14 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 								break;
 							}
 							default: {
-								stdError("Erreur lors de la lecture de la map, BONUS inconu <%d>", (int)l_map->getBlock(x,y)->joueur->at(0));
+								stdError("Erreur lors de la lecture de la map, BONUS inconu <%d>", (int)l_map->getBlock(x, y)->joueur->at(0));
 								break;
 							}
 						}
 						break;
 					}
 					default: {
-						stdError("Erreur lors de la lecture de la map, Objet inconu <%d>", (int)l_map->getBlock(x,y)->element);
+						stdError("Erreur lors de la lecture de la map, Objet inconu <%d>", (int)l_map->getBlock(x, y)->element);
 						break;
 					}
 				}
@@ -1383,15 +1415,29 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 					SDL_BlitSurface(c_Instance->c_Decor[mur_indestructible], NULL, c_Instance->c_ecranGeneral, &pos);
 					break;
 				}
-				case map::UN_joueur:
+				case map::UN_joueur: {
+					if( !l_map->getBlock(v_pos)->joueur )
+						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(v_pos)->joueur=0", v_pos.x, v_pos.y);
+
+					if( !l_map->getBlock(v_pos)->joueur->size() )
+						stdErrorE("l_map->getBlock(%u, %u)->joueur->size()=0", v_pos.x, v_pos.y);
+
+
+					unsigned char joueur = l_map->getBlock(v_pos)->joueur->at(0);
+					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
+					c_Instance->joueur_orientation( p->joueur(joueur-1)->orientation(), joueur, &pos );
+					break;
+				}
 				case map::plusieurs_joueurs: {
 					if( !l_map->getBlock(v_pos)->joueur )
 						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(v_pos)->joueur=0", v_pos.x, v_pos.y);
 
-					unsigned char joueur = l_map->getBlock(v_pos)->joueur->at(0);
-
+					unsigned char joueur;
 					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
-					c_Instance->joueur_orientation( p->joueur(joueur-1)->orientation(), joueur, &pos );
+					for( int i=l_map->getBlock(v_pos)->joueur->size()-1; i>=0; i-- ){
+						joueur = l_map->getBlock(v_pos)->joueur->at(i);
+						c_Instance->joueur_orientation( p->joueur(joueur-1)->orientation(), joueur, &pos );
+					}
 					break;
 				}
 				case map::bombe_poser: {
@@ -1412,8 +1458,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 					SDL_BlitSurface(c_Instance->c_Decor[bombe], &imgRect, c_Instance->c_ecranGeneral, &pos);
 					break;
 				}
-				case map::bombe_poser_AVEC_UN_joueur:
-				case map::bombe_poser_AVEC_plusieurs_joueurs: {
+				case map::bombe_poser_AVEC_UN_joueur: {
 					if( !l_map->getBlock(v_pos)->joueur )
 						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(v_pos)->joueur=0", v_pos.x, v_pos.y);
 
@@ -1438,6 +1483,36 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
 					SDL_BlitSurface(c_Instance->c_Decor[bombe], &imgRect, c_Instance->c_ecranGeneral, &pos);
 					c_Instance->joueur_orientation( p->joueur(joueur-1)->orientation(), joueur, &pos );
+					break;
+				}
+				case map::bombe_poser_AVEC_plusieurs_joueurs: {
+					if( !l_map->getBlock(v_pos)->joueur )
+						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(v_pos)->joueur=0", v_pos.x, v_pos.y);
+
+					if( l_map->getBlock(v_pos)->joueur->size() <= 1 )
+						stdErrorE("Nombre d'info joueur (%u) incorrect !", l_map->getBlock(v_pos)->joueur->size());
+
+					unsigned char joueur;
+
+					if( c_Instance->isInSpriteList(v_pos) == -1 ){
+						Sprite b;
+						b.pos = v_pos;
+						b.objet = bombe;
+						b.frame = 0;
+						b.refresh = 0;
+						c_Instance->c_ListSprite.push_back(b);
+					}
+
+					imgRect.x = 0;
+					imgRect.y = 0;
+					imgRect.w = 32;
+					imgRect.h = 32;
+					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
+					SDL_BlitSurface(c_Instance->c_Decor[bombe], &imgRect, c_Instance->c_ecranGeneral, &pos);
+					for( int i=l_map->getBlock(v_pos)->joueur->size()-1; i>=1; i-- ){
+						joueur = l_map->getBlock(v_pos)->joueur->at(i);
+						c_Instance->joueur_orientation( p->joueur(joueur-1)->orientation(), joueur, &pos );
+					}
 					break;
 				}
 				case map::flamme_origine: {
@@ -1474,7 +1549,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 				}
 				case map::bonus: {
 					if( !l_map->getBlock(v_pos)->joueur )
-						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x,y).joueur=0", v_pos.x, v_pos.y);
+						stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(x, y).joueur=0", v_pos.x, v_pos.y);
 
 					SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
 					switch( (bonus::t_Bonus)l_map->getBlock(v_pos)->joueur->at(0) )
@@ -1491,8 +1566,8 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 							SDL_BlitSurface(c_Instance->c_Decor[gain_declancheur], NULL, c_Instance->c_ecranGeneral, &pos);
 							break;
 						}
-						case bonus::vitesse: {
-							SDL_BlitSurface(c_Instance->c_Decor[gain_vitesse_vitesse], NULL, c_Instance->c_ecranGeneral, &pos);
+						case bonus::pousse_bombe: {
+							SDL_BlitSurface(c_Instance->c_Decor[gain_pousse_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
 							break;
 						}
 						case bonus::vie: {
@@ -1542,8 +1617,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 						}
 						break;
 					}
-					case map::bombe_poser_AVEC_UN_joueur:
-					case map::bombe_poser_AVEC_plusieurs_joueurs: {
+					case map::bombe_poser_AVEC_UN_joueur: {
 						if( c_Instance->c_ListSprite.at(i).refresh < clock() ){
 							if( !l_map->getBlock(c_Instance->c_ListSprite.at(i).pos)->joueur )
 								stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(pos).joueur=0", c_Instance->c_ListSprite.at(i).pos.x, c_Instance->c_ListSprite.at(i).pos.y);
@@ -1559,6 +1633,32 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 							SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
 							SDL_BlitSurface(c_Instance->c_Decor[bombe], &imgRect, c_Instance->c_ecranGeneral, &pos);
 							c_Instance->joueur_orientation( p->joueur(joueur-1)->orientation(), joueur, &pos );
+							c_Instance->c_ListSprite.at(i).frame++;
+							c_Instance->c_ListSprite.at(i).refresh = clock()+VitesseSpriteBombe;
+
+							SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x, pos.y, 32, 32);
+						}
+						break;
+					}
+					case map::bombe_poser_AVEC_plusieurs_joueurs: {
+						if( c_Instance->c_ListSprite.at(i).refresh < clock() ){
+							if( !l_map->getBlock(c_Instance->c_ListSprite.at(i).pos)->joueur )
+								stdErrorE("POINTEUR NULL !X=%u, Y=%u, l_map->getBlock(pos).joueur=0", c_Instance->c_ListSprite.at(i).pos.x, c_Instance->c_ListSprite.at(i).pos.y);
+
+							unsigned char joueur;
+
+							pos.x=c_Instance->c_ListSprite.at(i).pos.x*32+xpos;
+							pos.y=c_Instance->c_ListSprite.at(i).pos.y*32+ypos;
+							imgRect.x = (c_Instance->c_ListSprite.at(i).frame%(c_Instance->c_Decor[bombe]->w/32))*32;
+							imgRect.y = 0;
+							imgRect.w = 32;
+							imgRect.h = 32;
+							SDL_BlitSurface(c_Instance->c_Decor[vide], NULL, c_Instance->c_ecranGeneral, &pos);
+							SDL_BlitSurface(c_Instance->c_Decor[bombe], &imgRect, c_Instance->c_ecranGeneral, &pos);
+							for( int k=l_map->getBlock(c_Instance->c_ListSprite.at(i).pos)->joueur->size()-1; k>=1; k-- ){
+								joueur = l_map->getBlock(c_Instance->c_ListSprite.at(i).pos)->joueur->at(k);
+								c_Instance->joueur_orientation( p->joueur(joueur-1)->orientation(), joueur, &pos );
+							}
 							c_Instance->c_ListSprite.at(i).frame++;
 							c_Instance->c_ListSprite.at(i).refresh = clock()+VitesseSpriteBombe;
 
@@ -1614,7 +1714,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 	*/
 	// Affichage du nom du joueur 1
 	pos.x = 10;
-	pos.y = ypos+15;
+	pos.y = ypos;
 	refresh = p->playerNeedRefresh(0);
 	if( refresh ){
 		// Affichage du nom du joueur 1
@@ -1735,6 +1835,30 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
 			SDL_FreeSurface(sfr_tmp);
 			nbVie = p->joueur(0)->armements()->quantiteMAX(bonus::vie);
+		}
+
+		// Pousse
+		static unsigned char PousseBombe = 0;
+		pos.x = 40;
+		pos.y += 35;
+		if( PousseBombe != p->joueur(0)->armements()->quantiteMAX(bonus::pousse_bombe) || c_Instance->c_premierAffichage || refresh ){
+			sprintf(tempsAff, "%d", p->joueur(0)->armements()->quantiteMAX(bonus::pousse_bombe) );
+			sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+			// Blit background
+			imgRect.x = pos.x;
+			imgRect.y = pos.y;
+			SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+
+			SDL_BlitSurface(c_Instance->c_Decor[gain_pousse_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
+			pos.x += 40;
+			pos.y -= 6;
+			SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+			pos.y += 6;
+
+			SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
+			SDL_FreeSurface(sfr_tmp);
+			PousseBombe = p->joueur(0)->armements()->quantiteMAX(bonus::pousse_bombe);
 		}
 	}
 
@@ -1867,6 +1991,30 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 				SDL_FreeSurface(sfr_tmp);
 				nbVie = p->joueur(3)->armements()->quantiteMAX(bonus::vie);
 			}
+
+			// Pousse Bombe
+			static unsigned char PousseBombe = 0;
+			pos.x = 40;
+			pos.y += 35;
+			if( PousseBombe != p->joueur(3)->armements()->quantiteMAX(bonus::pousse_bombe) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff, "%d", p->joueur(3)->armements()->quantiteMAX(bonus::pousse_bombe) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_pousse_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
+				SDL_FreeSurface(sfr_tmp);
+				PousseBombe = p->joueur(3)->armements()->quantiteMAX(bonus::pousse_bombe);
+			}
 		}
 		cleanPlayer4 = 1;
 	}else{
@@ -1875,7 +2023,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 			imgRect.x = 10;
 			imgRect.y = l_map->Y()*32-(25+35*4);
 			imgRect.w = xpos;
-			imgRect.h = 25+35*5;
+			imgRect.h = 25+35*6;
 			SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 			pos.x = 10;
 			pos.y = l_map->Y()*32;
@@ -2016,6 +2164,30 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 				SDL_FreeSurface(sfr_tmp);
 				nbVie = p->joueur(1)->armements()->quantiteMAX(bonus::vie);
 			}
+
+			// Pousse Bombe
+			static unsigned char PousseBombe = 0;
+			pos.x = l_map->X()*32+xpos+40;
+			pos.y += 35;
+			if( PousseBombe != p->joueur(1)->armements()->quantiteMAX(bonus::pousse_bombe) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff, "%d", p->joueur(1)->armements()->quantiteMAX(bonus::pousse_bombe) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_pousse_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
+				SDL_FreeSurface(sfr_tmp);
+				PousseBombe = p->joueur(1)->armements()->quantiteMAX(bonus::pousse_bombe);
+			}
 		}
 		cleanPlayer2 = 1;
 	}else{
@@ -2024,7 +2196,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 			imgRect.x = l_map->X()*32+xpos+10;
 			imgRect.y = l_map->Y()*32-(25+35*4);
 			imgRect.w = c_Instance->c_ecranGeneral->w-(l_map->X()*32+xpos);
-			imgRect.h = 25+35*5;
+			imgRect.h = 25+35*6;
 			SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
 			pos.x = l_map->X()*32+xpos+10;
 			pos.y = l_map->Y()*32-(25+35*4);
@@ -2041,7 +2213,7 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 		refresh = p->playerNeedRefresh(2);
 		// Affichage du nom du joueur 3
 		pos.x = l_map->X()*32+xpos+10;
-		pos.y = ypos+15;
+		pos.y = ypos;
 		if( refresh ){
 			// Affichage du nom du joueur 3
 			sfr_tmp = c_Instance->ecritTexte(p->joueur(2)->nom()->c_str(), couleurNoire, 55);
@@ -2163,6 +2335,30 @@ SYS_CLAVIER moteur_sdl::afficherMapEtEvent( partie* p )
 				SDL_FreeSurface(sfr_tmp);
 				nbVie = p->joueur(2)->armements()->quantiteMAX(bonus::vie);
 			}
+
+			// Pousse Bombe
+			static unsigned char PousseBombe = 0;
+			pos.x = l_map->X()*32+xpos+40;
+			pos.y += 35;
+			if( PousseBombe != p->joueur(2)->armements()->quantiteMAX(bonus::pousse_bombe) || c_Instance->c_premierAffichage || refresh ){
+				sprintf(tempsAff, "%d", p->joueur(2)->armements()->quantiteMAX(bonus::pousse_bombe) );
+				sfr_tmp = c_Instance->ecritTexte(tempsAff, couleurBlanche, 40);
+
+				// Blit background
+				imgRect.x = pos.x;
+				imgRect.y = pos.y;
+				SDL_FillRect(c_Instance->c_ecranGeneral, &imgRect, SDL_MapRGB(c_Instance->c_ecranGeneral->format, 131, 202, 255));
+
+				SDL_BlitSurface(c_Instance->c_Decor[gain_pousse_bombe], NULL, c_Instance->c_ecranGeneral, &pos);
+				pos.x += 40;
+				pos.y -= 6;
+				SDL_BlitSurface(sfr_tmp, NULL, c_Instance->c_ecranGeneral, &pos);// Blitage du Texte
+				pos.y += 6;
+
+				SDL_UpdateRect(c_Instance->c_ecranGeneral, pos.x-40, pos.y, imgRect.w, 32);
+				SDL_FreeSurface(sfr_tmp);
+				PousseBombe = p->joueur(2)->armements()->quantiteMAX(bonus::pousse_bombe);
+			}
 		}
 		cleanPlayer3 = 1;
 	}else{
@@ -2223,12 +2419,12 @@ SDLKey moteur_sdl::traductionClavier( const SDL_KeyboardEvent* touche )
 
 
 /***************************************************************************//*!
-* @fn SDL_Surface* moteur_sdl::chargerImage( const char image[] )
+* @fn SDL_Surface* moteur_sdl::chargerImage( const char image[] ) const
 * @brief Permet de charger une image.
 * @param[in] image L'image a charger
 * @return Une surface (contenant l'image) a libérer avec SDL_FreeSurface()
 */
-SDL_Surface* moteur_sdl::chargerImage( const char image[] )
+SDL_Surface* moteur_sdl::chargerImage( const char image[] ) const
 {
 	SDL_Surface* tmp = IMG_Load(image);
 	if( !tmp )
@@ -2238,7 +2434,7 @@ SDL_Surface* moteur_sdl::chargerImage( const char image[] )
 
 
 /***************************************************************************//*!
-* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[] )
+* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[] ) const
 * @brief Permet d'écrire du texte en <b>NOIR</b>
 * @param[in] texte Le texte a écrire en noir
 * @return Une surface (contenant le texte) a libérer avec SDL_FreeSurface()
@@ -2246,7 +2442,7 @@ SDL_Surface* moteur_sdl::chargerImage( const char image[] )
 * Cette fonction est un alias de moteur_sdl::ecritTexte( const char texte[], const SDL_Color* couleur )
 * @see moteur_sdl::ecritTexte( const char texte[], const SDL_Color* couleur )
 */
-SDL_Surface* moteur_sdl::ecritTexte( const char texte[] )
+SDL_Surface* moteur_sdl::ecritTexte( const char texte[] ) const
 {
 	static SDL_Color couleurNoire = {0,0,0,0/*unused*/};
 	return ecritTexte( texte, couleurNoire );
@@ -2254,7 +2450,7 @@ SDL_Surface* moteur_sdl::ecritTexte( const char texte[] )
 
 
 /***************************************************************************//*!
-* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8 b )
+* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8 b ) const
 * @brief Permet d'écrire du texte dans une couleur RBG
 * @param[in] texte Le texte a écrire
 * @param[in] r,g,b Le taux d'utilisation de chaque couleurs ( de 0 à 255 )
@@ -2263,7 +2459,7 @@ SDL_Surface* moteur_sdl::ecritTexte( const char texte[] )
 * Cette fonction est un alias de moteur_sdl::ecritTexte( const char texte[], const SDL_Color* couleur )
 * @see moteur_sdl::ecritTexte( const char texte[], const SDL_Color* couleur )
 */
-SDL_Surface* moteur_sdl::ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8 b )
+SDL_Surface* moteur_sdl::ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8 b ) const
 {
 	SDL_Color couleur = {r, g, b, 0/*unused*/};
 	return ecritTexte( texte, couleur );
@@ -2271,13 +2467,13 @@ SDL_Surface* moteur_sdl::ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8
 
 
 /***************************************************************************//*!
-* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur )
+* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur ) const
 * @brief Permet d'écrire du texte dans une couleur
 * @param[in] texte Le texte a écrire
 * @param[in] couleur La couleur du texte
 * @return Une surface (contenant le texte) a libérer avec SDL_FreeSurface()
 */
-SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur )
+SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur ) const
 {
 	SDL_Surface* tmp = TTF_RenderText_Blended(c_policeGeneral, texte, couleur);
 	if( !tmp )
@@ -2288,14 +2484,14 @@ SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleu
 
 
 /***************************************************************************//*!
-* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille )
+* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille ) const
 * @brief Permet d'écrire du texte dans une couleur avec une certaine taille de police
 * @param[in] texte Le texte a écrire
 * @param[in] couleur La couleur a utiliser
 * @param[in] taille La taille du texte
 * @return Une surface (contenant le texte) a libérer avec SDL_FreeSurface()
 */
-SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille )
+SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille ) const
 {
 	TTF_Font* police = TTF_OpenFont("Chicken Butt.ttf", taille);
 	if( !police )
@@ -2306,6 +2502,40 @@ SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleu
 		stdErrorE("Erreur lors de la création du texte <%s>, Couleur: {%u, %u, %u}, Erreur renvoyée: %s", texte, (unsigned int)couleur.r, (unsigned int)couleur.g, (unsigned int)couleur.b, TTF_GetError());
 
 	TTF_CloseFont(police);/* Fermeture de la police */
+
+	return tmp;
+}
+
+
+/***************************************************************************//*!
+* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[], TTF_Font* police ) const
+* @brief Permet d'écrire du texte en <b>NOIR</b>
+* @param[in] texte		Le texte a écrire en <b>NOIR</b>
+* @param[in] police		La police a utiliser
+* @return Une surface (contenant le texte) a libérer avec SDL_FreeSurface()
+*
+* @note Cette fonction est un alias de moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur, TTF_Font* police )
+*/
+SDL_Surface* moteur_sdl::ecritTexte( const char texte[], TTF_Font* police ) const
+{
+	static SDL_Color couleurNoire = {0,0,0,0/*unused*/};
+	return ecritTexte( texte, police, couleurNoire );
+}
+
+
+/***************************************************************************//*!
+* @fn SDL_Surface* moteur_sdl::ecritTexte( const char texte[], const SDL_Color& couleur, TTF_Font* police ) const
+* @brief Permet d'écrire du texte
+* @param[in] texte		Le texte a écrire
+* @param[in] police		La police a utiliser
+* @param[in] couleur	La couleur a utiliser
+* @return Une surface (contenant le texte) a libérer avec SDL_FreeSurface()
+*/
+SDL_Surface* moteur_sdl::ecritTexte( const char texte[], TTF_Font* police, const SDL_Color& couleur ) const
+{
+	SDL_Surface* tmp = TTF_RenderText_Blended(police, texte, couleur);
+	if( !tmp )
+		stdErrorE("Erreur lors de la création du texte <%s>, Couleur: {%u, %u, %u}, Erreur renvoyée: %s", texte, (unsigned int)couleur.r, (unsigned int)couleur.g, (unsigned int)couleur.b, TTF_GetError());
 
 	return tmp;
 }
@@ -2333,11 +2563,11 @@ char* moteur_sdl::completerMot( char texte[], unsigned int taille )
 
 
 /***************************************************************************//*!
-* @fn int moteur_sdl::isInSpriteList( s_Coordonnees pos )
+* @fn int moteur_sdl::isInSpriteList( s_Coordonnees pos ) const
 * @brief Complete le texte avec le caractère _ jusqu'a avoir un texte de longueur 20
 * @return Si trouvé, alors renvoie la position dans la liste. Sinon -1
 */
-int moteur_sdl::isInSpriteList( s_Coordonnees pos )
+int moteur_sdl::isInSpriteList( s_Coordonnees pos ) const
 {
 	unsigned int i;
 	for( i=0; i<c_ListSprite.size(); i++ )

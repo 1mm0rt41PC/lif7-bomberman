@@ -248,7 +248,7 @@ char partie::main( libAff * afficherMapEtEvent )
 	options* opt = options::getInstance();
 	bonus::s_Event bonusEvent;
 	char JoueurGagnant = 0;// Aucune joueur n'a gagné par défaut
-	s_Event e;
+	s_EventBombe e;
 	SOCKET s;
 	uint32_t X=0, Y=0;// Utilisé uniquement lors de partie online ( host & client )
 	clavier::t_touche onlineClavier;// Utilisé uniquement lors de partie online ( host & client )
@@ -286,7 +286,10 @@ char partie::main( libAff * afficherMapEtEvent )
 		}
 
 		// Envoie du nom
-		c_client->send_message(c_joueurs[0].nom()->c_str(), c_joueurs[0].nom()->length());
+		if( c_nb_joueurs > 1 )
+			c_client->send_message(c_joueurs[c_uniqueJoueurID].nom()->c_str(), c_joueurs[0].nom()->length());
+		else
+			c_client->send_message(c_joueurs[0].nom()->c_str(), c_joueurs[0].nom()->length());
 
 		memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
 		// Attente de la réponce
@@ -320,6 +323,42 @@ char partie::main( libAff * afficherMapEtEvent )
 		// Récéption de TOUTE la map et des autres infos
 		while( c_client->readServer(c_buffer, PACK_bufferSize) != 0 && c_buffer[0] != '0' )
 		{
+			if( !c_buffer[0] ){// Paquet vide...
+				stdError("Paquet vide !");
+				baseClientServer::printAllBuffer( c_buffer, PACK_bufferSize, __FILE__, __LINE__ );
+
+				// Analyse du paquet
+				for( i=0; i<PACK_bufferSize; i++ )
+				{
+					if( '0' <= c_buffer[i] && c_buffer[i] <= '9' ){
+						if( c_buffer[i+1] == ':' )
+							strcpy(c_buffer, c_buffer+i);
+						break;
+					}
+				}
+				// Esqu'il nous manque une partie du paquet ?
+				if( c_buffer[strlen(c_buffer)-1] == '²' ){
+					stdError("Paquet récupéré: <%s>", c_buffer);
+				}else{
+					stdError("Impossible de récupérer le paquet: <%s>", c_buffer);
+				}
+			}
+
+			// Esqu'il nous manque une partie du paquet ?
+			if( c_buffer[strlen(c_buffer)-1] != '²' ){
+				stdError("Il manque une partie du Paquet ! Paquet actuel: <%s>", c_buffer);
+				while( c_client->readServer(c_buffer+strlen(c_buffer), PACK_bufferSize-strlen(c_buffer)) != 0 && c_buffer[strlen(c_buffer)-1] != '²' );
+				stdError("Paquet final: <%s>", c_buffer);
+
+				// Esqu'il nous manque une partie du paquet ?
+				if( c_buffer[strlen(c_buffer)-1] == '²' ){
+					stdError("Paquet récupéré: <%s>", c_buffer);
+				}else{
+					stdError("Impossible de récupérer le paquet: <%s>", c_buffer);
+					continue;
+				}
+			}
+
 			switch( c_buffer[0] )
 			{
 				case '1': {// Map
@@ -342,7 +381,7 @@ char partie::main( libAff * afficherMapEtEvent )
 					break;
 				}
 				case '9': {// Timer
-					sscanf(c_buffer, "9:%ld", &c_timeOut);
+					sscanf(c_buffer, "9:%ld²", &c_timeOut);
 					c_timeOut += clock();
 					break;
 				}
@@ -352,6 +391,11 @@ char partie::main( libAff * afficherMapEtEvent )
 				}
 			}
 			memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
+		}
+
+		if( !c_client->is_connected() ){
+			stdError("Problème de déconnection avec le serveur !");
+			return -10;
 		}
 
 		// Commencement de la partie
@@ -387,6 +431,42 @@ char partie::main( libAff * afficherMapEtEvent )
 				memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
 				while( c_buffer[0] != '4' && c_client->readServer(c_buffer, PACK_bufferSize) != 0 && c_buffer[0] != '0' )
 				{
+					if( !c_buffer[0] ){// Paquet vide...
+						stdError("Paquet vide !");
+						baseClientServer::printAllBuffer( c_buffer, PACK_bufferSize, __FILE__, __LINE__ );
+
+						// Analyse du paquet
+						for( i=0; i<PACK_bufferSize; i++ )
+						{
+							if( '0' <= c_buffer[i] && c_buffer[i] <= '9' ){
+								if( c_buffer[i+1] == ':' )
+									strcpy(c_buffer, c_buffer+i);
+								break;
+							}
+						}
+						// Esqu'il nous manque une partie du paquet ?
+						if( c_buffer[strlen(c_buffer)-1] == '²' ){
+							stdError("Paquet récupéré: <%s>", c_buffer);
+						}else{
+							stdError("Impossible de récupérer le paquet: <%s>", c_buffer);
+						}
+					}
+
+					// Esqu'il nous manque une partie du paquet ?
+					if( c_buffer[strlen(c_buffer)-1] != '²' ){
+						stdError("Il manque une partie du Paquet ! Paquet actuel: <%s>", c_buffer);
+						while( c_client->readServer(c_buffer+strlen(c_buffer), PACK_bufferSize-strlen(c_buffer)) != 0 && c_buffer[strlen(c_buffer)-1] != '²' );
+						stdError("Paquet final: <%s>", c_buffer);
+
+						// Esqu'il nous manque une partie du paquet ?
+						if( c_buffer[strlen(c_buffer)-1] == '²' ){
+							stdError("Paquet récupéré: <%s>", c_buffer);
+						}else{
+							stdError("Impossible de récupérer le paquet: <%s>", c_buffer);
+							continue;
+						}
+					}
+
 					switch( c_buffer[0] )
 					{
 						case '1': {// Map
@@ -402,9 +482,9 @@ char partie::main( libAff * afficherMapEtEvent )
 							break;
 						}
 						case '4': {// Fin de partie
+							c_buffer[strlen(c_buffer)-1] = 0;
 							JoueurGagnant = c_buffer[2]-'0';
 							c_winnerName = c_buffer+4;
-							stdError("id=%d, name=%s", c_buffer[2]-'0', c_buffer+4);
 							break;
 						}
 						case '5': {// Nombre de joueur
@@ -424,7 +504,7 @@ char partie::main( libAff * afficherMapEtEvent )
 							break;
 						}
 						case '9': {// Timer
-							sscanf(c_buffer, "9:%ld", &c_timeOut);
+							sscanf(c_buffer, "9:%ld²", &c_timeOut);
 							c_timeOut += clock();
 							break;
 						}
@@ -502,7 +582,7 @@ char partie::main( libAff * afficherMapEtEvent )
 		{
 			if( !c_joueurs[i].isLocal() && c_joueurs[i].socket() != INVALID_SOCKET ){
 				// Envoie du timer
-				sprintf(c_buffer, "9:%ld", c_timeOut-clock());
+				sprintf(c_buffer, "9:%ld²", c_timeOut-clock());
 				c_server->send_message( c_joueurs[i].socket(), c_buffer, PACK_bufferSize);
 				strcpy(c_buffer, "0:end");
 				c_server->send_message( s, c_buffer, PACK_bufferSize);// Fin de transmition
@@ -529,20 +609,28 @@ char partie::main( libAff * afficherMapEtEvent )
 			bool killPlayer = 0;
 			while( c_joueurs[i].armements()->isEvent(&bonusEvent) )// Tanqu'il y a des event on tourne
 			{
-				if( bonusEvent.type == bonus::SIGNAL_kill ){
-					killPlayer = 1;
-				}else{
-					e.type = bonusEvent.type;
-					e.joueur = i+1;
-					e.pos = bonusEvent.pos;
-					e.repetionSuivante = 0;
-					e.Nb_Repetition = 0;
-					e.Nb_Repetition_MAX = c_joueurs[i].armements()->quantiteUtilisable(bonus::puissance_flamme);
-					e.continue_X = true;
-					e.continue_negativeX = true;
-					e.continue_Y = true;
-					e.continue_negativeY = true;
-					c_listEvent.push_back( e );
+				switch( bonusEvent.type )
+				{
+					case bonus::SIGNAL_kill: {
+						killPlayer = 1;
+						break;
+					}
+					case bonus::bombe: {
+						e.joueur = i+1;
+						e.pos = bonusEvent.pos;
+						e.repetionSuivante = 0;
+						e.Nb_Repetition = 0;
+						e.Nb_Repetition_MAX = c_joueurs[i].armements()->quantiteUtilisable(bonus::puissance_flamme);
+						e.continue_X = true;
+						e.continue_negativeX = true;
+						e.continue_Y = true;
+						e.continue_negativeY = true;
+						c_listEventBombe.push_back( e );
+						break;
+					}
+					default:
+						stdError("Event bonus non pris en charge bonus=%d", bonusEvent.type);
+						break;
 				}
 			}
 			// On a reçut le signal kill => On kill le perso
@@ -788,16 +876,16 @@ char partie::main( libAff * afficherMapEtEvent )
 						}
 						// Nétoyage des Events
 						c_joueurs[i].armements()->modEvent()->clear();
-						for( unsigned int h=0; h<c_listEvent.size(); h++ )
+						for( unsigned int h=0; h<c_listEventBombe.size(); h++ )
 						{
 							// Si l'évent correspond à l'event du joueur => clean all
-							if( c_listEvent.at(h).joueur == i ){
+							if( c_listEventBombe.at(h).joueur == i ){
 								// Suppression des blocks en-flammé
-								for( unsigned int k=0; k<c_listEvent.at(h).deflagration.size(); k++ )
+								for( unsigned int k=0; k<c_listEventBombe.at(h).deflagration.size(); k++ )
 								{
-									c_map->rmInfoJoueur(c_listEvent.at(h).deflagration.at(k).x, c_listEvent.at(h).deflagration.at(k).y, e.joueur, true);
-									if( !c_map->getBlock(c_listEvent.at(h).deflagration.at(k))->joueur->size() )
-										c_map->setBlock(c_listEvent.at(h).deflagration.at(k), map::vide);
+									c_map->rmInfoJoueur(c_listEventBombe.at(h).deflagration.at(k).x, c_listEventBombe.at(h).deflagration.at(k).y, e.joueur, true);
+									if( !c_map->getBlock(c_listEventBombe.at(h).deflagration.at(k))->joueur->size() )
+										c_map->setBlock(c_listEventBombe.at(h).deflagration.at(k), map::vide);
 								}
 							}
 						}
@@ -914,12 +1002,19 @@ char partie::main( libAff * afficherMapEtEvent )
 
 		continuerScanClavier = 1;
 
-	}while( key != RETOUR_MENU_PRECEDENT && (nbJoueurVivant() > 1 || c_listEvent.size()) );
+	}while( key != RETOUR_MENU_PRECEDENT && (nbJoueurVivant() > 1 || c_listEventBombe.size()) );
 
 	// On détermine, qui a gagné
 	for( i=0; i<c_nb_joueurs; i++ )
 	{
-		if( c_joueurs[i].armements() ){
+		if( (c_joueurs[i].isLocal()
+			|| (
+				!c_joueurs[i].isLocal()
+				&& c_joueurs[i].socket() != INVALID_SOCKET
+				)
+			)
+			&& c_joueurs[i].armements()
+		){
 			JoueurGagnant = i+1;// ( on veut un nombre entre 1 et ... )
 			c_winnerName = *c_joueurs[i].nom();
 			break;
@@ -929,7 +1024,7 @@ char partie::main( libAff * afficherMapEtEvent )
 	// Si on est host, alors, on envoie le nom du gagnant au clients
 	if( c_connection == CNX_Host ){
 		memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
-		sprintf(c_buffer, "4:%d,%s", (int)JoueurGagnant, c_winnerName.c_str());
+		sprintf(c_buffer, "4:%d,%s²", (int)JoueurGagnant, c_winnerName.c_str());
 		for( i=0; i<c_nb_joueurs; i++ )
 		{
 			// Si le joueur est local où non connecté, on passe
@@ -971,6 +1066,11 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 {
 	map::t_type elementNouvellePosition;
 
+	if( !c_joueurs[joueur].armements() ){
+		stdError("Le joueur %d n'a pas d'armements ! Impossible de déplacer le joueur !", joueur);
+		return ;
+	}
+
 	if( joueur >= c_nb_joueurs )
 		stdErrorE("Le joueur %d n'existe pas ! Impossible de déplacer le joueur !", joueur);
 
@@ -986,12 +1086,70 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 		&&	/*0 <= newY &&*/ newY < c_map->Y()// taille de la map
 		&&	elementNouvellePosition != map::Mur_destructible		// On vérif s'il n'y a pas
 		&&	elementNouvellePosition != map::Mur_INdestructible		// d'objet solid
-		&&	elementNouvellePosition != map::bombe_poser
-		&&	elementNouvellePosition != map::bombe_poser_AVEC_UN_joueur
-		&&	elementNouvellePosition != map::bombe_poser_AVEC_plusieurs_joueurs))
+		&& (
+				(
+					(
+						elementNouvellePosition == map::bombe_poser
+						|| elementNouvellePosition == map::bombe_poser_AVEC_UN_joueur
+						|| elementNouvellePosition == map::bombe_poser_AVEC_plusieurs_joueurs
+					)
+					&&
+					c_joueurs[joueur].armements()->quantiteMAX(bonus::pousse_bombe)
+					&&
+					c_map->getBlock(newX, newY)->joueur
+					&&
+					c_map->getBlock(newX, newY)->joueur->size()
+					&&
+					c_joueurs[c_map->getBlock(newX, newY)->joueur->at(0)-1].armements()
+					&&
+					c_joueurs[c_map->getBlock(newX, newY)->joueur->at(0)-1].armements()->getEvent(newX, newY)
+					&&
+					(
+						(
+							c_joueurs[joueur].orientation() == perso::ORI_haut
+							&&
+							newY >= 1
+							&&
+							c_map->getBlock(newX, newY-1)->element == map::vide
+						)
+						||
+						(
+							c_joueurs[joueur].orientation() == perso::ORI_bas
+							&&
+							newY+1 < c_map->Y()
+							&&
+							c_map->getBlock(newX, newY+1)->element == map::vide
+						)
+						||
+						(
+							c_joueurs[joueur].orientation() == perso::ORI_droite
+							&&
+							newX+1 < c_map->X()
+							&&
+							c_map->getBlock(newX+1, newY)->element == map::vide
+						)
+						||
+						(
+							c_joueurs[joueur].orientation() == perso::ORI_gauche
+							&&
+							newX >= 1
+							&&
+							c_map->getBlock(newX-1, newY)->element == map::vide
+						)
+					)
+				)
+				||
+				(
+						elementNouvellePosition != map::bombe_poser
+					&&	elementNouvellePosition != map::bombe_poser_AVEC_UN_joueur
+					&&	elementNouvellePosition != map::bombe_poser_AVEC_plusieurs_joueurs
+				)
+			)
+		))
 	{
 		return ;
 	}
+
 
 	/***********************************************************************
 	* On ne tombe pas sur un objet inconnu
@@ -1093,8 +1251,8 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 				stdErrorE("BONUS: Problème de pointeur ! c_map->getBlock(%u, %u)->joueur = 0 !", newX, newY);
 			if( !c_map->getBlock(newX, newY)->joueur->size() )
 				stdErrorE("BONUS: Problème de contenu ! c_map->getBlock(%u, %u)->joueur->size() = 0 !", newX, newY);
-			if( c_map->getBlock(newX, newY)->joueur->at(0) >= NB_ELEMENT_t_Bonus )
-				stdErrorE("BONUS: Problème de contenu ! c_map->getBlock(%u, %u)->joueur->at(0){%u} >= {%d}NB_ELEMENT_t_Bonus !", newX, newY, (unsigned int)c_map->getBlock(newX, newY)->joueur->at(0), NB_ELEMENT_t_Bonus);
+			if( c_map->getBlock(newX, newY)->joueur->at(0) >= bonus::NB_ELEMENT_t_Bonus )
+				stdErrorE("BONUS: Problème de contenu ! c_map->getBlock(%u, %u)->joueur->at(0){%u} >= {%d}NB_ELEMENT_t_Bonus !", newX, newY, (unsigned int)c_map->getBlock(newX, newY)->joueur->at(0), bonus::NB_ELEMENT_t_Bonus);
 			// Ajout de l'armement
 			if( !c_joueurs[joueur].armements() )
 				stdErrorE("Le joueur %d n'a pas d'armement ! Erreur lors du déplacement sur le bonus !", joueur);
@@ -1106,8 +1264,88 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 			c_joueurs[joueur].defPos(newX, newY);
 			break;
 		}
+		case map::bombe_poser: {
+			if( !c_map->getBlock(newX, newY)->joueur )
+				stdErrorE("BONUS: Problème de pointeur ! c_map->getBlock(%u, %u)->joueur = 0 !", newX, newY);
+			if( !c_map->getBlock(newX, newY)->joueur->size() )
+				stdErrorE("BONUS: Problème de contenu ! c_map->getBlock(%u, %u)->joueur->size() = 0 !", newX, newY);
+
+
+			s_EventPousseBombe e;
+			e.direction = c_joueurs[joueur].orientation();
+			e.joueur = c_map->getBlock(newX, newY)->joueur->at(0)-1;
+			e.repetionSuivante = clock() + bonus::VITESSE_pousseBombe;
+
+			if( !c_joueurs[e.joueur].armements() )
+				stdErrorE("Attention ! Le joueur %u est mort !", e.joueur);
+
+			// La bombe n'est plus dans la liste des event bonus
+			if( !c_joueurs[e.joueur].armements()->getEvent(newX, newY) ){
+				stdError("getEvent(%u, %u) = 0", newX, newY);
+				return ;
+			}
+
+			switch( c_joueurs[joueur].orientation() )
+			{
+				case perso::ORI_haut: {
+					c_map->setBlock( newX, newY-1, map::bombe_poser );
+					c_map->ajouterInfoJoueur( newX, newY-1, joueur+1);
+
+					c_map->rmInfoJoueur(newX, newY);
+					c_map->setBlock(newX, newY, map::UN_joueur);
+					c_map->ajouterInfoJoueur( newX, newY, joueur+1);
+					c_joueurs[joueur].defPos(newX, newY);
+
+					e.pos = coordonneeConvert(newX, newY-1);
+					break;
+				}
+				case perso::ORI_bas: {
+					c_map->setBlock( newX, newY+1, map::bombe_poser );
+					c_map->ajouterInfoJoueur( newX, newY+1, joueur+1);
+
+					c_map->rmInfoJoueur(newX, newY);
+					c_map->setBlock(newX, newY, map::UN_joueur);
+					c_map->ajouterInfoJoueur( newX, newY, joueur+1);
+					c_joueurs[joueur].defPos(newX, newY);
+
+					e.pos = coordonneeConvert(newX, newY+1);
+					break;
+				}
+				case perso::ORI_droite: {
+					c_map->setBlock( newX+1, newY, map::bombe_poser );
+					c_map->ajouterInfoJoueur( newX+1, newY, joueur+1);
+
+					c_map->rmInfoJoueur(newX, newY);
+					c_map->setBlock(newX, newY, map::UN_joueur);
+					c_map->ajouterInfoJoueur( newX, newY, joueur+1);
+					c_joueurs[joueur].defPos(newX, newY);
+
+					e.pos = coordonneeConvert(newX+1, newY);
+					break;
+				}
+				case perso::ORI_gauche: {
+					c_map->setBlock( newX-1, newY, map::bombe_poser );
+					c_map->ajouterInfoJoueur( newX-1, newY, joueur+1);
+
+					c_map->rmInfoJoueur(newX, newY);
+					c_map->setBlock(newX, newY, map::UN_joueur);
+					c_map->ajouterInfoJoueur( newX, newY, joueur+1);
+					c_joueurs[joueur].defPos(newX, newY);
+
+					e.pos = coordonneeConvert(newX-1, newY);
+					break;
+				}
+				default:
+					stdErrorE("Erreur, orientation incorrect ! %d", c_joueurs[joueur].orientation());
+			}
+
+			c_joueurs[e.joueur].armements()->getEvent(newX, newY)->pos = e.pos;
+			c_listEventPouseBombe<< e ;// On ajoute la bome à la liste d'event
+
+			break;
+		}
 		default: {
-			stdErrorE("Cas non pris en charge c_map->getBlock(%u, %u).element=%d", newX, newY, elementNouvellePosition);
+			stdError("Cas non pris en charge c_map->getBlock(%u, %u).element=%d", newX, newY, elementNouvellePosition);
 		}
 	}
 }
@@ -1196,8 +1434,8 @@ void partie::placer_perso_position_initial( unsigned char joueur )
 				stdErrorE("BONUS: Problème de pointeur ! c_map->getBlock(%u, %u)->joueur = 0 !", newX, newY);
 			if( !c_map->getBlock(newX, newY)->joueur->size() )
 				stdErrorE("BONUS: Problème de contenu ! c_map->getBlock(%u, %u)->joueur->size() = 0 !", newX, newY);
-			if( c_map->getBlock(newX, newY)->joueur->at(0) >= NB_ELEMENT_t_Bonus )
-				stdErrorE("BONUS: Problème de contenu ! c_map->getBlock(%u, %u)->joueur->at(0){%u} >= {%d}NB_ELEMENT_t_Bonus !", newX, newY, (unsigned int)c_map->getBlock(newX, newY)->joueur->at(0), NB_ELEMENT_t_Bonus);
+			if( c_map->getBlock(newX, newY)->joueur->at(0) >= bonus::NB_ELEMENT_t_Bonus )
+				stdErrorE("BONUS: Problème de contenu ! c_map->getBlock(%u, %u)->joueur->at(0){%u} >= {%d}NB_ELEMENT_t_Bonus !", newX, newY, (unsigned int)c_map->getBlock(newX, newY)->joueur->at(0), bonus::NB_ELEMENT_t_Bonus);
 			// Ajout de l'armement
 			if( !c_joueurs[joueur].armements() )
 				stdErrorE("Le joueur %d n'a pas d'armement ! Erreur lors du déplacement sur le bonus !", joueur);
@@ -1217,12 +1455,140 @@ void partie::placer_perso_position_initial( unsigned char joueur )
 
 
 /***************************************************************************//*!
+* @fn void partie::checkInternalEventPousseBombe()
+* @brief Scan les event du bonus pousse bombe
+*
+* @bug Date du bug: 2011/01/20<br />
+* Le code contenu dans cette fonction devrait normalement aller directement dans la fonction
+* partie::checkInternalEvent(). Or sous SDL, le code contenu dans cette fonction provoque un bug
+* d'accélération des personnages. Ce bug ne touche que les joueurs qui ont des touches comprises
+* entre a et z. Même si le code n'est jamais traité, le bug ce produit quand même. De plsu si
+* l'on essaye de tracer le bug avec stdError(...) au niveau du clavier ou même au niveau de
+* perso::defPos( unsigned int Xpos, unsigned int Ypos ) alors le bug n'existe plus...<br />
+* Pour info, ce bug existe UNIQUEMENT depuis la création du bonus "Pousse Bombe"<br />
+* A première vu, ce bout de code a lui seul fait apparaitre le bug, alors que le code
+* en lui même ne fait que lire des infos :
+* @code
+* c_joueurs[c_listEventPouseBombe.at(i).joueur].armements()->getEvent(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y);
+* @endcode
+*/
+void partie::checkInternalEventPousseBombe()
+{
+	for( unsigned int i=0; i<c_listEventPouseBombe.size(); i++ )
+	{
+		// Tant que l'on a pas atteint le temps
+		if( c_listEventPouseBombe.at(i).repetionSuivante > clock() ) continue;
+
+		c_joueurs[c_listEventPouseBombe.at(i).joueur].armements();
+		c_listEventPouseBombe.at(i).pos.x;
+		c_listEventPouseBombe.at(i).pos.y;
+		// Ce bout de code a lui seul fait apparaitre le bug...
+		c_joueurs[c_listEventPouseBombe.at(i).joueur].armements()->getEvent(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y);
+
+		// Si le joueur est mort => on vire la bombe de la liste
+		// Si la bombe a explosé => on vire la bombe de la liste
+		if( !c_joueurs[c_listEventPouseBombe.at(i).joueur].armements() || !c_joueurs[c_listEventPouseBombe.at(i).joueur].armements()->getEvent(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y) ){
+			c_listEventPouseBombe.remove(i);
+			i--;
+		}else{
+
+			switch( c_listEventPouseBombe.at(i).direction )
+			{
+				case perso::ORI_haut: {
+					if( c_listEventPouseBombe.at(i).pos.y >= 1 && c_map->getBlock(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y-1)->element == map::vide ){
+						c_map->setBlock( c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y-1, map::bombe_poser );
+						c_map->ajouterInfoJoueur( c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y-1, c_listEventPouseBombe.at(i).joueur+1);
+						c_map->setBlock(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y, map::vide);
+						c_listEventPouseBombe.at(i).pos.y -= 1;
+						c_joueurs[c_listEventPouseBombe.at(i).joueur].armements()->getEvent(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y+1)->pos = c_listEventPouseBombe.at(i).pos;
+						// On regarde si on pourra aller plus loin. Sinon => On supprime cette bombe de l'event
+						if( !(c_listEventPouseBombe.at(i).pos.y >= 1 && c_map->getBlock(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y-1)->element == map::vide) ){
+							c_listEventPouseBombe.remove(i);
+							i--;
+						}else{
+							c_listEventPouseBombe.at(i).repetionSuivante = clock() + bonus::VITESSE_pousseBombe;
+						}
+					}else{
+						c_listEventPouseBombe.remove(i);
+						i--;
+					}
+					break;
+				}
+				case perso::ORI_bas: {
+					if( c_listEventPouseBombe.at(i).pos.y+1 < c_map->Y() && c_map->getBlock(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y+1)->element == map::vide ){
+						c_map->setBlock( c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y+1, map::bombe_poser );
+						c_map->ajouterInfoJoueur( c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y+1, c_listEventPouseBombe.at(i).joueur+1);
+						c_map->setBlock(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y, map::vide);
+						c_listEventPouseBombe.at(i).pos.y += 1;
+						c_joueurs[c_listEventPouseBombe.at(i).joueur].armements()->getEvent(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y-1)->pos = c_listEventPouseBombe.at(i).pos;
+						// On regarde si on pourra aller plus loin. Sinon => On supprime cette bombe de l'event
+						if( !(c_listEventPouseBombe.at(i).pos.y+1 < c_map->Y() && c_map->getBlock(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y+1)->element == map::vide) ){
+							c_listEventPouseBombe.remove(i);
+							i--;
+						}else{
+							c_listEventPouseBombe.at(i).repetionSuivante = clock() + bonus::VITESSE_pousseBombe;
+						}
+					}else{
+						c_listEventPouseBombe.remove(i);
+						i--;
+					}
+					break;
+				}
+				case perso::ORI_droite: {
+					if( c_listEventPouseBombe.at(i).pos.x+1 < c_map->X() && c_map->getBlock(c_listEventPouseBombe.at(i).pos.x+1, c_listEventPouseBombe.at(i).pos.y)->element == map::vide ){
+						c_map->setBlock( c_listEventPouseBombe.at(i).pos.x+1, c_listEventPouseBombe.at(i).pos.y, map::bombe_poser );
+						c_map->ajouterInfoJoueur( c_listEventPouseBombe.at(i).pos.x+1, c_listEventPouseBombe.at(i).pos.y, c_listEventPouseBombe.at(i).joueur+1);
+						c_map->setBlock(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y, map::vide);
+						c_listEventPouseBombe.at(i).pos.x += 1;
+						c_joueurs[c_listEventPouseBombe.at(i).joueur].armements()->getEvent(c_listEventPouseBombe.at(i).pos.x-1, c_listEventPouseBombe.at(i).pos.y)->pos = c_listEventPouseBombe.at(i).pos;
+						// On regarde si on pourra aller plus loin. Sinon => On supprime cette bombe de l'event
+						if( !(c_listEventPouseBombe.at(i).pos.x+1 < c_map->X() && c_map->getBlock(c_listEventPouseBombe.at(i).pos.x+1, c_listEventPouseBombe.at(i).pos.y)->element == map::vide) ){
+							c_listEventPouseBombe.remove(i);
+							i--;
+						}else{
+							c_listEventPouseBombe.at(i).repetionSuivante = clock() + bonus::VITESSE_pousseBombe;
+						}
+					}else{
+						c_listEventPouseBombe.remove(i);
+						i--;
+					}
+					break;
+				}
+				case perso::ORI_gauche: {
+					if( c_listEventPouseBombe.at(i).pos.x >= 1 && c_map->getBlock(c_listEventPouseBombe.at(i).pos.x-1, c_listEventPouseBombe.at(i).pos.y)->element == map::vide ){
+						c_map->setBlock( c_listEventPouseBombe.at(i).pos.x-1, c_listEventPouseBombe.at(i).pos.y, map::bombe_poser );
+						c_map->ajouterInfoJoueur( c_listEventPouseBombe.at(i).pos.x-1, c_listEventPouseBombe.at(i).pos.y, c_listEventPouseBombe.at(i).joueur+1);
+						c_map->setBlock(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y, map::vide);
+						c_listEventPouseBombe.at(i).pos.x -= 1;
+						c_joueurs[c_listEventPouseBombe.at(i).joueur].armements()->getEvent(c_listEventPouseBombe.at(i).pos.x+1, c_listEventPouseBombe.at(i).pos.y)->pos = c_listEventPouseBombe.at(i).pos;
+						// On regarde si on pourra aller plus loin. Sinon => On supprime cette bombe de l'event
+						if( !(c_listEventPouseBombe.at(i).pos.x >= 1 && c_map->getBlock(c_listEventPouseBombe.at(i).pos.x-1, c_listEventPouseBombe.at(i).pos.y)->element == map::vide) ){
+							c_listEventPouseBombe.remove(i);
+							i--;
+						}else{
+							c_listEventPouseBombe.at(i).repetionSuivante = clock() + bonus::VITESSE_pousseBombe;
+						}
+					}else{
+						c_listEventPouseBombe.remove(i);
+						i--;
+					}
+					break;
+				}
+				default:{
+					stdErrorE("Erreur, orientation incorrect ! %d", c_listEventPouseBombe.at(i).direction);
+				}
+			}
+		}
+	}
+}
+
+
+/***************************************************************************//*!
 * @fn void partie::checkInternalEvent()
 * @brief Analyse et traite les Event internes pour une partie F4A
 */
 void partie::checkInternalEvent()
 {
-	//static s_Event& e;
 	static unsigned int i;
 
 	/***************************************************************************
@@ -1274,118 +1640,112 @@ void partie::checkInternalEvent()
 		}
 	}
 
+	/***************************************************************************
+	* Events Pousse Bombe
+	*/
+	checkInternalEventPousseBombe();
 
 	/***************************************************************************
-	* Events
+	* Events Bombe
 	*/
-	unsigned int nbElts = c_listEvent.size();
-	for( i=0; i<c_listEvent.size(); i++ )
+	for( i=0; i<c_listEventBombe.size(); i++ )
 	{
-		if( nbElts > c_listEvent.size() )
-			nbElts = c_listEvent.size();
-
 		// Tant que l'on a pas atteint le temps
-		if( c_listEvent.at(i).repetionSuivante > clock() ) continue;
+		if( c_listEventBombe.at(i).repetionSuivante > clock() ) continue;
 
+		s_EventBombe& e = c_listEventBombe.at(i);
 
-		s_Event& e = c_listEvent.at(i);
-
-		/*******************************************************************
-		* Bombe
+		/***************************************************************
+		* Encore un tour ?
+		* On efface les trace des bombes
 		*/
-		if( e.type == bonus::bombe )
-		{
-			/***************************************************************
-			* Encore un tour ?
-			* On efface les trace des bombes
-			*/
-			if( e.Nb_Repetition > e.Nb_Repetition_MAX ){// On a fini ! Plus de tour
-				// Suppression des blocks en-flammé
-				for( unsigned int j=0; j<e.deflagration.size(); j++ )
-				{
-					c_map->rmInfoJoueur(e.deflagration.at(j).x, e.deflagration.at(j).y, e.joueur, true);
-					if( !c_map->getBlock(e.deflagration.at(j))->joueur->size() )
-						c_map->setBlock(e.deflagration.at(j), map::vide);
-				}
+		if( e.Nb_Repetition > e.Nb_Repetition_MAX ){// On a fini ! Plus de tour
+			// Suppression des blocks en-flammé
+			for( unsigned int j=0; j<e.deflagration.size(); j++ )
+			{
+				c_map->rmInfoJoueur(e.deflagration.at(j).x, e.deflagration.at(j).y, e.joueur, true);
+				if( !c_map->getBlock(e.deflagration.at(j))->joueur->size() )
+					c_map->setBlock(e.deflagration.at(j), map::vide);
+			}
 
-				// Pop des bonus
-				for( unsigned int j=0; j<e.listBlockDetruit.size(); j++ )
-				{
-					if( !c_map->getBlock(e.listBlockDetruit.at(j))->joueur->size() ){// One ne fait rien pop si il y a déjà quelqu'un à cette emplacement ou si il y a des flammes enemis
-						bonus::t_Bonus tmp = bonus::getBonusAleatoire();
-						if( tmp == bonus::__RIEN__ ){
-							c_map->setBlock(e.listBlockDetruit.at(j), map::vide);
-						}else{
-							c_map->rmInfoJoueur(e.listBlockDetruit.at(j).x, e.listBlockDetruit.at(j).y);// Pour supprimer tout les meta-info
-							c_map->setBlock(e.listBlockDetruit.at(j), map::bonus);
-							c_map->ajouterInfoJoueur(e.listBlockDetruit.at(j).x,e.listBlockDetruit.at(j).y, (unsigned char)tmp, 1);
-						}
+			// Pop des bonus
+			for( unsigned int j=0; j<e.listBlockDetruit.size(); j++ )
+			{
+				if( !c_map->getBlock(e.listBlockDetruit.at(j))->joueur->size() ){// One ne fait rien pop si il y a déjà quelqu'un à cette emplacement ou si il y a des flammes enemis
+					bonus::t_Bonus tmp = bonus::getBonusAleatoire();
+					if( tmp == bonus::__RIEN__ ){
+						c_map->setBlock(e.listBlockDetruit.at(j), map::vide);
+					}else{
+						c_map->rmInfoJoueur(e.listBlockDetruit.at(j).x, e.listBlockDetruit.at(j).y);// Pour supprimer tout les meta-info
+						c_map->setBlock(e.listBlockDetruit.at(j), map::bonus);
+						c_map->ajouterInfoJoueur(e.listBlockDetruit.at(j).x,e.listBlockDetruit.at(j).y, (unsigned char)tmp, 1);
 					}
 				}
-				// Fin de l'event => out de la liste
-				c_listEvent.erase(c_listEvent.begin()+i);
-				i--;
-
-			}else{// ENCORE un tour
-
-				// Création de la déflagration
-				if( e.Nb_Repetition == 0 ){// On ne traite que le centre le 1er tour
-					killPlayers(&e, e.pos.x, e.pos.y);// Adition des flammes avec le reste de l'environement
-					c_map->setBlock(e.pos.x, e.pos.y, map::flamme_origine);
-					e.deflagration.push_back( coordonneeConvert(e.pos.x, e.pos.y) );
-
-					c_listEvent.at(i).Nb_Repetition++;
-					c_listEvent.at(i).repetionSuivante = clock() + VITESSE_DEFLAGRATION_FLAMME;// Ajustement du temps
-
-					continue;
-				}
-
-				// Flamme gauche
-				if( e.continue_negativeX ){
-					char r = actionSurLesElements( &e, e.pos.x-e.Nb_Repetition, e.pos.y, -1 );
-					if( r == -1 || r == 0 )
-						e.continue_negativeX = false;
-					if( r == 0 || r == 1 )
-						e.deflagration.push_back( coordonneeConvert(e.pos.x-e.Nb_Repetition, e.pos.y) );
-				}
-
-				// Flamme droite
-				if( e.continue_X ){
-					char r = actionSurLesElements( &e, e.pos.x+e.Nb_Repetition, e.pos.y, +1 );
-					if( r == -1 || r == 0 )
-						e.continue_X = false;
-					if( r == 0 || r == 1 )
-						e.deflagration.push_back( coordonneeConvert(e.pos.x+e.Nb_Repetition, e.pos.y) );
-				}
-
-				// Flamme haut
-				if( e.continue_negativeY ){
-					char r = actionSurLesElements( &e, e.pos.x, e.pos.y-e.Nb_Repetition, -2 );
-					if( r == -1 || r == 0 )
-						e.continue_negativeY = false;
-					if( r == 0 || r == 1 )
-						e.deflagration.push_back( coordonneeConvert(e.pos.x, e.pos.y-e.Nb_Repetition) );
-				}
-
-				// Flamme bas
-				if( e.continue_Y ){
-					char r = actionSurLesElements( &e, e.pos.x, e.pos.y+e.Nb_Repetition, +2 );
-					if( r == -1 || r == 0 )
-						e.continue_Y = false;
-					if( r == 0 || r == 1 )
-						e.deflagration.push_back( coordonneeConvert(e.pos.x, e.pos.y+e.Nb_Repetition) );
-				}
-
-				c_listEvent.at(i).Nb_Repetition++;
-				c_listEvent.at(i).repetionSuivante = clock() + VITESSE_DEFLAGRATION_FLAMME;// * CLOCKS_PER_SEC;// Ajustement du temps
 			}
+			// Fin de l'event => out de la liste
+			c_listEventBombe.erase(c_listEventBombe.begin()+i);
+			i--;
+
+		}else{// ENCORE un tour
+
+			// Création de la déflagration
+			if( e.Nb_Repetition == 0 ){// On ne traite que le centre le 1er tour
+				killPlayers(&e, e.pos.x, e.pos.y);// Adition des flammes avec le reste de l'environement
+				c_map->setBlock(e.pos.x, e.pos.y, map::flamme_origine);
+				e.deflagration.push_back( coordonneeConvert(e.pos.x, e.pos.y) );
+
+				c_listEventBombe.at(i).Nb_Repetition++;
+				c_listEventBombe.at(i).repetionSuivante = clock() + bonus::VITESSE_flammes;// Ajustement du temps
+
+				continue;
+			}
+
+			// Flamme gauche
+			if( e.continue_negativeX ){
+				char r = actionSurLesElements( &e, e.pos.x-e.Nb_Repetition, e.pos.y, -1 );
+				if( r == -1 || r == 0 )
+					e.continue_negativeX = false;
+				if( r == 0 || r == 1 )
+					e.deflagration.push_back( coordonneeConvert(e.pos.x-e.Nb_Repetition, e.pos.y) );
+			}
+
+			// Flamme droite
+			if( e.continue_X ){
+				char r = actionSurLesElements( &e, e.pos.x+e.Nb_Repetition, e.pos.y, +1 );
+				if( r == -1 || r == 0 )
+					e.continue_X = false;
+				if( r == 0 || r == 1 )
+					e.deflagration.push_back( coordonneeConvert(e.pos.x+e.Nb_Repetition, e.pos.y) );
+			}
+
+			// Flamme haut
+			if( e.continue_negativeY ){
+				char r = actionSurLesElements( &e, e.pos.x, e.pos.y-e.Nb_Repetition, -2 );
+				if( r == -1 || r == 0 )
+					e.continue_negativeY = false;
+				if( r == 0 || r == 1 )
+					e.deflagration.push_back( coordonneeConvert(e.pos.x, e.pos.y-e.Nb_Repetition) );
+			}
+
+			// Flamme bas
+			if( e.continue_Y ){
+				char r = actionSurLesElements( &e, e.pos.x, e.pos.y+e.Nb_Repetition, +2 );
+				if( r == -1 || r == 0 )
+					e.continue_Y = false;
+				if( r == 0 || r == 1 )
+					e.deflagration.push_back( coordonneeConvert(e.pos.x, e.pos.y+e.Nb_Repetition) );
+			}
+
+			c_listEventBombe.at(i).Nb_Repetition++;
+			c_listEventBombe.at(i).repetionSuivante = clock() + bonus::VITESSE_flammes;// * CLOCKS_PER_SEC;// Ajustement du temps
 		}
+
 	}
 }
 
 
 /***************************************************************************//*!
-* @fn char partie::actionSurLesElements( s_Event* e, unsigned int x, unsigned int y, char direction )
+* @fn char partie::actionSurLesElements( s_EventBombe* e, unsigned int x, unsigned int y, char direction )
 * @brief Positionne les flammes en fonction de l'environement
 * @param[in,out] e L'event en cours
 * @param[in] x Position X de la map a check
@@ -1396,9 +1756,9 @@ void partie::checkInternalEvent()
 *			-  0 On stop tout mais on traite le block à l'adresse (Mur_destructible)
 *			-  1 On continue
 *
-* @note On retourne la valeur de partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
+* @note On retourne la valeur de partie::killPlayers( s_EventBombe* e, unsigned int x, unsigned int y )
 */
-char partie::actionSurLesElements( s_Event* e, unsigned int x, unsigned int y, char direction )
+char partie::actionSurLesElements( s_EventBombe* e, unsigned int x, unsigned int y, char direction )
 {
 	char continuer = 1;
 	switch( killPlayers(e, x, y) )
@@ -1451,7 +1811,7 @@ char partie::actionSurLesElements( s_Event* e, unsigned int x, unsigned int y, c
 
 
 /***************************************************************************//*!
-* @fn char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
+* @fn char partie::killPlayers( s_EventBombe* e, unsigned int x, unsigned int y )
 * @brief Tue les joueurs et détruit les block destructibles (Mode: F4A)
 * @param[in,out] e L'event en cours
 * @param[in] x Position X de la map a check
@@ -1463,12 +1823,12 @@ char partie::actionSurLesElements( s_Event* e, unsigned int x, unsigned int y, c
 *
 * @note Les valeurs de X et de Y sont comparées à la taille de la map => Pas de risque de sortir de la map
 */
-char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
+char partie::killPlayers( s_EventBombe* e, unsigned int x, unsigned int y )
 {
 	// k sert dans les boucle for comme compteur.
 	// Peut être utilisée sans problème
 	static unsigned int k;// ça ne sert à rien de la recréer à chaque fois
-	static s_Event eAdd;
+	static s_EventBombe eAdd;
 	unsigned char idJoueur;
 
 	if( x >= c_map->X() || y >= c_map->Y() )
@@ -1628,11 +1988,11 @@ char partie::killPlayers( s_Event* e, unsigned int x, unsigned int y )
 /***************************************************************************//*!
 * @fn const char* partie::packIt( uint32_t X, uint32_t Y, map::t_type type )
 * @brief Empaquette les variables X, Y, type pour les envoyer sur le réseau
-* @return Les variables formaté dans une chaine de caractère
+* @return Les variables formatées dans une chaine de caractère
 */
 const char* partie::packIt( uint32_t X, uint32_t Y, map::t_type type )
 {
-	unsigned int PACK_size = snprintf(c_buffer, PACK_bufferSize, "1:%u,%u,%u", X, Y, type);
+	unsigned int PACK_size = snprintf(c_buffer, PACK_bufferSize, "1:%u,%u,%u²", X, Y, type);
 	if( PACK_size >= PACK_bufferSize )
 		stdError("ATTENTION ! Perte de donnees ! %d donnees lues et %d donnees ecrites Maximum ( Ne pas oublier dans les calcules le \\0 ! )", PACK_size, PACK_bufferSize);
 
@@ -1642,8 +2002,8 @@ const char* partie::packIt( uint32_t X, uint32_t Y, map::t_type type )
 
 /***************************************************************************//*!
 * @fn const char* partie::packIt( std::vector<unsigned char>* list )
-* @brief Empaquette tout ce que contient le tableau
-* @return Les variables formaté dans une chaine de caractère
+* @brief Empaquette tout ce que contient le tableau : map info joueur
+* @return Les variables formatées dans une chaine de caractère
 */
 const char* partie::packIt( std::vector<unsigned char>* list )
 {
@@ -1665,7 +2025,8 @@ const char* partie::packIt( std::vector<unsigned char>* list )
 		c_buffer[p] = ' ';
 		p++;
 	}
-	c_buffer[p-1] = 0;
+	c_buffer[p-1] = '²';
+	c_buffer[p] = 0;
 
 	return c_buffer;
 }
@@ -1681,7 +2042,7 @@ const char* partie::packIt( clavier::t_touche t )
 	if( 0 > t || t > 9 )
 		stdError("Erreur lors du packing du clavier ! Le nombre %d ne peut etre pack !", t);
 
-	strcpy(c_buffer, "3:0");// Entête
+	strcpy(c_buffer, "3:0²");// Entête
 	c_buffer[2] += (int)t;
 
 	return c_buffer;
@@ -1698,23 +2059,23 @@ const char* partie::packIt( unsigned char joueur, bool includeWeapon )
 	// Taille max 43 caractères (au pire des cas) Or PACK_bufferSize == 47
 	if( includeWeapon ){
 		if( c_joueurs[joueur].armements() ){
-			unsigned int PACK_size = snprintf(c_buffer, PACK_bufferSize, "7:%d,%d,%d,%d,%d,%d,%d,%s"
+			unsigned int PACK_size = snprintf(c_buffer, PACK_bufferSize, "7:%d,%d,%d,%d,%d,%d,%d,%s²"
 					,joueur
 					,c_joueurs[joueur].orientation()
 					,c_joueurs[joueur].armements()->quantiteMAX(bonus::bombe)
 					,c_joueurs[joueur].armements()->quantiteMAX(bonus::puissance_flamme)
 					,c_joueurs[joueur].armements()->quantiteMAX(bonus::declancheur)
-					,c_joueurs[joueur].armements()->quantiteMAX(bonus::vitesse)
+					,c_joueurs[joueur].armements()->quantiteMAX(bonus::pousse_bombe)
 					,c_joueurs[joueur].armements()->quantiteMAX(bonus::vie)
 					,c_joueurs[joueur].nom()->c_str()
 			);
 			if( PACK_size >= PACK_bufferSize )
 				stdError("ATTENTION ! Perte de donnees ! %d donnees lues et %d donnees ecrites Maximum ( Ne pas oublier dans les calcules le \\0 ! )", PACK_size, PACK_bufferSize);
 		}else{
-			sprintf(c_buffer, "7:%d,%d,0,0,0,0,0,%s", joueur, c_joueurs[joueur].orientation(), c_joueurs[joueur].nom()->c_str());
+			sprintf(c_buffer, "7:%d,%d,0,0,0,0,0,%s²", joueur, c_joueurs[joueur].orientation(), c_joueurs[joueur].nom()->c_str());
 		}
 	}else{
-		sprintf(c_buffer, "6:%d,%d,%s", joueur, c_joueurs[joueur].orientation(), c_joueurs[joueur].nom()->c_str());
+		sprintf(c_buffer, "6:%d,%d,%s²", joueur, c_joueurs[joueur].orientation(), c_joueurs[joueur].nom()->c_str());
 	}
 
 	return c_buffer;
@@ -1732,13 +2093,14 @@ void partie::unPackIt( uint32_t* X, uint32_t* Y, map::t_type* type )
 
 	//stdError("UnPack this: %s", c_buffer+2);
 
-	if( c_buffer[0] != '1' ){
+	if( c_buffer[0] != '1' || c_buffer[strlen(c_buffer)-1] != '²' ){
 		stdError("Erreur ! Mauvais packet ! {%s}", c_buffer);
 		*X = 0;
 		*Y = 0;
 		*type = map::vide;
 		return ;
 	}
+	c_buffer[strlen(c_buffer)-1] = 0;// On vire la fin de chaine ²
 
 	*X = 0;
 	firstLap = 1;
@@ -1772,7 +2134,7 @@ void partie::unPackIt( uint32_t* X, uint32_t* Y, map::t_type* type )
 
 	*type = (map::t_type)0;
 	firstLap = 1;
-	for( ; c_buffer[i] != 0; i++ )
+	for( ; c_buffer[i]; i++ )
 	{
 		if( '0' <= c_buffer[i] && c_buffer[i] <= '9' ){// Pour contrer le bug SOH
 			if( firstLap ){
@@ -1797,10 +2159,11 @@ void partie::unPackIt( uint32_t X, uint32_t Y )
 {
 	//stdError("UnPack this: %s at x=%u, y=%u", c_buffer+2, X, Y);
 
-	if( c_buffer[0] != '2' ){
+	if( c_buffer[0] != '2' || c_buffer[strlen(c_buffer)-1] != '²' ){
 		stdError("Erreur ! Mauvais packet ! {%s}", c_buffer);
 		return ;
 	}
+	c_buffer[strlen(c_buffer)-1] = 0;// On vire la fin de chaine ²
 
 	for( unsigned int i=2; c_buffer[i]; i++ ){
 		if( i >= PACK_bufferSize )
@@ -1818,7 +2181,7 @@ void partie::unPackIt( uint32_t X, uint32_t Y )
 */
 void partie::unPackIt( clavier::t_touche* t )
 {
-	if( c_buffer[0] != '3' ){
+	if( c_buffer[0] != '3' || c_buffer[strlen(c_buffer)-1] != '²' ){
 		stdError("Erreur ! Mauvais packet ! {%s}", c_buffer);
 		*t = clavier::NUL;
 		return ;
@@ -1840,10 +2203,11 @@ void partie::unPackIt()
 	perso::t_Orientation ori = (perso::t_Orientation)0;
 	unsigned char tmpBonusValue;
 
-	if( c_buffer[0] != '6' && c_buffer[0] != '7' ){
+	if( (c_buffer[0] != '6' && c_buffer[0] != '7') || c_buffer[strlen(c_buffer)-1] != '²' ){
 		stdError("Packet incorrect ! {%s}", c_buffer);
 		return ;
 	}
+	c_buffer[strlen(c_buffer)-1] = 0;// On vire la fin de chaine ²
 
 	/***************************************************************************
 	* On détermine l'ID du joueur
@@ -1949,7 +2313,7 @@ void partie::unPackIt()
 		i++;// Pour virer la,
 		c_joueurs[idJoueur].armements()->defQuantiteMAX(bonus::declancheur, tmpBonusValue);
 
-		// Calcule vitesse
+		// Calcule pousse bombe
 		tmpBonusValue = 0;
 		for( ; c_buffer[i] != ','; i++ )
 		{
@@ -1963,7 +2327,7 @@ void partie::unPackIt()
 			}
 		}
 		i++;// Pour virer la,
-		c_joueurs[idJoueur].armements()->defQuantiteMAX(bonus::vitesse, tmpBonusValue);
+		c_joueurs[idJoueur].armements()->defQuantiteMAX(bonus::pousse_bombe, tmpBonusValue);
 
 		// Calcule vie
 		tmpBonusValue = 0;
@@ -2073,7 +2437,7 @@ void partie::ajouterNouvelleConnection( SOCKET s )
 	{
 		if( !c_joueurs[i].isLocal() && c_joueurs[i].socket() != INVALID_SOCKET ){
 			// Envoie du nouveau nombre de joueur
-			sprintf(c_buffer, "5:%d", nb_joueur);
+			sprintf(c_buffer, "5:%d²", nb_joueur);
 			c_server->send_message( c_joueurs[i].socket(), c_buffer, PACK_bufferSize);
 
 			// Envoie des données du joueur
@@ -2089,7 +2453,7 @@ void partie::ajouterNouvelleConnection( SOCKET s )
 			}
 
 			// Envoie du timer
-			sprintf(c_buffer, "9:%ld", c_timeOut-clock());
+			sprintf(c_buffer, "9:%ld²", c_timeOut-clock());
 			c_server->send_message( c_joueurs[i].socket(), c_buffer, PACK_bufferSize);// Fin de transmition de map
 		}
 	}
@@ -2099,3 +2463,4 @@ void partie::ajouterNouvelleConnection( SOCKET s )
 
 	c_listPlayerRefresh.push_back(idJoueur);
 }
+                                                                                                                                                                                                                                                                                  

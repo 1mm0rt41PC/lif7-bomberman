@@ -96,7 +96,9 @@ void* CMemoryManager::allocate( size_t size, const char fileName[], unsigned int
 	newBlock.is_array	= is_array;
 	c_Blocks.push_back(newBlock);
 
-	fprintf(c_fp, "++ Allocation				| 0x%08X | %15d octets | <%15s>:%u\n", (unsigned int)ptr, static_cast<int>(size), fileName, line);
+	#ifdef MEMORY_FULL_REPORT
+		fprintf(c_fp, "++ Allocation				| 0x%08X | %15d octets | <%15s>:%u\n", (unsigned int)ptr, static_cast<int>(size), fileName, line);
+	#endif
 	return ptr;
 }
 
@@ -138,8 +140,10 @@ void CMemoryManager::Free( void* ptr, bool is_array )
 		return ;
 	}
 
-	// Finalement, si tout va bien, on supprime le bloc et on loggiz tout ça
-	fprintf(c_fp, "-- Désallocation			| 0x%08X | %15d octets | <%15s>:%u | ORG:<%s>:%u\n", (unsigned int)ptr, static_cast<int>(c_Blocks[i].size), c_DeleteStack.top().fileName.c_str(), c_DeleteStack.top().line, c_Blocks[i].fileName.c_str(), c_Blocks[i].line);
+	#ifdef MEMORY_FULL_REPORT
+		// Finalement, si tout va bien, on supprime le bloc et on loggiz tout ça
+		fprintf(c_fp, "-- Désallocation			| 0x%08X | %15d octets | <%15s>:%u | ORG:<%s>:%u\n", (unsigned int)ptr, static_cast<int>(c_Blocks[i].size), c_DeleteStack.top().fileName.c_str(), c_DeleteStack.top().line, c_Blocks[i].fileName.c_str(), c_Blocks[i].line);
+	#endif
 	c_Blocks.erase(i+c_Blocks.begin());
 	c_DeleteStack.pop();
 
@@ -202,7 +206,9 @@ SDL_Surface* CMemoryManager::IMG_Load_Debug( const char fileImg[], const char fi
 	newBlock.is_array	= false;
 	c_Blocks.push_back(newBlock);
 
-	fprintf(c_fp, "++ Allocation Surface		| 0x%08X | %15c octets | <%15s>:%u\n", (unsigned int)newBlock.ptr, '?', fileName, line);
+	#ifdef MEMORY_FULL_REPORT
+		fprintf(c_fp, "++ Allocation Surface		| 0x%08X | %15c octets | <%15s>:%u\n", (unsigned int)newBlock.ptr, '?', fileName, line);
+	#endif
 
 	return (SDL_Surface*)newBlock.ptr;
 }
@@ -239,8 +245,10 @@ void CMemoryManager::SDL_FreeSurface_Debug( SDL_Surface* ptr, const char fileNam
 		return ;
 	}
 
-	// Finalement, si tout va bien, on supprime le bloc et on loggiz tout ça
-	fprintf(c_fp, "-- Désallocation			| 0x%08X | %15c octets | <%15s>:%u | ORG:<%s>:%u\n", (unsigned int)ptr, '?', fileName, line, c_Blocks[i].fileName.c_str(), c_Blocks[i].line);
+	#ifdef MEMORY_FULL_REPORT
+		// Finalement, si tout va bien, on supprime le bloc et on loggiz tout ça
+		fprintf(c_fp, "-- Désallocation			| 0x%08X | %15c octets | <%15s>:%u | ORG:<%s>:%u\n", (unsigned int)ptr, '?', fileName, line, c_Blocks[i].fileName.c_str(), c_Blocks[i].line);
+	#endif
 	c_Blocks.erase(i+c_Blocks.begin());
 
 	// Libération de la mémoire
@@ -266,7 +274,9 @@ SDL_Surface* CMemoryManager::TTF_RenderText_Blended_Debug( TTF_Font *font, const
 	newBlock.is_array	= false;
 	c_Blocks.push_back(newBlock);
 
-	fprintf(c_fp, "++ Allocation Surface text	| 0x%08X | %15c octets | <%15s>:%u\n", (unsigned int)newBlock.ptr, '?', fileName, line);
+	#ifdef MEMORY_FULL_REPORT
+		fprintf(c_fp, "++ Allocation Surface text	| 0x%08X | %15c octets | <%15s>:%u\n", (unsigned int)newBlock.ptr, '?', fileName, line);
+	#endif
 
 	return (SDL_Surface*)newBlock.ptr;
 }
@@ -290,7 +300,9 @@ TTF_Font* CMemoryManager::TTF_OpenFont_Debug( const char file[], int size, const
 	newBlock.is_array	= false;
 	c_Blocks.push_back(newBlock);
 
-	fprintf(c_fp, "++ Allocation TTF			| 0x%08X | %15c octets | <%15s>:%u\n", (unsigned int)newBlock.ptr, '?', fileName, line);
+	#ifdef MEMORY_FULL_REPORT
+		fprintf(c_fp, "++ Allocation TTF			| 0x%08X | %15c octets | <%15s>:%u\n", (unsigned int)newBlock.ptr, '?', fileName, line);
+	#endif
 
 	return (TTF_Font*)newBlock.ptr;
 }
@@ -322,8 +334,10 @@ void CMemoryManager::TTF_CloseFont_Debug( TTF_Font* ptr, const char fileName[], 
 		return ;
 	}
 
-	// Finalement, si tout va bien, on supprime le bloc et on loggiz tout ça
-	fprintf(c_fp, "-- Désallocation d'un TTF	| 0x%08X | %15c octets | <%15s>:%u | ORG:<%s>:%u\n", (unsigned int)ptr, '?', fileName, line, c_Blocks[i].fileName.c_str(), c_Blocks[i].line);
+	#ifdef MEMORY_FULL_REPORT
+		// Finalement, si tout va bien, on supprime le bloc et on loggiz tout ça
+		fprintf(c_fp, "-- Désallocation d'un TTF	| 0x%08X | %15c octets | <%15s>:%u | ORG:<%s>:%u\n", (unsigned int)ptr, '?', fileName, line, c_Blocks[i].fileName.c_str(), c_Blocks[i].line);
+	#endif
 	c_Blocks.erase(i+c_Blocks.begin());
 
 	// Libération de la mémoire

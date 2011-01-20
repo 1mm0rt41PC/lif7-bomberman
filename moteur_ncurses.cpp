@@ -969,8 +969,8 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( partie* p )
 								mvwaddch( win, ypos+y, xpos+x, 'D');
 								break;
 							}
-							case bonus::vitesse: {
-								mvwaddch( win, ypos+y, xpos+x, 'V');
+							case bonus::pousse_bombe: {
+								mvwaddch( win, ypos+y, xpos+x, 'P');
 								break;
 							}
 							case bonus::vie: {
@@ -1098,8 +1098,8 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( partie* p )
 							mvwaddch( win, ypos+pos.y, xpos+pos.x, 'D');
 							break;
 						}
-						case bonus::vitesse: {
-							mvwaddch( win, ypos+pos.y, xpos+pos.x, 'V');
+						case bonus::pousse_bombe: {
+							mvwaddch( win, ypos+pos.y, xpos+pos.x, 'P');
 							break;
 						}
 						case bonus::vie: {
@@ -1143,7 +1143,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( partie* p )
 		mvwprintw(win, ypos+1, xpos-24, "Nombre de bombe: %d", p->joueur(0)->armements()->quantiteMAX(bonus::bombe));
 		mvwprintw(win, ypos+2, xpos-24, "Puissance de flamme: %d", p->joueur(0)->armements()->quantiteMAX(bonus::puissance_flamme));
 		mvwprintw(win, ypos+3, xpos-24, "Declancheur manuel: %d", p->joueur(0)->armements()->quantiteMAX(bonus::declancheur));
-		mvwprintw(win, ypos+4, xpos-24, "Vitesse: %d", p->joueur(0)->armements()->quantiteMAX(bonus::vitesse));
+		mvwprintw(win, ypos+4, xpos-24, "Pousse bombe: %d", p->joueur(0)->armements()->quantiteMAX(bonus::pousse_bombe));
 		mvwprintw(win, ypos+5, xpos-24, "Nombre de vie: %d", p->joueur(0)->armements()->quantiteMAX(bonus::vie));
 	}
 
@@ -1159,7 +1159,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( partie* p )
 			mvwprintw(win, ypos+l_map->Y()-5, xpos+l_map->X()+4, "Nombre de bombe: %d", p->joueur(1)->armements()->quantiteMAX(bonus::bombe));
 			mvwprintw(win, ypos+l_map->Y()-4, xpos+l_map->X()+4, "Puissance de flamme: %d", p->joueur(1)->armements()->quantiteMAX(bonus::puissance_flamme));
 			mvwprintw(win, ypos+l_map->Y()-3, xpos+l_map->X()+4, "Declancheur manuel: %d", p->joueur(1)->armements()->quantiteMAX(bonus::declancheur));
-			mvwprintw(win, ypos+l_map->Y()-2, xpos+l_map->X()+4, "Vitesse: %d", p->joueur(1)->armements()->quantiteMAX(bonus::vitesse));
+			mvwprintw(win, ypos+l_map->Y()-2, xpos+l_map->X()+4, "Pousse bombe: %d", p->joueur(1)->armements()->quantiteMAX(bonus::pousse_bombe));
 			mvwprintw(win, ypos+l_map->Y()-1, xpos+l_map->X()+4, "Nombre de vie: %d", p->joueur(1)->armements()->quantiteMAX(bonus::vie));
 		}
 		cleanPlayer2 = 1;
@@ -1186,7 +1186,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( partie* p )
 			mvwprintw(win, ypos+1, xpos+l_map->X()+4, "Nombre de bombe: %d", p->joueur(2)->armements()->quantiteMAX(bonus::bombe));
 			mvwprintw(win, ypos+2, xpos+l_map->X()+4, "Puissance de flamme: %d", p->joueur(2)->armements()->quantiteMAX(bonus::puissance_flamme));
 			mvwprintw(win, ypos+3, xpos+l_map->X()+4, "Declancheur manuel: %d", p->joueur(2)->armements()->quantiteMAX(bonus::declancheur));
-			mvwprintw(win, ypos+4, xpos+l_map->X()+4, "Vitesse: %d", p->joueur(2)->armements()->quantiteMAX(bonus::vitesse));
+			mvwprintw(win, ypos+4, xpos+l_map->X()+4, "Pousse bombe: %d", p->joueur(2)->armements()->quantiteMAX(bonus::pousse_bombe));
 			mvwprintw(win, ypos+5, xpos+l_map->X()+4, "Nombre de vie: %d", p->joueur(2)->armements()->quantiteMAX(bonus::vie));
 		}
 		cleanPlayer3 = 1;
@@ -1213,7 +1213,7 @@ SYS_CLAVIER moteur_ncurses::afficherMapEtEvent( partie* p )
 			mvwprintw(win, ypos+l_map->Y()-5, xpos-24, "Nombre de bombe: %d", p->joueur(3)->armements()->quantiteMAX(bonus::bombe));
 			mvwprintw(win, ypos+l_map->Y()-4, xpos-24, "Puissance de flamme: %d", p->joueur(3)->armements()->quantiteMAX(bonus::puissance_flamme));
 			mvwprintw(win, ypos+l_map->Y()-3, xpos-24, "Declancheur manuel: %d", p->joueur(3)->armements()->quantiteMAX(bonus::declancheur));
-			mvwprintw(win, ypos+l_map->Y()-2, xpos-24, "Vitesse: %d", p->joueur(3)->armements()->quantiteMAX(bonus::vitesse));
+			mvwprintw(win, ypos+l_map->Y()-2, xpos-24, "Pousse bombe: %d", p->joueur(3)->armements()->quantiteMAX(bonus::pousse_bombe));
 			mvwprintw(win, ypos+l_map->Y()-1, xpos-24, "Nombre de vie: %d", p->joueur(3)->armements()->quantiteMAX(bonus::vie));
 		}
 		cleanPlayer4 = 1;

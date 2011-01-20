@@ -54,7 +54,7 @@ class moteur_sdl
 			gain_bombe,
 			gain_declancheur,
 			gain_puissance_flamme,
-			gain_vitesse_vitesse,
+			gain_pousse_bombe,
 			gain_vie,
 
 			__nombre_de_decors__
@@ -109,16 +109,18 @@ class moteur_sdl
 		bool						c_fenetreOuverte;
 
 	private:
-		SDL_Surface* chargerImage( const char image[] );
-		SDL_Surface* ecritTexte( const char texte[] );
-		SDL_Surface* ecritTexte( const char texte[], const SDL_Color& couleur );
-		SDL_Surface* ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8 b );
-		SDL_Surface* ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille );
+		SDL_Surface* chargerImage( const char image[] ) const;
+		SDL_Surface* ecritTexte( const char texte[] ) const;
+		SDL_Surface* ecritTexte( const char texte[], const SDL_Color& couleur ) const;
+		SDL_Surface* ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8 b ) const;
+		SDL_Surface* ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille ) const;
+		SDL_Surface* ecritTexte( const char texte[], TTF_Font* police ) const;
+		SDL_Surface* ecritTexte( const char texte[], TTF_Font* police, const SDL_Color& couleur ) const;
 		void joueur_orientation( perso::t_Orientation ori, unsigned char joueur, SDL_Rect* pos ) const;
 
 		static char* completerMot( char texte[], unsigned int taille );
 
-		int isInSpriteList( s_Coordonnees pos );
+		int isInSpriteList( s_Coordonnees pos ) const;
 
 		moteur_sdl();
 

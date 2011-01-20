@@ -49,7 +49,7 @@ class moteur_sfml
 			gain_bombe,
 			gain_declancheur,
 			gain_puissance_flamme,
-			gain_vitesse_vitesse,
+			gain_pousse_bombe,
 			gain_vie,
 
 			__nombre_de_decors__

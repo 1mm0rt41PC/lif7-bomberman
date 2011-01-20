@@ -18,8 +18,6 @@
 * -# La couche instanciable, unique a chaque instance.<br />
 *	> Cette couche contient la quatité max en stock et la quantité utilisable.
 *
-* @todo Meilleur système de gestion des bonus
-*
 * @section aide Aide sur les variables
 * Mais c'est quoi la différence entre: quantite_utilisable, quantite_MAX_en_stock, quantite_MAX_Ramassable, probabiliter_pop ?<br />
 *
@@ -40,20 +38,23 @@ class bonus
 		* @attention En cas de modification du nombre d'element, modifier aussi
 		* le define NB_ELEMENT_t_Bonus
 		*/
-		#define NB_ELEMENT_t_Bonus 5
 		enum t_Bonus {
 			bombe=0,
-			// Vitesse de déflagration en milli-sec
-			#define VITESSE_DEFLAGRATION_FLAMME CLOCKS_PER_SEC/10
 			puissance_flamme,
 			declancheur,
-			vitesse,
+			pousse_bombe,
 			vie,
+
+			NB_ELEMENT_t_Bonus,
 			// Signal pour les event
 			SIGNAL_kill,
 
 			// NE RIEN METTRE APRES CET ELEMENT. NE PAS COMPTER CETTE ELEMENT
 			__RIEN__//!< Sert pour bonus::getBonusAleatoire();
+		};
+		enum {
+			VITESSE_flammes = CLOCKS_PER_SEC/10,// Vitesse de déflagration en milli-sec
+			VITESSE_pousseBombe = CLOCKS_PER_SEC/20
 		};
 
 		/*!
@@ -100,17 +101,17 @@ class bonus
 		* @note Passe -Wpadded pour 32bit (4o)
 		*/
 		typedef struct {
-			t_Bonus type;//!< Le bonus (2o)
 			unsigned char quantite_utilisable;//!< Nombre d'objet possédé actuellement et utilisable (1o)
 			unsigned char quantite_MAX_en_stock;//!< Quantité Maxi d'un objet (1o)
 		} s_bonus;
 
-		std::vector<s_Event> c_listEvent;//!< Tableau contenant les bombes posées (12o)
-		// Varaible Générale ( Variables global à toutes les class )
-		static s_bonus_proprieter* C_bonusProp;//!< Liste des bonus chargé et utilisables sur la map ( cette var n'est remplis q'une fois ! (static) )
-		// Varaibles Local à la class ( à l'instance de chaque class )
-		s_bonus* c_liste;//!< Liste des bonus attrapé par un player. ( bonus utilisable )
-		unsigned char c_nb;//!< Nombre de bonus obtenu par un player
+		// struct {
+			std::vector<s_Event>		c_listEvent;//!< Tableau contenant les bombes posées (12o)
+			// Varaible Générale ( Variables global à toutes les class )
+			static s_bonus_proprieter*	C_bonusProp;//!< Liste des bonus chargé et utilisables sur la map ( cette var n'est remplis q'une fois ! (static) )
+			// Varaibles Local à la class ( à l'instance de chaque class )
+			s_bonus						c_liste[NB_ELEMENT_t_Bonus];//!< Liste des bonus attrapé par un player. ( bonus utilisable )
+		// }
 
 
 	public:
@@ -120,8 +121,6 @@ class bonus
 		static void unInitBonusProp();// Destructeur pour inclut C_bonusProp
 
 		// Accesseurs
-		bool aDeja( t_Bonus b ) const;// Permet de savoir si un perso a un bonus ( existe et non null )
-		int est_Dans_La_Liste( t_Bonus b ) const;// Permet de savoir si un bonus est déjà dans la liste
 		unsigned char quantiteUtilisable( t_Bonus b ) const;
 		unsigned char quantiteMAX( t_Bonus b ) const;
 		unsigned char quantiteMAX_Ramassable( t_Bonus b ) const;
@@ -142,13 +141,14 @@ class bonus
 		void defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock );
 		void defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock, unsigned char quantite_MAX_Ramassable, unsigned char probabiliter_pop );
 		inline std::vector<s_Event>* modEvent();
+		s_Event* getEvent( unsigned int x, unsigned int y );
 		void forceTimeOut();
 		void forceTimeOut( unsigned int x, unsigned int y );
 		void kill();
 
 		// Autres
 		bool isEvent( s_Event* pos );
-		unsigned int nbEvent() const;
+		inline unsigned int nbEvent() const;
 		static t_Bonus getBonusAleatoire();
 };
 

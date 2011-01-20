@@ -31,7 +31,8 @@ int main( int argc, char* arvg[] )
 	(void)argc;
 	(void)arvg;
 
-	freopen("bug.txt", "w", stderr);// Redirection du flux d'erreur dans un fichier
+	//  NE PAS OUBLIER DE CHANGER LE NOM "bug.log" EN BAS DANS LE remove() !
+	freopen("bug.log", "w", stderr);// Redirection du flux d'erreur dans un fichier
 	srand(time(NULL));// Make random
 
 	// Initialisation des options général
@@ -84,6 +85,7 @@ int main( int argc, char* arvg[] )
 	char titreNomJoueurNumI[30] = {0};
 	char nomJoueurNumI[21] = {0};
 	char finPartie[70] = {0};
+	char IP[21] = "127.0.0.1";// Taille max 16
 
 	unsigned int entry = 0;
 	int tmp = 0;
@@ -198,13 +200,12 @@ int main( int argc, char* arvg[] )
 									* Client
 									*/
 									case 2: {
-										strcpy(nomJoueurNumI, "127.0.0.1");
-										while( m.isWindowOpen() && m.getTexte( "Veuillez entrez l'adresse IP du serveur", nomJoueurNumI ) != 3 && m.isWindowOpen() )
+										while( m.isWindowOpen() && m.getTexte( "Veuillez entrez l'adresse IP du serveur", IP ) != 3 && m.isWindowOpen() )
 										{
 											partie jeu;
 											jeu.def_connection( partie::CNX_Client );
 											jeu.getClient()->setPort(options::getInstance()->port());
-											jeu.getClient()->setServerAdress(nomJoueurNumI);
+											jeu.getClient()->setServerAdress(IP);
 											jeu.def_nbJoueurs(1);
 
 											// On récup le nom du joueur
@@ -330,6 +331,14 @@ int main( int argc, char* arvg[] )
 	// Désinitialisation des options général
 	options::uInit();
 
-	fclose(stderr);
+
+	fseek(stderr , 0, SEEK_END ); //On trouve la fin du fichier
+	if( !ftell(stderr) ){
+		fclose(stderr);
+		remove("bug.log");
+	}else{
+		fclose(stderr);
+	}
+
 	return EXIT_SUCCESS;
 }
