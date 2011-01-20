@@ -65,7 +65,7 @@ moteur_sfml::moteur_sfml()
 	chargerImage(c_Decor[gain_bombe], "images/gain_bombe.png");
 	chargerImage(c_Decor[gain_declancheur], "images/detonateur.png");
 	chargerImage(c_Decor[gain_puissance_flamme], "images/gain_puissance_flamme.png");
-	chargerImage(c_Decor[gain_vitesse_vitesse], "images/vitesse.png");
+	chargerImage(c_Decor[gain_pousse_bombe], "images/kick.png");
 	chargerImage(c_Decor[gain_vie], "images/gain_vie.gif");
 }
 

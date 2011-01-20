@@ -11,6 +11,10 @@
 #include "config.h"
 
 
+// Rapport complet ? ( defined or not )
+//#define MEMORY_FULL_REPORT
+
+
 /*!
 * @class CMemoryManager
 * @brief Système de vérification de fuite mémoire.

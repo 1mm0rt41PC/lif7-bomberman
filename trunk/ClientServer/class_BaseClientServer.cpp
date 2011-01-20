@@ -102,7 +102,7 @@ int baseClientServer::readClient( SOCKET sock, char* buffer, unsigned int buffer
 {
 	int nbByte = recv(sock, buffer, bufferSize, 0);
 
-	//stdError("rcv %s", buffer);
+	stdError("rcv %s", buffer);
 
 	if( nbByte == SOCKET_ERROR ){
 		stdError("Erreur(%d) lors de la lecture du client %d. Detail: <%s>", SOCKET_REPPORT_ERROR, sock, strerror(SOCKET_REPPORT_ERROR));
@@ -122,7 +122,7 @@ int baseClientServer::readClient( SOCKET sock, char* buffer, unsigned int buffer
 */
 void baseClientServer::send_message( SOCKET sock, const char* buffer, unsigned int bufferSize )
 {
-	//stdError("send %s", buffer);
+	stdError("send %s", buffer);
 	if( send(sock, buffer, bufferSize, 0) == SOCKET_ERROR )
 	   stdError("Erreur(%d) lors de l'envoie du message. Detail: <%s>", SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
 }
@@ -228,4 +228,21 @@ bool baseClientServer::TCP_NoDelay( SOCKET s )
 		reportError("Erreur(%d). Impossible d'accèder au paramètre de l'Algorithme de Nagle ! getsockopt(). Detail: <%s>", SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
 
 	return (bool)use;
+}
+
+
+/***************************************************************************//*!
+* @fn void baseClientServer::printAllBuffer( const char buffer[], unsigned int bufferSize, const char file[], unsigned int line )
+* @brief Permet de voir TOUT le buffer
+* @param[in] buffer		Le buffer a afficher
+* @param[in] bufferSize	La taille du buffer. [0 à bufferSize[
+* @param[in] file		Le fichier d'où est appelé la fonction (__FILE__)
+* @param[in] line		La ligne du fichier d'où est appelé la fonction (__LINE__)
+*/
+void baseClientServer::printAllBuffer( const char buffer[], unsigned int bufferSize, const char file[], unsigned int line )
+{
+	fprintf(stderr, "[file %s, line %u]: Paquet:<", file, line);
+	for( unsigned int i=0; i<bufferSize; i++ )
+		fprintf(stderr, "%c", buffer[i]);
+	fprintf(stderr, ">\n");
 }

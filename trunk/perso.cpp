@@ -59,6 +59,7 @@ void perso::defNom( std::string nom )
 */
 void perso::defPos( unsigned int Xpos, unsigned int Ypos )
 {
+	//stdError("Anti-bug SDL");// Anti-bug SDL
 	c_pos.x = Xpos;
 	c_pos.y = Ypos;
 }

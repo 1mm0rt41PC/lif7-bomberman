@@ -1,4 +1,4 @@
-Listre des entête
+Listre des entêtes
 0: FIN DE TRANSMITION
 1: Map
 2: Map info joueur ( meta données )
@@ -9,6 +9,8 @@ Listre des entête
 7: Infos mon joueur
 8: Supprimer le joueur
 9: Timer
+
+TOUT LES PAQUETS NUMEROTE DOIVENT FINIR PAR ²
 
 --> Protocole lors d'une nouvelle connection <--
 Client: 0-1 0-1 1-...				{is32Bits isIntel bufferSize}

@@ -7,6 +7,9 @@
 #include <errno.h>
 #include <limits.h>
 
+// Réseau
+#define __TCP_NODELAY__ true
+
 #if defined(WIN32) || defined(WIN64)
 	#include <winsock2.h>
 	//#pragma comment(lib, "wsock32.lib")
@@ -98,6 +101,8 @@ class baseClientServer
 		IF_WINDOWS(
 			inline const char* strerror( int ){ return "?"; }
 		)
+
+		static void printAllBuffer( const char buffer[], unsigned int bufferSize, const char file[], unsigned int line );
 
 		static bool isLittleEndian();// isIntel
 		// Conversion Little Endian <-> Big Endian

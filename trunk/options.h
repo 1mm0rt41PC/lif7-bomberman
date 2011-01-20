@@ -3,8 +3,8 @@
 
 #include <stdio.h>// Pour remove(char *)
 #include "clavier.h"
+#include "config.h"
 
-#define DEFAULT_PORT 947 // 947 = 'b'+'o'+'m'+'b'+'e'+'r'+'m'+'a'+'n' °(^_^)°
 #ifdef __LIB_ncurses__
 	#define CONFIG_FILE "config_ncurses.conf"
 #elif __LIB_SDL__

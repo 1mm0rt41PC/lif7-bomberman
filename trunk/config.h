@@ -4,7 +4,14 @@
 
 // Define LIB : __LIB_ncurses__, __LIB_SDL__, __LIB_SFML__
 
-#define __LIB_SDL__ 1
+// Pour les IDE et ne pas interférer avec les commandes make
+#if !defined(__LIB_ncurses__) && !defined(__LIB_SDL__) && !defined(__LIB_SFML__)
+	#define __LIB_SDL__ 1
+	#warning "Veuillez definir la lib d'affichage ! ( __LIB_ncurses__, __LIB_SDL__, __LIB_SFML__ ) !"
+#endif
+
+// NOTE: si DEFAULT_PORT < 1024 alors les droits root sont nécéssaire
+#define DEFAULT_PORT 947 // 947 = 'b'+'o'+'m'+'b'+'e'+'r'+'m'+'a'+'n' °(^_^)°
 
 enum {
 	__BOMBERMAN_VERSION__ = 1
