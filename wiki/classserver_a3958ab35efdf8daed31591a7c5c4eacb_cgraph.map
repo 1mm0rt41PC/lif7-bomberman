@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classserver.html#a5763b1fe8cfe5a31e5217e0a7584d839" title="Supprime le client qui a le socket s." alt="" coords="191,32,313,61"/>
+<area shape="rect" id="node5" href="$classserver.html#af29d65fecf50b8ba68ffee1a21d32f50" title="Retourne l&#39;id du client qui a le socket s." alt="" coords="364,5,503,35"/>
+<area shape="rect" id="node7" href="$classserver.html#ac0cf2372772a90dbe308c784266939e1" title="Déconnecte le client puis le supprime de la liste." alt="" coords="365,59,501,88"/>
+</map>

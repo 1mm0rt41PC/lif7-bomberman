@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classbase_client_server.html#a94f59ec6bf09f3c90f25e57781632df5" title="baseClientServer::setTCP_NoDelay" alt="" coords="264,5,507,35"/>
+<area shape="rect" id="node5" href="$classbase_client_server.html#a676e6d281c3ff4a5c9e2b91c04d6b99a" title="Permet de savoir l&#39;état du paramètre TCP_NoDelay ( Algorithme de Nagle ) pour le socket c_listenS..." alt="" coords="275,59,496,88"/>
+</map>

@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Membres de classe - Fonctions</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="functions.html"><span>Tout</span></a></li>
+      <li class="current"><a href="functions_func.html"><span>Fonctions</span></a></li>
+      <li><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_type.html"><span>Définition&nbsp;de&nbsp;type</span></a></li>
+      <li><a href="functions_enum.html"><span>Énumérations</span></a></li>
+      <li><a href="functions_eval.html"><span>Valeurs&nbsp;énumérées</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs3">
+    <ul class="tablist">
+      <li><a href="functions_func.html#index_a"><span>a</span></a></li>
+      <li><a href="functions_func_0x62.html#index_b"><span>b</span></a></li>
+      <li><a href="functions_func_0x63.html#index_c"><span>c</span></a></li>
+      <li><a href="functions_func_0x64.html#index_d"><span>d</span></a></li>
+      <li><a href="functions_func_0x65.html#index_e"><span>e</span></a></li>
+      <li><a href="functions_func_0x66.html#index_f"><span>f</span></a></li>
+      <li><a href="functions_func_0x67.html#index_g"><span>g</span></a></li>
+      <li><a href="functions_func_0x69.html#index_i"><span>i</span></a></li>
+      <li><a href="functions_func_0x6a.html#index_j"><span>j</span></a></li>
+      <li><a href="functions_func_0x6b.html#index_k"><span>k</span></a></li>
+      <li><a href="functions_func_0x6c.html#index_l"><span>l</span></a></li>
+      <li><a href="functions_func_0x6d.html#index_m"><span>m</span></a></li>
+      <li><a href="functions_func_0x6e.html#index_n"><span>n</span></a></li>
+      <li><a href="functions_func_0x6f.html#index_o"><span>o</span></a></li>
+      <li class="current"><a href="functions_func_0x70.html#index_p"><span>p</span></a></li>
+      <li><a href="functions_func_0x71.html#index_q"><span>q</span></a></li>
+      <li><a href="functions_func_0x72.html#index_r"><span>r</span></a></li>
+      <li><a href="functions_func_0x73.html#index_s"><span>s</span></a></li>
+      <li><a href="functions_func_0x74.html#index_t"><span>t</span></a></li>
+      <li><a href="functions_func_0x75.html#index_u"><span>u</span></a></li>
+      <li><a href="functions_func_0x78.html#index_x"><span>x</span></a></li>
+      <li><a href="functions_func_0x79.html#index_y"><span>y</span></a></li>
+      <li><a href="functions_func_0x7e.html#index_~"><span>~</span></a></li>
+    </ul>
+  </div>
+<div class="contents">
+&nbsp;
+
+<h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
+<li>packIt()
+: <a class="el" href="classpartie.html#addde04ace47d77c95a6426d5a8b169fd">partie</a>
+</li>
+<li>param_Par_Defaut()
+: <a class="el" href="classbonus.html#af91e74965a273a977bf3eea41dc19c13">bonus</a>
+</li>
+<li>partie()
+: <a class="el" href="classpartie.html#a8c7990dc4fb36412a4c198b4cde49e64">partie</a>
+</li>
+<li>perso()
+: <a class="el" href="classperso.html#a905a1edfdeb0887d41ad1f1a25b021a7">perso</a>
+</li>
+<li>placer_perso_position_initial()
+: <a class="el" href="classpartie.html#a54c3b6294fadf3be0949fa19527f5370">partie</a>
+</li>
+<li>playerNeedRefresh()
+: <a class="el" href="classpartie.html#a957dd9c9405332830ca5312fe600b139">partie</a>
+</li>
+<li>port()
+: <a class="el" href="classoptions.html#a4eeb468347a4f33dee3b565a35efe7a8">options</a>
+, <a class="el" href="classbase_client_server.html#a61011c973d5f71ddd0894f1f99f8959e">baseClientServer</a>
+</li>
+<li>positionInitialJoueur()
+: <a class="el" href="classmap.html#a69a17c9066d0cc1b9cf2f0123db3114e">map</a>
+</li>
+<li>probabiliter()
+: <a class="el" href="classbonus.html#ad80a500afd491b35c3dfcf3d70e51ac8">bonus</a>
+</li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="547,24,645,54"/>
+<area shape="rect" id="node7" href="$classclient.html#a2ea117a6fd3515343481d4ea4d97eab4" title="Récupère les données envoyées par le serveur." alt="" coords="364,24,497,54"/>
+<area shape="rect" id="node10" href="$classclient.html#ad45e388579b8c0ffec6f29ed2c0c4de9" title="Destructeur par défaut." alt="" coords="205,76,315,106"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="695,24,748,54"/>
+<area shape="rect" id="node12" href="$classclient.html#aafb3e1157b7e1f3e81c09fe1c7866a82" title="Permet de se connecter au serveur." alt="" coords="364,78,497,107"/>
+</map>

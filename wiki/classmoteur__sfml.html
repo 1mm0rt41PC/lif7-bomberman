@@ -1,0 +1,840 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la classe moteur_sfml</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="#pub-static-methods">Fonctions membres publiques statiques</a> &#124;
+<a href="#pri-types">Types privés</a> &#124;
+<a href="#pri-methods">Fonctions membres privées</a> &#124;
+<a href="#pri-static-methods">Fonctions membres privées statiques</a> &#124;
+<a href="#pri-attribs">Attributs privés</a> &#124;
+<a href="#pri-static-attribs">Attributs privés statiques</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la classe moteur_sfml</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="moteur_sfml" -->
+<p>Gère l'affichage via le moteur graphique SFML.  
+<a href="#_details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="moteur__sfml_8h_source.html">moteur_sfml.h</a>&gt;</code></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Graphe de collaboration de moteur_sfml:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__sfml__coll__graph.png" border="0" usemap="#moteur__sfml_coll__map" alt="Collaboration graph"/></div>
+<map name="moteur__sfml_coll__map" id="moteur__sfml_coll__map">
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">légende</a>]</span></center></div>
+
+<p><a href="classmoteur__sfml-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#aaab142001dbc3d56136b5bd282ac6475">~moteur_sfml</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Désinitialise la class <a class="el" href="classmoteur__sfml.html" title="Gère l&#39;affichage via le moteur graphique SFML.">moteur_sfml</a>.  <a href="#aaab142001dbc3d56136b5bd282ac6475"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#afac3f84993acd5a3eab2edf388dd0af0">menu</a> (const char titre[], const char *choix[], unsigned int nb_choix)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Afficher l'image correspondante suivant le menu où on est.  <a href="#afac3f84993acd5a3eab2edf388dd0af0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#a418c3276e0e92dd23ef25da6f9af9b04">afficherConfigurationClavier</a> (unsigned char joueur)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Menu permettant d'afficher et de modifier la configuration du clavier d'un joueur.  <a href="#a418c3276e0e92dd23ef25da6f9af9b04"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#a924bb726b5d2a413f4da0fe7a00962a2">getNombre</a> (const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int *valeurRetour)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Créer un menu pour récupérer un nombre entré par un utilisateur.  <a href="#a924bb726b5d2a413f4da0fe7a00962a2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#a8628e69118d8923eff8fad979f791da2">getTexte</a> (const char titre[], char texteRetour[21])</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet d'obtenir du texte.  <a href="#a8628e69118d8923eff8fad979f791da2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#a07c05115d0ba260cb5df07e310fda5e9">forcerRafraichissement</a> ()</td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-methods"></a>
+Fonctions membres publiques statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classmoteur__sfml.html">moteur_sfml</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#aa5290106520ad011241051d3f60435f1">getInstance</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie l'instance de la class. Si pas d'instance, alors création d'une instance.  <a href="#aa5290106520ad011241051d3f60435f1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static SYS_CLAVIER&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#a2f096be2aa41c3a7045731ff39af1fcf">afficherMapEtEvent</a> (<a class="el" href="classpartie.html">partie</a> *p)</td></tr>
+<tr><td colspan="2"><h2><a name="pri-types"></a>
+Types privés</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom">{ <br/>
+&nbsp;&nbsp;<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819afe553334e398e7a92913c50a8c9fa1b9">vide</a> = 0, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819a2b36d2621010ec719f52a8ec34856e11">mur_destructible</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819a3c4ff39ab81f873d655e023df8ec834a">mur_indestructible</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819a6b6c94e70dbba1c9b42cd13f9c91702a">joueur1_haut</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819ac1f08542f4a93a8a2f5c64cbd26530b5">joueur1_bas</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819a9f8c36e8b4df978761a6060e22cdfd93">joueur1_gauche</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819a379c6313a56ebe3a46bbd631141c07ae">joueur1_droite</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819aef50419d628fecb73cd488445337c347">joueur2_haut</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819a69130c45a067f3fe3969cf62c468365d">joueur2_bas</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819a1125189d665cb5310764351e3c772217">joueur2_gauche</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819aa5d0a1f6b765753febb59550f8a1581d">joueur2_droite</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819ad7ee121658dc51ae8ee96c7434834caa">joueur3_haut</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819af2773e1bb6f8573c8976e732db961840">joueur3_bas</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819ad656d9ce6205f47c0220f8999d6fa6c6">joueur3_gauche</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819afa72465cd11e4633c711eb08c50d30e5">joueur3_droite</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819ac1e88e633cf81e2c137819c4547f20d9">joueur4_haut</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819aee8d7cf2fe05116b6cc4fca8d9caabca">joueur4_bas</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819aa0af7d152687f214df9f9f1d9e4ade7d">joueur4_gauche</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819ab7d49368ff6d1cd4b40074c3223dd654">joueur4_droite</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819a225d5f7291e21a3edc3e1a5550e0267f">flamme_origine</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819a5c2fef4fa5ccf5f41a11905ab51230c9">flamme_horizontal</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819afe137178dc2e356d46e5c3798c89ec8b">flamme_vertical</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819a6300fb6c0a590a99f547381409ce2794">bout_flamme_haut</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819ab444465c8be038fae75f8b9c70edbf67">bout_flamme_bas</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819ad8f78e115e876056a2cc4751716fe9e1">bout_flamme_gauche</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819a22b6fb3e044cc1f5d3ddd543484cec00">bout_flamme_droite</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819a96779a83b787d04433299d34967d9324">bombe</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819a90b68ed80d1b76a1a8360539ae72e70a">gain_bombe</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819aa3c713835887d9d68a4ec19e4a5149cf">gain_declancheur</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819aae33b3a0a6a058f42ac0c305856df818">gain_puissance_flamme</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819accbc02ad85711f25bfaa891944a0fc51">gain_pousse_bombe</a>, 
+<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819a5f95c777792306561a3d75c4e9c3b899">gain_vie</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="classmoteur__sfml.html#a3ff99f98149ac2a3f3770453a0665819ad04ef5ee7124ae147ba626de7ef8913b">__nombre_de_decors__</a>
+<br/>
+ }</td></tr>
+<tr><td colspan="2"><h2><a name="pri-methods"></a>
+Fonctions membres privées</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#ad75a96e416de6f74d852dbaf91e8b6c7">moteur_sfml</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initialise la class <a class="el" href="classmoteur__sfml.html" title="Gère l&#39;affichage via le moteur graphique SFML.">moteur_sfml</a>.  <a href="#ad75a96e416de6f74d852dbaf91e8b6c7"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-static-methods"></a>
+Fonctions membres privées statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#aac797169fa9078c8ae02315eb3433dc4">completerMot</a> (char texte[], unsigned int taille)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Complete le texte avec le caractère _ jusqu'a avoir un texte de longueur 20.  <a href="#aac797169fa9078c8ae02315eb3433dc4"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-attribs"></a>
+Attributs privés</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">sf::Window&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#afc08f01cd1ae1ffba17e4eb3fb837f9e">c_App</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">sf::Image&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#a8a019450d84493d927b4d70393b8340f">c_background</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">sf::Font&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#afe2ed5aa9c0c318f3055e11066d07401">c_policeGeneral</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">sf::Image *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#aceff4b1dc21119871f056e734e8054d4">c_Decor</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#a3f12bc91b2eeccc764f08a32c50a36c1">c_premierAffichage</a></td></tr>
+<tr><td colspan="2"><h2><a name="pri-static-attribs"></a>
+Attributs privés statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classmoteur__sfml.html">moteur_sfml</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__sfml.html#a4c1b62209379fff99e24865c09af2164">c_Instance</a> = 0</td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Gère l'affichage via le moteur graphique SFML. </p>
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8h_source.html#l00017">17</a> du fichier <a class="el" href="moteur__sfml_8h_source.html">moteur_sfml.h</a>.</p>
+<hr/><h2>Documentation des énumérations membres</h2>
+<a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819"></a><!-- doxytag: member="moteur_sfml::@14" ref="a3ff99f98149ac2a3f3770453a0665819" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum<code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl><dt><b>Valeurs énumérées: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819afe553334e398e7a92913c50a8c9fa1b9"></a><!-- doxytag: member="vide" ref="a3ff99f98149ac2a3f3770453a0665819afe553334e398e7a92913c50a8c9fa1b9" args="" -->vide</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819a2b36d2621010ec719f52a8ec34856e11"></a><!-- doxytag: member="mur_destructible" ref="a3ff99f98149ac2a3f3770453a0665819a2b36d2621010ec719f52a8ec34856e11" args="" -->mur_destructible</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819a3c4ff39ab81f873d655e023df8ec834a"></a><!-- doxytag: member="mur_indestructible" ref="a3ff99f98149ac2a3f3770453a0665819a3c4ff39ab81f873d655e023df8ec834a" args="" -->mur_indestructible</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819a6b6c94e70dbba1c9b42cd13f9c91702a"></a><!-- doxytag: member="joueur1_haut" ref="a3ff99f98149ac2a3f3770453a0665819a6b6c94e70dbba1c9b42cd13f9c91702a" args="" -->joueur1_haut</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819ac1f08542f4a93a8a2f5c64cbd26530b5"></a><!-- doxytag: member="joueur1_bas" ref="a3ff99f98149ac2a3f3770453a0665819ac1f08542f4a93a8a2f5c64cbd26530b5" args="" -->joueur1_bas</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819a9f8c36e8b4df978761a6060e22cdfd93"></a><!-- doxytag: member="joueur1_gauche" ref="a3ff99f98149ac2a3f3770453a0665819a9f8c36e8b4df978761a6060e22cdfd93" args="" -->joueur1_gauche</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819a379c6313a56ebe3a46bbd631141c07ae"></a><!-- doxytag: member="joueur1_droite" ref="a3ff99f98149ac2a3f3770453a0665819a379c6313a56ebe3a46bbd631141c07ae" args="" -->joueur1_droite</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819aef50419d628fecb73cd488445337c347"></a><!-- doxytag: member="joueur2_haut" ref="a3ff99f98149ac2a3f3770453a0665819aef50419d628fecb73cd488445337c347" args="" -->joueur2_haut</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819a69130c45a067f3fe3969cf62c468365d"></a><!-- doxytag: member="joueur2_bas" ref="a3ff99f98149ac2a3f3770453a0665819a69130c45a067f3fe3969cf62c468365d" args="" -->joueur2_bas</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819a1125189d665cb5310764351e3c772217"></a><!-- doxytag: member="joueur2_gauche" ref="a3ff99f98149ac2a3f3770453a0665819a1125189d665cb5310764351e3c772217" args="" -->joueur2_gauche</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819aa5d0a1f6b765753febb59550f8a1581d"></a><!-- doxytag: member="joueur2_droite" ref="a3ff99f98149ac2a3f3770453a0665819aa5d0a1f6b765753febb59550f8a1581d" args="" -->joueur2_droite</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819ad7ee121658dc51ae8ee96c7434834caa"></a><!-- doxytag: member="joueur3_haut" ref="a3ff99f98149ac2a3f3770453a0665819ad7ee121658dc51ae8ee96c7434834caa" args="" -->joueur3_haut</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819af2773e1bb6f8573c8976e732db961840"></a><!-- doxytag: member="joueur3_bas" ref="a3ff99f98149ac2a3f3770453a0665819af2773e1bb6f8573c8976e732db961840" args="" -->joueur3_bas</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819ad656d9ce6205f47c0220f8999d6fa6c6"></a><!-- doxytag: member="joueur3_gauche" ref="a3ff99f98149ac2a3f3770453a0665819ad656d9ce6205f47c0220f8999d6fa6c6" args="" -->joueur3_gauche</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819afa72465cd11e4633c711eb08c50d30e5"></a><!-- doxytag: member="joueur3_droite" ref="a3ff99f98149ac2a3f3770453a0665819afa72465cd11e4633c711eb08c50d30e5" args="" -->joueur3_droite</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819ac1e88e633cf81e2c137819c4547f20d9"></a><!-- doxytag: member="joueur4_haut" ref="a3ff99f98149ac2a3f3770453a0665819ac1e88e633cf81e2c137819c4547f20d9" args="" -->joueur4_haut</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819aee8d7cf2fe05116b6cc4fca8d9caabca"></a><!-- doxytag: member="joueur4_bas" ref="a3ff99f98149ac2a3f3770453a0665819aee8d7cf2fe05116b6cc4fca8d9caabca" args="" -->joueur4_bas</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819aa0af7d152687f214df9f9f1d9e4ade7d"></a><!-- doxytag: member="joueur4_gauche" ref="a3ff99f98149ac2a3f3770453a0665819aa0af7d152687f214df9f9f1d9e4ade7d" args="" -->joueur4_gauche</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819ab7d49368ff6d1cd4b40074c3223dd654"></a><!-- doxytag: member="joueur4_droite" ref="a3ff99f98149ac2a3f3770453a0665819ab7d49368ff6d1cd4b40074c3223dd654" args="" -->joueur4_droite</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819a225d5f7291e21a3edc3e1a5550e0267f"></a><!-- doxytag: member="flamme_origine" ref="a3ff99f98149ac2a3f3770453a0665819a225d5f7291e21a3edc3e1a5550e0267f" args="" -->flamme_origine</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819a5c2fef4fa5ccf5f41a11905ab51230c9"></a><!-- doxytag: member="flamme_horizontal" ref="a3ff99f98149ac2a3f3770453a0665819a5c2fef4fa5ccf5f41a11905ab51230c9" args="" -->flamme_horizontal</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819afe137178dc2e356d46e5c3798c89ec8b"></a><!-- doxytag: member="flamme_vertical" ref="a3ff99f98149ac2a3f3770453a0665819afe137178dc2e356d46e5c3798c89ec8b" args="" -->flamme_vertical</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819a6300fb6c0a590a99f547381409ce2794"></a><!-- doxytag: member="bout_flamme_haut" ref="a3ff99f98149ac2a3f3770453a0665819a6300fb6c0a590a99f547381409ce2794" args="" -->bout_flamme_haut</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819ab444465c8be038fae75f8b9c70edbf67"></a><!-- doxytag: member="bout_flamme_bas" ref="a3ff99f98149ac2a3f3770453a0665819ab444465c8be038fae75f8b9c70edbf67" args="" -->bout_flamme_bas</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819ad8f78e115e876056a2cc4751716fe9e1"></a><!-- doxytag: member="bout_flamme_gauche" ref="a3ff99f98149ac2a3f3770453a0665819ad8f78e115e876056a2cc4751716fe9e1" args="" -->bout_flamme_gauche</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819a22b6fb3e044cc1f5d3ddd543484cec00"></a><!-- doxytag: member="bout_flamme_droite" ref="a3ff99f98149ac2a3f3770453a0665819a22b6fb3e044cc1f5d3ddd543484cec00" args="" -->bout_flamme_droite</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819a96779a83b787d04433299d34967d9324"></a><!-- doxytag: member="bombe" ref="a3ff99f98149ac2a3f3770453a0665819a96779a83b787d04433299d34967d9324" args="" -->bombe</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819a90b68ed80d1b76a1a8360539ae72e70a"></a><!-- doxytag: member="gain_bombe" ref="a3ff99f98149ac2a3f3770453a0665819a90b68ed80d1b76a1a8360539ae72e70a" args="" -->gain_bombe</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819aa3c713835887d9d68a4ec19e4a5149cf"></a><!-- doxytag: member="gain_declancheur" ref="a3ff99f98149ac2a3f3770453a0665819aa3c713835887d9d68a4ec19e4a5149cf" args="" -->gain_declancheur</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819aae33b3a0a6a058f42ac0c305856df818"></a><!-- doxytag: member="gain_puissance_flamme" ref="a3ff99f98149ac2a3f3770453a0665819aae33b3a0a6a058f42ac0c305856df818" args="" -->gain_puissance_flamme</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819accbc02ad85711f25bfaa891944a0fc51"></a><!-- doxytag: member="gain_pousse_bombe" ref="a3ff99f98149ac2a3f3770453a0665819accbc02ad85711f25bfaa891944a0fc51" args="" -->gain_pousse_bombe</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819a5f95c777792306561a3d75c4e9c3b899"></a><!-- doxytag: member="gain_vie" ref="a3ff99f98149ac2a3f3770453a0665819a5f95c777792306561a3d75c4e9c3b899" args="" -->gain_vie</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3ff99f98149ac2a3f3770453a0665819ad04ef5ee7124ae147ba626de7ef8913b"></a><!-- doxytag: member="__nombre_de_decors__" ref="a3ff99f98149ac2a3f3770453a0665819ad04ef5ee7124ae147ba626de7ef8913b" args="" -->__nombre_de_decors__</em>&nbsp;</td><td>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8h_source.html#l00020">20</a> du fichier <a class="el" href="moteur__sfml_8h_source.html">moteur_sfml.h</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="ad75a96e416de6f74d852dbaf91e8b6c7"></a><!-- doxytag: member="moteur_sfml::moteur_sfml" ref="ad75a96e416de6f74d852dbaf91e8b6c7" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">moteur_sfml::moteur_sfml </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Initialise la class <a class="el" href="classmoteur__sfml.html" title="Gère l&#39;affichage via le moteur graphique SFML.">moteur_sfml</a>. </p>
+<p>Initialise l'écran sdl et prépare le "terrain" pour les traitements futurs </p>
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8cpp_source.html#l00016">16</a> du fichier <a class="el" href="moteur__sfml_8cpp_source.html">moteur_sfml.cpp</a>.</p>
+
+<p>Références <a class="el" href="moteur__sfml_8h_source.html#l00047">bombe</a>, <a class="el" href="moteur__sfml_8h_source.html#l00044">bout_flamme_bas</a>, <a class="el" href="moteur__sfml_8h_source.html#l00046">bout_flamme_droite</a>, <a class="el" href="moteur__sfml_8h_source.html#l00045">bout_flamme_gauche</a>, <a class="el" href="moteur__sfml_8h_source.html#l00043">bout_flamme_haut</a>, <a class="el" href="moteur__sfml_8h_source.html#l00059">c_App</a>, <a class="el" href="moteur__sfml_8h_source.html#l00061">c_background</a>, <a class="el" href="moteur__sfml_8h_source.html#l00063">c_Decor</a>, <a class="el" href="moteur__sfml_8h_source.html#l00062">c_policeGeneral</a>, <a class="el" href="moteur__sfml_8h_source.html#l00041">flamme_horizontal</a>, <a class="el" href="moteur__sfml_8h_source.html#l00040">flamme_origine</a>, <a class="el" href="moteur__sfml_8h_source.html#l00042">flamme_vertical</a>, <a class="el" href="moteur__sfml_8h_source.html#l00049">gain_bombe</a>, <a class="el" href="moteur__sfml_8h_source.html#l00050">gain_declancheur</a>, <a class="el" href="moteur__sfml_8h_source.html#l00052">gain_pousse_bombe</a>, <a class="el" href="moteur__sfml_8h_source.html#l00051">gain_puissance_flamme</a>, <a class="el" href="moteur__sfml_8h_source.html#l00053">gain_vie</a>, <a class="el" href="moteur__sfml_8h_source.html#l00025">joueur1_bas</a>, <a class="el" href="moteur__sfml_8h_source.html#l00027">joueur1_droite</a>, <a class="el" href="moteur__sfml_8h_source.html#l00026">joueur1_gauche</a>, <a class="el" href="moteur__sfml_8h_source.html#l00024">joueur1_haut</a>, <a class="el" href="moteur__sfml_8h_source.html#l00029">joueur2_bas</a>, <a class="el" href="moteur__sfml_8h_source.html#l00031">joueur2_droite</a>, <a class="el" href="moteur__sfml_8h_source.html#l00030">joueur2_gauche</a>, <a class="el" href="moteur__sfml_8h_source.html#l00028">joueur2_haut</a>, <a class="el" href="moteur__sfml_8h_source.html#l00033">joueur3_bas</a>, <a class="el" href="moteur__sfml_8h_source.html#l00035">joueur3_droite</a>, <a class="el" href="moteur__sfml_8h_source.html#l00034">joueur3_gauche</a>, <a class="el" href="moteur__sfml_8h_source.html#l00032">joueur3_haut</a>, <a class="el" href="moteur__sfml_8h_source.html#l00037">joueur4_bas</a>, <a class="el" href="moteur__sfml_8h_source.html#l00039">joueur4_droite</a>, <a class="el" href="moteur__sfml_8h_source.html#l00038">joueur4_gauche</a>, <a class="el" href="moteur__sfml_8h_source.html#l00036">joueur4_haut</a>, <a class="el" href="moteur__sfml_8h_source.html#l00022">mur_destructible</a>, <a class="el" href="moteur__sfml_8h_source.html#l00023">mur_indestructible</a>, et <a class="el" href="moteur__sfml_8h_source.html#l00021">vide</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaab142001dbc3d56136b5bd282ac6475"></a><!-- doxytag: member="moteur_sfml::~moteur_sfml" ref="aaab142001dbc3d56136b5bd282ac6475" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">moteur_sfml::~moteur_sfml </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Désinitialise la class <a class="el" href="classmoteur__sfml.html" title="Gère l&#39;affichage via le moteur graphique SFML.">moteur_sfml</a>. </p>
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8cpp_source.html#l00090">90</a> du fichier <a class="el" href="moteur__sfml_8cpp_source.html">moteur_sfml.cpp</a>.</p>
+
+<p>Références <a class="el" href="moteur__sfml_8h_source.html#l00063">c_Decor</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="a418c3276e0e92dd23ef25da6f9af9b04"></a><!-- doxytag: member="moteur_sfml::afficherConfigurationClavier" ref="a418c3276e0e92dd23ef25da6f9af9b04" args="(unsigned char joueur)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void moteur_sfml::afficherConfigurationClavier </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>joueur</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Menu permettant d'afficher et de modifier la configuration du clavier d'un joueur. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>joueur</em>&nbsp;</td><td>Le numéro du joueur ( de 1 à ... ) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8cpp_source.html#l00241">241</a> du fichier <a class="el" href="moteur__sfml_8cpp_source.html">moteur_sfml.cpp</a>.</p>
+
+<p>Références <a class="el" href="clavier_8h_source.html#l00032">clavier::bas</a>, <a class="el" href="moteur__sfml_8h_source.html#l00061">c_background</a>, <a class="el" href="moteur__sfml_8h_source.html#l00062">c_policeGeneral</a>, <a class="el" href="clavier_8h_source.html#l00036">clavier::declancheur</a>, <a class="el" href="clavier_8cpp_source.html#l00053">clavier::defTouche()</a>, <a class="el" href="clavier_8h_source.html#l00033">clavier::droite</a>, <a class="el" href="clavier_8h_source.html#l00034">clavier::gauche</a>, <a class="el" href="moteur__sfml_8cpp_source.html#l00077">getInstance()</a>, <a class="el" href="clavier_8h_source.html#l00031">clavier::haut</a>, <a class="el" href="clavier_8h_source.html#l00035">clavier::lancerBombe</a>, et <a class="el" href="clavier_8cpp_source.html#l00144">clavier::touche()</a>.</p>
+
+<p>Référencé par <a class="el" href="main_8cpp_source.html#l00029">main()</a>.</p>
+
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__sfml_a418c3276e0e92dd23ef25da6f9af9b04_cgraph.png" border="0" usemap="#classmoteur__sfml_a418c3276e0e92dd23ef25da6f9af9b04_cgraph" alt=""/></div>
+<map name="classmoteur__sfml_a418c3276e0e92dd23ef25da6f9af9b04_cgraph" id="classmoteur__sfml_a418c3276e0e92dd23ef25da6f9af9b04_cgraph">
+<area shape="rect" id="node3" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&#39;une touche." alt="" coords="368,5,501,35"/><area shape="rect" id="node5" href="classmoteur__sfml.html#aa5290106520ad011241051d3f60435f1" title="Renvoie l&#39;instance de la class. Si pas d&#39;instance, alors création d&#39;une instance..." alt="" coords="341,59,528,88"/><area shape="rect" id="node7" href="classclavier.html#a64ea9fed59e7a3a07c987a412b96880a" title="Renvoie la touche affecté pour une action." alt="" coords="377,112,492,141"/></map>
+</div>
+</p>
+
+<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__sfml_a418c3276e0e92dd23ef25da6f9af9b04_icgraph.png" border="0" usemap="#classmoteur__sfml_a418c3276e0e92dd23ef25da6f9af9b04_icgraph" alt=""/></div>
+<map name="classmoteur__sfml_a418c3276e0e92dd23ef25da6f9af9b04_icgraph" id="classmoteur__sfml_a418c3276e0e92dd23ef25da6f9af9b04_icgraph">
+<area shape="rect" id="node3" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="343,5,396,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a2f096be2aa41c3a7045731ff39af1fcf"></a><!-- doxytag: member="moteur_sfml::afficherMapEtEvent" ref="a2f096be2aa41c3a7045731ff39af1fcf" args="(partie *p)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static SYS_CLAVIER moteur_sfml::afficherMapEtEvent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classpartie.html">partie</a> *&nbsp;</td>
+          <td class="paramname"> <em>p</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Référencé par <a class="el" href="main_8cpp_source.html#l00029">main()</a>.</p>
+
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__sfml_a2f096be2aa41c3a7045731ff39af1fcf_icgraph.png" border="0" usemap="#classmoteur__sfml_a2f096be2aa41c3a7045731ff39af1fcf_icgraph" alt=""/></div>
+<map name="classmoteur__sfml_a2f096be2aa41c3a7045731ff39af1fcf_icgraph" id="classmoteur__sfml_a2f096be2aa41c3a7045731ff39af1fcf_icgraph">
+<area shape="rect" id="node3" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="289,5,343,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aac797169fa9078c8ae02315eb3433dc4"></a><!-- doxytag: member="moteur_sfml::completerMot" ref="aac797169fa9078c8ae02315eb3433dc4" args="(char texte[], unsigned int taille)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * moteur_sfml::completerMot </td>
+          <td>(</td>
+          <td class="paramtype">char&nbsp;</td>
+          <td class="paramname"> <em>texte</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>taille</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [static, private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Complete le texte avec le caractère _ jusqu'a avoir un texte de longueur 20. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in,out]</tt>&nbsp;</td><td valign="top"><em>texte</em>&nbsp;</td><td>Le texte a combler </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>taille</em>&nbsp;</td><td>Taille réel du texte ( sans les _ ) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>La variable : texte </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8cpp_source.html#l01371">1371</a> du fichier <a class="el" href="moteur__sfml_8cpp_source.html">moteur_sfml.cpp</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sfml_8cpp_source.html#l00811">getTexte()</a>.</p>
+
+<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__sfml_aac797169fa9078c8ae02315eb3433dc4_icgraph.png" border="0" usemap="#classmoteur__sfml_aac797169fa9078c8ae02315eb3433dc4_icgraph" alt=""/></div>
+<map name="classmoteur__sfml_aac797169fa9078c8ae02315eb3433dc4_icgraph" id="classmoteur__sfml_aac797169fa9078c8ae02315eb3433dc4_icgraph">
+<area shape="rect" id="node3" href="classmoteur__sfml.html#a8628e69118d8923eff8fad979f791da2" title="Permet d&#39;obtenir du texte." alt="" coords="253,5,419,35"/><area shape="rect" id="node5" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="468,5,521,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a07c05115d0ba260cb5df07e310fda5e9"></a><!-- doxytag: member="moteur_sfml::forcerRafraichissement" ref="a07c05115d0ba260cb5df07e310fda5e9" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void moteur_sfml::forcerRafraichissement </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8h_source.html#l00089">89</a> du fichier <a class="el" href="moteur__sfml_8h_source.html">moteur_sfml.h</a>.</p>
+
+<p>Références <a class="el" href="moteur__sfml_8h_source.html#l00064">c_premierAffichage</a>.</p>
+
+<p>Référencé par <a class="el" href="main_8cpp_source.html#l00029">main()</a>.</p>
+
+<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__sfml_a07c05115d0ba260cb5df07e310fda5e9_icgraph.png" border="0" usemap="#classmoteur__sfml_a07c05115d0ba260cb5df07e310fda5e9_icgraph" alt=""/></div>
+<map name="classmoteur__sfml_a07c05115d0ba260cb5df07e310fda5e9_icgraph" id="classmoteur__sfml_a07c05115d0ba260cb5df07e310fda5e9_icgraph">
+<area shape="rect" id="node3" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="313,5,367,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aa5290106520ad011241051d3f60435f1"></a><!-- doxytag: member="moteur_sfml::getInstance" ref="aa5290106520ad011241051d3f60435f1" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmoteur__sfml.html">moteur_sfml</a> &amp; moteur_sfml::getInstance </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie l'instance de la class. Si pas d'instance, alors création d'une instance. </p>
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8cpp_source.html#l00077">77</a> du fichier <a class="el" href="moteur__sfml_8cpp_source.html">moteur_sfml.cpp</a>.</p>
+
+<p>Références <a class="el" href="moteur__sfml_8h_source.html#l00060">c_Instance</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sfml_8cpp_source.html#l00241">afficherConfigurationClavier()</a>, et <a class="el" href="main_8cpp_source.html#l00029">main()</a>.</p>
+
+<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__sfml_aa5290106520ad011241051d3f60435f1_icgraph.png" border="0" usemap="#classmoteur__sfml_aa5290106520ad011241051d3f60435f1_icgraph" alt=""/></div>
+<map name="classmoteur__sfml_aa5290106520ad011241051d3f60435f1_icgraph" id="classmoteur__sfml_aa5290106520ad011241051d3f60435f1_icgraph">
+<area shape="rect" id="node3" href="classmoteur__sfml.html#a418c3276e0e92dd23ef25da6f9af9b04" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="241,5,527,35"/><area shape="rect" id="node5" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="577,32,631,61"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a924bb726b5d2a413f4da0fe7a00962a2"></a><!-- doxytag: member="moteur_sfml::getNombre" ref="a924bb726b5d2a413f4da0fe7a00962a2" args="(const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int *valeurRetour)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int moteur_sfml::getNombre </td>
+          <td>(</td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>titre</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>valeurParDefaut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>valeurMin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>valeurMax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&nbsp;</td>
+          <td class="paramname"> <em>valeurRetour</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Créer un menu pour récupérer un nombre entré par un utilisateur. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>titre</em>&nbsp;</td><td>Le titre du menu </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>valeurParDefaut</em>&nbsp;</td><td>La valeur par défaut </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>valeurMin</em>&nbsp;</td><td>La valeur minimum </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>valeurMax</em>&nbsp;</td><td>La valeur maximum </td></tr>
+    <tr><td valign="top"><tt>[out]</tt>&nbsp;</td><td valign="top"><em>valeurRetour</em>&nbsp;</td><td>Dans cette variable sera stocké, le nombre obtenu a la fin de la fonction </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd><ul>
+<li>2 : Nombre validé et accèpté</li>
+<li>3 : Action annulée </li>
+</ul>
+</dd></dl>
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8cpp_source.html#l00565">565</a> du fichier <a class="el" href="moteur__sfml_8cpp_source.html">moteur_sfml.cpp</a>.</p>
+
+<p>Références <a class="el" href="moteur__sfml_8h_source.html#l00061">c_background</a>, et <a class="el" href="moteur__sfml_8h_source.html#l00062">c_policeGeneral</a>.</p>
+
+<p>Référencé par <a class="el" href="main_8cpp_source.html#l00029">main()</a>.</p>
+
+<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__sfml_a924bb726b5d2a413f4da0fe7a00962a2_icgraph.png" border="0" usemap="#classmoteur__sfml_a924bb726b5d2a413f4da0fe7a00962a2_icgraph" alt=""/></div>
+<map name="classmoteur__sfml_a924bb726b5d2a413f4da0fe7a00962a2_icgraph" id="classmoteur__sfml_a924bb726b5d2a413f4da0fe7a00962a2_icgraph">
+<area shape="rect" id="node3" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="239,5,292,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a8628e69118d8923eff8fad979f791da2"></a><!-- doxytag: member="moteur_sfml::getTexte" ref="a8628e69118d8923eff8fad979f791da2" args="(const char titre[], char texteRetour[21])" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int moteur_sfml::getTexte </td>
+          <td>(</td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>titre</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&nbsp;</td>
+          <td class="paramname"> <em>texteRetour</em>[21]</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet d'obtenir du texte. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>titre</em>&nbsp;</td><td>Le titre du menu </td></tr>
+    <tr><td valign="top"><tt>[out]</tt>&nbsp;</td><td valign="top"><em>texteRetour</em>&nbsp;</td><td>Dans cette variable sera stocké, le texte obtenu a la fin de la fonction </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd><ul>
+<li>2 : Texte validé et accèpté</li>
+<li>3 : Action annulée </li>
+</ul>
+</dd></dl>
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8cpp_source.html#l00811">811</a> du fichier <a class="el" href="moteur__sfml_8cpp_source.html">moteur_sfml.cpp</a>.</p>
+
+<p>Références <a class="el" href="moteur__sfml_8h_source.html#l00061">c_background</a>, <a class="el" href="moteur__sfml_8h_source.html#l00062">c_policeGeneral</a>, <a class="el" href="moteur__sfml_8cpp_source.html#l01371">completerMot()</a>, et <a class="el" href="outils_8cpp_source.html#l00061">trimString()</a>.</p>
+
+<p>Référencé par <a class="el" href="main_8cpp_source.html#l00029">main()</a>.</p>
+
+<p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__sfml_a8628e69118d8923eff8fad979f791da2_cgraph.png" border="0" usemap="#classmoteur__sfml_a8628e69118d8923eff8fad979f791da2_cgraph" alt=""/></div>
+<map name="classmoteur__sfml_a8628e69118d8923eff8fad979f791da2_cgraph" id="classmoteur__sfml_a8628e69118d8923eff8fad979f791da2_cgraph">
+<area shape="rect" id="node3" href="classmoteur__sfml.html#aac797169fa9078c8ae02315eb3433dc4" title="Complete le texte avec le caractère _ jusqu&#39;a avoir un texte de longueur 20." alt="" coords="219,5,419,35"/><area shape="rect" id="node5" href="outils_8cpp.html#a867f58846060922b50a272361337cc96" title="Vire les espaces avant et après une chaine de caractère." alt="" coords="276,59,361,88"/></map>
+</div>
+</p>
+
+<p><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__sfml_a8628e69118d8923eff8fad979f791da2_icgraph.png" border="0" usemap="#classmoteur__sfml_a8628e69118d8923eff8fad979f791da2_icgraph" alt=""/></div>
+<map name="classmoteur__sfml_a8628e69118d8923eff8fad979f791da2_icgraph" id="classmoteur__sfml_a8628e69118d8923eff8fad979f791da2_icgraph">
+<area shape="rect" id="node3" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="220,5,273,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="afac3f84993acd5a3eab2edf388dd0af0"></a><!-- doxytag: member="moteur_sfml::menu" ref="afac3f84993acd5a3eab2edf388dd0af0" args="(const char titre[], const char *choix[], unsigned int nb_choix)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int moteur_sfml::menu </td>
+          <td>(</td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>titre</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>choix</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>nb_choix</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Afficher l'image correspondante suivant le menu où on est. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>titre</em>&nbsp;</td><td>Titre de la sous fenêtre </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>choix</em>&nbsp;</td><td>Liste des choix a mettre dans la sous fenêtre. ( Tableau de chaine de caractères ) </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>nb_choix</em>&nbsp;</td><td>Nombre d'élement dans la liste des choix </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Le choix selectionné (sous forme d'un nombre: le ième element de la liste a été selectionné)</dd></dl>
+<p>La sous fenêtre propose de naviguer parmis une liste ( <em>choix</em> )<br/>
+ Puis renvoie le choix (sous forme d'un nombre: ième element de la liste)<br/>
+ </p>
+<div class="fragment"><pre class="fragment"> <span class="comment">// Exemple</span>
+ <span class="keyword">const</span> <span class="keywordtype">char</span>* choix[] = {
+    <span class="stringliteral">&quot;Choix 1&quot;</span>,
+    <span class="stringliteral">&quot;Choix 2&quot;</span>,
+    <span class="stringliteral">&quot;Choix 3&quot;</span>,
+    <span class="stringliteral">&quot;Choix 4&quot;</span>,
+    <span class="stringliteral">&quot;Choix 5&quot;</span>
+ };
+ <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> choix_selectionner = <a class="code" href="classmoteur__sfml.html#afac3f84993acd5a3eab2edf388dd0af0" title="Afficher l&amp;#39;image correspondante suivant le menu où on est.">menu</a>( <span class="stringliteral">&quot;Liste de mes choix&quot;</span>, choix, 5 );
+</pre></div> 
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8cpp_source.html#l00118">118</a> du fichier <a class="el" href="moteur__sfml_8cpp_source.html">moteur_sfml.cpp</a>.</p>
+
+<p>Références <a class="el" href="moteur__sfml_8h_source.html#l00061">c_background</a>, et <a class="el" href="moteur__sfml_8h_source.html#l00062">c_policeGeneral</a>.</p>
+
+<p>Référencé par <a class="el" href="main_8cpp_source.html#l00029">main()</a>.</p>
+
+<p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__sfml_afac3f84993acd5a3eab2edf388dd0af0_icgraph.png" border="0" usemap="#classmoteur__sfml_afac3f84993acd5a3eab2edf388dd0af0_icgraph" alt=""/></div>
+<map name="classmoteur__sfml_afac3f84993acd5a3eab2edf388dd0af0_icgraph" id="classmoteur__sfml_afac3f84993acd5a3eab2edf388dd0af0_icgraph">
+<area shape="rect" id="node3" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="204,5,257,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="afc08f01cd1ae1ffba17e4eb3fb837f9e"></a><!-- doxytag: member="moteur_sfml::c_App" ref="afc08f01cd1ae1ffba17e4eb3fb837f9e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">sf::Window <a class="el" href="classmoteur__sfml.html#afc08f01cd1ae1ffba17e4eb3fb837f9e">moteur_sfml::c_App</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8h_source.html#l00059">59</a> du fichier <a class="el" href="moteur__sfml_8h_source.html">moteur_sfml.h</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sfml_8cpp_source.html#l00016">moteur_sfml()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8a019450d84493d927b4d70393b8340f"></a><!-- doxytag: member="moteur_sfml::c_background" ref="a8a019450d84493d927b4d70393b8340f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">sf::Image <a class="el" href="classmoteur__sfml.html#a8a019450d84493d927b4d70393b8340f">moteur_sfml::c_background</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8h_source.html#l00061">61</a> du fichier <a class="el" href="moteur__sfml_8h_source.html">moteur_sfml.h</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sfml_8cpp_source.html#l00241">afficherConfigurationClavier()</a>, <a class="el" href="moteur__sfml_8cpp_source.html#l00565">getNombre()</a>, <a class="el" href="moteur__sfml_8cpp_source.html#l00811">getTexte()</a>, <a class="el" href="moteur__sfml_8cpp_source.html#l00118">menu()</a>, et <a class="el" href="moteur__sfml_8cpp_source.html#l00016">moteur_sfml()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aceff4b1dc21119871f056e734e8054d4"></a><!-- doxytag: member="moteur_sfml::c_Decor" ref="aceff4b1dc21119871f056e734e8054d4" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">sf::Image* <a class="el" href="classmoteur__sfml.html#aceff4b1dc21119871f056e734e8054d4">moteur_sfml::c_Decor</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8h_source.html#l00063">63</a> du fichier <a class="el" href="moteur__sfml_8h_source.html">moteur_sfml.h</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sfml_8cpp_source.html#l00016">moteur_sfml()</a>, et <a class="el" href="moteur__sfml_8cpp_source.html#l00090">~moteur_sfml()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4c1b62209379fff99e24865c09af2164"></a><!-- doxytag: member="moteur_sfml::c_Instance" ref="a4c1b62209379fff99e24865c09af2164" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmoteur__sfml.html">moteur_sfml</a> * <a class="el" href="classmoteur__sfml.html#a4c1b62209379fff99e24865c09af2164">moteur_sfml::c_Instance</a> = 0<code> [static, private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8h_source.html#l00060">60</a> du fichier <a class="el" href="moteur__sfml_8h_source.html">moteur_sfml.h</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sfml_8cpp_source.html#l00077">getInstance()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afe2ed5aa9c0c318f3055e11066d07401"></a><!-- doxytag: member="moteur_sfml::c_policeGeneral" ref="afe2ed5aa9c0c318f3055e11066d07401" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">sf::Font <a class="el" href="classmoteur__sfml.html#afe2ed5aa9c0c318f3055e11066d07401">moteur_sfml::c_policeGeneral</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8h_source.html#l00062">62</a> du fichier <a class="el" href="moteur__sfml_8h_source.html">moteur_sfml.h</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sfml_8cpp_source.html#l00241">afficherConfigurationClavier()</a>, <a class="el" href="moteur__sfml_8cpp_source.html#l00565">getNombre()</a>, <a class="el" href="moteur__sfml_8cpp_source.html#l00811">getTexte()</a>, <a class="el" href="moteur__sfml_8cpp_source.html#l00118">menu()</a>, et <a class="el" href="moteur__sfml_8cpp_source.html#l00016">moteur_sfml()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3f12bc91b2eeccc764f08a32c50a36c1"></a><!-- doxytag: member="moteur_sfml::c_premierAffichage" ref="a3f12bc91b2eeccc764f08a32c50a36c1" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmoteur__sfml.html#a3f12bc91b2eeccc764f08a32c50a36c1">moteur_sfml::c_premierAffichage</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="moteur__sfml_8h_source.html#l00064">64</a> du fichier <a class="el" href="moteur__sfml_8h_source.html">moteur_sfml.h</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sfml_8h_source.html#l00089">forcerRafraichissement()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="moteur__sfml_8h_source.html">moteur_sfml.h</a></li>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="moteur__sfml_8cpp_source.html">moteur_sfml.cpp</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

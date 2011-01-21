@@ -1,0 +1,15 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$classperso.html" title="Gère un personnage." alt="" coords="329,880,471,1381"/>
+<area shape="rect" id="node4" href="$structs___coordonnees.html" title="struct de coordonnées ( x,y )" alt="" coords="553,14,673,117"/>
+<area shape="rect" id="node14" href="$structpartie_1_1s___event_pousse_bombe.html" title="Permet de gérer les event des pousses bombes." alt="" coords="509,442,717,579"/>
+<area shape="rect" id="node23" href="$classmap.html" title="Gère une map." alt="" coords="1071,243,1321,779"/>
+<area shape="rect" id="node6" href="$classbonus.html" title="Gère les bonus." alt="" coords="165,208,400,813"/>
+<area shape="rect" id="node8" href="$structbonus_1_1s__bonus__proprieter.html" title="Cette structure accueil la propriété des bonus." alt="" coords="5,5,216,125"/>
+<area shape="rect" id="node10" href="$structbonus_1_1s__bonus.html" title="Cette sturcture accueil un bonus d&#39;un joueur." alt="" coords="240,14,429,117"/>
+<area shape="rect" id="node12" href="$class_q_list.html" title="{QList\&lt; s_EventPousseBombe \&gt;\n|&#45; c_list\l&#45; c_nb_ojb\l|+ QList()\l+ QList()\l+ ~QList()\l+ size()\l+ resize()\l+ operator[]()\l+ at()\l+ operator\&lt;\&lt;()\l+ insert()\l+ remove()\l}" alt="" coords="495,1001,721,1260"/>
+<area shape="rect" id="node17" href="$classserver.html" title="Cette class permet de gérer facilement un serveur." alt="" coords="929,915,1127,1347"/>
+<area shape="rect" id="node19" href="$classbase_client_server.html" title="Support pour la création d&#39;une class client/serveur." alt="" coords="743,295,908,727"/>
+<area shape="rect" id="node28" href="$classclient.html" title="Cette class permet de gérer facilement un client." alt="" coords="745,993,905,1269"/>
+<area shape="rect" id="node21" href="$structserver_1_1s_client.html" title="Contient les information d&#39;un client." alt="" coords="932,459,1047,562"/>
+<area shape="rect" id="node26" href="$structmap_1_1s___case.html" title="{map::s_Case\n|+ joueur\l+ element\l|}" alt="" coords="1144,14,1248,117"/>
+</map>

@@ -1,0 +1,18 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classperso.html#add0aebd55226ce05235400c09a529441" title="Renvoie les armes et bonus du personnage." alt="" coords="364,5,505,35"/>
+<area shape="rect" id="node5" href="$classmoteur__ncurses.html#a208a8f8e69a8bcfe2fe3b01291195d1c" title="Permet d&#39;effacer une ligne." alt="" coords="340,59,529,88"/>
+<area shape="rect" id="node7" href="$classpartie.html#a54be3942d34eaa369cfe6a8430da639d" title="Renvoie le type de connection: Host, Local, None ( pas de connection )." alt="" coords="367,112,503,141"/>
+<area shape="rect" id="node9" href="$classmap.html#a5ab949cacaad5148299aa70f55bb0c93" title="Retourn le block qui est à la position X, Y." alt="" coords="377,165,492,195"/>
+<area shape="rect" id="node11" href="$classmoteur__ncurses.html#a4c23b0d0242fcc5f3c90c8162112559d" title="Renvoie la couleur d&#39;un joueur." alt="" coords="313,219,556,248"/>
+<area shape="rect" id="node13" href="$classpartie.html#ae1902153955d80b676fe96ef395e58c5" title="Renvoie la map actuel." alt="" coords="377,272,492,301"/>
+<area shape="rect" id="node15" href="$classmap.html#a3453f2495334983df3bbf1737908e25e" title="Retourne les positions X,Y des case modifiées depuis le dernier cycle." alt="" coords="353,325,516,355"/>
+<area shape="rect" id="node17" href="$classperso.html#a73febc8006d08e4414cf6463a3b8ad9d" title="Renvoie l&#39;état du personnage vis à vis du reseau. (Local ou non)." alt="" coords="380,379,489,408"/>
+<area shape="rect" id="node19" href="$classpartie.html#aa259db60507f45e2307fa457879be8ee" title="Renvoie un joueur." alt="" coords="381,432,488,461"/>
+<area shape="rect" id="node21" href="$classpartie.html#ac5fd40da2e74478b0dee7fb7fe505929" title="Retourne le nombre de joueur." alt="" coords="369,485,500,515"/>
+<area shape="rect" id="node23" href="$classperso.html#a815c8505a10a43da797e0424a0192f92" title="Renvoie le nom du personnage." alt="" coords="388,539,481,568"/>
+<area shape="rect" id="node25" href="$classbonus.html#a24519446ce39620ac958f7702c9ba868" title="Renvoie la quantité MAX que le joueur a rammassé d&#39;un bonus." alt="" coords="360,592,509,621"/>
+<area shape="rect" id="node27" href="$classperso.html#a33ea05f68d9ddf2cf242b9b19c8b1ceb" title="Renvoie le socket utilisé (Par defaut: INVALID_SOCKET)." alt="" coords="381,645,488,675"/>
+<area shape="rect" id="node29" href="$classpartie.html#ab15f2837f87963336ba2f5e8feec1e44" title="Renvoie le temps de fin / mort subite. (Ne change pas en cours de partie)." alt="" coords="376,699,493,728"/>
+<area shape="rect" id="node31" href="$classmap.html#abc682d96c6d194b75d2e8a6430b5b076" title="Renvoie la taille X de la map." alt="" coords="401,752,468,781"/>
+<area shape="rect" id="node33" href="$classmap.html#abcb25776d119cd3f2864c67ec05a6a4a" title="Renvoie la taille Y de la map." alt="" coords="401,805,468,835"/>
+</map>

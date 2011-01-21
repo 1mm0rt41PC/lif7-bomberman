@@ -1,0 +1,864 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la classe baseClientServer</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="#pub-static-methods">Fonctions membres publiques statiques</a> &#124;
+<a href="#pub-attribs">Attributs publics</a> &#124;
+<a href="#pri-attribs">Attributs privés</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la classe baseClientServer</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="baseClientServer" -->
+<p>Support pour la création d'une class client/serveur.  
+<a href="#_details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="class___base_client_server_8h_source.html">class_BaseClientServer.h</a>&gt;</code></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Graphe d'héritage de baseClientServer:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbase_client_server__inherit__graph.png" border="0" usemap="#base_client_server_inherit__map" alt="Inheritance graph"/></div>
+<map name="base_client_server_inherit__map" id="base_client_server_inherit__map">
+<area shape="rect" id="node3" href="classclient.html" title="Cette class permet de gérer facilement un client." alt="" coords="5,563,165,839"/><area shape="rect" id="node5" href="classserver.html" title="Cette class permet de gérer facilement un serveur." alt="" coords="189,485,387,917"/></map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">légende</a>]</span></center></div>
+
+<p><a href="classbase_client_server-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#ada968cd92346f898f60216c738da2737">baseClientServer</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#ab05d86575998b22718aad38aec0027d4">~baseClientServer</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructeur par defaut.  <a href="#ab05d86575998b22718aad38aec0027d4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#a61011c973d5f71ddd0894f1f99f8959e">port</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Defini le port à utiliser.  <a href="#a61011c973d5f71ddd0894f1f99f8959e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#a676e6d281c3ff4a5c9e2b91c04d6b99a">TCP_NoDelay</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet de savoir l'état du paramètre TCP_NoDelay ( Algorithme de Nagle ) pour le socket c_listenSocket.  <a href="#a676e6d281c3ff4a5c9e2b91c04d6b99a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#a7d8a192e4011ea46b9d36ab8e2c921e1">TCP_NoDelay</a> (<a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> s)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet de savoir l'état du paramètre TCP_NoDelay ( Algorithme de Nagle ).  <a href="#a7d8a192e4011ea46b9d36ab8e2c921e1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#ae24984bbf180c9fe1e75160e108dbaa4">setPort</a> (unsigned int port)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifier le port d'écoute.  <a href="#ae24984bbf180c9fe1e75160e108dbaa4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#acf92891d022c8c20e68b634ba1701757">setWait</a> (long tv_sec, long tv_usec)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifier le temps d'attente d'une réponse.  <a href="#acf92891d022c8c20e68b634ba1701757"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#a5d0d1ef1417eb5ca0a25147576e99710">setWait</a> (const timeval *wait)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifier le temps d'attente d'une réponse.  <a href="#a5d0d1ef1417eb5ca0a25147576e99710"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#a94f59ec6bf09f3c90f25e57781632df5">setTCP_NoDelay</a> (bool activer)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#a702e328a02579aac6a8060a2b18838f0">setTCP_NoDelay</a> (<a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> s, bool activer)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet de modifier le paramètre TCP_NoDelay ( Algorithme de Nagle ).  <a href="#a702e328a02579aac6a8060a2b18838f0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#a6eeb24edfb7b92dd6311817d848bb953">readClient</a> (<a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> sock, char *buffer, unsigned int <a class="el" href="classbase_client_server.html#afc826d31816db85c53667361e303c37d">bufferSize</a>)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Récupère les données envoyées par un client.  <a href="#a6eeb24edfb7b92dd6311817d848bb953"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#afaeac42db5822c4582e54e51daaa35a8">send_message</a> (<a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> sock, const char *buffer, unsigned int <a class="el" href="classbase_client_server.html#afc826d31816db85c53667361e303c37d">bufferSize</a>)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Envoie un message (buffer) au client.  <a href="#afaeac42db5822c4582e54e51daaa35a8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#a6415a999d34d9969e6b7d7108df74c0f">IF_WINDOWS</a> (inline const char *strerror(int){return&quot;?&quot;;}) static void printAllBuffer(const char buffer[]</td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-methods"></a>
+Fonctions membres publiques statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#a09c15f21a6970e5a5f9103802291c502">isLittleEndian</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet de savoir si l'on est sur une machine Intel, une machine qui lit les octects en Little Endian.  <a href="#a09c15f21a6970e5a5f9103802291c502"></a><br/></td></tr>
+<tr><td class="memTemplParams" colspan="2">template&lt;class Type &gt; </td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">static Type&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#ad64908eb927871b5d9544ea664d6d5ce">reverseByte</a> (Type var)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Conversion Little Endian &lt;-&gt; Big Endian (Inversion des octets).  <a href="#ad64908eb927871b5d9544ea664d6d5ce"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#afc826d31816db85c53667361e303c37d">bufferSize</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int const char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#a3a94c4ce7ae9e5b911bd03edc4d0e2ae">file</a> []</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int const char <br class="typebreak"/>
+unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#a54c04653116419cadf5900d8947a21a5">line</a></td></tr>
+<tr><td colspan="2"><h2><a name="pri-attribs"></a>
+Attributs privés</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">IF_WINDOWS(static WSADATA <br class="typebreak"/>
+c_wsaData;) protected unsigned <br class="typebreak"/>
+int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#a2dea81cee139f918358e36b8650fa37e">c_port</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">&lt; Temps d'attente au niveau du select  <a href="#a2dea81cee139f918358e36b8650fa37e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3">c_listenSocket</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Le socket principal. ( c'est clui là quit sert pour l'écoute sur le port c_port ).  <a href="#adcdb18e66a3751fd8edbd5d1f65e8bd3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class___base_client_server_8h.html#a29046dc0232f0e5c70adbc25090d77b8">SOCKADDR_IN</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#a9a11cce8df298490560c391275736be9">c_addr</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">fd_set&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbase_client_server.html#a72e8655cd3ede0bea9cdb934ff40fa42">c_rdfs</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Le fd qui est utiliser pour check les signaux en lecture.  <a href="#a72e8655cd3ede0bea9cdb934ff40fa42"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Support pour la création d'une class client/serveur. </p>
+<dl class="warning"><dt><b>Avertissement:</b></dt><dd>Cette class ne contient pas les outils nécéssaire pour être considérée comme un serveur ou un client </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8h_source.html#l00062">62</a> du fichier <a class="el" href="class___base_client_server_8h_source.html">class_BaseClientServer.h</a>.</p>
+<hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="ada968cd92346f898f60216c738da2737"></a><!-- doxytag: member="baseClientServer::baseClientServer" ref="ada968cd92346f898f60216c738da2737" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">baseClientServer::baseClientServer </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab05d86575998b22718aad38aec0027d4"></a><!-- doxytag: member="baseClientServer::~baseClientServer" ref="ab05d86575998b22718aad38aec0027d4" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">baseClientServer::~baseClientServer </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Destructeur par defaut. </p>
+<ul>
+<li>Appel baseClientServer::endListen()</li>
+<li>Si la platforme est windows =&gt; on décharge Winsock de la mémoire </li>
+</ul>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8cpp_source.html#l00049">49</a> du fichier <a class="el" href="class___base_client_server_8cpp_source.html">class_BaseClientServer.cpp</a>.</p>
+
+<p>Références <a class="el" href="classbase_client_server.html#a6415a999d34d9969e6b7d7108df74c0f">IF_WINDOWS()</a>.</p>
+
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbase_client_server_ab05d86575998b22718aad38aec0027d4_cgraph.png" border="0" usemap="#classbase_client_server_ab05d86575998b22718aad38aec0027d4_cgraph" alt=""/></div>
+<map name="classbase_client_server_ab05d86575998b22718aad38aec0027d4_cgraph" id="classbase_client_server_ab05d86575998b22718aad38aec0027d4_cgraph">
+<area shape="rect" id="node3" href="classbase_client_server.html#a6415a999d34d9969e6b7d7108df74c0f" title="baseClientServer::IF_WINDOWS" alt="" coords="313,5,532,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="a6415a999d34d9969e6b7d7108df74c0f"></a><!-- doxytag: member="baseClientServer::IF_WINDOWS" ref="a6415a999d34d9969e6b7d7108df74c0f" args="(inline const char *strerror(int){return&quot;?&quot;;}) static void printAllBuffer(const char buffer[]" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">baseClientServer::IF_WINDOWS </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Référencé par <a class="el" href="class__client_8cpp_source.html#l00010">client::client()</a>, <a class="el" href="class__server_8cpp_source.html#l00109">server::Listening()</a>, <a class="el" href="class__client_8cpp_source.html#l00102">client::setServerAdress()</a>, <a class="el" href="class___base_client_server_8cpp_source.html#l00199">setTCP_NoDelay()</a>, <a class="el" href="class___base_client_server_8cpp_source.html#l00217">TCP_NoDelay()</a>, et <a class="el" href="class___base_client_server_8cpp_source.html#l00049">~baseClientServer()</a>.</p>
+
+<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbase_client_server_a6415a999d34d9969e6b7d7108df74c0f_icgraph.png" border="0" usemap="#classbase_client_server_a6415a999d34d9969e6b7d7108df74c0f_icgraph" alt=""/></div>
+<map name="classbase_client_server_a6415a999d34d9969e6b7d7108df74c0f_icgraph" id="classbase_client_server_a6415a999d34d9969e6b7d7108df74c0f_icgraph">
+<area shape="rect" id="node3" href="classclient.html#a4684cdbcdc4a3bd61631d974d0ce3dea" title="Constructeur par défaut." alt="" coords="355,5,453,35"/><area shape="rect" id="node5" href="classserver.html#a86e0b7cfa19dc5aee949533eb617e41f" title="Met le serveur en activité. Lance l&#39;écoute sur le port demandé." alt="" coords="341,59,467,88"/><area shape="rect" id="node13" href="classclient.html#a6c40fcab76ed1d882a253a1bf8c33546" title="Permet de définir le serveur où se connecter." alt="" coords="581,112,752,141"/><area shape="rect" id="node16" href="classbase_client_server.html#a702e328a02579aac6a8060a2b18838f0" title="Permet de modifier le paramètre TCP_NoDelay ( Algorithme de Nagle )." alt="" coords="283,163,525,192"/><area shape="rect" id="node18" href="classbase_client_server.html#a7d8a192e4011ea46b9d36ab8e2c921e1" title="Permet de savoir l&#39;état du paramètre TCP_NoDelay ( Algorithme de Nagle )." alt="" coords="293,216,515,245"/><area shape="rect" id="node20" href="classbase_client_server.html#ab05d86575998b22718aad38aec0027d4" title="Destructeur par defaut." alt="" coords="275,269,533,299"/><area shape="rect" id="node7" href="classserver.html#ae99f6766fe520a13022e3aee4d7c2d94" title="Met le serveur en activité sur le port {port}." alt="" coords="604,5,729,35"/><area shape="rect" id="node9" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="617,59,716,88"/><area shape="rect" id="node11" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="801,85,855,115"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a09c15f21a6970e5a5f9103802291c502"></a><!-- doxytag: member="baseClientServer::isLittleEndian" ref="a09c15f21a6970e5a5f9103802291c502" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool baseClientServer::isLittleEndian </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de savoir si l'on est sur une machine Intel, une machine qui lit les octects en Little Endian. </p>
+<dl class="see"><dt><b>Voir également:</b></dt><dd><a class="el" href="classbase_client_server.html#ad64908eb927871b5d9544ea664d6d5ce" title="Conversion Little Endian &lt;-&gt; Big Endian (Inversion des octets).">baseClientServer::reverseByte( Type var )</a> </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8cpp_source.html#l00186">186</a> du fichier <a class="el" href="class___base_client_server_8cpp_source.html">class_BaseClientServer.cpp</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l02360">partie::ajouterNouvelleConnection()</a>, et <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbase_client_server_a09c15f21a6970e5a5f9103802291c502_icgraph.png" border="0" usemap="#classbase_client_server_a09c15f21a6970e5a5f9103802291c502_icgraph" alt=""/></div>
+<map name="classbase_client_server_a09c15f21a6970e5a5f9103802291c502_icgraph" id="classbase_client_server_a09c15f21a6970e5a5f9103802291c502_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="279,5,516,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="565,32,664,61"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="713,32,767,61"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a61011c973d5f71ddd0894f1f99f8959e"></a><!-- doxytag: member="baseClientServer::port" ref="a61011c973d5f71ddd0894f1f99f8959e" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int baseClientServer::port </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Defini le port à utiliser. </p>
+<dl class="note"><dt><b>Note:</b></dt><dd>Le port n'est effectivement pri en compte qu'après un appel à baseClientServer::Listening() </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8inl_source.html#l00019">19</a> du fichier <a class="el" href="class___base_client_server_8inl_source.html">class_BaseClientServer.inl</a>.</p>
+
+<p>Références <a class="el" href="class___base_client_server_8h_source.html#l00065">c_port</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6eeb24edfb7b92dd6311817d848bb953"></a><!-- doxytag: member="baseClientServer::readClient" ref="a6eeb24edfb7b92dd6311817d848bb953" args="(SOCKET sock, char *buffer, unsigned int bufferSize)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int baseClientServer::readClient </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a>&nbsp;</td>
+          <td class="paramname"> <em>sock</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>bufferSize</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Récupère les données envoyées par un client. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>sock</em>&nbsp;</td><td>Le socket du client </td></tr>
+    <tr><td valign="top"><tt>[in,out]</tt>&nbsp;</td><td valign="top"><em>buffer</em>&nbsp;</td><td>La variables où seront stockées les données </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>bufferSize</em>&nbsp;</td><td>Taille du buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Le nombre de byte reçut</dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>si retour = 0 =&gt; Client déconnecté (Le client est automatiquement viré de la liste dans ce cas la)<br/>
+ En cas d'erreur, le client sera déconnecté </dd></dl>
+
+<p>Réimplémentée dans <a class="el" href="classserver.html#a3958ab35efdf8daed31591a7c5c4eacb">server</a>.</p>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8cpp_source.html#l00101">101</a> du fichier <a class="el" href="class___base_client_server_8cpp_source.html">class_BaseClientServer.cpp</a>.</p>
+
+<p>Référencé par <a class="el" href="class__client_8cpp_source.html#l00185">client::readServer()</a>.</p>
+
+<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbase_client_server_a6eeb24edfb7b92dd6311817d848bb953_icgraph.png" border="0" usemap="#classbase_client_server_a6eeb24edfb7b92dd6311817d848bb953_icgraph" alt=""/></div>
+<map name="classbase_client_server_a6eeb24edfb7b92dd6311817d848bb953_icgraph" id="classbase_client_server_a6eeb24edfb7b92dd6311817d848bb953_icgraph">
+<area shape="rect" id="node3" href="classclient.html#a2ea117a6fd3515343481d4ea4d97eab4" title="Récupère les données envoyées par le serveur." alt="" coords="260,5,393,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="443,5,541,35"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="591,5,644,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ad64908eb927871b5d9544ea664d6d5ce"></a><!-- doxytag: member="baseClientServer::reverseByte" ref="ad64908eb927871b5d9544ea664d6d5ce" args="(Type var)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Type &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Type baseClientServer::reverseByte </td>
+          <td>(</td>
+          <td class="paramtype">Type&nbsp;</td>
+          <td class="paramname"> <em>var</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Conversion Little Endian &lt;-&gt; Big Endian (Inversion des octets). </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>var</em>&nbsp;</td><td>La variable a qui il faut inversé les octets </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie la {var} avec les octets inversé </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8cpp_source.html#l00166">166</a> du fichier <a class="el" href="class___base_client_server_8cpp_source.html">class_BaseClientServer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afaeac42db5822c4582e54e51daaa35a8"></a><!-- doxytag: member="baseClientServer::send_message" ref="afaeac42db5822c4582e54e51daaa35a8" args="(SOCKET sock, const char *buffer, unsigned int bufferSize)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void baseClientServer::send_message </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a>&nbsp;</td>
+          <td class="paramname"> <em>sock</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>bufferSize</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Envoie un message (buffer) au client. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>sock</em>&nbsp;</td><td>Le socket du client </td></tr>
+    <tr><td valign="top"><tt>[in,out]</tt>&nbsp;</td><td valign="top"><em>buffer</em>&nbsp;</td><td>La variable sont stockées les données à envoyer </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>bufferSize</em>&nbsp;</td><td>Taille du buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8cpp_source.html#l00123">123</a> du fichier <a class="el" href="class___base_client_server_8cpp_source.html">class_BaseClientServer.cpp</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l02360">partie::ajouterNouvelleConnection()</a>, et <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbase_client_server_afaeac42db5822c4582e54e51daaa35a8_icgraph.png" border="0" usemap="#classbase_client_server_afaeac42db5822c4582e54e51daaa35a8_icgraph" alt=""/></div>
+<map name="classbase_client_server_afaeac42db5822c4582e54e51daaa35a8_icgraph" id="classbase_client_server_afaeac42db5822c4582e54e51daaa35a8_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="292,5,529,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="579,32,677,61"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="727,32,780,61"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ae24984bbf180c9fe1e75160e108dbaa4"></a><!-- doxytag: member="baseClientServer::setPort" ref="ae24984bbf180c9fe1e75160e108dbaa4" args="(unsigned int port)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void baseClientServer::setPort </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>port</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifier le port d'écoute. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>port</em>&nbsp;</td><td>Le port a utiliser de 1 à 65 536 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>Par défaut, le port = 0 =&gt; port alléatoire. </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8cpp_source.html#l00065">65</a> du fichier <a class="el" href="class___base_client_server_8cpp_source.html">class_BaseClientServer.cpp</a>.</p>
+
+<p>Références <a class="el" href="class___base_client_server_8h_source.html#l00065">c_port</a>.</p>
+
+<p>Référencé par <a class="el" href="class__server_8cpp_source.html#l00098">server::Listening()</a>, et <a class="el" href="main_8cpp_source.html#l00029">main()</a>.</p>
+
+<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbase_client_server_ae24984bbf180c9fe1e75160e108dbaa4_icgraph.png" border="0" usemap="#classbase_client_server_ae24984bbf180c9fe1e75160e108dbaa4_icgraph" alt=""/></div>
+<map name="classbase_client_server_ae24984bbf180c9fe1e75160e108dbaa4_icgraph" id="classbase_client_server_ae24984bbf180c9fe1e75160e108dbaa4_icgraph">
+<area shape="rect" id="node3" href="classserver.html#ae99f6766fe520a13022e3aee4d7c2d94" title="Met le serveur en activité sur le port {port}." alt="" coords="241,5,367,35"/><area shape="rect" id="node5" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="277,59,331,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a702e328a02579aac6a8060a2b18838f0"></a><!-- doxytag: member="baseClientServer::setTCP_NoDelay" ref="a702e328a02579aac6a8060a2b18838f0" args="(SOCKET s, bool activer)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void baseClientServer::setTCP_NoDelay </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a>&nbsp;</td>
+          <td class="paramname"> <em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>activer</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de modifier le paramètre TCP_NoDelay ( Algorithme de Nagle ). </p>
+<p>Permet de modifier le paramètre TCP_NoDelay ( Algorithme de Nagle ) sur le socket c_listenSocket.</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>s</em>&nbsp;</td><td>Le socket a modifier </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>activer</em>&nbsp;</td><td>Désactiver ?</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Cette fonction est un alias de <a class="el" href="classbase_client_server.html#a702e328a02579aac6a8060a2b18838f0" title="Permet de modifier le paramètre TCP_NoDelay ( Algorithme de Nagle ).">baseClientServer::setTCP_NoDelay( SOCKET s, bool activer )</a> </p>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8cpp_source.html#l00199">199</a> du fichier <a class="el" href="class___base_client_server_8cpp_source.html">class_BaseClientServer.cpp</a>.</p>
+
+<p>Références <a class="el" href="classbase_client_server.html#a6415a999d34d9969e6b7d7108df74c0f">IF_WINDOWS()</a>.</p>
+
+<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbase_client_server_a702e328a02579aac6a8060a2b18838f0_cgraph.png" border="0" usemap="#classbase_client_server_a702e328a02579aac6a8060a2b18838f0_cgraph" alt=""/></div>
+<map name="classbase_client_server_a702e328a02579aac6a8060a2b18838f0_cgraph" id="classbase_client_server_a702e328a02579aac6a8060a2b18838f0_cgraph">
+<area shape="rect" id="node3" href="classbase_client_server.html#a6415a999d34d9969e6b7d7108df74c0f" title="baseClientServer::IF_WINDOWS" alt="" coords="297,5,516,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a94f59ec6bf09f3c90f25e57781632df5"></a><!-- doxytag: member="baseClientServer::setTCP_NoDelay" ref="a94f59ec6bf09f3c90f25e57781632df5" args="(bool activer)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void baseClientServer::setTCP_NoDelay </td>
+          <td>(</td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>activer</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8inl_source.html#l00032">32</a> du fichier <a class="el" href="class___base_client_server_8inl_source.html">class_BaseClientServer.inl</a>.</p>
+
+<p>Références <a class="el" href="class___base_client_server_8h_source.html#l00073">c_listenSocket</a>.</p>
+
+<p>Référencé par <a class="el" href="class__client_8cpp_source.html#l00039">client::connection()</a>, <a class="el" href="class__server_8cpp_source.html#l00109">server::Listening()</a>, et <a class="el" href="class__server_8cpp_source.html#l00191">server::lookupNewConnection()</a>.</p>
+
+<p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbase_client_server_a94f59ec6bf09f3c90f25e57781632df5_icgraph.png" border="0" usemap="#classbase_client_server_a94f59ec6bf09f3c90f25e57781632df5_icgraph" alt=""/></div>
+<map name="classbase_client_server_a94f59ec6bf09f3c90f25e57781632df5_icgraph" id="classbase_client_server_a94f59ec6bf09f3c90f25e57781632df5_icgraph">
+<area shape="rect" id="node3" href="classclient.html#aafb3e1157b7e1f3e81c09fe1c7866a82" title="Permet de se connecter au serveur." alt="" coords="335,5,468,35"/><area shape="rect" id="node9" href="classserver.html#a86e0b7cfa19dc5aee949533eb617e41f" title="Met le serveur en activité. Lance l&#39;écoute sur le port demandé." alt="" coords="339,112,464,141"/><area shape="rect" id="node14" href="classserver.html#a970c338624781ad9b8db82d0e853210f" title="Envoie une message (buffer) au client." alt="" coords="296,59,507,88"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="569,59,668,88"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="732,59,785,88"/><area shape="rect" id="node11" href="classserver.html#ae99f6766fe520a13022e3aee4d7c2d94" title="Met le serveur en activité sur le port {port}." alt="" coords="556,112,681,141"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="acf92891d022c8c20e68b634ba1701757"></a><!-- doxytag: member="baseClientServer::setWait" ref="acf92891d022c8c20e68b634ba1701757" args="(long tv_sec, long tv_usec)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void baseClientServer::setWait </td>
+          <td>(</td>
+          <td class="paramtype">long&nbsp;</td>
+          <td class="paramname"> <em>tv_sec</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&nbsp;</td>
+          <td class="paramname"> <em>tv_usec</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifier le temps d'attente d'une réponse. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>tv_sec</em>&nbsp;</td><td>Le temps en secs </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>tv_usec</em>&nbsp;</td><td>Le temps en ms </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>Le temps d'attente par défaut est de 0.01sec </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8cpp_source.html#l00080">80</a> du fichier <a class="el" href="class___base_client_server_8cpp_source.html">class_BaseClientServer.cpp</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>, et <a class="el" href="class___base_client_server_8inl_source.html#l00008">setWait()</a>.</p>
+
+<p><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbase_client_server_acf92891d022c8c20e68b634ba1701757_icgraph.png" border="0" usemap="#classbase_client_server_acf92891d022c8c20e68b634ba1701757_icgraph" alt=""/></div>
+<map name="classbase_client_server_acf92891d022c8c20e68b634ba1701757_icgraph" id="classbase_client_server_acf92891d022c8c20e68b634ba1701757_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="284,5,383,35"/><area shape="rect" id="node7" href="classbase_client_server.html#a5d0d1ef1417eb5ca0a25147576e99710" title="Modifier le temps d&#39;attente d&#39;une réponse." alt="" coords="241,59,425,88"/><area shape="rect" id="node5" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="476,5,529,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a5d0d1ef1417eb5ca0a25147576e99710"></a><!-- doxytag: member="baseClientServer::setWait" ref="a5d0d1ef1417eb5ca0a25147576e99710" args="(const timeval *wait)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void baseClientServer::setWait </td>
+          <td>(</td>
+          <td class="paramtype">const timeval *&nbsp;</td>
+          <td class="paramname"> <em>wait</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifier le temps d'attente d'une réponse. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>wait</em>&nbsp;</td><td>Le temps d'attente </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>Le temps d'attente par défaut est de 0.01sec<br/>
+ Cette fonction est un simple alias de <a class="el" href="classbase_client_server.html#acf92891d022c8c20e68b634ba1701757" title="Modifier le temps d&#39;attente d&#39;une réponse.">baseClientServer::setWait( long tv_sec, long tv_usec )</a> </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8inl_source.html#l00008">8</a> du fichier <a class="el" href="class___base_client_server_8inl_source.html">class_BaseClientServer.inl</a>.</p>
+
+<p>Références <a class="el" href="class___base_client_server_8cpp_source.html#l00080">setWait()</a>.</p>
+
+<p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbase_client_server_a5d0d1ef1417eb5ca0a25147576e99710_cgraph.png" border="0" usemap="#classbase_client_server_a5d0d1ef1417eb5ca0a25147576e99710_cgraph" alt=""/></div>
+<map name="classbase_client_server_a5d0d1ef1417eb5ca0a25147576e99710_cgraph" id="classbase_client_server_a5d0d1ef1417eb5ca0a25147576e99710_cgraph">
+<area shape="rect" id="node3" href="classbase_client_server.html#acf92891d022c8c20e68b634ba1701757" title="Modifier le temps d&#39;attente d&#39;une réponse." alt="" coords="241,5,425,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a7d8a192e4011ea46b9d36ab8e2c921e1"></a><!-- doxytag: member="baseClientServer::TCP_NoDelay" ref="a7d8a192e4011ea46b9d36ab8e2c921e1" args="(SOCKET s)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool baseClientServer::TCP_NoDelay </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a>&nbsp;</td>
+          <td class="paramname"> <em>s</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de savoir l'état du paramètre TCP_NoDelay ( Algorithme de Nagle ). </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>s</em>&nbsp;</td><td>Le socket a analyser </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8cpp_source.html#l00217">217</a> du fichier <a class="el" href="class___base_client_server_8cpp_source.html">class_BaseClientServer.cpp</a>.</p>
+
+<p>Références <a class="el" href="classbase_client_server.html#a6415a999d34d9969e6b7d7108df74c0f">IF_WINDOWS()</a>.</p>
+
+<p><div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbase_client_server_a7d8a192e4011ea46b9d36ab8e2c921e1_cgraph.png" border="0" usemap="#classbase_client_server_a7d8a192e4011ea46b9d36ab8e2c921e1_cgraph" alt=""/></div>
+<map name="classbase_client_server_a7d8a192e4011ea46b9d36ab8e2c921e1_cgraph" id="classbase_client_server_a7d8a192e4011ea46b9d36ab8e2c921e1_cgraph">
+<area shape="rect" id="node3" href="classbase_client_server.html#a6415a999d34d9969e6b7d7108df74c0f" title="baseClientServer::IF_WINDOWS" alt="" coords="279,5,497,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a676e6d281c3ff4a5c9e2b91c04d6b99a"></a><!-- doxytag: member="baseClientServer::TCP_NoDelay" ref="a676e6d281c3ff4a5c9e2b91c04d6b99a" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool baseClientServer::TCP_NoDelay </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de savoir l'état du paramètre TCP_NoDelay ( Algorithme de Nagle ) pour le socket c_listenSocket. </p>
+<p>Cette fonction est un alias de <a class="el" href="classbase_client_server.html#a7d8a192e4011ea46b9d36ab8e2c921e1" title="Permet de savoir l&#39;état du paramètre TCP_NoDelay ( Algorithme de Nagle ).">baseClientServer::TCP_NoDelay( SOCKET s )</a> </p>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8inl_source.html#l00045">45</a> du fichier <a class="el" href="class___base_client_server_8inl_source.html">class_BaseClientServer.inl</a>.</p>
+
+<p>Références <a class="el" href="class___base_client_server_8h_source.html#l00073">c_listenSocket</a>.</p>
+
+<p>Référencé par <a class="el" href="class__server_8cpp_source.html#l00191">server::lookupNewConnection()</a>.</p>
+
+<p><div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbase_client_server_a676e6d281c3ff4a5c9e2b91c04d6b99a_icgraph.png" border="0" usemap="#classbase_client_server_a676e6d281c3ff4a5c9e2b91c04d6b99a_icgraph" alt=""/></div>
+<map name="classbase_client_server_a676e6d281c3ff4a5c9e2b91c04d6b99a_icgraph" id="classbase_client_server_a676e6d281c3ff4a5c9e2b91c04d6b99a_icgraph">
+<area shape="rect" id="node3" href="classserver.html#a970c338624781ad9b8db82d0e853210f" title="Envoie une message (buffer) au client." alt="" coords="277,5,488,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="536,5,635,35"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="684,5,737,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="afc826d31816db85c53667361e303c37d"></a><!-- doxytag: member="baseClientServer::bufferSize" ref="afc826d31816db85c53667361e303c37d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="classbase_client_server.html#afc826d31816db85c53667361e303c37d">baseClientServer::bufferSize</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8h_source.html#l00105">105</a> du fichier <a class="el" href="class___base_client_server_8h_source.html">class_BaseClientServer.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9a11cce8df298490560c391275736be9"></a><!-- doxytag: member="baseClientServer::c_addr" ref="a9a11cce8df298490560c391275736be9" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class___base_client_server_8h.html#a29046dc0232f0e5c70adbc25090d77b8">SOCKADDR_IN</a> <a class="el" href="classbase_client_server.html#a9a11cce8df298490560c391275736be9">baseClientServer::c_addr</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8h_source.html#l00074">74</a> du fichier <a class="el" href="class___base_client_server_8h_source.html">class_BaseClientServer.h</a>.</p>
+
+<p>Référencé par <a class="el" href="class__client_8cpp_source.html#l00039">client::connection()</a>, et <a class="el" href="class__server_8cpp_source.html#l00109">server::Listening()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adcdb18e66a3751fd8edbd5d1f65e8bd3"></a><!-- doxytag: member="baseClientServer::c_listenSocket" ref="adcdb18e66a3751fd8edbd5d1f65e8bd3" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="el" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3">baseClientServer::c_listenSocket</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Le socket principal. ( c'est clui là quit sert pour l'écoute sur le port c_port ). </p>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8h_source.html#l00073">73</a> du fichier <a class="el" href="class___base_client_server_8h_source.html">class_BaseClientServer.h</a>.</p>
+
+<p>Référencé par <a class="el" href="class__client_8cpp_source.html#l00039">client::connection()</a>, <a class="el" href="class__client_8cpp_source.html#l00076">client::disconnection()</a>, <a class="el" href="class__server_8cpp_source.html#l00161">server::endListen()</a>, <a class="el" href="class__client_8cpp_source.html#l00091">client::is_connected()</a>, <a class="el" href="class__server_8cpp_source.html#l00109">server::Listening()</a>, <a class="el" href="class__client_8cpp_source.html#l00153">client::lookupConnection()</a>, <a class="el" href="class__server_8cpp_source.html#l00191">server::lookupNewConnection()</a>, <a class="el" href="class__client_8cpp_source.html#l00185">client::readServer()</a>, <a class="el" href="class__client_8inl_source.html#l00008">client::send_message()</a>, <a class="el" href="class___base_client_server_8inl_source.html#l00032">setTCP_NoDelay()</a>, et <a class="el" href="class___base_client_server_8inl_source.html#l00045">TCP_NoDelay()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2dea81cee139f918358e36b8650fa37e"></a><!-- doxytag: member="baseClientServer::c_port" ref="a2dea81cee139f918358e36b8650fa37e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">IF_WINDOWS ( static WSADATA c_wsaData; ) protected unsigned int <a class="el" href="classbase_client_server.html#a2dea81cee139f918358e36b8650fa37e">baseClientServer::c_port</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>&lt; Temps d'attente au niveau du select </p>
+<p>Port a utiliser </p>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8h_source.html#l00065">65</a> du fichier <a class="el" href="class___base_client_server_8h_source.html">class_BaseClientServer.h</a>.</p>
+
+<p>Référencé par <a class="el" href="class__client_8cpp_source.html#l00039">client::connection()</a>, <a class="el" href="class__server_8cpp_source.html#l00109">server::Listening()</a>, <a class="el" href="class___base_client_server_8inl_source.html#l00019">port()</a>, et <a class="el" href="class___base_client_server_8cpp_source.html#l00065">setPort()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a72e8655cd3ede0bea9cdb934ff40fa42"></a><!-- doxytag: member="baseClientServer::c_rdfs" ref="a72e8655cd3ede0bea9cdb934ff40fa42" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">fd_set <a class="el" href="classbase_client_server.html#a72e8655cd3ede0bea9cdb934ff40fa42">baseClientServer::c_rdfs</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Le fd qui est utiliser pour check les signaux en lecture. </p>
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8h_source.html#l00075">75</a> du fichier <a class="el" href="class___base_client_server_8h_source.html">class_BaseClientServer.h</a>.</p>
+
+<p>Référencé par <a class="el" href="class__client_8cpp_source.html#l00153">client::lookupConnection()</a>, <a class="el" href="class__server_8cpp_source.html#l00258">server::lookupConnectionClient()</a>, et <a class="el" href="class__server_8cpp_source.html#l00191">server::lookupNewConnection()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3a94c4ce7ae9e5b911bd03edc4d0e2ae"></a><!-- doxytag: member="baseClientServer::file" ref="a3a94c4ce7ae9e5b911bd03edc4d0e2ae" args="[]" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int const char <a class="el" href="classbase_client_server.html#a3a94c4ce7ae9e5b911bd03edc4d0e2ae">baseClientServer::file</a>[]</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8h_source.html#l00105">105</a> du fichier <a class="el" href="class___base_client_server_8h_source.html">class_BaseClientServer.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a54c04653116419cadf5900d8947a21a5"></a><!-- doxytag: member="baseClientServer::line" ref="a54c04653116419cadf5900d8947a21a5" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int const char unsigned int <a class="el" href="classbase_client_server.html#a54c04653116419cadf5900d8947a21a5">baseClientServer::line</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="class___base_client_server_8h_source.html#l00105">105</a> du fichier <a class="el" href="class___base_client_server_8h_source.html">class_BaseClientServer.h</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/ClientServer/<a class="el" href="class___base_client_server_8h_source.html">class_BaseClientServer.h</a></li>
+<li>/home/ph3w/Bureau/lif7-bomberman/ClientServer/<a class="el" href="class___base_client_server_8cpp_source.html">class_BaseClientServer.cpp</a></li>
+<li>/home/ph3w/Bureau/lif7-bomberman/ClientServer/<a class="el" href="class___base_client_server_8inl_source.html">class_BaseClientServer.inl</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

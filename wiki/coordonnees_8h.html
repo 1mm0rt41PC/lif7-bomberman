@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence du fichier /home/ph3w/Bureau/lif7-bomberman/coordonnees.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle">
+<h1>Référence du fichier /home/ph3w/Bureau/lif7-bomberman/coordonnees.h</h1>  </div>
+</div>
+<div class="contents">
+
+<p><a href="coordonnees_8h_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">struct de coordonnées ( x,y )  <a href="structs___coordonnees.html#_details">Plus de détails...</a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="coordonnees_8h.html#a6672966a8002c5f5e0a711f7029b0e7d">coordonneeConvert</a> (unsigned int x, unsigned int y)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet de créer facillement une stucture <a class="el" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a> initialisée.  <a href="#a6672966a8002c5f5e0a711f7029b0e7d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="coordonnees_8h.html#ab89e0923e3a5fc987c95a47449ecfb12">coordonneeConvert</a> (unsigned int x, unsigned int y, <a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &amp;pos)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet de facillement initialisée une stucture <a class="el" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a>.  <a href="#ab89e0923e3a5fc987c95a47449ecfb12"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="coordonnees_8h.html#ae4a79783953de477406970583dbcc7e5">coordonneeEgal</a> (const <a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &amp;c1, const <a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &amp;c2)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet comparer le contenue de 2 variables de type <a class="el" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a>.  <a href="#ae4a79783953de477406970583dbcc7e5"></a><br/></td></tr>
+</table>
+<hr/><h2>Documentation des fonctions</h2>
+<a class="anchor" id="a6672966a8002c5f5e0a711f7029b0e7d"></a><!-- doxytag: member="coordonnees.h::coordonneeConvert" ref="a6672966a8002c5f5e0a711f7029b0e7d" args="(unsigned int x, unsigned int y)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a> coordonneeConvert </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>y</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de créer facillement une stucture <a class="el" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a> initialisée. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>x</em>&nbsp;</td><td>Coordonnée X </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>y</em>&nbsp;</td><td>Coordonnée Y </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="coordonnees_8h_source.html#l00021">21</a> du fichier <a class="el" href="coordonnees_8h_source.html">coordonnees.h</a>.</p>
+
+<p>Références <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>, <a class="el" href="map_8cpp_source.html#l00113">map::ajouterInfoJoueur()</a>, <a class="el" href="partie_8cpp_source.html#l01590">partie::checkInternalEvent()</a>, <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, <a class="el" href="partie_8cpp_source.html#l01826">partie::killPlayers()</a>, et <a class="el" href="map_8cpp_source.html#l00089">map::setBlock()</a>.</p>
+
+<p><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="coordonnees_8h_a6672966a8002c5f5e0a711f7029b0e7d_icgraph.png" border="0" usemap="#coordonnees_8h_a6672966a8002c5f5e0a711f7029b0e7d_icgraph" alt=""/></div>
+<map name="coordonnees_8h_a6672966a8002c5f5e0a711f7029b0e7d_icgraph" id="coordonnees_8h_a6672966a8002c5f5e0a711f7029b0e7d_icgraph">
+<area shape="rect" id="node3" href="classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="204,5,428,35"/><area shape="rect" id="node5" href="classmap.html#ac7e126e8c0555f9f2e9c86cc81865b9f" title="Ajoute des meta donnée ( ou info joueurs ) dans le block (X, Y)." alt="" coords="233,288,399,317"/><area shape="rect" id="node9" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="1343,263,1529,292"/><area shape="rect" id="node19" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="807,573,1004,603"/><area shape="rect" id="node29" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="841,109,969,139"/><area shape="rect" id="node38" href="classmap.html#a9daefd4b8e29eba7b98b734ce4530fea" title="Modifie le block qui est à la position X, Y." alt="" coords="260,495,372,524"/><area shape="rect" id="node7" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="1068,197,1279,227"/><area shape="rect" id="node11" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1579,469,1677,499"/><area shape="rect" id="node16" href="classpartie.html#aa5cca051f9f07d1b267f5a4df8dabd24" title="Scan les event du bonus pousse bombe." alt="" coords="477,416,757,445"/><area shape="rect" id="node23" href="classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="495,469,740,499"/><area shape="rect" id="node33" href="classpartie.html#a690624a8847be8257bd1d89e23018614" title="Désempaquette le buffer et met les données dans le tableau." alt="" coords="557,211,677,240"/><area shape="rect" id="node13" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1727,469,1780,499"/><area shape="rect" id="node25" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="1055,469,1292,499"/><area shape="rect" id="node46" href="classmap.html#a5d865615ead2c9f10768e8504b1adb23" title="Modifie le block qui est à la position X, Y." alt="" coords="561,675,673,704"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ab89e0923e3a5fc987c95a47449ecfb12"></a><!-- doxytag: member="coordonnees.h::coordonneeConvert" ref="ab89e0923e3a5fc987c95a47449ecfb12" args="(unsigned int x, unsigned int y, s_Coordonnees &amp;pos)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void coordonneeConvert </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>pos</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de facillement initialisée une stucture <a class="el" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a>. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>pos</em>&nbsp;</td><td>La variable dans laquelle on va mettre X et Y </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>x</em>&nbsp;</td><td>Coordonnée X </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>y</em>&nbsp;</td><td>Coordonnée Y </td></tr>
+    <tr><td valign="top"><tt>[in,out]</tt>&nbsp;</td><td valign="top"><em>pos</em>&nbsp;</td><td>Là où vont être stockées les coordonnées </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="coordonnees_8h_source.html#l00038">38</a> du fichier <a class="el" href="coordonnees_8h_source.html">coordonnees.h</a>.</p>
+
+<p>Références <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae4a79783953de477406970583dbcc7e5"></a><!-- doxytag: member="coordonnees.h::coordonneeEgal" ref="ae4a79783953de477406970583dbcc7e5" args="(const s_Coordonnees &amp;c1, const s_Coordonnees &amp;c2)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool coordonneeEgal </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>c1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>c2</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet comparer le contenue de 2 variables de type <a class="el" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a>. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>c1</em>&nbsp;</td><td>Coordonnées à comparer avec c2 </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>c2</em>&nbsp;</td><td>Coordonnées à comparer avec c1 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="coordonnees_8h_source.html#l00052">52</a> du fichier <a class="el" href="coordonnees_8h_source.html">coordonnees.h</a>.</p>
+
+<p>Références <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l02570">moteur_sdl::isInSpriteList()</a>.</p>
+
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="coordonnees_8h_ae4a79783953de477406970583dbcc7e5_icgraph.png" border="0" usemap="#coordonnees_8h_ae4a79783953de477406970583dbcc7e5_icgraph" alt=""/></div>
+<map name="coordonnees_8h_ae4a79783953de477406970583dbcc7e5_icgraph" id="coordonnees_8h_ae4a79783953de477406970583dbcc7e5_icgraph">
+<area shape="rect" id="node3" href="classmoteur__sdl.html#ab29b0ea5c97c36acbecfe99f39999ea6" title="Complete le texte avec le caractère _ jusqu&#39;a avoir un texte de longueur 20." alt="" coords="180,5,361,35"/><area shape="rect" id="node5" href="classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="412,5,636,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

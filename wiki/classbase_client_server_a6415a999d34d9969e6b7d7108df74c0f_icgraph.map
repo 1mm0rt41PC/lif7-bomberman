@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classclient.html#a4684cdbcdc4a3bd61631d974d0ce3dea" title="Constructeur par défaut." alt="" coords="355,5,453,35"/>
+<area shape="rect" id="node5" href="$classserver.html#a86e0b7cfa19dc5aee949533eb617e41f" title="Met le serveur en activité. Lance l&#39;écoute sur le port demandé." alt="" coords="341,59,467,88"/>
+<area shape="rect" id="node13" href="$classclient.html#a6c40fcab76ed1d882a253a1bf8c33546" title="Permet de définir le serveur où se connecter." alt="" coords="581,112,752,141"/>
+<area shape="rect" id="node16" href="$classbase_client_server.html#a702e328a02579aac6a8060a2b18838f0" title="Permet de modifier le paramètre TCP_NoDelay ( Algorithme de Nagle )." alt="" coords="283,163,525,192"/>
+<area shape="rect" id="node18" href="$classbase_client_server.html#a7d8a192e4011ea46b9d36ab8e2c921e1" title="Permet de savoir l&#39;état du paramètre TCP_NoDelay ( Algorithme de Nagle )." alt="" coords="293,216,515,245"/>
+<area shape="rect" id="node20" href="$classbase_client_server.html#ab05d86575998b22718aad38aec0027d4" title="Destructeur par defaut." alt="" coords="275,269,533,299"/>
+<area shape="rect" id="node7" href="$classserver.html#ae99f6766fe520a13022e3aee4d7c2d94" title="Met le serveur en activité sur le port {port}." alt="" coords="604,5,729,35"/>
+<area shape="rect" id="node9" href="$classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="617,59,716,88"/>
+<area shape="rect" id="node11" href="$main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="801,85,855,115"/>
+</map>

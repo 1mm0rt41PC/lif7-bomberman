@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classmoteur__sfml.html#a418c3276e0e92dd23ef25da6f9af9b04" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="111,60,396,89"/>
+<area shape="rect" id="node7" href="$classmoteur__sfml.html#aa5290106520ad011241051d3f60435f1" title="Renvoie l&#39;instance de la class. Si pas d&#39;instance, alors création d&#39;une instance..." alt="" coords="472,112,659,141"/>
+<area shape="rect" id="node11" href="$classmoteur__sfml.html#a2f096be2aa41c3a7045731ff39af1fcf" title="moteur_sfml::afficherMapEtEvent" alt="" coords="136,164,371,193"/>
+<area shape="rect" id="node13" href="$classpartie.html#ade01e6f9ef64f5dbc1cc1cb725a7a379" title="Permet de modifier la connection: Host, Local, None ( pas de connection )." alt="" coords="172,217,335,247"/>
+<area shape="rect" id="node15" href="$classpartie.html#a2003f42af8a8c3f3038e0707ca966821" title="Definie le nombre de joueur." alt="" coords="487,269,644,299"/>
+<area shape="rect" id="node17" href="$classperso.html#aabdabe266d21f553cd3814cd3b560c64" title="Permet de definir si ce perso est local ou distant." alt="" coords="507,323,624,352"/>
+<area shape="rect" id="node19" href="$classperso.html#a790e87487c0adb4360d690b2f2f2d05b" title="Modifie le nom du personnage." alt="" coords="807,288,924,317"/>
+<area shape="rect" id="node21" href="$classoptions.html#aacf689ad8af10573989f26fd5de3c3aa" title="Permet de définir un port compris entre [0 et 9999]." alt="" coords="192,923,315,952"/>
+<area shape="rect" id="node23" href="$classoptions.html#a30947cfb97ac0346a6557388cb6cab9b" title="Permet d&#39;enregistrer la config." alt="" coords="472,1421,659,1451"/>
+<area shape="rect" id="node30" href="$classmoteur__sfml.html#a07c05115d0ba260cb5df07e310fda5e9" title="moteur_sfml::forcerRafraichissement" alt="" coords="124,976,383,1005"/>
+<area shape="rect" id="node32" href="$classpartie.html#aba546895433f712feea797aee65aeb96" title="Renvoie le client utilisé pour communiquer." alt="" coords="192,1029,315,1059"/>
+<area shape="rect" id="node35" href="$classmoteur__sdl.html#a275eb203b7d8d395945c03ba036e1360" title="Renvoie l&#39;instance de la class. Si pas d&#39;instance, alors création d&#39;une instance..." alt="" coords="165,1083,341,1112"/>
+<area shape="rect" id="node37" href="$classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options." alt="" coords="489,165,641,195"/>
+<area shape="rect" id="node41" href="$classmoteur__sfml.html#a924bb726b5d2a413f4da0fe7a00962a2" title="Créer un menu pour récupérer un nombre entré par un utilisateur." alt="" coords="161,1136,345,1165"/>
+<area shape="rect" id="node43" href="$classpartie.html#a6e482f58cab5db9b2e529ec23784f8ae" title="Renvoie le serveur utilisé pour communiquer." alt="" coords="184,1189,323,1219"/>
+<area shape="rect" id="node45" href="$classmoteur__sfml.html#a8628e69118d8923eff8fad979f791da2" title="Permet d&#39;obtenir du texte." alt="" coords="171,1243,336,1272"/>
+<area shape="rect" id="node51" href="$classpartie.html#adb715dd93594bf27e53b84236a3abd31" title="Renvoie le nom du gagnant de la partie." alt="" coords="168,1296,339,1325"/>
+<area shape="rect" id="node53" href="$classpartie.html#aa259db60507f45e2307fa457879be8ee" title="Renvoie un joueur." alt="" coords="812,1319,919,1348"/>
+<area shape="rect" id="node55" href="$classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="204,768,303,797"/>
+<area shape="rect" id="node109" href="$classmoteur__sfml.html#afac3f84993acd5a3eab2edf388dd0af0" title="Afficher l&#39;image correspondante suivant le menu où on est." alt="" coords="180,1349,327,1379"/>
+<area shape="rect" id="node111" href="$classoptions.html#a4eeb468347a4f33dee3b565a35efe7a8" title="Donne le port utilisé pour le jeu." alt="" coords="203,1403,304,1432"/>
+<area shape="rect" id="node113" href="$classbase_client_server.html#ae24984bbf180c9fe1e75160e108dbaa4" title="Modifier le port d&#39;écoute." alt="" coords="161,1456,345,1485"/>
+<area shape="rect" id="node115" href="$classclient.html#a6c40fcab76ed1d882a253a1bf8c33546" title="Permet de définir le serveur où se connecter." alt="" coords="168,1509,339,1539"/>
+<area shape="rect" id="node117" href="$classoptions.html#a5be99ac3b975b5dd294788678147688f" title="Désinitialise la class options." alt="" coords="201,1563,305,1592"/>
+<area shape="rect" id="node5" href="$classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&#39;une touche." alt="" coords="499,5,632,35"/>
+<area shape="rect" id="node9" href="$classclavier.html#a64ea9fed59e7a3a07c987a412b96880a" title="Renvoie la touche affecté pour une action." alt="" coords="508,59,623,88"/>
+<area shape="rect" id="node25" href="$classclavier.html#a8929b689468a574630f32dbb108b5f3a" title="Renvoie le nombre d&#39;actions possibles sur ce clavier." alt="" coords="793,1451,937,1480"/>
+<area shape="rect" id="node27" href="$classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration." alt="" coords="735,1397,996,1427"/>
+<area shape="rect" id="node39" href="$classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d" title="Initialise la class options." alt="" coords="804,165,927,195"/>
+<area shape="rect" id="node47" href="$classmoteur__sfml.html#aac797169fa9078c8ae02315eb3433dc4" title="Complete le texte avec le caractère _ jusqu&#39;a avoir un texte de longueur 20." alt="" coords="465,1475,665,1504"/>
+<area shape="rect" id="node49" href="$outils_8cpp.html#a867f58846060922b50a272361337cc96" title="Vire les espaces avant et après une chaine de caractère." alt="" coords="523,1528,608,1557"/>
+<area shape="rect" id="node57" href="$classmap.html#ac7e126e8c0555f9f2e9c86cc81865b9f" title="Ajoute des meta donnée ( ou info joueurs ) dans le block (X, Y)." alt="" coords="783,1164,948,1193"/>
+<area shape="rect" id="node59" href="$classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="447,531,684,560"/>
+<area shape="rect" id="node61" href="$classperso.html#add0aebd55226ce05235400c09a529441" title="Renvoie les armes et bonus du personnage." alt="" coords="795,583,936,612"/>
+<area shape="rect" id="node63" href="$classperso.html#aa19fd01c37bed0b375dcc4362be08ed1" title="Modif l&#39;armement du perso." alt="" coords="784,504,947,533"/>
+<area shape="rect" id="node66" href="$classperso.html#ad5afe81f43724128d79b57acfabcda3a" title="Permet de definir le socket utilisé par le perso." alt="" coords="800,412,931,441"/>
+<area shape="rect" id="node68" href="$classmap.html#a5ab949cacaad5148299aa70f55bb0c93" title="Retourn le block qui est à la position X, Y." alt="" coords="808,1005,923,1035"/>
+<area shape="rect" id="node71" href="$classbonus.html#a520116b2a2842563acb732ba56199595" title="Renvoie le pointeur des bonus généraux." alt="" coords="497,635,633,664"/>
+<area shape="rect" id="node73" href="$classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="472,1216,659,1245"/>
+<area shape="rect" id="node78" href="$classoptions.html#a281d1464d4a4c827bcbac56ab3c9be94" title="Renvoie le clavier numéro {clavier_numero}." alt="" coords="487,688,644,717"/>
+<area shape="rect" id="node80" href="$classclient.html#aafb3e1157b7e1f3e81c09fe1c7866a82" title="Permet de se connecter au serveur." alt="" coords="499,741,632,771"/>
+<area shape="rect" id="node82" href="$classbonus.html#a09ddd6bcfc30cc20ee55f41ee1885136" title="Décrémente quantite_utilisable." alt="" coords="763,1241,968,1271"/>
+<area shape="rect" id="node87" href="$classperso.html#a1b34094c6f485175dfe7ddcfc58c3534" title="Modif l&#39;orientation du perso." alt="" coords="487,795,644,824"/>
+<area shape="rect" id="node90" href="$classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="467,1112,664,1141"/>
+<area shape="rect" id="node96" href="$classclient.html#a8d1188c4d73c355ca3233bd7efbedc75" title="Permet de se déconnecter au serveur." alt="" coords="489,848,641,877"/>
+<area shape="rect" id="node98" href="$classserver.html#a36c3ecd67ea956c01bf8f4064c1e2078" title="Met fin a une écoute sur un port." alt="" coords="500,952,631,981"/>
+<area shape="rect" id="node100" href="$classbonus.html#ac503bb19af6f4486c412d011e20bd97e" title="Met fin au temps d&#39;attente de tout les event." alt="" coords="488,1005,643,1035"/>
+<area shape="rect" id="node102" href="$classpartie.html#adea76917bafe42b34b4fefae60c965d8" title="Charge une map." alt="" coords="507,1059,624,1088"/>
+<area shape="rect" id="node106" href="$classmap.html#a3453f2495334983df3bbf1737908e25e" title="Retourne les positions X,Y des case modifiées depuis le dernier cycle." alt="" coords="484,427,647,456"/>
+</map>

@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/QList.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/QList.h</h1>  </div>
+</div>
+<div class="contents">
+<a href="_q_list_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef QLIST_h</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define QLIST_h</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="preprocessor">#ifndef stdError</span>
+<a name="l00005"></a>00005 <span class="preprocessor"></span><span class="preprocessor">    #include &lt;stdio.h&gt;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">    #include &lt;stdlib.h&gt;</span>
+<a name="l00007"></a>00007     
+<a name="l00008"></a>00008     <span class="comment">// Permet de mettre entre quot (&quot;)</span>
+<a name="l00009"></a>00009 <span class="preprocessor">    #define QUOT_ME( data ) #data</span>
+<a name="l00010"></a>00010 <span class="preprocessor"></span>
+<a name="l00011"></a>00011     <span class="comment">// NOTE: utiliser fflush(stderr) pour afficher directe les données</span>
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013     <span class="comment">// Système d&#39;erreur SANS EXIT</span>
+<a name="l00014"></a>00014 <span class="preprocessor">    #define stdError( msg, ... ) {fprintf(stderr, &quot;[file &quot; __FILE__ &quot;, line %d]: &quot; msg &quot;\n&quot;, __LINE__, ##__VA_ARGS__); fflush(stderr);}</span>
+<a name="l00015"></a>00015 <span class="preprocessor"></span>
+<a name="l00016"></a>00016     <span class="comment">// Système d&#39;erreur AVEC EXIT</span>
+<a name="l00017"></a>00017 <span class="preprocessor">    #define stdErrorE( msg, ... ) {fprintf(stderr, &quot;[file &quot; __FILE__ &quot;, line %d]: &quot; msg &quot;\n&quot;, __LINE__, ##__VA_ARGS__); exit(__LINE__);}</span>
+<a name="l00018"></a>00018 <span class="preprocessor"></span>
+<a name="l00019"></a>00019 <span class="preprocessor">    #define redirectSdtErr( filename ) freopen(filename, &quot;w&quot;, stderr)</span>
+<a name="l00020"></a>00020 <span class="preprocessor"></span><span class="preprocessor">    #define closeSdtErr( filename ) fclose(stderr)</span>
+<a name="l00021"></a>00021 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00022"></a>00022 <span class="preprocessor"></span>
+<a name="l00023"></a>00023 <span class="keyword">template</span>&lt;<span class="keyword">class</span> Type&gt;
+<a name="l00024"></a><a class="code" href="class_q_list.html">00024</a> <span class="keyword">class </span><a class="code" href="class_q_list.html">QList</a>
+<a name="l00025"></a>00025 {
+<a name="l00026"></a>00026     <span class="keyword">private</span>:
+<a name="l00027"></a><a class="code" href="class_q_list.html#a8419a0f68013a7657b1993ac44f79b07">00027</a>         Type* <a class="code" href="class_q_list.html#a8419a0f68013a7657b1993ac44f79b07">c_list</a>;
+<a name="l00028"></a><a class="code" href="class_q_list.html#af436b7d8093a0130b0986b8152c32453">00028</a>         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="class_q_list.html#af436b7d8093a0130b0986b8152c32453">c_nb_ojb</a>;
+<a name="l00029"></a>00029 
+<a name="l00030"></a>00030     <span class="keyword">public</span>:
+<a name="l00031"></a>00031         <a class="code" href="class_q_list.html#ae084fb8abf05b0564d11ad0b92d955d5">QList</a>();
+<a name="l00032"></a>00032         <a class="code" href="class_q_list.html#ae084fb8abf05b0564d11ad0b92d955d5">QList</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb, Type&amp; fill );
+<a name="l00033"></a>00033         <a class="code" href="class_q_list.html#a70fb8092458488b844bc60d3a900bcde">~QList</a>();
+<a name="l00034"></a>00034         <span class="keyword">inline</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="class_q_list.html#a1ba2656b5fa0790c29790373e9fee411">size</a>();
+<a name="l00035"></a>00035         <span class="keywordtype">void</span> <a class="code" href="class_q_list.html#a6e17a1550e8b90dd62b1df93be56d995">resize</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="class_q_list.html#a1ba2656b5fa0790c29790373e9fee411">size</a>, Type&amp; fill );
+<a name="l00036"></a>00036         <span class="keyword">inline</span> Type&amp; <a class="code" href="class_q_list.html#ab3d7f4bbc5c4b7ee887d95e1739c8354">operator[]</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> n);
+<a name="l00037"></a>00037         Type&amp; <a class="code" href="class_q_list.html#a250d44beb2d93d79cb9543ed6988f72f">at</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> n);
+<a name="l00038"></a>00038         <span class="keywordtype">void</span> <a class="code" href="class_q_list.html#a15e8824a8dd6a49fda33581299c3bf77">operator&lt;&lt;</a>( <span class="keyword">const</span> Type&amp; newObj );
+<a name="l00039"></a>00039         <span class="keywordtype">void</span> <a class="code" href="class_q_list.html#a8c2b248e4501a99eb71c2fe84f1caf79">insert</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="class_q_list.html#a250d44beb2d93d79cb9543ed6988f72f">at</a>, <span class="keyword">const</span> Type&amp; newObj );
+<a name="l00040"></a>00040         <span class="keywordtype">void</span> <span class="keyword">remove</span>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> at );
+<a name="l00041"></a>00041 };
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043 <span class="preprocessor">#include &quot;<a class="code" href="_q_list_8inl.html">QList.inl</a>&quot;</span>
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045 <span class="preprocessor">#endif</span>
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

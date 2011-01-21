@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la structure map::s_Case</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+  <div class="navpath">
+    <ul>
+      <li><a class="el" href="classmap.html">map</a>      </li>
+      <li><a class="el" href="structmap_1_1s___case.html">map::s_Case</a>      </li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Attributs publics</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la structure map::s_Case</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="map::s_Case" -->
+<p><code>#include &lt;<a class="el" href="map_8h_source.html">map.h</a>&gt;</code></p>
+
+<p><a href="structmap_1_1s___case-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; unsigned char &gt; *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmap_1_1s___case.html#abb0729961b09f69bd64aa02db1cb83cf">joueur</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">La liste est ici pour obtenir des info sur le perso à l'origine du type t.  <a href="#abb0729961b09f69bd64aa02db1cb83cf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469b">t_type</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmap_1_1s___case.html#a86e865c530706b05742fa388c860652c">element</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">type d'element.  <a href="#a86e865c530706b05742fa388c860652c"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Exemple:<br/>
+</p>
+<ul>
+<li>flamme à QUI ? =&gt; La liste contient : le num du joueur qui a provoqué ces flammes<br/>
+</li>
+<li>bombe_poser à QUI ? =&gt; La liste contient : le num du joueur qui a posé la bombe<br/>
+</li>
+<li>UN_joueur QUI ? =&gt; La liste contient : le num du joueur qui est à cette endroit<br/>
+</li>
+<li>plusieurs_joueurs QUI ... ? =&gt; La liste contient : les num des joueurs qui sont à cette endroit<br/>
+</li>
+<li>bombe_poser_AVEC_UN_joueur QUI et QUI ? =&gt; La liste contient : (dans l'ordre !)<br/>
+ 1) Le num du joueur a qui appartient la bombe.<br/>
+ 2) Le num du joueur qui est à cette position<br/>
+</li>
+<li>bombe_poser_AVEC_plusieurs_joueurs QUI et QUI ... ? =&gt; La liste contient : (dans l'ordre !)<br/>
+ 1) Le num du joueur a qui appartient la bombe.<br/>
+ 2 à ...) Les num des joueurs qui sont à cette position.<br/>
+ </li>
+</ul>
+
+<p>Définition à la ligne <a class="el" href="map_8h_source.html#l00088">88</a> du fichier <a class="el" href="map_8h_source.html">map.h</a>.</p>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="a86e865c530706b05742fa388c860652c"></a><!-- doxytag: member="map::s_Case::element" ref="a86e865c530706b05742fa388c860652c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469b">t_type</a> <a class="el" href="structmap_1_1s___case.html#a86e865c530706b05742fa388c860652c">map::s_Case::element</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>type d'element. </p>
+
+<p>Définition à la ligne <a class="el" href="map_8h_source.html#l00090">90</a> du fichier <a class="el" href="map_8h_source.html">map.h</a>.</p>
+
+<p>Référencé par <a class="el" href="map_8cpp_source.html#l00230">map::chargerMap()</a>, <a class="el" href="map_8cpp_source.html#l00028">map::map()</a>, <a class="el" href="map_8cpp_source.html#l00366">map::mettreJoueurA_sa_PositionInitial()</a>, et <a class="el" href="map_8cpp_source.html#l00187">map::setTaille()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abb0729961b09f69bd64aa02db1cb83cf"></a><!-- doxytag: member="map::s_Case::joueur" ref="abb0729961b09f69bd64aa02db1cb83cf" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;unsigned char&gt;* <a class="el" href="structmap_1_1s___case.html#abb0729961b09f69bd64aa02db1cb83cf">map::s_Case::joueur</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>La liste est ici pour obtenir des info sur le perso à l'origine du type t. </p>
+
+<p>Définition à la ligne <a class="el" href="map_8h_source.html#l00089">89</a> du fichier <a class="el" href="map_8h_source.html">map.h</a>.</p>
+
+<p>Référencé par <a class="el" href="map_8cpp_source.html#l00113">map::ajouterInfoJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00230">map::chargerMap()</a>, <a class="el" href="map_8cpp_source.html#l00028">map::map()</a>, <a class="el" href="map_8cpp_source.html#l00366">map::mettreJoueurA_sa_PositionInitial()</a>, <a class="el" href="map_8cpp_source.html#l00423">map::nb_InfoJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00187">map::setTaille()</a>, et <a class="el" href="map_8cpp_source.html#l00057">map::~map()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette structure a été générée à partir du fichier suivant :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="map_8h_source.html">map.h</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Liste des bogues</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>Liste des bogues </h1>  </div>
+</div>
+<div class="contents">
+<p><a class="anchor" id="_bug000003"></a> </p>
+<dl>
+<dt>Membre <a class="el" href="classpartie.html#aa5cca051f9f07d1b267f5a4df8dabd24">partie::checkInternalEventPousseBombe</a> () </dt>
+<dd>Date du bug: 2011/01/20<br/>
+ Le code contenu dans cette fonction devrait normalement aller directement dans la fonction <a class="el" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A.">partie::checkInternalEvent()</a>. Or sous SDL, le code contenu dans cette fonction provoque un bug d'accélération des personnages. Ce bug ne touche que les joueurs qui ont des touches comprises entre a et z. Même si le code n'est jamais traité, le bug ce produit quand même. De plsu si l'on essaye de tracer le bug avec stdError(...) au niveau du clavier ou même au niveau de <a class="el" href="classperso.html#a3c273f65aee2b958e0d2b1112762feab" title="Modifie la position du personnage.">perso::defPos( unsigned int Xpos, unsigned int Ypos )</a> alors le bug n'existe plus...<br/>
+ Pour info, ce bug existe UNIQUEMENT depuis la création du bonus "Pousse Bombe"<br/>
+ A première vu, ce bout de code a lui seul fait apparaitre le bug, alors que le code en lui même ne fait que lire des infos : </dd>
+</dl>
+<p><a class="anchor" id="_bug000001"></a> </p>
+<dl>
+<dt>Membre <a class="el" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1">partie::deplacer_le_Perso_A</a> (unsigned int newX, unsigned int newY, unsigned char joueur) </dt>
+<dd><b>NE GERE PAS TOUT LES CAS</b> </dd>
+</dl>
+<p><a class="anchor" id="_bug000002"></a> </p>
+<dl>
+<dt>Membre <a class="el" href="classpartie.html#a54c3b6294fadf3be0949fa19527f5370">partie::placer_perso_position_initial</a> (unsigned char joueur) </dt>
+<dd><b>NE GERE PAS TOUT LES CAS</b> </dd>
+</dl>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

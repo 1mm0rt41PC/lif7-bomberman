@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/perso.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/perso.h</h1>  </div>
+</div>
+<div class="contents">
+<a href="perso_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef PERSO_h</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define PERSO_h</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &quot;<a class="code" href="bonus_8h.html">bonus.h</a>&quot;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &quot;<a class="code" href="class___base_client_server_8h.html">ClientServer/class_BaseClientServer.h</a>&quot;</span><span class="comment">// Pour avoir le type SOCKET</span>
+<a name="l00007"></a>00007 <span class="comment"></span>
+<a name="l00008"></a>00008 <span class="comment">/*!</span>
+<a name="l00009"></a>00009 <span class="comment">* @class perso</span>
+<a name="l00010"></a>00010 <span class="comment">* @brief Gère un personnage.</span>
+<a name="l00011"></a>00011 <span class="comment">*</span>
+<a name="l00012"></a>00012 <span class="comment">* Info :</span>
+<a name="l00013"></a>00013 <span class="comment">* - Pour mettre un perso sur en état: mort -&gt; defArmements(0)&lt;br /&gt;</span>
+<a name="l00014"></a>00014 <span class="comment">*   Pas d&#39;arme OU plus de vie -&gt; mort&lt;br /&gt;</span>
+<a name="l00015"></a>00015 <span class="comment">*   Pour definir une partie avec un nombre de vie illimité : quantite_MAX_Ramassable = 0 =&gt; SANS VIE&lt;br /&gt;</span>
+<a name="l00016"></a>00016 <span class="comment">*/</span>
+<a name="l00017"></a><a class="code" href="classperso.html">00017</a> <span class="keyword">class </span><a class="code" href="classperso.html" title="Gère un personnage.">perso</a>
+<a name="l00018"></a>00018 {
+<a name="l00019"></a>00019     <span class="keyword">public</span>:
+<a name="l00020"></a><a class="code" href="classperso.html#af25facef489bc105b9fe42132b80cba5">00020</a>         <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00021"></a><a class="code" href="classperso.html#af25facef489bc105b9fe42132b80cba5a634b23e64a1d353fdda76a2ec18248f4">00021</a>             ORI_haut,
+<a name="l00022"></a><a class="code" href="classperso.html#af25facef489bc105b9fe42132b80cba5aa59f5203b5e142fa7a139b875240ccb7">00022</a>             ORI_bas,
+<a name="l00023"></a><a class="code" href="classperso.html#af25facef489bc105b9fe42132b80cba5ab3e12149a43ed9f6c1ed651c7b7130a5">00023</a>             ORI_droite,
+<a name="l00024"></a><a class="code" href="classperso.html#af25facef489bc105b9fe42132b80cba5ab905cf580d7a21ed24b5917ddc8fe517">00024</a>             <a class="code" href="classperso.html#af25facef489bc105b9fe42132b80cba5ab905cf580d7a21ed24b5917ddc8fe517">ORI_gauche</a>
+<a name="l00025"></a>00025         } t_Orientation;
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027     <span class="keyword">private</span>:
+<a name="l00028"></a>00028         <span class="comment">// struct {</span>
+<a name="l00029"></a><a class="code" href="classperso.html#a2200983133e90ff48ed2abc6a3d2a7aa">00029</a>         <a class="code" href="map_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a> <a class="code" href="classperso.html#a2200983133e90ff48ed2abc6a3d2a7aa">c_nom</a>;
+<a name="l00030"></a><a class="code" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">00030</a>         <a class="code" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a> <a class="code" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">c_pos</a>;
+<a name="l00031"></a><a class="code" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">00031</a>         <a class="code" href="classbonus.html" title="Gère les bonus.">bonus</a>* <a class="code" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">c_armements</a>;
+<a name="l00032"></a><a class="code" href="classperso.html#aaccc0ac764f0100e8126737ae37e7fc4">00032</a>         <a class="code" href="classperso.html#af25facef489bc105b9fe42132b80cba5">t_Orientation</a> <a class="code" href="classperso.html#aaccc0ac764f0100e8126737ae37e7fc4">c_orientation</a>;
+<a name="l00033"></a><a class="code" href="classperso.html#ac590574add82ac2695b0fa29f15b6b29">00033</a>         <span class="keywordtype">bool</span> <a class="code" href="classperso.html#ac590574add82ac2695b0fa29f15b6b29">c_isLocal</a>;
+<a name="l00034"></a><a class="code" href="classperso.html#a4bca6631ede313a08e9e6da539079325">00034</a>         <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="code" href="classperso.html#a4bca6631ede313a08e9e6da539079325" title="Socket a utiliser pour le perso. Valeur par defaut: INVALID_SOCKET.">c_MySocket</a>;<span class="comment">//!&lt; Socket a utiliser pour le perso. Valeur par defaut: INVALID_SOCKET</span>
+<a name="l00035"></a>00035 <span class="comment"></span>        <span class="comment">//clavier c_Touches; &lt;- CLAVIER géré en global ( options général )</span>
+<a name="l00036"></a>00036         <span class="comment">// }</span>
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038     <span class="keyword">public</span>:
+<a name="l00039"></a>00039         <span class="comment">// Init &amp; UnInit</span>
+<a name="l00040"></a>00040         <a class="code" href="classperso.html#af0f49599683fc9a7637ca6e650fbf4aa">perso</a>();
+<a name="l00041"></a>00041         <a class="code" href="classperso.html#af0f49599683fc9a7637ca6e650fbf4aa">perso</a>( <a class="code" href="map_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a> <a class="code" href="classperso.html#a815c8505a10a43da797e0424a0192f92" title="Renvoie le nom du personnage.">nom</a>, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Xpos, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Ypos );
+<a name="l00042"></a>00042         <a class="code" href="classperso.html#a3fe28d7cf2d02fd9607c0538fd799017">~perso</a>();
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044         <span class="comment">// Modificateurs</span>
+<a name="l00045"></a>00045         <span class="keywordtype">void</span> <a class="code" href="classperso.html#a790e87487c0adb4360d690b2f2f2d05b" title="Modifie le nom du personnage.">defNom</a>( <a class="code" href="map_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a> <a class="code" href="classperso.html#a815c8505a10a43da797e0424a0192f92" title="Renvoie le nom du personnage.">nom</a> );
+<a name="l00046"></a>00046         <span class="keywordtype">void</span> <a class="code" href="classperso.html#a3c273f65aee2b958e0d2b1112762feab" title="Modifie la position du personnage.">defPos</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Xpos, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Ypos );
+<a name="l00047"></a>00047         <span class="keywordtype">void</span> <a class="code" href="classperso.html#a3c273f65aee2b958e0d2b1112762feab" title="Modifie la position du personnage.">defPos</a>( <a class="code" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a> pos );
+<a name="l00048"></a>00048         <span class="keywordtype">void</span> <a class="code" href="classperso.html#af4dcf10ad3cd83ccc43e4038273b2d7d" title="Permet de modifier la position X du personnage.">defX</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Xpos );
+<a name="l00049"></a>00049         <span class="keywordtype">void</span> <a class="code" href="classperso.html#a3e19c82c00755e3ad1a5c65a760b9ad8" title="Permet de modifier la position Y du personnage.">defY</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Ypos );
+<a name="l00050"></a>00050         <span class="keywordtype">void</span> <a class="code" href="classperso.html#aa19fd01c37bed0b375dcc4362be08ed1" title="Modif l&amp;#39;armement du perso.">defArmements</a>( <a class="code" href="classbonus.html" title="Gère les bonus.">bonus</a>* a );
+<a name="l00051"></a>00051         <span class="keywordtype">void</span> <a class="code" href="classperso.html#a1b34094c6f485175dfe7ddcfc58c3534" title="Modif l&amp;#39;orientation du perso.">defOrientation</a>( <a class="code" href="classperso.html#af25facef489bc105b9fe42132b80cba5">t_Orientation</a> ori );
+<a name="l00052"></a>00052         <span class="keywordtype">void</span> <a class="code" href="classperso.html#aabdabe266d21f553cd3814cd3b560c64" title="Permet de definir si ce perso est local ou distant.">defLocal</a>( <span class="keywordtype">bool</span> <a class="code" href="classperso.html#a73febc8006d08e4414cf6463a3b8ad9d" title="Renvoie l&amp;#39;état du personnage vis à vis du reseau. (Local ou non).">isLocal</a> );
+<a name="l00053"></a>00053         <span class="keywordtype">void</span> <a class="code" href="classperso.html#ad5afe81f43724128d79b57acfabcda3a" title="Permet de definir le socket utilisé par le perso.">defSocket</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> MySocket );
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055         <span class="comment">// Accesseurs</span>
+<a name="l00056"></a>00056         <span class="keyword">const</span> <a class="code" href="map_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a>* <a class="code" href="classperso.html#a815c8505a10a43da797e0424a0192f92" title="Renvoie le nom du personnage.">nom</a>() <span class="keyword">const</span>;
+<a name="l00057"></a>00057         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classperso.html#abdd033a1b14d1e2c8c6a58b7bd28de86" title="Renvoie la position X du perso.">X</a>() <span class="keyword">const</span>;
+<a name="l00058"></a>00058         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classperso.html#a728c317474ec0e762c2c36c283a1654c" title="Renvoie la position Y du perso.">Y</a>() <span class="keyword">const</span>;
+<a name="l00059"></a>00059         <span class="keywordtype">bool</span> <a class="code" href="classperso.html#a3a8713fdb8d5c58803f29b3b91ae47b6" title="Renvoie si le perso est vivant ou pas.">estVivant</a>() <span class="keyword">const</span>;
+<a name="l00060"></a>00060         <a class="code" href="classbonus.html" title="Gère les bonus.">bonus</a>* <a class="code" href="classperso.html#add0aebd55226ce05235400c09a529441" title="Renvoie les armes et bonus du personnage.">armements</a>() <span class="keyword">const</span>;
+<a name="l00061"></a>00061         <a class="code" href="classperso.html#af25facef489bc105b9fe42132b80cba5">t_Orientation</a> <a class="code" href="classperso.html#a5db1bb1382ea2071bd744476542eaee2" title="Renvoie l&amp;#39;orientation du personnage.">orientation</a>() <span class="keyword">const</span>;
+<a name="l00062"></a>00062         <span class="keywordtype">bool</span> <a class="code" href="classperso.html#a73febc8006d08e4414cf6463a3b8ad9d" title="Renvoie l&amp;#39;état du personnage vis à vis du reseau. (Local ou non).">isLocal</a>() <span class="keyword">const</span>;
+<a name="l00063"></a>00063         <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="code" href="classperso.html#a33ea05f68d9ddf2cf242b9b19c8b1ceb" title="Renvoie le socket utilisé (Par defaut: INVALID_SOCKET).">socket</a>() <span class="keyword">const</span>;
+<a name="l00064"></a>00064 };
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066 <span class="preprocessor">#endif</span>
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

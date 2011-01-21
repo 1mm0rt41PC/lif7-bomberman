@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Membres de classe</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="globals.html"><span>Tout</span></a></li>
+      <li><a href="globals_func.html"><span>Fonctions</span></a></li>
+      <li><a href="globals_type.html"><span>Définition&nbsp;de&nbsp;type</span></a></li>
+      <li class="current"><a href="globals_eval.html"><span>Valeurs&nbsp;énumérées</span></a></li>
+    </ul>
+  </div>
+<div class="contents">
+&nbsp;<ul>
+<li>__BOMBERMAN_VERSION__
+: <a class="el" href="config_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a7a96c5436c2b93e73f491800d240a6d9">config.h</a>
+</li>
+<li>Is32Bits
+: <a class="el" href="meta_prog_8inl.html#a99fb83031ce9923c84392b4e92f956b5aa6ab291ddde20dbab3a32cffd81fc8fb">metaProg.inl</a>
+</li>
+<li>Is64Bits
+: <a class="el" href="meta_prog_8inl.html#a99fb83031ce9923c84392b4e92f956b5af906545fd55cc125a7411ca8a0a2d5dd">metaProg.inl</a>
+</li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:29 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

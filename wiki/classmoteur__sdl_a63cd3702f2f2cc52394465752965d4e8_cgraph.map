@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&#39;une touche." alt="" coords="369,5,503,35"/>
+<area shape="rect" id="node5" href="$classmoteur__sdl.html#ae53d8fca7fc64d23b1c02390bcd3840e" title="Permet d&#39;écrire du texte en NOIR" alt="" coords="355,59,517,88"/>
+<area shape="rect" id="node7" href="$classmoteur__sdl.html#a275eb203b7d8d395945c03ba036e1360" title="Renvoie l&#39;instance de la class. Si pas d&#39;instance, alors création d&#39;une instance..." alt="" coords="348,112,524,141"/>
+<area shape="rect" id="node9" href="$classclavier.html#a64ea9fed59e7a3a07c987a412b96880a" title="Renvoie la touche affecté pour une action." alt="" coords="379,165,493,195"/>
+<area shape="rect" id="node11" href="$classmoteur__sdl.html#aa5484b45267f4b4cd48e6ad5c120ead5" title="Permet l&#39;utilisation d&#39;un clavier unicode en toute simplicité." alt="" coords="331,219,541,248"/>
+</map>

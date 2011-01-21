@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence du fichier /home/ph3w/Bureau/lif7-bomberman/outils.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle">
+<h1>Référence du fichier /home/ph3w/Bureau/lif7-bomberman/outils.h</h1>  </div>
+</div>
+<div class="contents">
+
+<p><a href="outils_8h_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="outils_8h.html#a5ee0533ff07a519f3fce335a2f57f157">myRand</a> (int a, int b)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Créer un nombre aléatoire compris entre a et b.  <a href="#a5ee0533ff07a519f3fce335a2f57f157"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="outils_8h.html#ab0a855d1eae4c34ffa5b7805b268dbbe">getTailleNombre</a> (int nb)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Calcule la longueur d'un nombre.  <a href="#ab0a855d1eae4c34ffa5b7805b268dbbe"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="outils_8h.html#a74636b55902344092d141b0c3c96051e">getTailleNombre</a> (unsigned int nb)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Calcule la longueur d'un nombre.  <a href="#a74636b55902344092d141b0c3c96051e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="outils_8h.html#a6de899e6ec4432e58a7466ed1e60c3f8">trimString</a> (char texte[])</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Vire les espaces avant et après une chaine de caractère.  <a href="#a6de899e6ec4432e58a7466ed1e60c3f8"></a><br/></td></tr>
+</table>
+<hr/><h2>Documentation des fonctions</h2>
+<a class="anchor" id="ab0a855d1eae4c34ffa5b7805b268dbbe"></a><!-- doxytag: member="outils.h::getTailleNombre" ref="ab0a855d1eae4c34ffa5b7805b268dbbe" args="(int nb)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char getTailleNombre </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>nb</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Calcule la longueur d'un nombre. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>nb</em>&nbsp;</td><td>Le nombre dont on veut savoir la taille </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie le nombre de chiffre qui compose le nombre</dd></dl>
+<p>Exemple getTailleNombre(-10) =&gt; 3<br/>
+ </p>
+
+<p>Définition à la ligne <a class="el" href="outils_8cpp_source.html#l00026">26</a> du fichier <a class="el" href="outils_8cpp_source.html">outils.cpp</a>.</p>
+
+<p>Références <a class="el" href="outils_8cpp_source.html#l00026">getTailleNombre()</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__ncurses_8cpp_source.html#l00422">moteur_ncurses::getNombre()</a>, et <a class="el" href="outils_8cpp_source.html#l00026">getTailleNombre()</a>.</p>
+
+<p><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="outils_8h_ab0a855d1eae4c34ffa5b7805b268dbbe_cgraph.png" border="0" usemap="#outils_8h_ab0a855d1eae4c34ffa5b7805b268dbbe_cgraph" alt=""/></div>
+<map name="outils_8h_ab0a855d1eae4c34ffa5b7805b268dbbe_cgraph" id="outils_8h_ab0a855d1eae4c34ffa5b7805b268dbbe_cgraph">
+<area shape="rect" id="node3" href="outils_8cpp.html#ab0a855d1eae4c34ffa5b7805b268dbbe" title="Calcule la longueur d&#39;un nombre." alt="" coords="179,29,304,59"/></map>
+</div>
+</p>
+
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="outils_8h_ab0a855d1eae4c34ffa5b7805b268dbbe_icgraph.png" border="0" usemap="#outils_8h_ab0a855d1eae4c34ffa5b7805b268dbbe_icgraph" alt=""/></div>
+<map name="outils_8h_ab0a855d1eae4c34ffa5b7805b268dbbe_icgraph" id="outils_8h_ab0a855d1eae4c34ffa5b7805b268dbbe_icgraph">
+<area shape="rect" id="node3" href="classmoteur__ncurses.html#a1d09cbe9608be4025643c0e7db9a0069" title="Créer un menu pour récupérer un nombre entré par un utilisateur." alt="" coords="180,29,385,59"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a74636b55902344092d141b0c3c96051e"></a><!-- doxytag: member="outils.h::getTailleNombre" ref="a74636b55902344092d141b0c3c96051e" args="(unsigned int nb)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char getTailleNombre </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>nb</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Calcule la longueur d'un nombre. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>nb</em>&nbsp;</td><td>Le nombre dont on veut savoir la taille </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie le nombre de chiffre qui compose le nombre</dd></dl>
+<p>Exemple getTailleNombre(122) =&gt; 3 </p>
+
+<p>Définition à la ligne <a class="el" href="outils_8cpp_source.html#l00043">43</a> du fichier <a class="el" href="outils_8cpp_source.html">outils.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5ee0533ff07a519f3fce335a2f57f157"></a><!-- doxytag: member="outils.h::myRand" ref="a5ee0533ff07a519f3fce335a2f57f157" args="(int a, int b)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int myRand </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>b</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Créer un nombre aléatoire compris entre a et b. </p>
+
+<p>Définition à la ligne <a class="el" href="outils_8cpp_source.html#l00007">7</a> du fichier <a class="el" href="outils_8cpp_source.html">outils.cpp</a>.</p>
+
+<p>Référencé par <a class="el" href="map_8cpp_source.html#l00230">map::chargerMap()</a>, <a class="el" href="partie_8cpp_source.html#l01590">partie::checkInternalEvent()</a>, et <a class="el" href="bonus_8cpp_source.html#l00477">bonus::getBonusAleatoire()</a>.</p>
+
+<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="outils_8h_a5ee0533ff07a519f3fce335a2f57f157_icgraph.png" border="0" usemap="#outils_8h_a5ee0533ff07a519f3fce335a2f57f157_icgraph" alt=""/></div>
+<map name="outils_8h_a5ee0533ff07a519f3fce335a2f57f157_icgraph" id="outils_8h_a5ee0533ff07a519f3fce335a2f57f157_icgraph">
+<area shape="rect" id="node3" href="classmap.html#a5aec3f3890ccd081364731383bbb77c3" title="Charge une map en mémoire." alt="" coords="155,5,288,35"/><area shape="rect" id="node11" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="364,59,551,88"/><area shape="rect" id="node14" href="classbonus.html#a4b5bd7441505cebab7959b7b7b49ec70" title="Renvoie un bonus aléatoire." alt="" coords="128,109,315,139"/><area shape="rect" id="node5" href="classpartie.html#adea76917bafe42b34b4fefae60c965d8" title="Charge une map." alt="" coords="399,5,516,35"/><area shape="rect" id="node7" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="600,32,699,61"/><area shape="rect" id="node9" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="748,32,801,61"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a6de899e6ec4432e58a7466ed1e60c3f8"></a><!-- doxytag: member="outils.h::trimString" ref="a6de899e6ec4432e58a7466ed1e60c3f8" args="(char texte[])" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* trimString </td>
+          <td>(</td>
+          <td class="paramtype">char&nbsp;</td>
+          <td class="paramname"> <em>texte</em>[]</td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Vire les espaces avant et après une chaine de caractère. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in,out]</tt>&nbsp;</td><td valign="top"><em>texte</em>&nbsp;</td><td>Le texte a trim. Le texte est directement modifié </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie le pointeur <em>texte</em> </dd></dl>
+<p>Exemple : "  toto " =&gt; "toto" </p>
+
+<p>Définition à la ligne <a class="el" href="outils_8cpp_source.html#l00061">61</a> du fichier <a class="el" href="outils_8cpp_source.html">outils.cpp</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sfml_8cpp_source.html#l00811">moteur_sfml::getTexte()</a>, <a class="el" href="moteur__sdl_8cpp_source.html#l00957">moteur_sdl::getTexte()</a>, et <a class="el" href="moteur__ncurses_8cpp_source.html#l00620">moteur_ncurses::getTexte()</a>.</p>
+
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="outils_8h_a6de899e6ec4432e58a7466ed1e60c3f8_icgraph.png" border="0" usemap="#outils_8h_a6de899e6ec4432e58a7466ed1e60c3f8_icgraph" alt=""/></div>
+<map name="outils_8h_a6de899e6ec4432e58a7466ed1e60c3f8_icgraph" id="outils_8h_a6de899e6ec4432e58a7466ed1e60c3f8_icgraph">
+<area shape="rect" id="node3" href="classmoteur__sfml.html#a8628e69118d8923eff8fad979f791da2" title="Permet d&#39;obtenir du texte." alt="" coords="153,5,319,35"/><area shape="rect" id="node7" href="classmoteur__sdl.html#a25a38bdd2e51b9184130c3e90d808a8c" title="Permet d&#39;obtenir du texte." alt="" coords="159,59,313,88"/><area shape="rect" id="node9" href="classmoteur__ncurses.html#a20d01f1da6e4e378673df3f550e57bae" title="Permet d&#39;obtenir du texte." alt="" coords="143,112,329,141"/><area shape="rect" id="node5" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="380,5,433,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

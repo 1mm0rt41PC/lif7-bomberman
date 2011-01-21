@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/debug_memory.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/debug_memory.h</h1>  </div>
+</div>
+<div class="contents">
+<a href="debug__memory_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#if defined(__DEBUG_MEMORY__) &amp;&amp; !defined(DEBUG_MEMORY_h)</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define DEBUG_MEMORY_h</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;stack&gt;</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;ctime&gt;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &quot;<a class="code" href="debug_8h.html">debug.h</a>&quot;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;<a class="code" href="config_8h.html">config.h</a>&quot;</span>
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 
+<a name="l00014"></a>00014 <span class="comment">// Rapport complet ? ( defined or not )</span>
+<a name="l00015"></a>00015 <span class="comment">//#define MEMORY_FULL_REPORT</span>
+<a name="l00016"></a>00016 
+<a name="l00017"></a>00017 <span class="comment"></span>
+<a name="l00018"></a>00018 <span class="comment">/*!</span>
+<a name="l00019"></a>00019 <span class="comment">* @class CMemoryManager</span>
+<a name="l00020"></a>00020 <span class="comment">* @brief Système de vérification de fuite mémoire.</span>
+<a name="l00021"></a>00021 <span class="comment">*</span>
+<a name="l00022"></a>00022 <span class="comment">* @warning &lt;b&gt;Cette class n&#39;est pas faites pour être utilisée directement !&lt;/b&gt;&lt;br /&gt;</span>
+<a name="l00023"></a>00023 <span class="comment">* Cette class surcharge les operateurs new et delete.&lt;br /&gt;</span>
+<a name="l00024"></a>00024 <span class="comment">* La class ne peut être instancié qu&#39;une seule fois (class singleton) !&lt;br /&gt;</span>
+<a name="l00025"></a>00025 <span class="comment">* De plus elle s&#39;instancie sans pointeur =&gt; Si une autre class singleton utilise la même technologie =&gt; BUG</span>
+<a name="l00026"></a>00026 <span class="comment">*</span>
+<a name="l00027"></a>00027 <span class="comment">* Pour utiliser cette class, mettre le code suivant dans les fichiers &lt;b&gt;.cpp&lt;/b&gt;  &lt;span style=&quot;text-decoration:underline;&quot;&gt;UNIQUEMENT&lt;/span&gt; !</span>
+<a name="l00028"></a>00028 <span class="comment">* @code</span>
+<a name="l00029"></a>00029 <span class="comment">* #define __DEBUG_MEMORY__// Active le debug memoire</span>
+<a name="l00030"></a>00030 <span class="comment">* #inlcude &quot;debug_memory.h&quot;</span>
+<a name="l00031"></a>00031 <span class="comment">* @endcode</span>
+<a name="l00032"></a>00032 <span class="comment">*/</span>
+<a name="l00033"></a><a class="code" href="class_c_memory_manager.html">00033</a> <span class="keyword">class </span><a class="code" href="class_c_memory_manager.html" title="Système de vérification de fuite mémoire.">CMemoryManager</a>
+<a name="l00034"></a>00034 {
+<a name="l00035"></a>00035     <span class="keyword">private</span>:<span class="comment"></span>
+<a name="l00036"></a>00036 <span class="comment">        /*!</span>
+<a name="l00037"></a>00037 <span class="comment">        * @enum t_obj</span>
+<a name="l00038"></a>00038 <span class="comment">        * @brief Type d&#39;objet alloué: Classic ( new / delete ), SDL_... ( Surface, TTF )</span>
+<a name="l00039"></a>00039 <span class="comment">        */</span>
+<a name="l00040"></a><a class="code" href="class_c_memory_manager.html#ab8c28bbacbf41e539dcb0d1185588f99">00040</a>         <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00041"></a><a class="code" href="class_c_memory_manager.html#ab8c28bbacbf41e539dcb0d1185588f99aa32ed10d616a4e916ec2f4abb3addfc7">00041</a>             __classic__,
+<a name="l00042"></a><a class="code" href="class_c_memory_manager.html#ab8c28bbacbf41e539dcb0d1185588f99a9b94b817a58d40cd639aa7325ee2d42c">00042</a>             __SDL_Surface__,
+<a name="l00043"></a><a class="code" href="class_c_memory_manager.html#ab8c28bbacbf41e539dcb0d1185588f99aa48ce3cc6f7b50a9267bdcedd9f648f2">00043</a>             <a class="code" href="class_c_memory_manager.html#ab8c28bbacbf41e539dcb0d1185588f99aa48ce3cc6f7b50a9267bdcedd9f648f2">__SDL_Font__</a>
+<a name="l00044"></a>00044         } t_obj;
+<a name="l00045"></a>00045 <span class="comment"></span>
+<a name="l00046"></a>00046 <span class="comment">        /*!</span>
+<a name="l00047"></a>00047 <span class="comment">        * @struct s_AllocatatedBlock</span>
+<a name="l00048"></a>00048 <span class="comment">        * @brief Stock les info sur les block mémoires alloués</span>
+<a name="l00049"></a>00049 <span class="comment">        */</span>
+<a name="l00050"></a><a class="code" href="struct_c_memory_manager_1_1s___allocatated_block.html">00050</a>         <span class="keyword">typedef</span> <span class="keyword">struct </span>{
+<a name="l00051"></a><a class="code" href="struct_c_memory_manager_1_1s___allocatated_block.html#a050ffa267c9f209f6a1159b6c2832142">00051</a>             <a class="code" href="map_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a>     fileName;   <span class="comment">//!&lt; Fichier contenant l&#39;allocation</span>
+<a name="l00052"></a><a class="code" href="struct_c_memory_manager_1_1s___allocatated_block.html#afa806a065eca6cf997823dd160e6503c">00052</a> <span class="comment"></span>            <span class="keywordtype">void</span>*           ptr;        <span class="comment">//!&lt; Le pointeur</span>
+<a name="l00053"></a><a class="code" href="struct_c_memory_manager_1_1s___allocatated_block.html#a66687bce2aeeb39d1066c878e37136b0">00053</a> <span class="comment"></span>            <span class="keywordtype">size_t</span>          size;       <span class="comment">//!&lt; Taille allouée</span>
+<a name="l00054"></a><a class="code" href="struct_c_memory_manager_1_1s___allocatated_block.html#a04a808fd7b875bb64b2e712c5da7968c">00054</a> <span class="comment"></span>            <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>    line;       <span class="comment">//!&lt; Ligne de l&#39;allocation</span>
+<a name="l00055"></a><a class="code" href="struct_c_memory_manager_1_1s___allocatated_block.html#ad77e2f233ea15004acfd3206b00dc1dc">00055</a> <span class="comment"></span>            <a class="code" href="class_c_memory_manager.html#ab8c28bbacbf41e539dcb0d1185588f99" title="Type d&amp;#39;objet alloué: Classic ( new / delete ), SDL_... ( Surface, TTF ).">t_obj</a>           type;       <span class="comment">//!&lt; Type d&#39;objet (SDL ou classic ?)</span>
+<a name="l00056"></a><a class="code" href="struct_c_memory_manager_1_1s___allocatated_block.html#ae08523066b3c9def225d38452557750f">00056</a> <span class="comment"></span>            <span class="keywordtype">bool</span>            is_array;   <span class="comment">//!&lt; Est-ce un objet ou un tableau ?</span>
+<a name="l00057"></a>00057 <span class="comment"></span>        } <a class="code" href="struct_c_memory_manager_1_1s___allocatated_block.html" title="Stock les info sur les block mémoires alloués.">s_AllocatatedBlock</a>;
+<a name="l00058"></a><a class="code" href="class_c_memory_manager.html#a419ced32e7de6033429b19e49c608126">00058</a>         <span class="keyword">typedef</span> std::vector&lt;s_AllocatatedBlock&gt; v_AllocatatedBlock;
+<a name="l00059"></a>00059 
+<a name="l00060"></a><a class="code" href="class_c_memory_manager.html#ab2d64d7c15f3b3d06cfa10d9e565c396">00060</a>         <a class="code" href="class_c_memory_manager.html#a419ced32e7de6033429b19e49c608126">v_AllocatatedBlock</a> <a class="code" href="class_c_memory_manager.html#ab2d64d7c15f3b3d06cfa10d9e565c396" title="Blocs de mémoire alloués.">c_Blocks</a>; <span class="comment">//!&lt; Blocs de mémoire alloués</span>
+<a name="l00061"></a><a class="code" href="class_c_memory_manager.html#a66fa4e51f5c81fcf128365a217ffe46e">00061</a> <span class="comment"></span>        std::stack&lt;s_AllocatatedBlock&gt; <a class="code" href="class_c_memory_manager.html#a66fa4e51f5c81fcf128365a217ffe46e" title="Pile contenant les infos sur les prochaines désallocations.">c_DeleteStack</a>; <span class="comment">//!&lt; Pile contenant les infos sur les prochaines désallocations</span>
+<a name="l00062"></a><a class="code" href="class_c_memory_manager.html#ad8837a903dd88682e2c19a4d12d9168d">00062</a> <span class="comment"></span>        FILE* <a class="code" href="class_c_memory_manager.html#ad8837a903dd88682e2c19a4d12d9168d" title="Pointeur de fichier où sera stocké le rapport.">c_fp</a>; <span class="comment">//!&lt; Pointeur de fichier où sera stocké le rapport</span>
+<a name="l00063"></a><a class="code" href="class_c_memory_manager.html#a48a8bd38d884d860ba2482b1cff0e135">00063</a> <span class="comment"></span>        <span class="keyword">static</span> <a class="code" href="class_c_memory_manager.html" title="Système de vérification de fuite mémoire.">CMemoryManager</a> <a class="code" href="class_c_memory_manager.html#a48a8bd38d884d860ba2482b1cff0e135" title="L&amp;#39;instance de la class.">c_inst</a>;<span class="comment">//!&lt; L&#39;instance de la class</span>
+<a name="l00064"></a>00064 <span class="comment"></span>
+<a name="l00065"></a>00065     <span class="keyword">private</span> :
+<a name="l00066"></a>00066         <a class="code" href="class_c_memory_manager.html#a348ff8aeb43bb768c0425f578c9f2480" title="Le constructeur par défaut.">CMemoryManager</a>();
+<a name="l00067"></a>00067         <a class="code" href="class_c_memory_manager.html#a2e609b1276459d743cfb91669007eee2" title="Le desconstructeur par défaut.">~CMemoryManager</a>();
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069     <span class="keyword">public</span> :
+<a name="l00070"></a>00070         <span class="comment">// Ajoute une allocation mémoire</span>
+<a name="l00071"></a>00071         <span class="keywordtype">void</span>* <a class="code" href="class_c_memory_manager.html#a72136456ec234a5abee8537160855a45" title="Récolte les informations sur les allocations.">allocate</a>( <span class="keywordtype">size_t</span> size, <span class="keyword">const</span> <span class="keywordtype">char</span> fileName[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> line, <span class="keywordtype">bool</span> is_array );
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073         <span class="comment">// Retire une allocation mémoire</span>
+<a name="l00074"></a>00074         <span class="keywordtype">void</span> <a class="code" href="class_c_memory_manager.html#a05f473d76591319066c50dbc071c5be1" title="Récolte les informations sur les désallocations.">Free</a>( <span class="keywordtype">void</span>* ptr, <span class="keywordtype">bool</span> is_array );
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076         <span class="comment">// Sauvegarde les infos sur la désallocation courante</span>
+<a name="l00077"></a>00077         <span class="keywordtype">void</span> <a class="code" href="class_c_memory_manager.html#ab70c6566b859092c13dcdbabafbea33e" title="Sauvegarde les infos sur la désallocation courante.">nextDelete</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> fileName[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> line );
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079         <span class="comment">// Renvoie l&#39;instance de la classe</span>
+<a name="l00080"></a>00080         <span class="keyword">static</span> <a class="code" href="class_c_memory_manager.html" title="Système de vérification de fuite mémoire.">CMemoryManager</a>&amp; <a class="code" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&amp;#39;intance de la class.">getInstance</a>();
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082 <span class="preprocessor">        #ifdef __LIB_SDL__</span>
+<a name="l00083"></a>00083 <span class="preprocessor"></span>        SDL_Surface* <a class="code" href="class_c_memory_manager.html#a990328b78646a11ef3079a44e1b9115c">IMG_Load_Debug</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> fileImg[], <span class="keyword">const</span> <span class="keywordtype">char</span> fileName[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> line );
+<a name="l00084"></a>00084         <span class="keywordtype">void</span> <a class="code" href="class_c_memory_manager.html#a728395871f1562c6710b1c741af62a8a" title="Récolte les informations sur les désallocations des Surfaces SDL.">SDL_FreeSurface_Debug</a>( SDL_Surface* ptr, <span class="keyword">const</span> <span class="keywordtype">char</span> fileName[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> line );
+<a name="l00085"></a>00085         SDL_Surface* <a class="code" href="class_c_memory_manager.html#ab57e5a6810861762c3c029be90b0da31" title="Récolte les informations sur les allocations des Surfaces SDL:TTF.">TTF_RenderText_Blended_Debug</a>( TTF_Font *font, <span class="keyword">const</span> <span class="keywordtype">char</span> text[], SDL_Color color, <span class="keyword">const</span> <span class="keywordtype">char</span> fileName[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> line );
+<a name="l00086"></a>00086         TTF_Font* <a class="code" href="class_c_memory_manager.html#ae0497df49ff60463727c867150d530c5" title="Récolte les informations sur les allocations des TTF_Font.">TTF_OpenFont_Debug</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> file[], <span class="keywordtype">int</span> size, <span class="keyword">const</span> <span class="keywordtype">char</span> fileName[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> line );
+<a name="l00087"></a>00087         <span class="keywordtype">void</span> <a class="code" href="class_c_memory_manager.html#aa9445f0e6fe11a1933f7018b477554fd" title="Récolte les informations sur les désallocations des TTF_Font.">TTF_CloseFont_Debug</a>( TTF_Font* ptr, <span class="keyword">const</span> <span class="keywordtype">char</span> fileName[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> line );
+<a name="l00088"></a>00088 <span class="preprocessor">        #endif</span>
+<a name="l00089"></a>00089 <span class="preprocessor"></span>};
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091 
+<a name="l00092"></a><a class="code" href="debug__memory_8h.html#a7eef29661fb85236ced6e989f457c1b4">00092</a> <span class="keyword">inline</span> <span class="keywordtype">void</span>* <a class="code" href="debug__memory_8h.html#a7eef29661fb85236ced6e989f457c1b4">operator new </a>( <span class="keywordtype">size_t</span> taille, <span class="keyword">const</span> <span class="keywordtype">char</span> fileName[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> line )
+<a name="l00093"></a>00093 {
+<a name="l00094"></a>00094     <span class="keywordflow">return</span> <a class="code" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&amp;#39;intance de la class.">CMemoryManager::getInstance</a>().<a class="code" href="class_c_memory_manager.html#a72136456ec234a5abee8537160855a45" title="Récolte les informations sur les allocations.">allocate</a>( taille , fileName, line, <span class="keyword">false</span> );
+<a name="l00095"></a>00095 }
+<a name="l00096"></a><a class="code" href="debug__memory_8h.html#ab14f58432455bd6705c00748da4575a7">00096</a> <span class="keyword">inline</span> <span class="keywordtype">void</span>* <a class="code" href="debug__memory_8h.html#ab14f58432455bd6705c00748da4575a7">operator new[] </a>( <span class="keywordtype">size_t</span> taille, <span class="keyword">const</span> <span class="keywordtype">char</span> fileName[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> line )
+<a name="l00097"></a>00097 {
+<a name="l00098"></a>00098     <span class="keywordflow">return</span> <a class="code" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&amp;#39;intance de la class.">CMemoryManager::getInstance</a>().<a class="code" href="class_c_memory_manager.html#a72136456ec234a5abee8537160855a45" title="Récolte les informations sur les allocations.">allocate</a>( taille , fileName, line, <span class="keyword">true</span> );
+<a name="l00099"></a>00099 }
+<a name="l00100"></a><a class="code" href="debug__memory_8h.html#a3d97a7e2a0208075b4b37328c96ed390">00100</a> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="debug__memory_8h.html#a3d97a7e2a0208075b4b37328c96ed390">operator delete</a>( <span class="keywordtype">void</span>* ptr )
+<a name="l00101"></a>00101 {
+<a name="l00102"></a>00102     <a class="code" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&amp;#39;intance de la class.">CMemoryManager::getInstance</a>().<a class="code" href="class_c_memory_manager.html#a05f473d76591319066c50dbc071c5be1" title="Récolte les informations sur les désallocations.">Free</a>(ptr, <span class="keyword">false</span>);
+<a name="l00103"></a>00103 }
+<a name="l00104"></a><a class="code" href="debug__memory_8h.html#a1d8b2d6f17242ae0d182b0f7a98ba54f">00104</a> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="debug__memory_8h.html#a1d8b2d6f17242ae0d182b0f7a98ba54f">operator delete[]</a>( <span class="keywordtype">void</span>* ptr )
+<a name="l00105"></a>00105 {
+<a name="l00106"></a>00106     <a class="code" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&amp;#39;intance de la class.">CMemoryManager::getInstance</a>().<a class="code" href="class_c_memory_manager.html#a05f473d76591319066c50dbc071c5be1" title="Récolte les informations sur les désallocations.">Free</a>(ptr, <span class="keyword">true</span>);
+<a name="l00107"></a>00107 }
+<a name="l00108"></a><a class="code" href="debug__memory_8h.html#a41ebeeeb4443ae2efbc12791b6ec80b7">00108</a> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="debug__memory_8h.html#a3d97a7e2a0208075b4b37328c96ed390">operator delete</a>( <span class="keywordtype">void</span>* ptr, <span class="keyword">const</span> <span class="keywordtype">char</span> fileName[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> line )
+<a name="l00109"></a>00109 {
+<a name="l00110"></a>00110     <a class="code" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&amp;#39;intance de la class.">CMemoryManager::getInstance</a>().<a class="code" href="class_c_memory_manager.html#ab70c6566b859092c13dcdbabafbea33e" title="Sauvegarde les infos sur la désallocation courante.">nextDelete</a>(fileName, line);
+<a name="l00111"></a>00111     <a class="code" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&amp;#39;intance de la class.">CMemoryManager::getInstance</a>().<a class="code" href="class_c_memory_manager.html#a05f473d76591319066c50dbc071c5be1" title="Récolte les informations sur les désallocations.">Free</a>(ptr, <span class="keyword">false</span>);
+<a name="l00112"></a>00112 }
+<a name="l00113"></a><a class="code" href="debug__memory_8h.html#afd1ddbb824746bb76da4e10565800a33">00113</a> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="debug__memory_8h.html#a1d8b2d6f17242ae0d182b0f7a98ba54f">operator delete[]</a>( <span class="keywordtype">void</span>* ptr, <span class="keyword">const</span> <span class="keywordtype">char</span> fileName[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> line )
+<a name="l00114"></a>00114 {
+<a name="l00115"></a>00115     <a class="code" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&amp;#39;intance de la class.">CMemoryManager::getInstance</a>().<a class="code" href="class_c_memory_manager.html#ab70c6566b859092c13dcdbabafbea33e" title="Sauvegarde les infos sur la désallocation courante.">nextDelete</a>(fileName, line);
+<a name="l00116"></a>00116     <a class="code" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&amp;#39;intance de la class.">CMemoryManager::getInstance</a>().<a class="code" href="class_c_memory_manager.html#a05f473d76591319066c50dbc071c5be1" title="Récolte les informations sur les désallocations.">Free</a>(ptr, <span class="keyword">true</span>);
+<a name="l00117"></a>00117 }
+<a name="l00118"></a>00118 <span class="preprocessor">#define new new(__FILE__, __LINE__)</span>
+<a name="l00119"></a>00119 <span class="preprocessor"></span><span class="preprocessor">#define delete CMemoryManager::getInstance().nextDelete(__FILE__, __LINE__), delete</span>
+<a name="l00120"></a>00120 <span class="preprocessor"></span>
+<a name="l00121"></a>00121 <span class="comment">/*******************************************************************************</span>
+<a name="l00122"></a>00122 <span class="comment">* Partie SDL</span>
+<a name="l00123"></a>00123 <span class="comment">*/</span>
+<a name="l00124"></a>00124 <span class="preprocessor">#ifdef __LIB_SDL__</span>
+<a name="l00125"></a>00125 <span class="preprocessor"></span><span class="preprocessor">    #define IMG_Load( img ) CMemoryManager::getInstance().IMG_Load_Debug(img, __FILE__, __LINE__)</span>
+<a name="l00126"></a>00126 <span class="preprocessor"></span><span class="preprocessor">    #define SDL_FreeSurface( surface ) CMemoryManager::getInstance().SDL_FreeSurface_Debug(surface, __FILE__, __LINE__)</span>
+<a name="l00127"></a>00127 <span class="preprocessor"></span><span class="preprocessor">    #define TTF_RenderText_Blended( police, texte, couleur ) CMemoryManager::getInstance().TTF_RenderText_Blended_Debug(police, texte, couleur, __FILE__, __LINE__)</span>
+<a name="l00128"></a>00128 <span class="preprocessor"></span><span class="preprocessor">    #define TTF_OpenFont( strPolice, taille ) CMemoryManager::getInstance().TTF_OpenFont_Debug(strPolice, taille, __FILE__, __LINE__)</span>
+<a name="l00129"></a>00129 <span class="preprocessor"></span><span class="preprocessor">    #define TTF_CloseFont( ptrPolice ) CMemoryManager::getInstance().TTF_CloseFont_Debug(ptrPolice, __FILE__, __LINE__)</span>
+<a name="l00130"></a>00130 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00131"></a>00131 <span class="preprocessor"></span>
+<a name="l00132"></a>00132 <span class="preprocessor">#endif</span>
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

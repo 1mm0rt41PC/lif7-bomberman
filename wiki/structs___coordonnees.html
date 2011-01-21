@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la structure s_Coordonnees</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Attributs publics</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la structure s_Coordonnees</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="s_Coordonnees" -->
+<p>struct de coordonnées ( x,y )  
+<a href="#_details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="coordonnees_8h_source.html">coordonnees.h</a>&gt;</code></p>
+
+<p><a href="structs___coordonnees-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structs___coordonnees.html#a58e4c6bec574940d228bf0a1b8b6b308">x</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structs___coordonnees.html#aaf8eb7cb396be8207c9c3c63a806de51">y</a></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>struct de coordonnées ( x,y ) </p>
+
+<p>Définition à la ligne <a class="el" href="coordonnees_8h_source.html#l00008">8</a> du fichier <a class="el" href="coordonnees_8h_source.html">coordonnees.h</a>.</p>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="a58e4c6bec574940d228bf0a1b8b6b308"></a><!-- doxytag: member="s_Coordonnees::x" ref="a58e4c6bec574940d228bf0a1b8b6b308" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="structs___coordonnees.html#a58e4c6bec574940d228bf0a1b8b6b308">s_Coordonnees::x</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="coordonnees_8h_source.html#l00009">9</a> du fichier <a class="el" href="coordonnees_8h_source.html">coordonnees.h</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">moteur_ncurses::afficherMapEtEvent()</a>, <a class="el" href="map_8cpp_source.html#l00113">map::ajouterInfoJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00230">map::chargerMap()</a>, <a class="el" href="partie_8cpp_source.html#l01590">partie::checkInternalEvent()</a>, <a class="el" href="partie_8cpp_source.html#l01475">partie::checkInternalEventPousseBombe()</a>, <a class="el" href="coordonnees_8h_source.html#l00021">coordonneeConvert()</a>, <a class="el" href="coordonnees_8h_source.html#l00052">coordonneeEgal()</a>, <a class="el" href="bonus_8cpp_source.html#l00243">bonus::decQuantiteUtilisable()</a>, <a class="el" href="perso_8cpp_source.html#l00060">perso::defPos()</a>, <a class="el" href="perso_8cpp_source.html#l00092">perso::defX()</a>, <a class="el" href="partie_8cpp_source.html#l00062">partie::genMap()</a>, <a class="el" href="map_8cpp_source.html#l00388">map::getBlock()</a>, <a class="el" href="bonus_8cpp_source.html#l00540">bonus::kill()</a>, <a class="el" href="map_8cpp_source.html#l00014">map::map()</a>, <a class="el" href="map_8cpp_source.html#l00366">map::mettreJoueurA_sa_PositionInitial()</a>, <a class="el" href="map_8cpp_source.html#l00423">map::nb_InfoJoueur()</a>, <a class="el" href="perso_8cpp_source.html#l00009">perso::perso()</a>, <a class="el" href="partie_8cpp_source.html#l01363">partie::placer_perso_position_initial()</a>, <a class="el" href="map_8cpp_source.html#l00144">map::rmInfoJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00089">map::setBlock()</a>, <a class="el" href="map_8cpp_source.html#l00187">map::setTaille()</a>, <a class="el" href="perso_8cpp_source.html#l00159">perso::X()</a>, <a class="el" href="map_8inl_source.html#l00007">map::X()</a>, et <a class="el" href="map_8cpp_source.html#l00057">map::~map()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaf8eb7cb396be8207c9c3c63a806de51"></a><!-- doxytag: member="s_Coordonnees::y" ref="aaf8eb7cb396be8207c9c3c63a806de51" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="structs___coordonnees.html#aaf8eb7cb396be8207c9c3c63a806de51">s_Coordonnees::y</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="coordonnees_8h_source.html#l00009">9</a> du fichier <a class="el" href="coordonnees_8h_source.html">coordonnees.h</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">moteur_ncurses::afficherMapEtEvent()</a>, <a class="el" href="map_8cpp_source.html#l00113">map::ajouterInfoJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00230">map::chargerMap()</a>, <a class="el" href="partie_8cpp_source.html#l01590">partie::checkInternalEvent()</a>, <a class="el" href="partie_8cpp_source.html#l01475">partie::checkInternalEventPousseBombe()</a>, <a class="el" href="coordonnees_8h_source.html#l00021">coordonneeConvert()</a>, <a class="el" href="coordonnees_8h_source.html#l00052">coordonneeEgal()</a>, <a class="el" href="bonus_8cpp_source.html#l00243">bonus::decQuantiteUtilisable()</a>, <a class="el" href="perso_8cpp_source.html#l00060">perso::defPos()</a>, <a class="el" href="perso_8cpp_source.html#l00082">perso::defY()</a>, <a class="el" href="partie_8cpp_source.html#l00062">partie::genMap()</a>, <a class="el" href="map_8cpp_source.html#l00388">map::getBlock()</a>, <a class="el" href="bonus_8cpp_source.html#l00540">bonus::kill()</a>, <a class="el" href="map_8cpp_source.html#l00014">map::map()</a>, <a class="el" href="map_8cpp_source.html#l00366">map::mettreJoueurA_sa_PositionInitial()</a>, <a class="el" href="map_8cpp_source.html#l00423">map::nb_InfoJoueur()</a>, <a class="el" href="perso_8cpp_source.html#l00009">perso::perso()</a>, <a class="el" href="partie_8cpp_source.html#l01363">partie::placer_perso_position_initial()</a>, <a class="el" href="map_8cpp_source.html#l00144">map::rmInfoJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00089">map::setBlock()</a>, <a class="el" href="map_8cpp_source.html#l00187">map::setTaille()</a>, <a class="el" href="perso_8cpp_source.html#l00169">perso::Y()</a>, <a class="el" href="map_8inl_source.html#l00017">map::Y()</a>, et <a class="el" href="map_8cpp_source.html#l00057">map::~map()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette structure a été générée à partir du fichier suivant :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="coordonnees_8h_source.html">coordonnees.h</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

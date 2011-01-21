@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence du fichier /home/ph3w/Bureau/lif7-bomberman/debug_memory.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle">
+<h1>Référence du fichier /home/ph3w/Bureau/lif7-bomberman/debug_memory.h</h1>  </div>
+</div>
+<div class="contents">
+
+<p><a href="debug__memory_8h_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html">CMemoryManager</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Système de vérification de fuite mémoire.  <a href="class_c_memory_manager.html#_details">Plus de détails...</a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html">CMemoryManager::s_AllocatatedBlock</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Stock les info sur les block mémoires alloués.  <a href="struct_c_memory_manager_1_1s___allocatated_block.html#_details">Plus de détails...</a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="debug__memory_8h.html#a7eef29661fb85236ced6e989f457c1b4">operator new</a> (size_t taille, const char fileName[], unsigned int line)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="debug__memory_8h.html#ab14f58432455bd6705c00748da4575a7">operator new[]</a> (size_t taille, const char fileName[], unsigned int line)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="debug__memory_8h.html#a3d97a7e2a0208075b4b37328c96ed390">operator delete</a> (void *ptr)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="debug__memory_8h.html#a1d8b2d6f17242ae0d182b0f7a98ba54f">operator delete[]</a> (void *ptr)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="debug__memory_8h.html#a41ebeeeb4443ae2efbc12791b6ec80b7">operator delete</a> (void *ptr, const char fileName[], unsigned int line)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="debug__memory_8h.html#afd1ddbb824746bb76da4e10565800a33">operator delete[]</a> (void *ptr, const char fileName[], unsigned int line)</td></tr>
+</table>
+<hr/><h2>Documentation des fonctions</h2>
+<a class="anchor" id="a3d97a7e2a0208075b4b37328c96ed390"></a><!-- doxytag: member="debug_memory.h::operator delete" ref="a3d97a7e2a0208075b4b37328c96ed390" args="(void *ptr)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void operator delete </td>
+          <td>(</td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname"> <em>ptr</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00100">100</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8cpp_source.html#l00113">CMemoryManager::Free()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00174">CMemoryManager::getInstance()</a>.</p>
+
+<p><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="debug__memory_8h_a3d97a7e2a0208075b4b37328c96ed390_cgraph.png" border="0" usemap="#debug__memory_8h_a3d97a7e2a0208075b4b37328c96ed390_cgraph" alt=""/></div>
+<map name="debug__memory_8h_a3d97a7e2a0208075b4b37328c96ed390_cgraph" id="debug__memory_8h_a3d97a7e2a0208075b4b37328c96ed390_cgraph">
+<area shape="rect" id="node3" href="class_c_memory_manager.html#a05f473d76591319066c50dbc071c5be1" title="Récolte les informations sur les désallocations." alt="" coords="201,5,375,35"/><area shape="rect" id="node5" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&#39;intance de la class." alt="" coords="177,59,399,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a41ebeeeb4443ae2efbc12791b6ec80b7"></a><!-- doxytag: member="debug_memory.h::operator delete" ref="a41ebeeeb4443ae2efbc12791b6ec80b7" args="(void *ptr, const char fileName[], unsigned int line)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void operator delete </td>
+          <td>(</td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname"> <em>ptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>fileName</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>line</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00108">108</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8cpp_source.html#l00113">CMemoryManager::Free()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00174">CMemoryManager::getInstance()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00159">CMemoryManager::nextDelete()</a>.</p>
+
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="debug__memory_8h_a41ebeeeb4443ae2efbc12791b6ec80b7_cgraph.png" border="0" usemap="#debug__memory_8h_a41ebeeeb4443ae2efbc12791b6ec80b7_cgraph" alt=""/></div>
+<map name="debug__memory_8h_a41ebeeeb4443ae2efbc12791b6ec80b7_cgraph" id="debug__memory_8h_a41ebeeeb4443ae2efbc12791b6ec80b7_cgraph">
+<area shape="rect" id="node3" href="class_c_memory_manager.html#a05f473d76591319066c50dbc071c5be1" title="Récolte les informations sur les désallocations." alt="" coords="201,5,375,35"/><area shape="rect" id="node5" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&#39;intance de la class." alt="" coords="177,59,399,88"/><area shape="rect" id="node7" href="class_c_memory_manager.html#ab70c6566b859092c13dcdbabafbea33e" title="Sauvegarde les infos sur la désallocation courante." alt="" coords="180,112,396,141"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a1d8b2d6f17242ae0d182b0f7a98ba54f"></a><!-- doxytag: member="debug_memory.h::operator delete[]" ref="a1d8b2d6f17242ae0d182b0f7a98ba54f" args="(void *ptr)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void operator delete[] </td>
+          <td>(</td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname"> <em>ptr</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00104">104</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8cpp_source.html#l00113">CMemoryManager::Free()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00174">CMemoryManager::getInstance()</a>.</p>
+
+<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="debug__memory_8h_a1d8b2d6f17242ae0d182b0f7a98ba54f_cgraph.png" border="0" usemap="#debug__memory_8h_a1d8b2d6f17242ae0d182b0f7a98ba54f_cgraph" alt=""/></div>
+<map name="debug__memory_8h_a1d8b2d6f17242ae0d182b0f7a98ba54f_cgraph" id="debug__memory_8h_a1d8b2d6f17242ae0d182b0f7a98ba54f_cgraph">
+<area shape="rect" id="node3" href="class_c_memory_manager.html#a05f473d76591319066c50dbc071c5be1" title="Récolte les informations sur les désallocations." alt="" coords="209,5,383,35"/><area shape="rect" id="node5" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&#39;intance de la class." alt="" coords="185,59,407,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="afd1ddbb824746bb76da4e10565800a33"></a><!-- doxytag: member="debug_memory.h::operator delete[]" ref="afd1ddbb824746bb76da4e10565800a33" args="(void *ptr, const char fileName[], unsigned int line)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void operator delete[] </td>
+          <td>(</td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname"> <em>ptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>fileName</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>line</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00113">113</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8cpp_source.html#l00113">CMemoryManager::Free()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00174">CMemoryManager::getInstance()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00159">CMemoryManager::nextDelete()</a>.</p>
+
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="debug__memory_8h_afd1ddbb824746bb76da4e10565800a33_cgraph.png" border="0" usemap="#debug__memory_8h_afd1ddbb824746bb76da4e10565800a33_cgraph" alt=""/></div>
+<map name="debug__memory_8h_afd1ddbb824746bb76da4e10565800a33_cgraph" id="debug__memory_8h_afd1ddbb824746bb76da4e10565800a33_cgraph">
+<area shape="rect" id="node3" href="class_c_memory_manager.html#a05f473d76591319066c50dbc071c5be1" title="Récolte les informations sur les désallocations." alt="" coords="209,5,383,35"/><area shape="rect" id="node5" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&#39;intance de la class." alt="" coords="185,59,407,88"/><area shape="rect" id="node7" href="class_c_memory_manager.html#ab70c6566b859092c13dcdbabafbea33e" title="Sauvegarde les infos sur la désallocation courante." alt="" coords="188,112,404,141"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a7eef29661fb85236ced6e989f457c1b4"></a><!-- doxytag: member="debug_memory.h::operator new" ref="a7eef29661fb85236ced6e989f457c1b4" args="(size_t taille, const char fileName[], unsigned int line)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* operator new </td>
+          <td>(</td>
+          <td class="paramtype">size_t&nbsp;</td>
+          <td class="paramname"> <em>taille</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>fileName</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>line</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00092">92</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8cpp_source.html#l00084">CMemoryManager::allocate()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00174">CMemoryManager::getInstance()</a>.</p>
+
+<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="debug__memory_8h_a7eef29661fb85236ced6e989f457c1b4_cgraph.png" border="0" usemap="#debug__memory_8h_a7eef29661fb85236ced6e989f457c1b4_cgraph" alt=""/></div>
+<map name="debug__memory_8h_a7eef29661fb85236ced6e989f457c1b4_cgraph" id="debug__memory_8h_a7eef29661fb85236ced6e989f457c1b4_cgraph">
+<area shape="rect" id="node3" href="class_c_memory_manager.html#a72136456ec234a5abee8537160855a45" title="Récolte les informations sur les allocations." alt="" coords="173,5,371,35"/><area shape="rect" id="node5" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&#39;intance de la class." alt="" coords="161,59,383,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ab14f58432455bd6705c00748da4575a7"></a><!-- doxytag: member="debug_memory.h::operator new[]" ref="ab14f58432455bd6705c00748da4575a7" args="(size_t taille, const char fileName[], unsigned int line)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* operator new[] </td>
+          <td>(</td>
+          <td class="paramtype">size_t&nbsp;</td>
+          <td class="paramname"> <em>taille</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>fileName</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>line</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00096">96</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8cpp_source.html#l00084">CMemoryManager::allocate()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00174">CMemoryManager::getInstance()</a>.</p>
+
+<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="debug__memory_8h_ab14f58432455bd6705c00748da4575a7_cgraph.png" border="0" usemap="#debug__memory_8h_ab14f58432455bd6705c00748da4575a7_cgraph" alt=""/></div>
+<map name="debug__memory_8h_ab14f58432455bd6705c00748da4575a7_cgraph" id="debug__memory_8h_ab14f58432455bd6705c00748da4575a7_cgraph">
+<area shape="rect" id="node3" href="class_c_memory_manager.html#a72136456ec234a5abee8537160855a45" title="Récolte les informations sur les allocations." alt="" coords="184,5,381,35"/><area shape="rect" id="node5" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d" title="Renvoie l&#39;intance de la class." alt="" coords="172,59,393,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

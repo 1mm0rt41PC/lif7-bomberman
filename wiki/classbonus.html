@@ -1,0 +1,1517 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la classe bonus</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Types publics</a> &#124;
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="#pub-static-methods">Fonctions membres publiques statiques</a> &#124;
+<a href="#pri-attribs">Attributs privés</a> &#124;
+<a href="#pri-static-attribs">Attributs privés statiques</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la classe bonus</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="bonus" -->
+<p>Gère les bonus.  
+<a href="#_details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="bonus_8h_source.html">bonus.h</a>&gt;</code></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Graphe de collaboration de bonus:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus__coll__graph.png" border="0" usemap="#bonus_coll__map" alt="Collaboration graph"/></div>
+<map name="bonus_coll__map" id="bonus_coll__map">
+<area shape="rect" id="node2" href="structbonus_1_1s__bonus__proprieter.html" title="Cette structure accueil la propriété des bonus." alt="" coords="5,5,216,125"/><area shape="rect" id="node4" href="structbonus_1_1s__bonus.html" title="Cette sturcture accueil un bonus d&#39;un joueur." alt="" coords="240,14,429,117"/></map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">légende</a>]</span></center></div>
+
+<p><a href="classbonus-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbonus_1_1s__bonus.html">s_bonus</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Cette sturcture accueil un bonus d'un joueur.  <a href="structbonus_1_1s__bonus.html#_details">Plus de détails...</a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbonus_1_1s__bonus__proprieter.html">s_bonus_proprieter</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Cette structure accueil la propriété des bonus.  <a href="structbonus_1_1s__bonus__proprieter.html#_details">Plus de détails...</a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbonus_1_1s___event.html">s_Event</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Cette sturcture accueil les Events posées.  <a href="structbonus_1_1s___event.html#_details">Plus de détails...</a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pub-types"></a>
+Types publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> { <br/>
+&nbsp;&nbsp;<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7efa5377d867e4dcd5d8e6656217d02fdc9f">bombe</a> = 0, 
+<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7efa3758eac4c25825d7f7cb8f5ec4bc610e">puissance_flamme</a>, 
+<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7efaf580f32a0c46beb866416ad197e19757">declancheur</a>, 
+<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7efae2dd393722ba461c826db4bc25f044eb">pousse_bombe</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7efa1246f4ca553bef6a133a81553cbb9b41">vie</a>, 
+<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7efad4da04441bd150d48c295dcde0e6b18e">NB_ELEMENT_t_Bonus</a>, 
+<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7efacf77abc7c3768ee97c83ef9a57f0707b">SIGNAL_kill</a>, 
+<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7efae1ab0b7bbc4bd501f72f12979b6208bd">__RIEN__</a>
+<br/>
+ }</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>Les types de bonus possible dans le jeu. </p>
+ <a href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">Plus de détails...</a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classbonus.html#a110b2b11bc96a93e23306d3b950e26b4a0ffaa2605f0b68f8cb75e956e01fa02e">VITESSE_flammes</a> =  CLOCKS_PER_SEC/10, 
+<a class="el" href="classbonus.html#a110b2b11bc96a93e23306d3b950e26b4aed68e439577aba2b507743b6bfe20f97">VITESSE_pousseBombe</a> =  CLOCKS_PER_SEC/20
+ }</td></tr>
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#ad6dc71f2ecd1ffe871a7aff4b419052b">bonus</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initialise la class bonus ( mais ne créer et ne charge aucun bonus en mémoire ).  <a href="#ad6dc71f2ecd1ffe871a7aff4b419052b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a59529e7a3ded2fb97689e04c21894099">~bonus</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Désinitialise la class bonus et supprime tous les bonus qui ont pu être chargés.  <a href="#a59529e7a3ded2fb97689e04c21894099"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a6d080874a788cfacfb23c9a03733709a">quantiteUtilisable</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b) const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie la quantité utilisatble d'un bonus.  <a href="#a6d080874a788cfacfb23c9a03733709a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a24519446ce39620ac958f7702c9ba868">quantiteMAX</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b) const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie la quantité MAX que le joueur a rammassé d'un bonus.  <a href="#a24519446ce39620ac958f7702c9ba868"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a4c2837caa68bfe4b796c7072c6001ca2">quantiteMAX_Ramassable</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b) const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie la quantité Max que l'on peut ramasser d'un objet.  <a href="#a4c2837caa68bfe4b796c7072c6001ca2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#ad80a500afd491b35c3dfcf3d70e51ac8">probabiliter</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b) const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie la probabilité qu'un bonus pop.  <a href="#ad80a500afd491b35c3dfcf3d70e51ac8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#aa0712503cd0829aba9e9d0edc099b316">incQuantiteUtilisable</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Incrémente quantite_utilisable.  <a href="#aa0712503cd0829aba9e9d0edc099b316"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#aab3137a4c074a64f24c1c725fac1fe76">incQuantiteMAX_en_stock</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Incrémente quantite_MAX_en_stock et quantite_utilisable.  <a href="#aab3137a4c074a64f24c1c725fac1fe76"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a09ddd6bcfc30cc20ee55f41ee1885136">decQuantiteUtilisable</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Décrémente quantite_utilisable.  <a href="#a09ddd6bcfc30cc20ee55f41ee1885136"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#ab336920aef77998b90645bc0e816b102">decQuantiteUtilisable</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b, unsigned int x, unsigned int y)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Décrémente quantite_utilisable.  <a href="#ab336920aef77998b90645bc0e816b102"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#ace8557770659dcdcb6cb4015aceb332c">decQuantiteUtilisable</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b, <a class="el" href="structs___coordonnees.html">s_Coordonnees</a> pos)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Décrémente quantite_utilisable.  <a href="#ace8557770659dcdcb6cb4015aceb332c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#aab77df64a0e6931d90af3f500721e5cd">decQuantiteMAX_en_stock</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Décrémente quantite_MAX_en_stock.  <a href="#aab77df64a0e6931d90af3f500721e5cd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#af91e74965a273a977bf3eea41dc19c13">param_Par_Defaut</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Charge en mémoire les paramètres par defaut pour une partie F4A.  <a href="#af91e74965a273a977bf3eea41dc19c13"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#af7954b0264f5afd63d9c708009f2c1e4">defQuantiteUtilisable</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b, unsigned char quantite_utilisable)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifie la quantité utilisable. (quantite_utilisable).  <a href="#af7954b0264f5afd63d9c708009f2c1e4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a4d41164c735c2d89f03dc4bd8b1abc1f">defQuantiteMAX</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b, unsigned char quantite_MAX_en_stock)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifie la quantité MAX en stock. (quantite_MAX_en_stock).  <a href="#a4d41164c735c2d89f03dc4bd8b1abc1f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a8337e02b55592ebd4c41f79e563e39a5">defBonus</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifie un bonus.  <a href="#a8337e02b55592ebd4c41f79e563e39a5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#afac6a3a9fbe5dc1aa01665dad5716b13">defBonus</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock, unsigned char quantite_MAX_Ramassable, unsigned char probabiliter_pop)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifie (ou créer un bonus si celui-ci n'est pas encore en mémoire).  <a href="#afac6a3a9fbe5dc1aa01665dad5716b13"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structbonus_1_1s___event.html">s_Event</a> &gt; *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a4a1eb4f717e5b65a8a87599b2dbbf262">modEvent</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">La liste des events non terminé.  <a href="#a4a1eb4f717e5b65a8a87599b2dbbf262"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structbonus_1_1s___event.html">s_Event</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#ae6328103dfcaf03ee9cd2656ca5fa6e6">getEvent</a> (unsigned int x, unsigned int y)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie l'envent qui se trouve a la position X, Y.  <a href="#ae6328103dfcaf03ee9cd2656ca5fa6e6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#ac503bb19af6f4486c412d011e20bd97e">forceTimeOut</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Met fin au temps d'attente de tout les event.  <a href="#ac503bb19af6f4486c412d011e20bd97e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#ac69bfb6a2226da26b1b793d1a2207263">forceTimeOut</a> (unsigned int x, unsigned int y)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Met fin au temps d'attente de tout les event qui sont en X,Y.  <a href="#ac69bfb6a2226da26b1b793d1a2207263"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#ad6c7196687883d064c8937d8b0b742b3">kill</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Met fin au temps d'attente de tous les event et ajoute le signal kill, qui signifit, qu'il faut supprimer l'armement.  <a href="#ad6c7196687883d064c8937d8b0b742b3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a8599049c6a2e5870cfa6b0ded416595e">isEvent</a> (<a class="el" href="structbonus_1_1s___event.html">s_Event</a> *pos)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Vérifit que le si le temps est écoulé pour une bombe posé.  <a href="#a8599049c6a2e5870cfa6b0ded416595e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a19dd37a96e64632f94fe266b58e0611a">nbEvent</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie le nombre d'event Traité on non.  <a href="#a19dd37a96e64632f94fe266b58e0611a"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-methods"></a>
+Fonctions membres publiques statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structbonus_1_1s__bonus__proprieter.html">s_bonus_proprieter</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a520116b2a2842563acb732ba56199595">bonusProp</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie le pointeur des bonus généraux.  <a href="#a520116b2a2842563acb732ba56199595"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a7b243eb4b56dce02b2008fb78d868684">unInitBonusProp</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Détruit les bonus qui étaient utilisables durant la partie.  <a href="#a7b243eb4b56dce02b2008fb78d868684"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#aa9f84e2d744bdf1542e4be434df85981">defQuantiteMAX_Ramassable</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b, unsigned char quantite_MAX_Ramassable)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifie la quantité MAX ramassable. (quantite_MAX_en_stock).  <a href="#aa9f84e2d744bdf1542e4be434df85981"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a0a454a5b2b187ef3973b59655f18f029">defProbabiliter</a> (<a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> b, unsigned char probabiliter_pop)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifie la probabilité d'un bonus de pop.  <a href="#a0a454a5b2b187ef3973b59655f18f029"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a4b5bd7441505cebab7959b7b7b49ec70">getBonusAleatoire</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie un bonus aléatoire.  <a href="#a4b5bd7441505cebab7959b7b7b49ec70"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-attribs"></a>
+Attributs privés</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structbonus_1_1s___event.html">s_Event</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a70c1099c7baf61ef267b197c6e2df96a">c_listEvent</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Tableau contenant les bombes posées (12o).  <a href="#a70c1099c7baf61ef267b197c6e2df96a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structbonus_1_1s__bonus.html">s_bonus</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a3aca43de4526d4852c48c93e7a0e8c4d">c_liste</a> [NB_ELEMENT_t_Bonus]</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Liste des bonus attrapé par un player. ( bonus utilisable ).  <a href="#a3aca43de4526d4852c48c93e7a0e8c4d"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-static-attribs"></a>
+Attributs privés statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structbonus_1_1s__bonus__proprieter.html">s_bonus_proprieter</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbonus.html#a42db51371ce1c54883f006f043b190a7">C_bonusProp</a> = NULL</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Liste des bonus chargé et utilisables sur la map ( cette var n'est remplis q'une fois ! (static) ).  <a href="#a42db51371ce1c54883f006f043b190a7"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Gère les bonus. </p>
+<p>Cette classe possède 2 couches de fonctionnement:</p>
+<ol type="1">
+<li>La couche général, qui regroupe les bonus disponibles pour la partie.<br/>
+ (En commum avec toutes les instances de cette class)<br/>
+ <b>A initialiser en 1er !via <a class="el" href="classbonus.html#a520116b2a2842563acb732ba56199595" title="Renvoie le pointeur des bonus généraux.">bonus::bonusProp()</a></b><br/>
+ &gt; Cette couche contient les probabilités de chaque objets et la quantité Maximum ramassables par joueur.</li>
+<li>La couche instanciable, unique a chaque instance.<br/>
+ &gt; Cette couche contient la quatité max en stock et la quantité utilisable.</li>
+</ol>
+<h2><a class="anchor" id="aide"></a>
+Aide sur les variables</h2>
+<p>Mais c'est quoi la différence entre: quantite_utilisable, quantite_MAX_en_stock, quantite_MAX_Ramassable, probabiliter_pop ?<br/>
+</p>
+<p>Prenons un exemple:<br/>
+</p>
+<ul>
+<li>Soit un perso bomberman.</li>
+<li>Le perso est capable de porter 10 bombes s'il y a le sac adéquate. ( quantite_MAX_Ramassable = 10 )</li>
+<li>Notre perso a un sac pouvant contenir 5 bombes maximum. ( quantite_MAX_en_stock = 5 )</li>
+<li>Le sac contient actuellement 3 bombes.( quantite_utilisable = 3)</li>
+<li>J'ai donc 2 bombes posées. Ces 2 bombes sont dans la variable <a class="el" href="classbonus.html#a70c1099c7baf61ef267b197c6e2df96a">c_listEvent</a> en attandant qu'elles explosent ^^ </li>
+</ul>
+
+<p>Définition à la ligne <a class="el" href="bonus_8h_source.html#l00031">31</a> du fichier <a class="el" href="bonus_8h_source.html">bonus.h</a>.</p>
+<hr/><h2>Documentation des énumérations membres</h2>
+<a class="anchor" id="a110b2b11bc96a93e23306d3b950e26b4"></a><!-- doxytag: member="bonus::@0" ref="a110b2b11bc96a93e23306d3b950e26b4" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl><dt><b>Valeurs énumérées: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="a110b2b11bc96a93e23306d3b950e26b4a0ffaa2605f0b68f8cb75e956e01fa02e"></a><!-- doxytag: member="VITESSE_flammes" ref="a110b2b11bc96a93e23306d3b950e26b4a0ffaa2605f0b68f8cb75e956e01fa02e" args="" -->VITESSE_flammes</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a110b2b11bc96a93e23306d3b950e26b4aed68e439577aba2b507743b6bfe20f97"></a><!-- doxytag: member="VITESSE_pousseBombe" ref="a110b2b11bc96a93e23306d3b950e26b4aed68e439577aba2b507743b6bfe20f97" args="" -->VITESSE_pousseBombe</em>&nbsp;</td><td>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8h_source.html#l00055">55</a> du fichier <a class="el" href="bonus_8h_source.html">bonus.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0d304c6fa948d0cbc4e787d775bcb7ef"></a><!-- doxytag: member="bonus::t_Bonus" ref="a0d304c6fa948d0cbc4e787d775bcb7ef" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">bonus::t_Bonus</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Les types de bonus possible dans le jeu. </p>
+<dl class="attention"><dt><b>Attention:</b></dt><dd>En cas de modification du nombre d'element, modifier aussi le define NB_ELEMENT_t_Bonus </dd></dl>
+<dl><dt><b>Valeurs énumérées: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="a0d304c6fa948d0cbc4e787d775bcb7efa5377d867e4dcd5d8e6656217d02fdc9f"></a><!-- doxytag: member="bombe" ref="a0d304c6fa948d0cbc4e787d775bcb7efa5377d867e4dcd5d8e6656217d02fdc9f" args="" -->bombe</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a0d304c6fa948d0cbc4e787d775bcb7efa3758eac4c25825d7f7cb8f5ec4bc610e"></a><!-- doxytag: member="puissance_flamme" ref="a0d304c6fa948d0cbc4e787d775bcb7efa3758eac4c25825d7f7cb8f5ec4bc610e" args="" -->puissance_flamme</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a0d304c6fa948d0cbc4e787d775bcb7efaf580f32a0c46beb866416ad197e19757"></a><!-- doxytag: member="declancheur" ref="a0d304c6fa948d0cbc4e787d775bcb7efaf580f32a0c46beb866416ad197e19757" args="" -->declancheur</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a0d304c6fa948d0cbc4e787d775bcb7efae2dd393722ba461c826db4bc25f044eb"></a><!-- doxytag: member="pousse_bombe" ref="a0d304c6fa948d0cbc4e787d775bcb7efae2dd393722ba461c826db4bc25f044eb" args="" -->pousse_bombe</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a0d304c6fa948d0cbc4e787d775bcb7efa1246f4ca553bef6a133a81553cbb9b41"></a><!-- doxytag: member="vie" ref="a0d304c6fa948d0cbc4e787d775bcb7efa1246f4ca553bef6a133a81553cbb9b41" args="" -->vie</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a0d304c6fa948d0cbc4e787d775bcb7efad4da04441bd150d48c295dcde0e6b18e"></a><!-- doxytag: member="NB_ELEMENT_t_Bonus" ref="a0d304c6fa948d0cbc4e787d775bcb7efad4da04441bd150d48c295dcde0e6b18e" args="" -->NB_ELEMENT_t_Bonus</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a0d304c6fa948d0cbc4e787d775bcb7efacf77abc7c3768ee97c83ef9a57f0707b"></a><!-- doxytag: member="SIGNAL_kill" ref="a0d304c6fa948d0cbc4e787d775bcb7efacf77abc7c3768ee97c83ef9a57f0707b" args="" -->SIGNAL_kill</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a0d304c6fa948d0cbc4e787d775bcb7efae1ab0b7bbc4bd501f72f12979b6208bd"></a><!-- doxytag: member="__RIEN__" ref="a0d304c6fa948d0cbc4e787d775bcb7efae1ab0b7bbc4bd501f72f12979b6208bd" args="" -->__RIEN__</em>&nbsp;</td><td>
+<p>Sert pour <a class="el" href="classbonus.html#a4b5bd7441505cebab7959b7b7b49ec70" title="Renvoie un bonus aléatoire.">bonus::getBonusAleatoire()</a>;. </p>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8h_source.html#l00041">41</a> du fichier <a class="el" href="bonus_8h_source.html">bonus.h</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="ad6dc71f2ecd1ffe871a7aff4b419052b"></a><!-- doxytag: member="bonus::bonus" ref="ad6dc71f2ecd1ffe871a7aff4b419052b" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bonus::bonus </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Initialise la class bonus ( mais ne créer et ne charge aucun bonus en mémoire ). </p>
+<p>Si C_bonusProp non initialiser auparavant, alors C_bonusProp sera initialiser </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00013">13</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, et <a class="el" href="bonus_8h_source.html#l00109">c_listEvent</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a59529e7a3ded2fb97689e04c21894099"></a><!-- doxytag: member="bonus::~bonus" ref="a59529e7a3ded2fb97689e04c21894099" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bonus::~bonus </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Désinitialise la class bonus et supprime tous les bonus qui ont pu être chargés. </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00026">26</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00109">c_listEvent</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="a520116b2a2842563acb732ba56199595"></a><!-- doxytag: member="bonus::bonusProp" ref="a520116b2a2842563acb732ba56199595" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structbonus_1_1s__bonus__proprieter.html">bonus::s_bonus_proprieter</a> * bonus::bonusProp </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie le pointeur des bonus généraux. </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>un pointeur vers les bonus généraux</dd></dl>
+<p>Si non initialisé alors on initalise les bonus utilisables pour la partie en cours<br/>
+ Les valeurs probabiliter_pop et quantite_MAX_Ramassable peuvent être modifiées<br/>
+ Via les fonction <a class="el" href="classbonus.html#aa9f84e2d744bdf1542e4be434df85981" title="Modifie la quantité MAX ramassable. (quantite_MAX_en_stock).">defQuantiteMAX_Ramassable()</a> et <a class="el" href="classbonus.html#a0a454a5b2b187ef3973b59655f18f029" title="Modifie la probabilité d&#39;un bonus de pop.">defProbabiliter()</a><br/>
+ <br/>
+ A utiliser au minimum debut de chaque partie !<br/>
+ </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00043">43</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, <a class="el" href="bonus_8h_source.html#l00072">bonus::s_bonus_proprieter::duree</a>, <a class="el" href="bonus_8h_source.html#l00074">bonus::s_bonus_proprieter::probabiliter_pop</a>, et <a class="el" href="bonus_8h_source.html#l00075">bonus::s_bonus_proprieter::quantite_MAX_Ramassable</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_a520116b2a2842563acb732ba56199595_icgraph.png" border="0" usemap="#classbonus_a520116b2a2842563acb732ba56199595_icgraph" alt=""/></div>
+<map name="classbonus_a520116b2a2842563acb732ba56199595_icgraph" id="classbonus_a520116b2a2842563acb732ba56199595_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="192,5,291,35"/><area shape="rect" id="node5" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="340,5,393,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aab77df64a0e6931d90af3f500721e5cd"></a><!-- doxytag: member="bonus::decQuantiteMAX_en_stock" ref="aab77df64a0e6931d90af3f500721e5cd" args="(t_Bonus b)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bonus::decQuantiteMAX_en_stock </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Décrémente quantite_MAX_en_stock. </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie vrais si on a pu décrémenté la valeur </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00270">270</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00042">bombe</a>, <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, <a class="el" href="bonus_8h_source.html#l00113">c_liste</a>, <a class="el" href="bonus_8h_source.html#l00048">NB_ELEMENT_t_Bonus</a>, <a class="el" href="bonus_8h_source.html#l00105">bonus::s_bonus::quantite_MAX_en_stock</a>, et <a class="el" href="bonus_8h_source.html#l00104">bonus::s_bonus::quantite_utilisable</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, et <a class="el" href="partie_8cpp_source.html#l01826">partie::killPlayers()</a>.</p>
+
+<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_aab77df64a0e6931d90af3f500721e5cd_icgraph.png" border="0" usemap="#classbonus_aab77df64a0e6931d90af3f500721e5cd_icgraph" alt=""/></div>
+<map name="classbonus_aab77df64a0e6931d90af3f500721e5cd_icgraph" id="classbonus_aab77df64a0e6931d90af3f500721e5cd_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="479,5,676,35"/><area shape="rect" id="node9" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="295,59,423,88"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="968,33,1067,63"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1116,33,1169,63"/><area shape="rect" id="node11" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="472,59,683,88"/><area shape="rect" id="node13" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="732,59,919,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a09ddd6bcfc30cc20ee55f41ee1885136"></a><!-- doxytag: member="bonus::decQuantiteUtilisable" ref="a09ddd6bcfc30cc20ee55f41ee1885136" args="(t_Bonus b)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bonus::decQuantiteUtilisable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Décrémente quantite_utilisable. </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie vrais si on a pu décrémenté la valeur </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00218">218</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00042">bombe</a>, <a class="el" href="bonus_8h_source.html#l00113">c_liste</a>, <a class="el" href="bonus_8h_source.html#l00048">NB_ELEMENT_t_Bonus</a>, et <a class="el" href="bonus_8h_source.html#l00104">bonus::s_bonus::quantite_utilisable</a>.</p>
+
+<p>Référencé par <a class="el" href="bonus_8cpp_source.html#l00243">decQuantiteUtilisable()</a>, <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, <a class="el" href="partie_8cpp_source.html#l01826">partie::killPlayers()</a>, et <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_a09ddd6bcfc30cc20ee55f41ee1885136_icgraph.png" border="0" usemap="#classbonus_a09ddd6bcfc30cc20ee55f41ee1885136_icgraph" alt=""/></div>
+<map name="classbonus_a09ddd6bcfc30cc20ee55f41ee1885136_icgraph" id="classbonus_a09ddd6bcfc30cc20ee55f41ee1885136_icgraph">
+<area shape="rect" id="node3" href="classbonus.html#ab336920aef77998b90645bc0e816b102" title="Décrémente quantite_utilisable." alt="" coords="259,5,464,35"/><area shape="rect" id="node5" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="519,56,716,85"/><area shape="rect" id="node7" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1008,108,1107,137"/><area shape="rect" id="node11" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="297,160,425,189"/><area shape="rect" id="node9" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1156,108,1209,137"/><area shape="rect" id="node13" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="512,160,723,189"/><area shape="rect" id="node15" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="772,160,959,189"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ab336920aef77998b90645bc0e816b102"></a><!-- doxytag: member="bonus::decQuantiteUtilisable" ref="ab336920aef77998b90645bc0e816b102" args="(t_Bonus b, unsigned int x, unsigned int y)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bonus::decQuantiteUtilisable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>y</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Décrémente quantite_utilisable. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>b</em>&nbsp;</td><td>Le bonus que l'on veut modifier </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>x</em>&nbsp;</td><td>Position X du bonus </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>y</em>&nbsp;</td><td>Position Y du bonus </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie vrais si on a pu décrémenté la valeur</dd></dl>
+<p>Cette fonction permet d'activer le déclancheur d'event du bonus </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00243">243</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, <a class="el" href="bonus_8h_source.html#l00109">c_listEvent</a>, <a class="el" href="bonus_8cpp_source.html#l00218">decQuantiteUtilisable()</a>, <a class="el" href="bonus_8h_source.html#l00072">bonus::s_bonus_proprieter::duree</a>, <a class="el" href="bonus_8h_source.html#l00089">bonus::s_Event::finEvent</a>, <a class="el" href="bonus_8h_source.html#l00088">bonus::s_Event::pos</a>, <a class="el" href="bonus_8h_source.html#l00090">bonus::s_Event::type</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_ab336920aef77998b90645bc0e816b102_cgraph.png" border="0" usemap="#classbonus_ab336920aef77998b90645bc0e816b102_cgraph" alt=""/></div>
+<map name="classbonus_ab336920aef77998b90645bc0e816b102_cgraph" id="classbonus_ab336920aef77998b90645bc0e816b102_cgraph">
+<area shape="rect" id="node3" href="classbonus.html#a09ddd6bcfc30cc20ee55f41ee1885136" title="Décrémente quantite_utilisable." alt="" coords="259,5,464,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ace8557770659dcdcb6cb4015aceb332c"></a><!-- doxytag: member="bonus::decQuantiteUtilisable" ref="ace8557770659dcdcb6cb4015aceb332c" args="(t_Bonus b, s_Coordonnees pos)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bonus::decQuantiteUtilisable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a>&nbsp;</td>
+          <td class="paramname"> <em>pos</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Décrémente quantite_utilisable. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>b</em>&nbsp;</td><td>Le bonus que l'on veut modifier </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>pos</em>&nbsp;</td><td>Position X, Y du bonus </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie vrais si on a pu décrémenté la valeur</dd></dl>
+<p>Cette fonction permet d'activer le déclancheur d'event du bonus </p>
+<dl class="note"><dt><b>Note:</b></dt><dd>Alias de la fonction <a class="el" href="classbonus.html#ab336920aef77998b90645bc0e816b102" title="Décrémente quantite_utilisable.">bonus::decQuantiteUtilisable( t_Bonus b, unsigned int x, unsigned int y )</a> </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8inl_source.html#l00033">33</a> du fichier <a class="el" href="bonus_8inl_source.html">bonus.inl</a>.</p>
+
+<p>Références <a class="el" href="bonus_8cpp_source.html#l00218">decQuantiteUtilisable()</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_ace8557770659dcdcb6cb4015aceb332c_cgraph.png" border="0" usemap="#classbonus_ace8557770659dcdcb6cb4015aceb332c_cgraph" alt=""/></div>
+<map name="classbonus_ace8557770659dcdcb6cb4015aceb332c_cgraph" id="classbonus_ace8557770659dcdcb6cb4015aceb332c_cgraph">
+<area shape="rect" id="node3" href="classbonus.html#a09ddd6bcfc30cc20ee55f41ee1885136" title="Décrémente quantite_utilisable." alt="" coords="259,5,464,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a8337e02b55592ebd4c41f79e563e39a5"></a><!-- doxytag: member="bonus::defBonus" ref="a8337e02b55592ebd4c41f79e563e39a5" args="(t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bonus::defBonus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>quantite_utilisable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>quantite_MAX_en_stock</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifie un bonus. </p>
+<dl class="see"><dt><b>Voir également:</b></dt><dd><a class="el" href="classbonus.html#afac6a3a9fbe5dc1aa01665dad5716b13">bonus::defBonus()</a> </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00366">366</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00042">bombe</a>, <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, <a class="el" href="bonus_8h_source.html#l00113">c_liste</a>, <a class="el" href="bonus_8h_source.html#l00048">NB_ELEMENT_t_Bonus</a>, <a class="el" href="bonus_8h_source.html#l00105">bonus::s_bonus::quantite_MAX_en_stock</a>, et <a class="el" href="bonus_8h_source.html#l00104">bonus::s_bonus::quantite_utilisable</a>.</p>
+
+<p>Référencé par <a class="el" href="bonus_8cpp_source.html#l00400">defBonus()</a>.</p>
+
+<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_a8337e02b55592ebd4c41f79e563e39a5_icgraph.png" border="0" usemap="#classbonus_a8337e02b55592ebd4c41f79e563e39a5_icgraph" alt=""/></div>
+<map name="classbonus_a8337e02b55592ebd4c41f79e563e39a5_icgraph" id="classbonus_a8337e02b55592ebd4c41f79e563e39a5_icgraph">
+<area shape="rect" id="node3" href="classbonus.html#afac6a3a9fbe5dc1aa01665dad5716b13" title="Modifie (ou créer un bonus si celui&#45;ci n&#39;est pas encore en mémoire)." alt="" coords="185,5,313,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="afac6a3a9fbe5dc1aa01665dad5716b13"></a><!-- doxytag: member="bonus::defBonus" ref="afac6a3a9fbe5dc1aa01665dad5716b13" args="(t_Bonus b, unsigned char quantite_utilisable, unsigned char quantite_MAX_en_stock, unsigned char quantite_MAX_Ramassable, unsigned char probabiliter_pop)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bonus::defBonus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>quantite_utilisable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>quantite_MAX_en_stock</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>quantite_MAX_Ramassable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>probabiliter_pop</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifie (ou créer un bonus si celui-ci n'est pas encore en mémoire). </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>b</em>&nbsp;</td><td>Le bonus dont on veut definir la probabilité </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>quantite_utilisable</em>&nbsp;</td><td>La quantité que l'on a actuellement et qui est utilisable. (J'ai 3 bombes au maximum mais 1 est posée donc il m'en reste 2 utilisables (quantite_utilisable)) </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>quantite_MAX_en_stock</em>&nbsp;</td><td>La quantité que le joueur peux utiliser. (J'ai 3 bombes au maximum (quantite_MAX_en_stock) mais 1 est posée donc il m'en reste 2 utilisables) </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>quantite_MAX_Ramassable</em>&nbsp;</td><td>(Général) La quantité que le joueur peux au maximum ramasser. (Je peux mettre 5 bombes dans mon sac à bombes) </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>probabiliter_pop</em>&nbsp;</td><td>(Général) La probabilité de pop après une destruction de case (valeur: entre [0 et 100 au max]) (Général): Propriétés communes à toutes les instances.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Exemple:<br/>
+</p>
+<ul>
+<li>Soit un perso bomberman.</li>
+<li>Le perso est capable de porter 10 bombes s'il y a le sac adéquate. ( quantite_MAX_Ramassable = 10 )</li>
+<li>Notre perso a un sac pouvant contenir 5 bombes maximum. ( quantite_MAX_en_stock = 5 )</li>
+<li>Le sac contient actuellement 3 bombes.( quantite_utilisable = 3)</li>
+<li>J'ai donc 2 bombes posées. </li>
+</ul>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00400">400</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, <a class="el" href="bonus_8cpp_source.html#l00366">defBonus()</a>, <a class="el" href="bonus_8h_source.html#l00074">bonus::s_bonus_proprieter::probabiliter_pop</a>, et <a class="el" href="bonus_8h_source.html#l00075">bonus::s_bonus_proprieter::quantite_MAX_Ramassable</a>.</p>
+
+<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_afac6a3a9fbe5dc1aa01665dad5716b13_cgraph.png" border="0" usemap="#classbonus_afac6a3a9fbe5dc1aa01665dad5716b13_cgraph" alt=""/></div>
+<map name="classbonus_afac6a3a9fbe5dc1aa01665dad5716b13_cgraph" id="classbonus_afac6a3a9fbe5dc1aa01665dad5716b13_cgraph">
+<area shape="rect" id="node3" href="classbonus.html#a8337e02b55592ebd4c41f79e563e39a5" title="Modifie un bonus." alt="" coords="185,5,313,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a0a454a5b2b187ef3973b59655f18f029"></a><!-- doxytag: member="bonus::defProbabiliter" ref="a0a454a5b2b187ef3973b59655f18f029" args="(t_Bonus b, unsigned char probabiliter_pop)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bonus::defProbabiliter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>probabiliter_pop</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifie la probabilité d'un bonus de pop. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>b</em>&nbsp;</td><td>Le bonus dont on veut definir la probabilité </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>probabiliter_pop</em>&nbsp;</td><td>La probabilité de pop après une destruction de case (valeur: entre [0 et 100 au max]) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>Voir également:</b></dt><dd><a class="el" href="classbonus.html#afac6a3a9fbe5dc1aa01665dad5716b13">bonus::defBonus()</a> </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00349">349</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00042">bombe</a>, <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, <a class="el" href="bonus_8h_source.html#l00048">NB_ELEMENT_t_Bonus</a>, et <a class="el" href="bonus_8h_source.html#l00074">bonus::s_bonus_proprieter::probabiliter_pop</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4d41164c735c2d89f03dc4bd8b1abc1f"></a><!-- doxytag: member="bonus::defQuantiteMAX" ref="a4d41164c735c2d89f03dc4bd8b1abc1f" args="(t_Bonus b, unsigned char quantite_MAX_en_stock)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bonus::defQuantiteMAX </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>quantite_MAX_en_stock</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifie la quantité MAX en stock. (quantite_MAX_en_stock). </p>
+<p><b>/!\quantite_MAX_Ramassable &gt;= quantite_MAX_en_stock/!\</b> </p>
+<dl class="see"><dt><b>Voir également:</b></dt><dd><a class="el" href="classbonus.html#aide">Aide sur les variables</a> </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00317">317</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00042">bombe</a>, <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, <a class="el" href="bonus_8h_source.html#l00113">c_liste</a>, <a class="el" href="bonus_8h_source.html#l00048">NB_ELEMENT_t_Bonus</a>, et <a class="el" href="bonus_8h_source.html#l00105">bonus::s_bonus::quantite_MAX_en_stock</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l02198">partie::unPackIt()</a>.</p>
+
+<p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_a4d41164c735c2d89f03dc4bd8b1abc1f_icgraph.png" border="0" usemap="#classbonus_a4d41164c735c2d89f03dc4bd8b1abc1f_icgraph" alt=""/></div>
+<map name="classbonus_a4d41164c735c2d89f03dc4bd8b1abc1f_icgraph" id="classbonus_a4d41164c735c2d89f03dc4bd8b1abc1f_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a1c02eb26617ee76e5bae9f75e27f600c" title="Désempaquette le buffer et met les données dans le joueur correspondant." alt="" coords="227,5,347,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="395,5,493,35"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="543,5,596,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aa9f84e2d744bdf1542e4be434df85981"></a><!-- doxytag: member="bonus::defQuantiteMAX_Ramassable" ref="aa9f84e2d744bdf1542e4be434df85981" args="(t_Bonus b, unsigned char quantite_MAX_Ramassable)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bonus::defQuantiteMAX_Ramassable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>quantite_MAX_Ramassable</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifie la quantité MAX ramassable. (quantite_MAX_en_stock). </p>
+<dl class="see"><dt><b>Voir également:</b></dt><dd><a class="el" href="classbonus.html#afac6a3a9fbe5dc1aa01665dad5716b13">bonus::defBonus()</a> </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00333">333</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00042">bombe</a>, <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, <a class="el" href="bonus_8h_source.html#l00048">NB_ELEMENT_t_Bonus</a>, et <a class="el" href="bonus_8h_source.html#l00075">bonus::s_bonus_proprieter::quantite_MAX_Ramassable</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af7954b0264f5afd63d9c708009f2c1e4"></a><!-- doxytag: member="bonus::defQuantiteUtilisable" ref="af7954b0264f5afd63d9c708009f2c1e4" args="(t_Bonus b, unsigned char quantite_utilisable)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bonus::defQuantiteUtilisable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>quantite_utilisable</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifie la quantité utilisable. (quantite_utilisable). </p>
+<p>Si quantite_utilisable &gt; quantite_MAX_en_stock =&gt; quantite_utilisable = quantite_MAX_en_stock<br/>
+ <b>/!\quantite_MAX_Ramassable &gt;= quantite_utilisable/!\</b> </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00295">295</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00042">bombe</a>, <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, <a class="el" href="bonus_8h_source.html#l00113">c_liste</a>, <a class="el" href="bonus_8h_source.html#l00048">NB_ELEMENT_t_Bonus</a>, <a class="el" href="bonus_8h_source.html#l00105">bonus::s_bonus::quantite_MAX_en_stock</a>, et <a class="el" href="bonus_8h_source.html#l00104">bonus::s_bonus::quantite_utilisable</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac503bb19af6f4486c412d011e20bd97e"></a><!-- doxytag: member="bonus::forceTimeOut" ref="ac503bb19af6f4486c412d011e20bd97e" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bonus::forceTimeOut </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Met fin au temps d'attente de tout les event. </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00512">512</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00109">c_listEvent</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01826">partie::killPlayers()</a>, et <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_ac503bb19af6f4486c412d011e20bd97e_icgraph.png" border="0" usemap="#classbonus_ac503bb19af6f4486c412d011e20bd97e_icgraph" alt=""/></div>
+<map name="classbonus_ac503bb19af6f4486c412d011e20bd97e_icgraph" id="classbonus_ac503bb19af6f4486c412d011e20bd97e_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="209,56,337,85"/><area shape="rect" id="node9" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="883,83,981,112"/><area shape="rect" id="node5" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="387,5,597,35"/><area shape="rect" id="node7" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="647,56,833,85"/><area shape="rect" id="node11" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1031,83,1084,112"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ac69bfb6a2226da26b1b793d1a2207263"></a><!-- doxytag: member="bonus::forceTimeOut" ref="ac69bfb6a2226da26b1b793d1a2207263" args="(unsigned int x, unsigned int y)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bonus::forceTimeOut </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>y</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Met fin au temps d'attente de tout les event qui sont en X,Y. </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00523">523</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00109">c_listEvent</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4b5bd7441505cebab7959b7b7b49ec70"></a><!-- doxytag: member="bonus::getBonusAleatoire" ref="a4b5bd7441505cebab7959b7b7b49ec70" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">bonus::t_Bonus</a> bonus::getBonusAleatoire </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie un bonus aléatoire. </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie un bonus aléatoire </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00477">477</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, <a class="el" href="outils_8cpp_source.html#l00007">myRand()</a>, et <a class="el" href="bonus_8h_source.html#l00048">NB_ELEMENT_t_Bonus</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01590">partie::checkInternalEvent()</a>.</p>
+
+<p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_a4b5bd7441505cebab7959b7b7b49ec70_cgraph.png" border="0" usemap="#classbonus_a4b5bd7441505cebab7959b7b7b49ec70_cgraph" alt=""/></div>
+<map name="classbonus_a4b5bd7441505cebab7959b7b7b49ec70_cgraph" id="classbonus_a4b5bd7441505cebab7959b7b7b49ec70_cgraph">
+<area shape="rect" id="node3" href="outils_8cpp.html#a5ee0533ff07a519f3fce335a2f57f157" title="Créer un nombre aléatoire compris entre a et b." alt="" coords="240,5,315,35"/></map>
+</div>
+</p>
+
+<p><div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_a4b5bd7441505cebab7959b7b7b49ec70_icgraph.png" border="0" usemap="#classbonus_a4b5bd7441505cebab7959b7b7b49ec70_icgraph" alt=""/></div>
+<map name="classbonus_a4b5bd7441505cebab7959b7b7b49ec70_icgraph" id="classbonus_a4b5bd7441505cebab7959b7b7b49ec70_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="241,5,428,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="477,5,576,35"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="625,5,679,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ae6328103dfcaf03ee9cd2656ca5fa6e6"></a><!-- doxytag: member="bonus::getEvent" ref="ae6328103dfcaf03ee9cd2656ca5fa6e6" args="(unsigned int x, unsigned int y)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structbonus_1_1s___event.html">bonus::s_Event</a> * bonus::getEvent </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>y</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie l'envent qui se trouve a la position X, Y. </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00495">495</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00109">c_listEvent</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01475">partie::checkInternalEventPousseBombe()</a>, et <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>.</p>
+
+<p><div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_ae6328103dfcaf03ee9cd2656ca5fa6e6_icgraph.png" border="0" usemap="#classbonus_ae6328103dfcaf03ee9cd2656ca5fa6e6_icgraph" alt=""/></div>
+<map name="classbonus_ae6328103dfcaf03ee9cd2656ca5fa6e6_icgraph" id="classbonus_ae6328103dfcaf03ee9cd2656ca5fa6e6_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#aa5cca051f9f07d1b267f5a4df8dabd24" title="Scan les event du bonus pousse bombe." alt="" coords="181,7,461,36"/><area shape="rect" id="node11" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="511,59,708,88"/><area shape="rect" id="node5" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="516,5,703,35"/><area shape="rect" id="node7" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="757,32,856,61"/><area shape="rect" id="node9" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="905,32,959,61"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aab3137a4c074a64f24c1c725fac1fe76"></a><!-- doxytag: member="bonus::incQuantiteMAX_en_stock" ref="aab3137a4c074a64f24c1c725fac1fe76" args="(t_Bonus b)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bonus::incQuantiteMAX_en_stock </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Incrémente quantite_MAX_en_stock et quantite_utilisable. </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie vrais si on a pu incrémenter la valeur </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00197">197</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00042">bombe</a>, <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, <a class="el" href="bonus_8h_source.html#l00113">c_liste</a>, <a class="el" href="bonus_8h_source.html#l00048">NB_ELEMENT_t_Bonus</a>, <a class="el" href="bonus_8h_source.html#l00105">bonus::s_bonus::quantite_MAX_en_stock</a>, et <a class="el" href="bonus_8h_source.html#l00104">bonus::s_bonus::quantite_utilisable</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, et <a class="el" href="partie_8cpp_source.html#l01363">partie::placer_perso_position_initial()</a>.</p>
+
+<p><div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_aab3137a4c074a64f24c1c725fac1fe76_icgraph.png" border="0" usemap="#classbonus_aab3137a4c074a64f24c1c725fac1fe76_icgraph" alt=""/></div>
+<map name="classbonus_aab3137a4c074a64f24c1c725fac1fe76_icgraph" id="classbonus_aab3137a4c074a64f24c1c725fac1fe76_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="585,5,783,35"/><area shape="rect" id="node9" href="classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="289,57,535,87"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1357,57,1456,87"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1505,57,1559,87"/><area shape="rect" id="node11" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="833,57,1071,87"/><area shape="rect" id="node15" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="620,111,748,140"/><area shape="rect" id="node17" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="847,111,1057,140"/><area shape="rect" id="node19" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="1121,111,1308,140"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aa0712503cd0829aba9e9d0edc099b316"></a><!-- doxytag: member="bonus::incQuantiteUtilisable" ref="aa0712503cd0829aba9e9d0edc099b316" args="(t_Bonus b)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bonus::incQuantiteUtilisable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Incrémente quantite_utilisable. </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie vrais si on a pu incrémenter la valeur </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00177">177</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00042">bombe</a>, <a class="el" href="bonus_8h_source.html#l00113">c_liste</a>, <a class="el" href="bonus_8h_source.html#l00048">NB_ELEMENT_t_Bonus</a>, et <a class="el" href="bonus_8h_source.html#l00104">bonus::s_bonus::quantite_utilisable</a>.</p>
+
+<p>Référencé par <a class="el" href="bonus_8cpp_source.html#l00442">isEvent()</a>.</p>
+
+<p><div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-14-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_aa0712503cd0829aba9e9d0edc099b316_icgraph.png" border="0" usemap="#classbonus_aa0712503cd0829aba9e9d0edc099b316_icgraph" alt=""/></div>
+<map name="classbonus_aa0712503cd0829aba9e9d0edc099b316_icgraph" id="classbonus_aa0712503cd0829aba9e9d0edc099b316_icgraph">
+<area shape="rect" id="node3" href="classbonus.html#a8599049c6a2e5870cfa6b0ded416595e" title="Vérifit que le si le temps est écoulé pour une bombe posé." alt="" coords="253,5,368,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a8599049c6a2e5870cfa6b0ded416595e"></a><!-- doxytag: member="bonus::isEvent" ref="a8599049c6a2e5870cfa6b0ded416595e" args="(s_Event *pos)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bonus::isEvent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structbonus_1_1s___event.html">s_Event</a> *&nbsp;</td>
+          <td class="paramname"> <em>pos</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Vérifit que le si le temps est écoulé pour une bombe posé. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in,out]</tt>&nbsp;</td><td valign="top"><em>pos</em>&nbsp;</td><td>Cette variables contiendra la position X,Y de la bombe qui a explosé. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie le pointeur pos si une bombe a explosé, NULL sinon.</dd></dl>
+<p>Si le temps est écoulé, alors on renvoie sa position et on dit la vire de la<br/>
+ file d'attente. De plus on rajoute cette bombe au nombre de bombe quantite_utilisable<br/>
+</p>
+<dl class="warning"><dt><b>Avertissement:</b></dt><dd>Cette fonction doit être utilisé en boucle !<br/>
+ Elle renvoie les bombes qui ont explosées une à une.<br/>
+ Cette fonction <b>doit être à couplée avec un tanque</b> jusqu'a NULL</dd></dl>
+<p>Utilisation: </p>
+<div class="fragment"><pre class="fragment"> <span class="comment">// Plus haut on a bonus* joueur; qui a été instancié et correctement defini</span>
+ <a class="code" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a> pos = {0};
+ <span class="comment">// La on check toutes les bombes</span>
+ <span class="keywordflow">while</span>( joueur-&gt;isEvent(&amp;pos) == true )
+ {
+    <span class="comment">// Cette boucle est exécutée autant de fois qu&#39;il y a de bombes qui ont explosées.</span>
+    <span class="comment">// Exemple, en cas d&#39;utilisation d&#39;un déclancheur =&gt; toutes les bombes posées par le joueur vont exploser</span>
+    <span class="comment">// Traitement pour la bombe</span>
+    printf(<span class="stringliteral">&quot;La bombe a la position X=%u, Y=%u à explosé !\n&quot;</span>, pos.<a class="code" href="structs___coordonnees.html#a58e4c6bec574940d228bf0a1b8b6b308">x</a>, pos.<a class="code" href="structs___coordonnees.html#aaf8eb7cb396be8207c9c3c63a806de51">y</a>);
+    printf(<span class="stringliteral">&quot;De plus elle est de nouveau disponnible dans les bombes pouvant être lancées ! (quantite_utilisable)&quot;</span>)
+ }
+</pre></div> 
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00442">442</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00042">bombe</a>, <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, <a class="el" href="bonus_8h_source.html#l00109">c_listEvent</a>, <a class="el" href="bonus_8h_source.html#l00044">declancheur</a>, <a class="el" href="bonus_8cpp_source.html#l00177">incQuantiteUtilisable()</a>, et <a class="el" href="bonus_8cpp_source.html#l00119">quantiteUtilisable()</a>.</p>
+
+<p><div id="dynsection-15" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-15-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-15-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_a8599049c6a2e5870cfa6b0ded416595e_cgraph.png" border="0" usemap="#classbonus_a8599049c6a2e5870cfa6b0ded416595e_cgraph" alt=""/></div>
+<map name="classbonus_a8599049c6a2e5870cfa6b0ded416595e_cgraph" id="classbonus_a8599049c6a2e5870cfa6b0ded416595e_cgraph">
+<area shape="rect" id="node3" href="classbonus.html#aa0712503cd0829aba9e9d0edc099b316" title="Incrémente quantite_utilisable." alt="" coords="168,5,368,35"/><area shape="rect" id="node5" href="classbonus.html#a6d080874a788cfacfb23c9a03733709a" title="Renvoie la quantité utilisatble d&#39;un bonus." alt="" coords="179,59,357,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ad6c7196687883d064c8937d8b0b742b3"></a><!-- doxytag: member="bonus::kill" ref="ad6c7196687883d064c8937d8b0b742b3" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bonus::kill </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Met fin au temps d'attente de tous les event et ajoute le signal kill, qui signifit, qu'il faut supprimer l'armement. </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00540">540</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00109">c_listEvent</a>, <a class="el" href="bonus_8h_source.html#l00089">bonus::s_Event::finEvent</a>, <a class="el" href="bonus_8h_source.html#l00088">bonus::s_Event::pos</a>, <a class="el" href="bonus_8h_source.html#l00090">bonus::s_Event::type</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, et <a class="el" href="partie_8cpp_source.html#l01826">partie::killPlayers()</a>.</p>
+
+<p><div id="dynsection-16" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-16-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-16-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_ad6c7196687883d064c8937d8b0b742b3_icgraph.png" border="0" usemap="#classbonus_ad6c7196687883d064c8937d8b0b742b3_icgraph" alt=""/></div>
+<map name="classbonus_ad6c7196687883d064c8937d8b0b742b3_icgraph" id="classbonus_ad6c7196687883d064c8937d8b0b742b3_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="324,5,521,35"/><area shape="rect" id="node9" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="140,59,268,88"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="813,33,912,63"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="961,33,1015,63"/><area shape="rect" id="node11" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="317,59,528,88"/><area shape="rect" id="node13" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="577,59,764,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a4a1eb4f717e5b65a8a87599b2dbbf262"></a><!-- doxytag: member="bonus::modEvent" ref="a4a1eb4f717e5b65a8a87599b2dbbf262" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="structbonus_1_1s___event.html">bonus::s_Event</a> &gt; * bonus::modEvent </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>La liste des events non terminé. </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie La liste des events non terminé </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8inl_source.html#l00006">6</a> du fichier <a class="el" href="bonus_8inl_source.html">bonus.inl</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00109">c_listEvent</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-17" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-17-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-17-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_a4a1eb4f717e5b65a8a87599b2dbbf262_icgraph.png" border="0" usemap="#classbonus_a4a1eb4f717e5b65a8a87599b2dbbf262_icgraph" alt=""/></div>
+<map name="classbonus_a4a1eb4f717e5b65a8a87599b2dbbf262_icgraph" id="classbonus_a4a1eb4f717e5b65a8a87599b2dbbf262_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="189,5,288,35"/><area shape="rect" id="node5" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="337,5,391,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a19dd37a96e64632f94fe266b58e0611a"></a><!-- doxytag: member="bonus::nbEvent" ref="a19dd37a96e64632f94fe266b58e0611a" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int bonus::nbEvent </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie le nombre d'event Traité on non. </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie un bonus aléatoire </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8inl_source.html#l00017">17</a> du fichier <a class="el" href="bonus_8inl_source.html">bonus.inl</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00109">c_listEvent</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af91e74965a273a977bf3eea41dc19c13"></a><!-- doxytag: member="bonus::param_Par_Defaut" ref="af91e74965a273a977bf3eea41dc19c13" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bonus::param_Par_Defaut </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Charge en mémoire les paramètres par defaut pour une partie F4A. </p>
+<p>Charge les paramètres par defaut pour une partie F4A et supprime les anciens<br/>
+ paramètres si besoin. </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00096">96</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00113">c_liste</a>, <a class="el" href="bonus_8h_source.html#l00105">bonus::s_bonus::quantite_MAX_en_stock</a>, et <a class="el" href="bonus_8h_source.html#l00104">bonus::s_bonus::quantite_utilisable</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l02360">partie::ajouterNouvelleConnection()</a>, <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>, et <a class="el" href="partie_8cpp_source.html#l02198">partie::unPackIt()</a>.</p>
+
+<p><div id="dynsection-18" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-18-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-18-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-18-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_af91e74965a273a977bf3eea41dc19c13_icgraph.png" border="0" usemap="#classbonus_af91e74965a273a977bf3eea41dc19c13_icgraph" alt=""/></div>
+<map name="classbonus_af91e74965a273a977bf3eea41dc19c13_icgraph" id="classbonus_af91e74965a273a977bf3eea41dc19c13_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="244,5,481,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="531,57,629,87"/><area shape="rect" id="node10" href="classpartie.html#a1c02eb26617ee76e5bae9f75e27f600c" title="Désempaquette le buffer et met les données dans le joueur correspondant." alt="" coords="303,109,423,139"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="679,57,732,87"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ad80a500afd491b35c3dfcf3d70e51ac8"></a><!-- doxytag: member="bonus::probabiliter" ref="ad80a500afd491b35c3dfcf3d70e51ac8" args="(t_Bonus b) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char bonus::probabiliter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie la probabilité qu'un bonus pop. </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00163">163</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, et <a class="el" href="bonus_8h_source.html#l00074">bonus::s_bonus_proprieter::probabiliter_pop</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a24519446ce39620ac958f7702c9ba868"></a><!-- doxytag: member="bonus::quantiteMAX" ref="a24519446ce39620ac958f7702c9ba868" args="(t_Bonus b) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char bonus::quantiteMAX </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie la quantité MAX que le joueur a rammassé d'un bonus. </p>
+<p>ie: 5 bombes sur 8 sur 20 -&gt; On a 5 bombes que l'on peut encore posé<br/>
+ et on en a posé 8-5=3, de plus on peut ramasser un maximum de 20-8=12 bombes<br/>
+ suplémentaire. </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00138">138</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00042">bombe</a>, <a class="el" href="bonus_8h_source.html#l00113">c_liste</a>, <a class="el" href="bonus_8h_source.html#l00048">NB_ELEMENT_t_Bonus</a>, et <a class="el" href="bonus_8h_source.html#l00105">bonus::s_bonus::quantite_MAX_en_stock</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>, et <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">moteur_ncurses::afficherMapEtEvent()</a>.</p>
+
+<p><div id="dynsection-19" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-19-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-19-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-19-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_a24519446ce39620ac958f7702c9ba868_icgraph.png" border="0" usemap="#classbonus_a24519446ce39620ac958f7702c9ba868_icgraph" alt=""/></div>
+<map name="classbonus_a24519446ce39620ac958f7702c9ba868_icgraph" id="classbonus_a24519446ce39620ac958f7702c9ba868_icgraph">
+<area shape="rect" id="node3" href="classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="223,5,447,35"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="207,59,463,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a4c2837caa68bfe4b796c7072c6001ca2"></a><!-- doxytag: member="bonus::quantiteMAX_Ramassable" ref="a4c2837caa68bfe4b796c7072c6001ca2" args="(t_Bonus b) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char bonus::quantiteMAX_Ramassable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie la quantité Max que l'on peut ramasser d'un objet. </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00153">153</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>, et <a class="el" href="bonus_8h_source.html#l00075">bonus::s_bonus_proprieter::quantite_MAX_Ramassable</a>.</p>
+
+<p>Référencé par <a class="el" href="perso_8cpp_source.html#l00182">perso::estVivant()</a>.</p>
+
+<p><div id="dynsection-20" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-20-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-20-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-20-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_a4c2837caa68bfe4b796c7072c6001ca2_icgraph.png" border="0" usemap="#classbonus_a4c2837caa68bfe4b796c7072c6001ca2_icgraph" alt=""/></div>
+<map name="classbonus_a4c2837caa68bfe4b796c7072c6001ca2_icgraph" id="classbonus_a4c2837caa68bfe4b796c7072c6001ca2_icgraph">
+<area shape="rect" id="node3" href="classperso.html#a3a8713fdb8d5c58803f29b3b91ae47b6" title="Renvoie si le perso est vivant ou pas." alt="" coords="289,5,415,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a6d080874a788cfacfb23c9a03733709a"></a><!-- doxytag: member="bonus::quantiteUtilisable" ref="a6d080874a788cfacfb23c9a03733709a" args="(t_Bonus b) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char bonus::quantiteUtilisable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie la quantité utilisatble d'un bonus. </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00119">119</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00042">bombe</a>, <a class="el" href="bonus_8h_source.html#l00113">c_liste</a>, <a class="el" href="bonus_8h_source.html#l00048">NB_ELEMENT_t_Bonus</a>, et <a class="el" href="bonus_8h_source.html#l00104">bonus::s_bonus::quantite_utilisable</a>.</p>
+
+<p>Référencé par <a class="el" href="perso_8cpp_source.html#l00182">perso::estVivant()</a>, <a class="el" href="bonus_8cpp_source.html#l00442">isEvent()</a>, et <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-21" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-21-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-21-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-21-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_a6d080874a788cfacfb23c9a03733709a_icgraph.png" border="0" usemap="#classbonus_a6d080874a788cfacfb23c9a03733709a_icgraph" alt=""/></div>
+<map name="classbonus_a6d080874a788cfacfb23c9a03733709a_icgraph" id="classbonus_a6d080874a788cfacfb23c9a03733709a_icgraph">
+<area shape="rect" id="node3" href="classperso.html#a3a8713fdb8d5c58803f29b3b91ae47b6" title="Renvoie si le perso est vivant ou pas." alt="" coords="236,5,361,35"/><area shape="rect" id="node5" href="classbonus.html#a8599049c6a2e5870cfa6b0ded416595e" title="Vérifit que le si le temps est écoulé pour une bombe posé." alt="" coords="241,59,356,88"/><area shape="rect" id="node7" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="249,112,348,141"/><area shape="rect" id="node9" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="412,112,465,141"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a7b243eb4b56dce02b2008fb78d868684"></a><!-- doxytag: member="bonus::unInitBonusProp" ref="a7b243eb4b56dce02b2008fb78d868684" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bonus::unInitBonusProp </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Détruit les bonus qui étaient utilisables durant la partie. </p>
+<p><b>A utiliser à la fin de chaque partie !</b> </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8cpp_source.html#l00079">79</a> du fichier <a class="el" href="bonus_8cpp_source.html">bonus.cpp</a>.</p>
+
+<p>Références <a class="el" href="bonus_8h_source.html#l00111">C_bonusProp</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-22" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-22-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-22-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-22-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classbonus_a7b243eb4b56dce02b2008fb78d868684_icgraph.png" border="0" usemap="#classbonus_a7b243eb4b56dce02b2008fb78d868684_icgraph" alt=""/></div>
+<map name="classbonus_a7b243eb4b56dce02b2008fb78d868684_icgraph" id="classbonus_a7b243eb4b56dce02b2008fb78d868684_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="227,5,325,35"/><area shape="rect" id="node5" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="375,5,428,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="a42db51371ce1c54883f006f043b190a7"></a><!-- doxytag: member="bonus::C_bonusProp" ref="a42db51371ce1c54883f006f043b190a7" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structbonus_1_1s__bonus__proprieter.html">bonus::s_bonus_proprieter</a> * <a class="el" href="classbonus.html#a42db51371ce1c54883f006f043b190a7">bonus::C_bonusProp</a> = NULL<code> [static, private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Liste des bonus chargé et utilisables sur la map ( cette var n'est remplis q'une fois ! (static) ). </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8h_source.html#l00111">111</a> du fichier <a class="el" href="bonus_8h_source.html">bonus.h</a>.</p>
+
+<p>Référencé par <a class="el" href="bonus_8cpp_source.html#l00013">bonus()</a>, <a class="el" href="bonus_8cpp_source.html#l00043">bonusProp()</a>, <a class="el" href="bonus_8cpp_source.html#l00270">decQuantiteMAX_en_stock()</a>, <a class="el" href="bonus_8cpp_source.html#l00243">decQuantiteUtilisable()</a>, <a class="el" href="bonus_8cpp_source.html#l00366">defBonus()</a>, <a class="el" href="bonus_8cpp_source.html#l00349">defProbabiliter()</a>, <a class="el" href="bonus_8cpp_source.html#l00317">defQuantiteMAX()</a>, <a class="el" href="bonus_8cpp_source.html#l00333">defQuantiteMAX_Ramassable()</a>, <a class="el" href="bonus_8cpp_source.html#l00295">defQuantiteUtilisable()</a>, <a class="el" href="bonus_8cpp_source.html#l00477">getBonusAleatoire()</a>, <a class="el" href="bonus_8cpp_source.html#l00197">incQuantiteMAX_en_stock()</a>, <a class="el" href="bonus_8cpp_source.html#l00442">isEvent()</a>, <a class="el" href="bonus_8cpp_source.html#l00163">probabiliter()</a>, <a class="el" href="bonus_8cpp_source.html#l00153">quantiteMAX_Ramassable()</a>, et <a class="el" href="bonus_8cpp_source.html#l00079">unInitBonusProp()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3aca43de4526d4852c48c93e7a0e8c4d"></a><!-- doxytag: member="bonus::c_liste" ref="a3aca43de4526d4852c48c93e7a0e8c4d" args="[NB_ELEMENT_t_Bonus]" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structbonus_1_1s__bonus.html">s_bonus</a> <a class="el" href="classbonus.html#a3aca43de4526d4852c48c93e7a0e8c4d">bonus::c_liste</a>[NB_ELEMENT_t_Bonus]<code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Liste des bonus attrapé par un player. ( bonus utilisable ). </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8h_source.html#l00113">113</a> du fichier <a class="el" href="bonus_8h_source.html">bonus.h</a>.</p>
+
+<p>Référencé par <a class="el" href="bonus_8cpp_source.html#l00270">decQuantiteMAX_en_stock()</a>, <a class="el" href="bonus_8cpp_source.html#l00218">decQuantiteUtilisable()</a>, <a class="el" href="bonus_8cpp_source.html#l00366">defBonus()</a>, <a class="el" href="bonus_8cpp_source.html#l00317">defQuantiteMAX()</a>, <a class="el" href="bonus_8cpp_source.html#l00295">defQuantiteUtilisable()</a>, <a class="el" href="bonus_8cpp_source.html#l00197">incQuantiteMAX_en_stock()</a>, <a class="el" href="bonus_8cpp_source.html#l00177">incQuantiteUtilisable()</a>, <a class="el" href="bonus_8cpp_source.html#l00096">param_Par_Defaut()</a>, <a class="el" href="bonus_8cpp_source.html#l00138">quantiteMAX()</a>, et <a class="el" href="bonus_8cpp_source.html#l00119">quantiteUtilisable()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a70c1099c7baf61ef267b197c6e2df96a"></a><!-- doxytag: member="bonus::c_listEvent" ref="a70c1099c7baf61ef267b197c6e2df96a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structbonus_1_1s___event.html">s_Event</a>&gt; <a class="el" href="classbonus.html#a70c1099c7baf61ef267b197c6e2df96a">bonus::c_listEvent</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Tableau contenant les bombes posées (12o). </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8h_source.html#l00109">109</a> du fichier <a class="el" href="bonus_8h_source.html">bonus.h</a>.</p>
+
+<p>Référencé par <a class="el" href="bonus_8cpp_source.html#l00013">bonus()</a>, <a class="el" href="bonus_8cpp_source.html#l00243">decQuantiteUtilisable()</a>, <a class="el" href="bonus_8cpp_source.html#l00512">forceTimeOut()</a>, <a class="el" href="bonus_8cpp_source.html#l00495">getEvent()</a>, <a class="el" href="bonus_8cpp_source.html#l00442">isEvent()</a>, <a class="el" href="bonus_8cpp_source.html#l00540">kill()</a>, <a class="el" href="bonus_8inl_source.html#l00006">modEvent()</a>, <a class="el" href="bonus_8inl_source.html#l00017">nbEvent()</a>, et <a class="el" href="bonus_8cpp_source.html#l00026">~bonus()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="bonus_8h_source.html">bonus.h</a></li>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="bonus_8cpp_source.html">bonus.cpp</a></li>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="bonus_8inl_source.html">bonus.inl</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

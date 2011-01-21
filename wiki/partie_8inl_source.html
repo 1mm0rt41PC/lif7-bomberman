@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/partie.inl</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/partie.inl</h1>  </div>
+</div>
+<div class="contents">
+<a href="partie_8inl.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*******************************************************************************</span>
+<a name="l00002"></a>00002 <span class="comment">*</span>
+<a name="l00003"></a>00003 <span class="comment">*/</span>
+<a name="l00004"></a><a class="code" href="classpartie.html#a16e34369e5a807a559219bbdf10e78ac">00004</a> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classpartie.html#a16e34369e5a807a559219bbdf10e78ac">partie::def_modeJeu</a>( <a class="code" href="classpartie.html#a814c99350cb9e3ee66e1a92df26b3fe0">partie::t_MODE</a> m )
+<a name="l00005"></a>00005 {
+<a name="l00006"></a>00006     <a class="code" href="classpartie.html#a757d13f0587e2d2ec548c2a6bbeb59b9">c_mode</a> = m;
+<a name="l00007"></a>00007 }
+<a name="l00008"></a>00008 
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00011"></a>00011 <span class="comment">* @fn unsigned char partie::nbJoueurs() const</span>
+<a name="l00012"></a>00012 <span class="comment">* @brief Retourne le nombre de joueur.</span>
+<a name="l00013"></a>00013 <span class="comment">*/</span>
+<a name="l00014"></a><a class="code" href="classpartie.html#ac5fd40da2e74478b0dee7fb7fe505929">00014</a> <span class="keyword">inline</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classpartie.html#ac5fd40da2e74478b0dee7fb7fe505929" title="Retourne le nombre de joueur.">partie::nbJoueurs</a>()<span class="keyword"> const</span>
+<a name="l00015"></a>00015 <span class="keyword"></span>{
+<a name="l00016"></a>00016     <span class="keywordflow">return</span> <a class="code" href="classpartie.html#a70f5ba5f9faea6fcbcb7aa3d2257450b" title="Le nombre de joueur dans la partie.">c_nb_joueurs</a>;
+<a name="l00017"></a>00017 }
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020 <span class="comment">/*******************************************************************************</span>
+<a name="l00021"></a>00021 <span class="comment">*</span>
+<a name="l00022"></a>00022 <span class="comment">*/</span>
+<a name="l00023"></a><a class="code" href="classpartie.html#ab36793a9724c1a056863ffc214a0e0f1">00023</a> <span class="keyword">inline</span> <a class="code" href="classpartie.html#a814c99350cb9e3ee66e1a92df26b3fe0">partie::t_MODE</a> <a class="code" href="classpartie.html#ab36793a9724c1a056863ffc214a0e0f1">partie::modeJeu</a>()<span class="keyword"> const</span>
+<a name="l00024"></a>00024 <span class="keyword"></span>{
+<a name="l00025"></a>00025     <span class="keywordflow">return</span> <a class="code" href="classpartie.html#a757d13f0587e2d2ec548c2a6bbeb59b9">c_mode</a>;
+<a name="l00026"></a>00026 }
+<a name="l00027"></a>00027 
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00030"></a>00030 <span class="comment">* @fn map* partie::getMap() const</span>
+<a name="l00031"></a>00031 <span class="comment">* @brief Renvoie la map actuel</span>
+<a name="l00032"></a>00032 <span class="comment">*/</span>
+<a name="l00033"></a><a class="code" href="classpartie.html#ae1902153955d80b676fe96ef395e58c5">00033</a> <span class="keyword">inline</span> <a class="code" href="classmap.html" title="Gère une map.">map</a>* <a class="code" href="classpartie.html#ae1902153955d80b676fe96ef395e58c5" title="Renvoie la map actuel.">partie::getMap</a>()<span class="keyword"> const</span>
+<a name="l00034"></a>00034 <span class="keyword"></span>{
+<a name="l00035"></a>00035     <span class="keywordflow">return</span> <a class="code" href="classpartie.html#a2e8c085d8c52b47b06d485778b6493e1" title="SIMPLE POINTEUR !">c_map</a>;
+<a name="l00036"></a>00036 }
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00040"></a>00040 <span class="comment">* @fn partie::t_Connection partie::connection() const</span>
+<a name="l00041"></a>00041 <span class="comment">* @brief Renvoie le type de connection: Host, Local, None ( pas de connection )</span>
+<a name="l00042"></a>00042 <span class="comment">*/</span>
+<a name="l00043"></a><a class="code" href="classpartie.html#a54be3942d34eaa369cfe6a8430da639d">00043</a> <span class="keyword">inline</span> <a class="code" href="classpartie.html#ab404c2e853ee2e820a91f97bbb826207">partie::t_Connection</a> <a class="code" href="classpartie.html#a54be3942d34eaa369cfe6a8430da639d" title="Renvoie le type de connection: Host, Local, None ( pas de connection ).">partie::connection</a>()<span class="keyword"> const</span>
+<a name="l00044"></a>00044 <span class="keyword"></span>{
+<a name="l00045"></a>00045     <span class="keywordflow">return</span> <a class="code" href="classpartie.html#ad3ff9229ecd345365b6aaad8f66aae2b" title="Partie en Host, Client.">c_connection</a>;
+<a name="l00046"></a>00046 }
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00050"></a>00050 <span class="comment">* @fn std::string partie::getWinnerName() const</span>
+<a name="l00051"></a>00051 <span class="comment">* @brief Renvoie le nom du gagnant de la partie</span>
+<a name="l00052"></a>00052 <span class="comment">*/</span>
+<a name="l00053"></a><a class="code" href="classpartie.html#adb715dd93594bf27e53b84236a3abd31">00053</a> <span class="keyword">inline</span> <a class="code" href="map_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a> <a class="code" href="classpartie.html#adb715dd93594bf27e53b84236a3abd31" title="Renvoie le nom du gagnant de la partie.">partie::getWinnerName</a>()<span class="keyword"> const</span>
+<a name="l00054"></a>00054 <span class="keyword"></span>{
+<a name="l00055"></a>00055     <span class="keywordflow">return</span> <a class="code" href="classpartie.html#a1e5f41da1f77f4e44cf5735f224e0388">c_winnerName</a>;
+<a name="l00056"></a>00056 }
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00060"></a>00060 <span class="comment">* @fn clock_t partie::timeOut() const</span>
+<a name="l00061"></a>00061 <span class="comment">* @brief Renvoie le temps de fin / mort subite. (Ne change pas en cours de partie)</span>
+<a name="l00062"></a>00062 <span class="comment">*/</span>
+<a name="l00063"></a><a class="code" href="classpartie.html#ab15f2837f87963336ba2f5e8feec1e44">00063</a> <span class="keyword">inline</span> clock_t <a class="code" href="classpartie.html#ab15f2837f87963336ba2f5e8feec1e44" title="Renvoie le temps de fin / mort subite. (Ne change pas en cours de partie).">partie::timeOut</a>()<span class="keyword"> const</span>
+<a name="l00064"></a>00064 <span class="keyword"></span>{
+<a name="l00065"></a>00065     <span class="keywordflow">return</span> <a class="code" href="classpartie.html#aaad2effe7ce5ae06ea184c9499ba4eb6">c_timeOut</a>;
+<a name="l00066"></a>00066 }
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00070"></a>00070 <span class="comment">* @fn unsigned char partie::getUniqueJoueurID() const</span>
+<a name="l00071"></a>00071 <span class="comment">* @brief Renvoie l&#39;id du joueur de ce PC (client)</span>
+<a name="l00072"></a>00072 <span class="comment">*/</span>
+<a name="l00073"></a><a class="code" href="classpartie.html#ae36da47667e320abaa1943000d7c8c04">00073</a> <span class="keyword">inline</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classpartie.html#ae36da47667e320abaa1943000d7c8c04" title="Renvoie l&amp;#39;id du joueur de ce PC (client).">partie::getUniqueJoueurID</a>()<span class="keyword"> const</span>
+<a name="l00074"></a>00074 <span class="keyword"></span>{
+<a name="l00075"></a>00075     <span class="keywordflow">return</span> <a class="code" href="classpartie.html#afb65c2ba5d2855f340b6e6183bcfa525" title="Si connection client -&amp;gt; ID du joueur (correspond au numéro dans le tableau c_joueur).">c_uniqueJoueurID</a>;
+<a name="l00076"></a>00076 }
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classmoteur__sfml.html#a418c3276e0e92dd23ef25da6f9af9b04" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="516,21,801,51"/>
+<area shape="rect" id="node7" href="$classmoteur__sdl.html#a63cd3702f2f2cc52394465752965d4e8" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="189,60,467,89"/>
+<area shape="rect" id="node9" href="$classmoteur__ncurses.html#a5a5da4538be5bc5b7e78cc7f96d2f6a8" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="1224,112,1533,141"/>
+<area shape="rect" id="node11" href="$classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp; clavier )." alt="" coords="239,164,417,193"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1583,164,1636,193"/>
+<area shape="rect" id="node13" href="$classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d" title="Initialise la class options." alt="" coords="852,164,975,193"/>
+<area shape="rect" id="node22" href="$classoptions.html#ade7f5fcd45bd4a6c56c4064ce5c2f915" title="Remet (et enregistre) les paramètres par défaut." alt="" coords="573,215,744,244"/>
+<area shape="rect" id="node15" href="$classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options." alt="" coords="1024,164,1176,193"/>
+<area shape="rect" id="node18" href="$classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1329,216,1428,245"/>
+</map>

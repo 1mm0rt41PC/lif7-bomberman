@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la structure partie::s_EventPousseBombe</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+  <div class="navpath">
+    <ul>
+      <li><a class="el" href="classpartie.html">partie</a>      </li>
+      <li><a class="el" href="structpartie_1_1s___event_pousse_bombe.html">partie::s_EventPousseBombe</a>      </li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Attributs publics</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la structure partie::s_EventPousseBombe</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="partie::s_EventPousseBombe" -->
+<p>Permet de gérer les event des pousses bombes.  
+<a href="#_details">Plus de détails...</a></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Graphe de collaboration de partie::s_EventPousseBombe:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="structpartie_1_1s___event_pousse_bombe__coll__graph.png" border="0" usemap="#partie_1_1s___event_pousse_bombe_coll__map" alt="Collaboration graph"/></div>
+<map name="partie_1_1s___event_pousse_bombe_coll__map" id="partie_1_1s___event_pousse_bombe_coll__map">
+<area shape="rect" id="node2" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )" alt="" coords="49,6,169,109"/></map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">légende</a>]</span></center></div>
+
+<p><a href="structpartie_1_1s___event_pousse_bombe-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classperso.html#af25facef489bc105b9fe42132b80cba5">perso::t_Orientation</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpartie_1_1s___event_pousse_bombe.html#a09dda126b50ee4c1f29ed7b2b206c702">direction</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Direction de la bombe.  <a href="#a09dda126b50ee4c1f29ed7b2b206c702"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpartie_1_1s___event_pousse_bombe.html#ad69694d75ceb3610fff0393c195f8272">pos</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Position de l'event.  <a href="#ad69694d75ceb3610fff0393c195f8272"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">clock_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpartie_1_1s___event_pousse_bombe.html#a7bc9760c6a082bb8a4c6a5479cae8098">repetionSuivante</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Time de la prochaine répétion.  <a href="#a7bc9760c6a082bb8a4c6a5479cae8098"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpartie_1_1s___event_pousse_bombe.html#a7968b0a108aea965ba8a35da7ab159f2">joueur</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Le joueur a qui appartient la bombe [0-...[.  <a href="#a7968b0a108aea965ba8a35da7ab159f2"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Permet de gérer les event des pousses bombes. </p>
+
+<p>Définition à la ligne <a class="el" href="partie_8h_source.html#l00042">42</a> du fichier <a class="el" href="partie_8h_source.html">partie.h</a>.</p>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="a09dda126b50ee4c1f29ed7b2b206c702"></a><!-- doxytag: member="partie::s_EventPousseBombe::direction" ref="a09dda126b50ee4c1f29ed7b2b206c702" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classperso.html#af25facef489bc105b9fe42132b80cba5">perso::t_Orientation</a> <a class="el" href="structpartie_1_1s___event_pousse_bombe.html#a09dda126b50ee4c1f29ed7b2b206c702">partie::s_EventPousseBombe::direction</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Direction de la bombe. </p>
+
+<p>Définition à la ligne <a class="el" href="partie_8h_source.html#l00043">43</a> du fichier <a class="el" href="partie_8h_source.html">partie.h</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01475">partie::checkInternalEventPousseBombe()</a>, et <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7968b0a108aea965ba8a35da7ab159f2"></a><!-- doxytag: member="partie::s_EventPousseBombe::joueur" ref="a7968b0a108aea965ba8a35da7ab159f2" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char <a class="el" href="structpartie_1_1s___event_pousse_bombe.html#a7968b0a108aea965ba8a35da7ab159f2">partie::s_EventPousseBombe::joueur</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Le joueur a qui appartient la bombe [0-...[. </p>
+
+<p>Définition à la ligne <a class="el" href="partie_8h_source.html#l00046">46</a> du fichier <a class="el" href="partie_8h_source.html">partie.h</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01475">partie::checkInternalEventPousseBombe()</a>, et <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad69694d75ceb3610fff0393c195f8272"></a><!-- doxytag: member="partie::s_EventPousseBombe::pos" ref="ad69694d75ceb3610fff0393c195f8272" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a> <a class="el" href="structpartie_1_1s___event_pousse_bombe.html#ad69694d75ceb3610fff0393c195f8272">partie::s_EventPousseBombe::pos</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Position de l'event. </p>
+
+<p>Définition à la ligne <a class="el" href="partie_8h_source.html#l00044">44</a> du fichier <a class="el" href="partie_8h_source.html">partie.h</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01475">partie::checkInternalEventPousseBombe()</a>, et <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7bc9760c6a082bb8a4c6a5479cae8098"></a><!-- doxytag: member="partie::s_EventPousseBombe::repetionSuivante" ref="a7bc9760c6a082bb8a4c6a5479cae8098" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">clock_t <a class="el" href="structpartie_1_1s___event_pousse_bombe.html#a7bc9760c6a082bb8a4c6a5479cae8098">partie::s_EventPousseBombe::repetionSuivante</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Time de la prochaine répétion. </p>
+
+<p>Définition à la ligne <a class="el" href="partie_8h_source.html#l00045">45</a> du fichier <a class="el" href="partie_8h_source.html">partie.h</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01475">partie::checkInternalEventPousseBombe()</a>, et <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette structure a été générée à partir du fichier suivant :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="partie_8h_source.html">partie.h</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

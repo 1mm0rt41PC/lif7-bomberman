@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/ClientServer/Server/class_server.inl</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/ClientServer/Server/class_server.inl</h1>  </div>
+</div>
+<div class="contents">
+<a href="class__server_8inl.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00002"></a>00002 <span class="comment">* @fn void server::setNbClientMax( unsigned int nbClient )</span>
+<a name="l00003"></a>00003 <span class="comment">* @brief Defini le nombre maximum de client simultané</span>
+<a name="l00004"></a>00004 <span class="comment">*/</span>
+<a name="l00005"></a><a class="code" href="classserver.html#a72ed5380818b2a60241cdfe9f7b315a8">00005</a> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classserver.html#a72ed5380818b2a60241cdfe9f7b315a8" title="Defini le nombre maximum de client simultané.">server::setNbClientMax</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nbClient )
+<a name="l00006"></a>00006 {
+<a name="l00007"></a>00007     <a class="code" href="classserver.html#ae5c08d5767b242760df76eac0ea6ba0e" title="Nombre maximum de client. Si = à 0 =&amp;gt; pas de limite.">c_nb_Max_Client</a> = nbClient;
+<a name="l00008"></a>00008 }
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 
+<a name="l00011"></a>00011 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00012"></a>00012 <span class="comment">* @fn void server::rmClient( SOCKET s )</span>
+<a name="l00013"></a>00013 <span class="comment">* @brief Supprime le client qui a le socket s</span>
+<a name="l00014"></a>00014 <span class="comment">* @param[in] s Le socket a supprimer de la liste</span>
+<a name="l00015"></a>00015 <span class="comment">*</span>
+<a name="l00016"></a>00016 <span class="comment">* Alias de server::rmClientID( server::getClientID( s ) );</span>
+<a name="l00017"></a>00017 <span class="comment">*/</span>
+<a name="l00018"></a><a class="code" href="classserver.html#a5763b1fe8cfe5a31e5217e0a7584d839">00018</a> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classserver.html#a5763b1fe8cfe5a31e5217e0a7584d839" title="Supprime le client qui a le socket s.">server::rmClient</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> s )
+<a name="l00019"></a>00019 {
+<a name="l00020"></a>00020     <a class="code" href="classserver.html#ac0cf2372772a90dbe308c784266939e1" title="Déconnecte le client puis le supprime de la liste.">rmClientID</a>( <a class="code" href="classserver.html#af29d65fecf50b8ba68ffee1a21d32f50" title="Retourne l&amp;#39;id du client qui a le socket s.">getClientID</a>( s ) );
+<a name="l00021"></a>00021 }
+<a name="l00022"></a>00022 
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00025"></a>00025 <span class="comment">* @fn unsigned int server::nb_Max_Client() const</span>
+<a name="l00026"></a>00026 <span class="comment">* @brief Retourne le nombre maximum de client simultané</span>
+<a name="l00027"></a>00027 <span class="comment">* @note Si = 0 =&gt; infini</span>
+<a name="l00028"></a>00028 <span class="comment">*/</span>
+<a name="l00029"></a><a class="code" href="classserver.html#a4797f37f86d2e0f0153798d10866de27">00029</a> <span class="keyword">inline</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classserver.html#a4797f37f86d2e0f0153798d10866de27" title="Retourne le nombre maximum de client simultané.">server::nb_Max_Client</a>()<span class="keyword"> const</span>
+<a name="l00030"></a>00030 <span class="keyword"></span>{
+<a name="l00031"></a>00031     <span class="keywordflow">return</span> <a class="code" href="classserver.html#ae5c08d5767b242760df76eac0ea6ba0e" title="Nombre maximum de client. Si = à 0 =&amp;gt; pas de limite.">c_nb_Max_Client</a>;
+<a name="l00032"></a>00032 }
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00036"></a>00036 <span class="comment">* @fn unsigned int server::nb_clientConnecter() const</span>
+<a name="l00037"></a>00037 <span class="comment">* @brief Retourne le nombre de client actuellement connecté</span>
+<a name="l00038"></a>00038 <span class="comment">*/</span>
+<a name="l00039"></a><a class="code" href="classserver.html#ab054937318f26d19ae895e0ece9cbc18">00039</a> <span class="keyword">inline</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classserver.html#ab054937318f26d19ae895e0ece9cbc18" title="Retourne le nombre de client actuellement connecté.">server::nb_clientConnecter</a>()<span class="keyword"> const</span>
+<a name="l00040"></a>00040 <span class="keyword"></span>{
+<a name="l00041"></a>00041     <span class="keywordflow">return</span> <a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f" title="Nombre de client actuellement connecté.">c_nb_clientConnecter</a>;
+<a name="l00042"></a>00042 }
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00046"></a>00046 <span class="comment">* @fn const server::sClient* server::listClient() const</span>
+<a name="l00047"></a>00047 <span class="comment">* @brief Renvoie le tableau des client actuellement connecté</span>
+<a name="l00048"></a>00048 <span class="comment">*/</span>
+<a name="l00049"></a><a class="code" href="classserver.html#a7abaefe5ead76c775f741095a9b988ff">00049</a> <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="structserver_1_1s_client.html" title="Contient les information d&amp;#39;un client.">server::sClient</a>* <a class="code" href="classserver.html#a7abaefe5ead76c775f741095a9b988ff" title="Renvoie le tableau des client actuellement connecté.">server::listClient</a>()<span class="keyword"> const</span>
+<a name="l00050"></a>00050 <span class="keyword"></span>{
+<a name="l00051"></a>00051     <span class="keywordflow">return</span> <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>;
+<a name="l00052"></a>00052 }
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00056"></a>00056 <span class="comment">* @fn bool server::lookupConnectionClient( SOCKET client )</span>
+<a name="l00057"></a>00057 <span class="comment">* @brief Recherche une activité pour le client</span>
+<a name="l00058"></a>00058 <span class="comment">* @param[in] client Le socket du client dont on veut voir l&#39;activité</span>
+<a name="l00059"></a>00059 <span class="comment">* @return True si le client a une une activité, False sinon</span>
+<a name="l00060"></a>00060 <span class="comment">*</span>
+<a name="l00061"></a>00061 <span class="comment">* @warning Veuillez executer server::lookupNewConnection() avant !</span>
+<a name="l00062"></a>00062 <span class="comment">*/</span>
+<a name="l00063"></a><a class="code" href="classserver.html#a3760ed7ce751244c5e14838fa9c0b991">00063</a> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classserver.html#ab25aea3888274547f75fdd6b44e2d0be" title="Recherche une activité pour tout les clients.">server::lookupConnectionClient</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="code" href="classclient.html" title="Cette class permet de gérer facilement un client.">client</a> )
+<a name="l00064"></a>00064 {
+<a name="l00065"></a>00065     <span class="keywordflow">return</span> FD_ISSET(client, &amp;<a class="code" href="classbase_client_server.html#a72e8655cd3ede0bea9cdb934ff40fa42" title="Le fd qui est utiliser pour check les signaux en lecture.">c_rdfs</a>);
+<a name="l00066"></a>00066 }
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

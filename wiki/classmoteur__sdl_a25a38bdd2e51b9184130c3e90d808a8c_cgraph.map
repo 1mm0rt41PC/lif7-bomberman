@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classmoteur__sdl.html#a93f37dba34220d15eb41eae6175c07fe" title="Complete le texte avec le caractère _ jusqu&#39;a avoir un texte de longueur 20." alt="" coords="221,5,411,35"/>
+<area shape="rect" id="node5" href="$classmoteur__sdl.html#ae53d8fca7fc64d23b1c02390bcd3840e" title="Permet d&#39;écrire du texte en NOIR" alt="" coords="235,59,397,88"/>
+<area shape="rect" id="node7" href="$classmoteur__sdl.html#aa5484b45267f4b4cd48e6ad5c120ead5" title="Permet l&#39;utilisation d&#39;un clavier unicode en toute simplicité." alt="" coords="211,112,421,141"/>
+<area shape="rect" id="node9" href="$outils_8cpp.html#a867f58846060922b50a272361337cc96" title="Vire les espaces avant et après une chaine de caractère." alt="" coords="273,165,359,195"/>
+</map>

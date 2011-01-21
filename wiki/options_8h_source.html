@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/options.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/options.h</h1>  </div>
+</div>
+<div class="contents">
+<a href="options_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef OPTIONS_h</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define OPTIONS_h</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;stdio.h&gt;</span><span class="comment">// Pour remove(char *)</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &quot;<a class="code" href="clavier_8h.html">clavier.h</a>&quot;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &quot;<a class="code" href="config_8h.html">config.h</a>&quot;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#ifdef __LIB_ncurses__</span>
+<a name="l00009"></a>00009 <span class="preprocessor"></span><span class="preprocessor">    #define CONFIG_FILE &quot;config_ncurses.conf&quot;</span>
+<a name="l00010"></a>00010 <span class="preprocessor"></span><span class="preprocessor">#elif __LIB_SDL__</span>
+<a name="l00011"></a>00011 <span class="preprocessor"></span><span class="preprocessor">    #define CONFIG_FILE &quot;config_sdl.conf&quot;</span>
+<a name="l00012"></a>00012 <span class="preprocessor"></span><span class="preprocessor">#elif __LIB_SFML__</span>
+<a name="l00013"></a>00013 <span class="preprocessor"></span><span class="preprocessor">    #define CONFIG_FILE &quot;config_sfml.conf&quot;</span>
+<a name="l00014"></a>00014 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00015"></a>00015 <span class="preprocessor"></span>
+<a name="l00016"></a>00016 <span class="comment"></span>
+<a name="l00017"></a>00017 <span class="comment">/*!</span>
+<a name="l00018"></a>00018 <span class="comment">* @class options</span>
+<a name="l00019"></a>00019 <span class="comment">* @brief Gère les options.</span>
+<a name="l00020"></a>00020 <span class="comment">*</span>
+<a name="l00021"></a>00021 <span class="comment">* La class manipule le port de jeu et les claviers ( 4 min et 4 max =&gt; 4 claviers tout le temps ^^ )</span>
+<a name="l00022"></a>00022 <span class="comment">* &lt;b&gt;Il ne peut y avoir qu&#39;une seule et unique instance de cette class !&lt;/b&gt;&lt;br /&gt;</span>
+<a name="l00023"></a>00023 <span class="comment">* &lt;span style=&quot;text-decoration:underline;&quot;&gt;Utilisation:&lt;/span&gt;&lt;br /&gt;</span>
+<a name="l00024"></a>00024 <span class="comment">*   - Pour créer l&#39;instance: option* optGeneral = options::getInstance();</span>
+<a name="l00025"></a>00025 <span class="comment">*   - Pour récup l&#39;instance: option* optGeneral = options::getInstance();</span>
+<a name="l00026"></a>00026 <span class="comment">*</span>
+<a name="l00027"></a>00027 <span class="comment">* Exemple:</span>
+<a name="l00028"></a>00028 <span class="comment">* @code</span>
+<a name="l00029"></a>00029 <span class="comment">* // Va créer l&#39;instance si elle n&#39;existe pas</span>
+<a name="l00030"></a>00030 <span class="comment">* // puis va charger la config</span>
+<a name="l00031"></a>00031 <span class="comment">* // puis attribut 5 comme port</span>
+<a name="l00032"></a>00032 <span class="comment">* options::getInstance()-&gt;defPort( 5 );</span>
+<a name="l00033"></a>00033 <span class="comment">*</span>
+<a name="l00034"></a>00034 <span class="comment">* clavier* j1 = options::getInstance()-&gt;clavierJoueur( 1 );// &lt;- Retourne le clavier du joueur 2 ( nombre de [0 à 3] )</span>
+<a name="l00035"></a>00035 <span class="comment">* // NOTE: Dans la ligne juste audessus, le port est bien 5</span>
+<a name="l00036"></a>00036 <span class="comment">* @endcode</span>
+<a name="l00037"></a>00037 <span class="comment">*</span>
+<a name="l00038"></a>00038 <span class="comment">* @warning Utiliser options::getInstance() pour récupérer l&#39;instance général ( ou la créer si elle n&#39;existe pas )</span>
+<a name="l00039"></a>00039 <span class="comment">* @todo Prendre en compte le clavier pour SDL, SFML</span>
+<a name="l00040"></a>00040 <span class="comment">*/</span>
+<a name="l00041"></a><a class="code" href="classoptions.html">00041</a> <span class="keyword">class </span><a class="code" href="classoptions.html" title="Gère les options.">options</a>
+<a name="l00042"></a>00042 {
+<a name="l00043"></a>00043     <span class="keyword">private</span>:
+<a name="l00044"></a>00044         <span class="comment">// struct {</span>
+<a name="l00045"></a><a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c">00045</a>             <a class="code" href="classclavier.html" title="Gère les claviers.">clavier</a> <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[4];<span class="comment">//!&lt; Les claviers dispo en mémoire ( 4 dans tous les cas ! )</span>
+<a name="l00046"></a><a class="code" href="classoptions.html#aaf14aa3eb46d54063ac815438d48ca34">00046</a> <span class="comment"></span>            <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classoptions.html#aaf14aa3eb46d54063ac815438d48ca34" title="Le port utilisé ( par défaut 947 ).">c_port</a>;<span class="comment">//!&lt; Le port utilisé ( par défaut 947 )</span>
+<a name="l00047"></a><a class="code" href="classoptions.html#aa731f5b457d9cdcd45dbaa21b3aa4e5e">00047</a> <span class="comment"></span>            <span class="keyword">static</span> <a class="code" href="classoptions.html" title="Gère les options.">options</a>* <a class="code" href="classoptions.html#aa731f5b457d9cdcd45dbaa21b3aa4e5e" title="L&amp;#39;instance de notre class.">c_Instance</a>;<span class="comment">//!&lt; L&#39;instance de notre class</span>
+<a name="l00048"></a>00048 <span class="comment"></span>        <span class="comment">// }</span>
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050         <span class="keywordtype">void</span> <a class="code" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration.">supprimerFichierConfiguation</a>() <span class="keyword">const</span>;
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052         <span class="comment">// ON NE TOUCHE PAS AU CONSTRUCTEUR / DESTRUCTEUR</span>
+<a name="l00053"></a>00053         <a class="code" href="classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d" title="Initialise la class options.">options</a>();
+<a name="l00054"></a><a class="code" href="classoptions.html#aeb360f60766b8cff26c8ec46c1bc78ca">00054</a>         <a class="code" href="classoptions.html#aeb360f60766b8cff26c8ec46c1bc78ca">~options</a>(){}
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056     <span class="keyword">public</span>:
+<a name="l00057"></a>00057         <span class="comment">// Constructeur</span>
+<a name="l00058"></a>00058         <span class="keyword">static</span> <a class="code" href="classoptions.html" title="Gère les options.">options</a>* <a class="code" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options.">getInstance</a>();
+<a name="l00059"></a>00059         <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classoptions.html#a5be99ac3b975b5dd294788678147688f" title="Désinitialise la class options.">uInit</a>();
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061         <span class="comment">// Modificateurs</span>
+<a name="l00062"></a>00062         <span class="keywordtype">void</span> <a class="code" href="classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp;amp; clavier ).">configParDefaut</a>();
+<a name="l00063"></a>00063         <span class="keywordtype">void</span> <a class="code" href="classoptions.html#ade7f5fcd45bd4a6c56c4064ce5c2f915" title="Remet (et enregistre) les paramètres par défaut.">remise_a_zero</a>();
+<a name="l00064"></a>00064         <span class="keywordtype">bool</span> <a class="code" href="classoptions.html#aacf689ad8af10573989f26fd5de3c3aa" title="Permet de définir un port compris entre [0 et 9999].">defPort</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classoptions.html#a4eeb468347a4f33dee3b565a35efe7a8" title="Donne le port utilisé pour le jeu.">port</a> );
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066         <span class="comment">// Accesseurs</span>
+<a name="l00067"></a>00067         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classoptions.html#a4eeb468347a4f33dee3b565a35efe7a8" title="Donne le port utilisé pour le jeu.">port</a>() <span class="keyword">const</span>;
+<a name="l00068"></a>00068         <a class="code" href="classclavier.html" title="Gère les claviers.">clavier</a>* <a class="code" href="classoptions.html#a281d1464d4a4c827bcbac56ab3c9be94" title="Renvoie le clavier numéro {clavier_numero}.">clavierJoueur</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> clavier_numero );
+<a name="l00069"></a>00069         <a class="code" href="classclavier.html" title="Gère les claviers.">clavier</a>* <a class="code" href="classoptions.html#a2c3ea73f7f4333145a8a134dc942ec58" title="Alias de options::clavierJoueur( unsigned char clavier_numero ).">operator[]</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> clavier_numero );
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071         <span class="comment">// Autres</span>
+<a name="l00072"></a>00072         <span class="keywordtype">void</span> <a class="code" href="classoptions.html#a30947cfb97ac0346a6557388cb6cab9b" title="Permet d&amp;#39;enregistrer la config.">enregistrerConfig</a>();
+<a name="l00073"></a>00073 };
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075 <span class="preprocessor">#endif</span>
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/bonus.inl</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/bonus.inl</h1>  </div>
+</div>
+<div class="contents">
+<a href="bonus_8inl.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00002"></a>00002 <span class="comment">* @fn std::vector&lt;bonus::s_Event&gt;* bonus::modEvent()</span>
+<a name="l00003"></a>00003 <span class="comment">* @brief La liste des events non terminé</span>
+<a name="l00004"></a>00004 <span class="comment">* @return Renvoie La liste des events non terminé</span>
+<a name="l00005"></a>00005 <span class="comment">*/</span>
+<a name="l00006"></a><a class="code" href="classbonus.html#a4a1eb4f717e5b65a8a87599b2dbbf262">00006</a> <span class="keyword">inline</span> std::vector&lt;bonus::s_Event&gt;* <a class="code" href="classbonus.html#a4a1eb4f717e5b65a8a87599b2dbbf262" title="La liste des events non terminé.">bonus::modEvent</a>()
+<a name="l00007"></a>00007 {
+<a name="l00008"></a>00008     <span class="keywordflow">return</span> &amp;<a class="code" href="classbonus.html#a70c1099c7baf61ef267b197c6e2df96a" title="Tableau contenant les bombes posées (12o).">c_listEvent</a>;
+<a name="l00009"></a>00009 }
+<a name="l00010"></a>00010 
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00013"></a>00013 <span class="comment">* @fn unsigned int bonus::nbEvent() const</span>
+<a name="l00014"></a>00014 <span class="comment">* @brief Renvoie le nombre d&#39;event Traité on non.</span>
+<a name="l00015"></a>00015 <span class="comment">* @return Renvoie un bonus aléatoire</span>
+<a name="l00016"></a>00016 <span class="comment">*/</span>
+<a name="l00017"></a><a class="code" href="classbonus.html#a19dd37a96e64632f94fe266b58e0611a">00017</a> <span class="keyword">inline</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classbonus.html#a19dd37a96e64632f94fe266b58e0611a" title="Renvoie le nombre d&amp;#39;event Traité on non.">bonus::nbEvent</a>()<span class="keyword"> const</span>
+<a name="l00018"></a>00018 <span class="keyword"></span>{
+<a name="l00019"></a>00019     <span class="keywordflow">return</span> <a class="code" href="classbonus.html#a70c1099c7baf61ef267b197c6e2df96a" title="Tableau contenant les bombes posées (12o).">c_listEvent</a>.size();
+<a name="l00020"></a>00020 }
+<a name="l00021"></a>00021 
+<a name="l00022"></a>00022 
+<a name="l00023"></a>00023 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00024"></a>00024 <span class="comment">* @fn bool bonus::decQuantiteUtilisable( t_Bonus b, s_Coordonnees pos )</span>
+<a name="l00025"></a>00025 <span class="comment">* @brief Décrémente quantite_utilisable</span>
+<a name="l00026"></a>00026 <span class="comment">* @param[in] b Le bonus que l&#39;on veut modifier</span>
+<a name="l00027"></a>00027 <span class="comment">* @param[in] pos Position X, Y du bonus</span>
+<a name="l00028"></a>00028 <span class="comment">* @return Renvoie vrais si on a pu décrémenté la valeur</span>
+<a name="l00029"></a>00029 <span class="comment">*</span>
+<a name="l00030"></a>00030 <span class="comment">* Cette fonction permet d&#39;activer le déclancheur d&#39;event du bonus</span>
+<a name="l00031"></a>00031 <span class="comment">* @note Alias de la fonction bonus::decQuantiteUtilisable( t_Bonus b, unsigned int x, unsigned int y )</span>
+<a name="l00032"></a>00032 <span class="comment">*/</span>
+<a name="l00033"></a><a class="code" href="classbonus.html#ace8557770659dcdcb6cb4015aceb332c">00033</a> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classbonus.html#a09ddd6bcfc30cc20ee55f41ee1885136" title="Décrémente quantite_utilisable.">bonus::decQuantiteUtilisable</a>( <a class="code" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef" title="Les types de bonus possible dans le jeu.">t_Bonus</a> b, <a class="code" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a> pos )
+<a name="l00034"></a>00034 {
+<a name="l00035"></a>00035     <span class="keywordflow">return</span> <a class="code" href="classbonus.html#a09ddd6bcfc30cc20ee55f41ee1885136" title="Décrémente quantite_utilisable.">decQuantiteUtilisable</a>( b, pos.<a class="code" href="structs___coordonnees.html#a58e4c6bec574940d228bf0a1b8b6b308">x</a>, pos.<a class="code" href="structs___coordonnees.html#aaf8eb7cb396be8207c9c3c63a806de51">y</a> );
+<a name="l00036"></a>00036 }
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

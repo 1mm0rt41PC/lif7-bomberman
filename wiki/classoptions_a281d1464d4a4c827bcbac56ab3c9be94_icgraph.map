@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classmoteur__ncurses.html#a5a5da4538be5bc5b7e78cc7f96d2f6a8" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="213,5,523,35"/>
+<area shape="rect" id="node5" href="$classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="319,59,417,88"/>
+<area shape="rect" id="node9" href="$classoptions.html#a2c3ea73f7f4333145a8a134dc942ec58" title="Alias de options::clavierJoueur( unsigned char clavier_numero )." alt="" coords="297,112,439,141"/>
+<area shape="rect" id="node7" href="$main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="572,59,625,88"/>
+</map>

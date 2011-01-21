@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/options.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/options.cpp</h1>  </div>
+</div>
+<div class="contents">
+<a href="options_8cpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#include &quot;<a class="code" href="options_8h.html">options.h</a>&quot;</span>
+<a name="l00002"></a>00002 <span class="preprocessor">#include &quot;<a class="code" href="debug_8h.html">debug.h</a>&quot;</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="comment">// NOTE A MOI MÊME : NE PAS OUBLIER D&#39;INITIALISER CETTE SALTE DE MEMBRE STATIC AINSI !!! ( principe singleton )</span>
+<a name="l00005"></a>00005 <a class="code" href="classoptions.html" title="Gère les options.">options</a>* <a class="code" href="classoptions.html#aa731f5b457d9cdcd45dbaa21b3aa4e5e" title="L&amp;#39;instance de notre class.">options::c_Instance</a> = NULL;
+<a name="l00006"></a>00006 
+<a name="l00007"></a>00007 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00008"></a>00008 <span class="comment">* @fn options::options()</span>
+<a name="l00009"></a>00009 <span class="comment">* @brief Initialise la class options</span>
+<a name="l00010"></a>00010 <span class="comment">*</span>
+<a name="l00011"></a>00011 <span class="comment">* Lit le fichier de configuration s&#39;il existe, sinon on charge la config par défaut</span>
+<a name="l00012"></a>00012 <span class="comment">* @note Fichier stocké sous la forme : {port} {nb_touches} {clavier[1]} ... {clavier[i]}</span>
+<a name="l00013"></a>00013 <span class="comment">* @note fread( &amp;DATA, sizeof(DATA), nb_DATA, *stream ); (renvoie le nombre de varible correctement initialisées)</span>
+<a name="l00014"></a>00014 <span class="comment">* @warning NE PAS PASSER PAR LE CONSTRUCTEUR ! Utilisez options::getInstance()</span>
+<a name="l00015"></a>00015 <span class="comment">* @see options::getInstance()</span>
+<a name="l00016"></a>00016 <span class="comment">*/</span>
+<a name="l00017"></a><a class="code" href="classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d">00017</a> <a class="code" href="classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d" title="Initialise la class options.">options::options</a>()
+<a name="l00018"></a>00018 {
+<a name="l00019"></a>00019     FILE *fp=0;
+<a name="l00020"></a>00020     <span class="comment">// Si on trouve notre fichier de configuration on le charge.</span>
+<a name="l00021"></a>00021     <span class="comment">// Sinon on prend la config par défaut</span>
+<a name="l00022"></a>00022     <span class="keywordflow">if</span>( (fp=fopen(CONFIG_FILE, <span class="stringliteral">&quot;rb&quot;</span>)) ){
+<a name="l00023"></a>00023         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_touches=0;
+<a name="l00024"></a>00024 
+<a name="l00025"></a>00025         <span class="comment">/***********************************************************************</span>
+<a name="l00026"></a>00026 <span class="comment">        * On récup le port</span>
+<a name="l00027"></a>00027 <span class="comment">        */</span>
+<a name="l00028"></a>00028         <span class="keywordflow">if</span>( fread( &amp;<a class="code" href="classoptions.html#aaf14aa3eb46d54063ac815438d48ca34" title="Le port utilisé ( par défaut 947 ).">c_port</a>, <span class="keyword">sizeof</span>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>), 1, fp ) != 1 ){
+<a name="l00029"></a>00029             <span class="comment">// Si un bug lors de la lecture, on charge la config par défaut</span>
+<a name="l00030"></a>00030             fclose(fp);
+<a name="l00031"></a>00031             stdError(<span class="stringliteral">&quot;Erreur lors de la lecture du fichier %s {port}&quot;</span>, CONFIG_FILE);
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033             <a class="code" href="classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp;amp; clavier ).">configParDefaut</a>();
+<a name="l00034"></a>00034             return ;
+<a name="l00035"></a>00035         }
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037         <span class="comment">/***********************************************************************</span>
+<a name="l00038"></a>00038 <span class="comment">        * On récup le nombre de touches</span>
+<a name="l00039"></a>00039 <span class="comment">        */</span>
+<a name="l00040"></a>00040         <span class="keywordflow">if</span>( fread( &amp;nb_touches, <span class="keyword">sizeof</span>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>), 1, fp ) != 1 ){
+<a name="l00041"></a>00041             <span class="comment">// Si un bug lors de la lecture, on charge la config par défaut</span>
+<a name="l00042"></a>00042             fclose(fp);
+<a name="l00043"></a>00043             stdError(<span class="stringliteral">&quot;Erreur lors de la lecture du fichier %s {nb_touches}&quot;</span>, CONFIG_FILE);
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045             <a class="code" href="classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp;amp; clavier ).">configParDefaut</a>();
+<a name="l00046"></a>00046             return ;
+<a name="l00047"></a>00047         }
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049         <span class="comment">// Si nb_touches = 0 =&gt; BUG =&gt; reset_config !</span>
+<a name="l00050"></a>00050         <span class="keywordflow">if</span>( nb_touches == 0 ){
+<a name="l00051"></a>00051             <span class="comment">// Si un bug lors de la lecture, alors on RESET la config</span>
+<a name="l00052"></a>00052             fclose(fp);
+<a name="l00053"></a>00053             stdError(<span class="stringliteral">&quot;Erreur lors de la lecture du fichier %s {nb_touches == 0 !?} =&gt; resetData()&quot;</span>, CONFIG_FILE);
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055             <a class="code" href="classoptions.html#ade7f5fcd45bd4a6c56c4064ce5c2f915" title="Remet (et enregistre) les paramètres par défaut.">remise_a_zero</a>();
+<a name="l00056"></a>00056             return ;
+<a name="l00057"></a>00057         }
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060         <span class="comment">/***********************************************************************</span>
+<a name="l00061"></a>00061 <span class="comment">        * On charge les touches dans les claviers</span>
+<a name="l00062"></a>00062 <span class="comment">        */</span>
+<a name="l00063"></a>00063         <span class="keywordflow">for</span>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i=0; i&lt;4; i++ ){
+<a name="l00064"></a>00064             <span class="keywordflow">if</span>( !<a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[i].chargerConfig( fp, nb_touches ) ){
+<a name="l00065"></a>00065                 <span class="comment">// Si un bug lors de la lecture, on charge la config par défaut</span>
+<a name="l00066"></a>00066                 fclose(fp);
+<a name="l00067"></a>00067                 stdError(<span class="stringliteral">&quot;Erreur lors de la lecture du clavier &lt;%u&gt;&quot;</span>, i);
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069                 <a class="code" href="classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp;amp; clavier ).">configParDefaut</a>();
+<a name="l00070"></a>00070                 return ;<span class="comment">// On arrête tout</span>
+<a name="l00071"></a>00071             }
+<a name="l00072"></a>00072         }
+<a name="l00073"></a>00073         fclose(fp);
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075     }<span class="keywordflow">else</span>{
+<a name="l00076"></a>00076         <span class="comment">// On charge la config par defaut</span>
+<a name="l00077"></a>00077         <a class="code" href="classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp;amp; clavier ).">configParDefaut</a>();
+<a name="l00078"></a>00078     }
+<a name="l00079"></a>00079 }
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00083"></a>00083 <span class="comment">* @fn options* options::getInstance()</span>
+<a name="l00084"></a>00084 <span class="comment">* @brief Initialise la class options</span>
+<a name="l00085"></a>00085 <span class="comment">* @return L&#39;instance UNIQUE de la class.</span>
+<a name="l00086"></a>00086 <span class="comment">*</span>
+<a name="l00087"></a>00087 <span class="comment">* Si aucune instance de la class n&#39;existe, alors appel au constructeur options::options()&lt;br /&gt;</span>
+<a name="l00088"></a>00088 <span class="comment">* S&#39;il existe déjà une instance de la class alors on renvoie simplement l&#39;instance en cours.</span>
+<a name="l00089"></a>00089 <span class="comment">*/</span>
+<a name="l00090"></a><a class="code" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4">00090</a> <a class="code" href="classoptions.html" title="Gère les options.">options</a>* <a class="code" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options.">options::getInstance</a>()
+<a name="l00091"></a>00091 {
+<a name="l00092"></a>00092     <span class="keywordflow">if</span>( !<a class="code" href="classoptions.html#aa731f5b457d9cdcd45dbaa21b3aa4e5e" title="L&amp;#39;instance de notre class.">c_Instance</a> )<span class="comment">// Pas encore d&#39;instance ? Bon bah on la créer</span>
+<a name="l00093"></a>00093         <a class="code" href="classoptions.html#aa731f5b457d9cdcd45dbaa21b3aa4e5e" title="L&amp;#39;instance de notre class.">c_Instance</a> = <span class="keyword">new</span> <a class="code" href="classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d" title="Initialise la class options.">options</a>();
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095     <span class="keywordflow">return</span> <a class="code" href="classoptions.html#aa731f5b457d9cdcd45dbaa21b3aa4e5e" title="L&amp;#39;instance de notre class.">c_Instance</a>;
+<a name="l00096"></a>00096 }
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00100"></a>00100 <span class="comment">* @fn void options::uInit()</span>
+<a name="l00101"></a>00101 <span class="comment">* @brief Désinitialise la class options</span>
+<a name="l00102"></a>00102 <span class="comment">*</span>
+<a name="l00103"></a>00103 <span class="comment">* Si aucune instance de la class n&#39;existe, alors cette fonction ne fait rien.</span>
+<a name="l00104"></a>00104 <span class="comment">*/</span>
+<a name="l00105"></a><a class="code" href="classoptions.html#a5be99ac3b975b5dd294788678147688f">00105</a> <span class="keywordtype">void</span> <a class="code" href="classoptions.html#a5be99ac3b975b5dd294788678147688f" title="Désinitialise la class options.">options::uInit</a>()
+<a name="l00106"></a>00106 {
+<a name="l00107"></a>00107     <span class="keywordflow">if</span>( <a class="code" href="classoptions.html#aa731f5b457d9cdcd45dbaa21b3aa4e5e" title="L&amp;#39;instance de notre class.">c_Instance</a> ){
+<a name="l00108"></a>00108         <span class="comment">//c_Instance-&gt;~options();// &lt;- Pas besoin de ça ici, il n&#39;y a pas de new</span>
+<a name="l00109"></a>00109         <span class="keyword">delete</span> <a class="code" href="classoptions.html#aa731f5b457d9cdcd45dbaa21b3aa4e5e" title="L&amp;#39;instance de notre class.">c_Instance</a>;
+<a name="l00110"></a>00110     }
+<a name="l00111"></a>00111     <a class="code" href="classoptions.html#aa731f5b457d9cdcd45dbaa21b3aa4e5e" title="L&amp;#39;instance de notre class.">c_Instance</a> = 0;
+<a name="l00112"></a>00112 }
+<a name="l00113"></a>00113 
+<a name="l00114"></a>00114 
+<a name="l00115"></a>00115 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00116"></a>00116 <span class="comment">* @fn void options::configParDefaut()</span>
+<a name="l00117"></a>00117 <span class="comment">* @brief Permet de charger la config par défaut ( port &amp; clavier )</span>
+<a name="l00118"></a>00118 <span class="comment">*/</span>
+<a name="l00119"></a><a class="code" href="classoptions.html#acb1a8837861a00fa69ed734598ee2b07">00119</a> <span class="keywordtype">void</span> <a class="code" href="classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp;amp; clavier ).">options::configParDefaut</a>()
+<a name="l00120"></a>00120 {
+<a name="l00121"></a>00121     <a class="code" href="classoptions.html#aaf14aa3eb46d54063ac815438d48ca34" title="Le port utilisé ( par défaut 947 ).">c_port</a> = DEFAULT_PORT;
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123 <span class="preprocessor">    #ifdef __LIB_ncurses__</span>
+<a name="l00124"></a>00124 <span class="preprocessor"></span>        <span class="comment">// Clavier Joueur 1</span>
+<a name="l00125"></a>00125         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche.">initClavier</a>( 6 );<span class="comment">// On veut 6 touches !</span>
+<a name="l00126"></a>00126         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a8231b289f48a99aa410bbbeff3bd9b8e">clavier::haut</a>, KEY_UP );
+<a name="l00127"></a>00127         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a11ae41a3ad78c2ca0e17684d62ab8a0a">clavier::bas</a>, KEY_DOWN );
+<a name="l00128"></a>00128         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a02c98200c93bcecacd095997b8ae558a">clavier::droite</a>, KEY_RIGHT );
+<a name="l00129"></a>00129         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165af13384e0a20ef0b70ff3f04e41879df7">clavier::gauche</a>, KEY_LEFT );
+<a name="l00130"></a>00130         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165ab7a4a8f874823e415ac1fd56e450a4b8">clavier::lancerBombe</a>, KEY_DC );<span class="comment">// PADSTAR</span>
+<a name="l00131"></a>00131         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a25f40f7924d6289a172be3c154768918">clavier::declancheur</a>, KEY_END );<span class="comment">// PADSLASH</span>
+<a name="l00132"></a>00132 
+<a name="l00133"></a>00133         <span class="comment">// Clavier Joueur 2</span>
+<a name="l00134"></a>00134         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[1].<a class="code" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche.">initClavier</a>( 6 );<span class="comment">// On veut 6 touches !</span>
+<a name="l00135"></a>00135         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[1].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a8231b289f48a99aa410bbbeff3bd9b8e">clavier::haut</a>, <span class="charliteral">&#39;z&#39;</span> );
+<a name="l00136"></a>00136         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[1].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a11ae41a3ad78c2ca0e17684d62ab8a0a">clavier::bas</a>, <span class="charliteral">&#39;s&#39;</span> );
+<a name="l00137"></a>00137         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[1].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a02c98200c93bcecacd095997b8ae558a">clavier::droite</a>, <span class="charliteral">&#39;d&#39;</span> );
+<a name="l00138"></a>00138         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[1].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165af13384e0a20ef0b70ff3f04e41879df7">clavier::gauche</a>, <span class="charliteral">&#39;q&#39;</span> );
+<a name="l00139"></a>00139         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[1].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165ab7a4a8f874823e415ac1fd56e450a4b8">clavier::lancerBombe</a>, <span class="charliteral">&#39;t&#39;</span> );
+<a name="l00140"></a>00140         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[1].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a25f40f7924d6289a172be3c154768918">clavier::declancheur</a>, <span class="charliteral">&#39;r&#39;</span> );
+<a name="l00141"></a>00141 
+<a name="l00142"></a>00142         <span class="comment">// Clavier Joueur 3</span>
+<a name="l00143"></a>00143         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[2].<a class="code" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche.">initClavier</a>( 6 );<span class="comment">// On veut 6 touches !</span>
+<a name="l00144"></a>00144         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[2].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a8231b289f48a99aa410bbbeff3bd9b8e">clavier::haut</a>, <span class="charliteral">&#39;u&#39;</span> );
+<a name="l00145"></a>00145         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[2].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a11ae41a3ad78c2ca0e17684d62ab8a0a">clavier::bas</a>, <span class="charliteral">&#39;j&#39;</span> );
+<a name="l00146"></a>00146         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[2].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a02c98200c93bcecacd095997b8ae558a">clavier::droite</a>, <span class="charliteral">&#39;k&#39;</span> );
+<a name="l00147"></a>00147         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[2].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165af13384e0a20ef0b70ff3f04e41879df7">clavier::gauche</a>, <span class="charliteral">&#39;h&#39;</span> );
+<a name="l00148"></a>00148         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[2].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165ab7a4a8f874823e415ac1fd56e450a4b8">clavier::lancerBombe</a>, <span class="charliteral">&#39;p&#39;</span> );
+<a name="l00149"></a>00149         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[2].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a25f40f7924d6289a172be3c154768918">clavier::declancheur</a>, <span class="charliteral">&#39;o&#39;</span> );
+<a name="l00150"></a>00150 
+<a name="l00151"></a>00151         <span class="comment">// Clavier Joueur 4</span>
+<a name="l00152"></a>00152         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[3].<a class="code" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche.">initClavier</a>( 6 );<span class="comment">// On veut 6 touches !</span>
+<a name="l00153"></a>00153         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[3].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a8231b289f48a99aa410bbbeff3bd9b8e">clavier::haut</a>, <span class="charliteral">&#39;5&#39;</span> );<span class="comment">// Touche 5 Pad</span>
+<a name="l00154"></a>00154         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[3].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a11ae41a3ad78c2ca0e17684d62ab8a0a">clavier::bas</a>, <span class="charliteral">&#39;2&#39;</span> );<span class="comment">// Touche 2 Pad ( Curses pas térrible pour les define ... )</span>
+<a name="l00155"></a>00155         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[3].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a02c98200c93bcecacd095997b8ae558a">clavier::droite</a>, <span class="charliteral">&#39;3&#39;</span> );<span class="comment">// Touche 3 Pad</span>
+<a name="l00156"></a>00156         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[3].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165af13384e0a20ef0b70ff3f04e41879df7">clavier::gauche</a>, <span class="charliteral">&#39;1&#39;</span> );<span class="comment">// Touche 1 Pad</span>
+<a name="l00157"></a>00157         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[3].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165ab7a4a8f874823e415ac1fd56e450a4b8">clavier::lancerBombe</a>, <span class="charliteral">&#39;0&#39;</span> );<span class="comment">// Touche 0 Pad</span>
+<a name="l00158"></a>00158         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[3].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a25f40f7924d6289a172be3c154768918">clavier::declancheur</a>, <span class="charliteral">&#39;.&#39;</span> );<span class="comment">// Touche Suppr/. Pad</span>
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160 <span class="preprocessor">    #elif __LIB_SDL__</span>
+<a name="l00161"></a>00161 <span class="preprocessor"></span>        <span class="comment">// Clavier Joueur 1</span>
+<a name="l00162"></a>00162         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche.">initClavier</a>( 6 );<span class="comment">// On veut 6 touches !</span>
+<a name="l00163"></a>00163         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a8231b289f48a99aa410bbbeff3bd9b8e">clavier::haut</a>, SDLK_UP );
+<a name="l00164"></a>00164         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a11ae41a3ad78c2ca0e17684d62ab8a0a">clavier::bas</a>, SDLK_DOWN );
+<a name="l00165"></a>00165         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a02c98200c93bcecacd095997b8ae558a">clavier::droite</a>, SDLK_RIGHT );
+<a name="l00166"></a>00166         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165af13384e0a20ef0b70ff3f04e41879df7">clavier::gauche</a>, SDLK_LEFT );
+<a name="l00167"></a>00167         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165ab7a4a8f874823e415ac1fd56e450a4b8">clavier::lancerBombe</a>, SDLK_DELETE );
+<a name="l00168"></a>00168         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a25f40f7924d6289a172be3c154768918">clavier::declancheur</a>, SDLK_END );
+<a name="l00169"></a>00169 
+<a name="l00170"></a>00170         <span class="comment">// Clavier Joueur 2</span>
+<a name="l00171"></a>00171         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[1].<a class="code" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche.">initClavier</a>( 6 );<span class="comment">// On veut 6 touches !</span>
+<a name="l00172"></a>00172         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[1].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a8231b289f48a99aa410bbbeff3bd9b8e">clavier::haut</a>, SDLK_z );
+<a name="l00173"></a>00173         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[1].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a11ae41a3ad78c2ca0e17684d62ab8a0a">clavier::bas</a>, SDLK_s );
+<a name="l00174"></a>00174         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[1].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a02c98200c93bcecacd095997b8ae558a">clavier::droite</a>, SDLK_d );
+<a name="l00175"></a>00175         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[1].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165af13384e0a20ef0b70ff3f04e41879df7">clavier::gauche</a>, SDLK_q );
+<a name="l00176"></a>00176         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[1].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165ab7a4a8f874823e415ac1fd56e450a4b8">clavier::lancerBombe</a>, SDLK_t );
+<a name="l00177"></a>00177         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[1].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a25f40f7924d6289a172be3c154768918">clavier::declancheur</a>, SDLK_r );
+<a name="l00178"></a>00178 
+<a name="l00179"></a>00179         <span class="comment">// Clavier Joueur 3</span>
+<a name="l00180"></a>00180         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[2].<a class="code" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche.">initClavier</a>( 6 );<span class="comment">// On veut 6 touches !</span>
+<a name="l00181"></a>00181         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[2].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a8231b289f48a99aa410bbbeff3bd9b8e">clavier::haut</a>, SDLK_u );
+<a name="l00182"></a>00182         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[2].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a11ae41a3ad78c2ca0e17684d62ab8a0a">clavier::bas</a>, SDLK_j );
+<a name="l00183"></a>00183         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[2].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a02c98200c93bcecacd095997b8ae558a">clavier::droite</a>, SDLK_k );
+<a name="l00184"></a>00184         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[2].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165af13384e0a20ef0b70ff3f04e41879df7">clavier::gauche</a>, SDLK_h );
+<a name="l00185"></a>00185         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[2].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165ab7a4a8f874823e415ac1fd56e450a4b8">clavier::lancerBombe</a>, SDLK_p );
+<a name="l00186"></a>00186         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[2].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a25f40f7924d6289a172be3c154768918">clavier::declancheur</a>, SDLK_o );
+<a name="l00187"></a>00187 
+<a name="l00188"></a>00188         <span class="comment">// Clavier Joueur 4</span>
+<a name="l00189"></a>00189         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[3].<a class="code" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche.">initClavier</a>( 6 );<span class="comment">// On veut 6 touches !</span>
+<a name="l00190"></a>00190         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[3].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a8231b289f48a99aa410bbbeff3bd9b8e">clavier::haut</a>, SDLK_KP5 );<span class="comment">// Touche 5 Pad</span>
+<a name="l00191"></a>00191         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[3].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a11ae41a3ad78c2ca0e17684d62ab8a0a">clavier::bas</a>, SDLK_KP2 );<span class="comment">// Touche 2 Pad ( Curses pas térrible pour les define ... )</span>
+<a name="l00192"></a>00192         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[3].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a02c98200c93bcecacd095997b8ae558a">clavier::droite</a>, SDLK_KP3 );<span class="comment">// Touche 3 Pad</span>
+<a name="l00193"></a>00193         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[3].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165af13384e0a20ef0b70ff3f04e41879df7">clavier::gauche</a>, SDLK_KP1 );<span class="comment">// Touche 1 Pad</span>
+<a name="l00194"></a>00194         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[3].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165ab7a4a8f874823e415ac1fd56e450a4b8">clavier::lancerBombe</a>, SDLK_KP0 );<span class="comment">// Touche 0 Pad</span>
+<a name="l00195"></a>00195         <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[3].<a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a25f40f7924d6289a172be3c154768918">clavier::declancheur</a>, SDLK_KP_PERIOD );<span class="comment">// Touche Suppr/. Pad</span>
+<a name="l00196"></a>00196 <span class="preprocessor">    #endif</span>
+<a name="l00197"></a>00197 <span class="preprocessor"></span>}
+<a name="l00198"></a>00198 
+<a name="l00199"></a>00199 
+<a name="l00200"></a>00200 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00201"></a>00201 <span class="comment">* @fn void options::remise_a_zero()</span>
+<a name="l00202"></a>00202 <span class="comment">* @brief Remet (et enregistre) les paramètres par défaut</span>
+<a name="l00203"></a>00203 <span class="comment">*</span>
+<a name="l00204"></a>00204 <span class="comment">* Cette fonction effectue :</span>
+<a name="l00205"></a>00205 <span class="comment">*   - Une suppression du fichier de configuration</span>
+<a name="l00206"></a>00206 <span class="comment">*   - Un chargement des paramètres par défaut ( options::configParDefaut() )</span>
+<a name="l00207"></a>00207 <span class="comment">*/</span>
+<a name="l00208"></a><a class="code" href="classoptions.html#ade7f5fcd45bd4a6c56c4064ce5c2f915">00208</a> <span class="keywordtype">void</span> <a class="code" href="classoptions.html#ade7f5fcd45bd4a6c56c4064ce5c2f915" title="Remet (et enregistre) les paramètres par défaut.">options::remise_a_zero</a>()
+<a name="l00209"></a>00209 {
+<a name="l00210"></a>00210     FILE *fp=0;
+<a name="l00211"></a>00211     <span class="comment">// Si le fichier existe alors</span>
+<a name="l00212"></a>00212     <span class="keywordflow">if</span>( (fp=fopen(CONFIG_FILE, <span class="stringliteral">&quot;r&quot;</span>)) ){
+<a name="l00213"></a>00213         fclose(fp);
+<a name="l00214"></a>00214         <span class="comment">// On le supprime</span>
+<a name="l00215"></a>00215         <a class="code" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration.">supprimerFichierConfiguation</a>();
+<a name="l00216"></a>00216     }
+<a name="l00217"></a>00217 
+<a name="l00218"></a>00218     <span class="comment">// On charge la config par défaut</span>
+<a name="l00219"></a>00219     <a class="code" href="classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp;amp; clavier ).">configParDefaut</a>();
+<a name="l00220"></a>00220 }
+<a name="l00221"></a>00221 
+<a name="l00222"></a>00222 
+<a name="l00223"></a>00223 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00224"></a>00224 <span class="comment">* @fn bool options::defPort( unsigned int port )</span>
+<a name="l00225"></a>00225 <span class="comment">* @brief Permet de définir un port compris entre [0 et 9999].</span>
+<a name="l00226"></a>00226 <span class="comment">* @param[in] port Le port a utiliser.</span>
+<a name="l00227"></a>00227 <span class="comment">* @return Vrais si le port est accèpté</span>
+<a name="l00228"></a>00228 <span class="comment">*/</span>
+<a name="l00229"></a><a class="code" href="classoptions.html#aacf689ad8af10573989f26fd5de3c3aa">00229</a> <span class="keywordtype">bool</span> <a class="code" href="classoptions.html#aacf689ad8af10573989f26fd5de3c3aa" title="Permet de définir un port compris entre [0 et 9999].">options::defPort</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> port )
+<a name="l00230"></a>00230 {
+<a name="l00231"></a>00231     <span class="keywordflow">if</span>( 0 == port || port &gt; 9999 ){<span class="comment">// Il existe 65 536 mais pour l&#39;affichage, on limite à 9999</span>
+<a name="l00232"></a>00232         <span class="keywordflow">return</span> 0;<span class="comment">// On a un num &gt; 9999 donc on le prend pas !</span>
+<a name="l00233"></a>00233     }
+<a name="l00234"></a>00234 
+<a name="l00235"></a>00235     <span class="comment">// Le nouveau port est différent donc on l&#39;enregistre</span>
+<a name="l00236"></a>00236     <span class="keywordflow">if</span>( port != <a class="code" href="classoptions.html#aaf14aa3eb46d54063ac815438d48ca34" title="Le port utilisé ( par défaut 947 ).">c_port</a> ){
+<a name="l00237"></a>00237         <a class="code" href="classoptions.html#aaf14aa3eb46d54063ac815438d48ca34" title="Le port utilisé ( par défaut 947 ).">c_port</a> = port;
+<a name="l00238"></a>00238         <a class="code" href="classoptions.html#a30947cfb97ac0346a6557388cb6cab9b" title="Permet d&amp;#39;enregistrer la config.">enregistrerConfig</a>();<span class="comment">// On sav la config</span>
+<a name="l00239"></a>00239     }
+<a name="l00240"></a>00240     <span class="keywordflow">return</span> 1;
+<a name="l00241"></a>00241 }
+<a name="l00242"></a>00242 
+<a name="l00243"></a>00243 
+<a name="l00244"></a>00244 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00245"></a>00245 <span class="comment">* @fn unsigned int options::port() const</span>
+<a name="l00246"></a>00246 <span class="comment">* @brief Donne le port utilisé pour le jeu</span>
+<a name="l00247"></a>00247 <span class="comment">* @return Le port utilisé actuellement</span>
+<a name="l00248"></a>00248 <span class="comment">*/</span>
+<a name="l00249"></a><a class="code" href="classoptions.html#a4eeb468347a4f33dee3b565a35efe7a8">00249</a> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classoptions.html#a4eeb468347a4f33dee3b565a35efe7a8" title="Donne le port utilisé pour le jeu.">options::port</a>()<span class="keyword"> const</span>
+<a name="l00250"></a>00250 <span class="keyword"></span>{
+<a name="l00251"></a>00251     <span class="keywordflow">return</span> <a class="code" href="classoptions.html#aaf14aa3eb46d54063ac815438d48ca34" title="Le port utilisé ( par défaut 947 ).">c_port</a>;
+<a name="l00252"></a>00252 }
+<a name="l00253"></a>00253 
+<a name="l00254"></a>00254 
+<a name="l00255"></a>00255 
+<a name="l00256"></a>00256 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00257"></a>00257 <span class="comment">* @fn clavier* options::clavierJoueur( unsigned char clavier_numero )</span>
+<a name="l00258"></a>00258 <span class="comment">* @brief Renvoie le clavier numéro {clavier_numero}</span>
+<a name="l00259"></a>00259 <span class="comment">* @param[in] clavier_numero Le clavier que l&#39;on veut ( un nombre entre [0 et 3] )</span>
+<a name="l00260"></a>00260 <span class="comment">* @return Le port utilisé actuellement</span>
+<a name="l00261"></a>00261 <span class="comment">*/</span>
+<a name="l00262"></a><a class="code" href="classoptions.html#a281d1464d4a4c827bcbac56ab3c9be94">00262</a> <a class="code" href="classclavier.html" title="Gère les claviers.">clavier</a>* <a class="code" href="classoptions.html#a281d1464d4a4c827bcbac56ab3c9be94" title="Renvoie le clavier numéro {clavier_numero}.">options::clavierJoueur</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> clavier_numero )
+<a name="l00263"></a>00263 {
+<a name="l00264"></a>00264     <span class="keywordflow">if</span>( clavier_numero &gt; 4 ){<span class="comment">// Si le numero demandé est pas bon -&gt; out</span>
+<a name="l00265"></a>00265         stdError(<span class="stringliteral">&quot;options::clavierJoueur( %d )&quot;</span>, (<span class="keywordtype">int</span>)clavier_numero);
+<a name="l00266"></a>00266         <span class="keywordflow">return</span> 0;
+<a name="l00267"></a>00267     }
+<a name="l00268"></a>00268 
+<a name="l00269"></a>00269     <span class="keywordflow">return</span> &amp;<a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[clavier_numero];
+<a name="l00270"></a>00270 }
+<a name="l00271"></a>00271 
+<a name="l00272"></a>00272 
+<a name="l00273"></a>00273 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00274"></a>00274 <span class="comment">* @fn clavier* options::operator[]( unsigned char clavier_numero )</span>
+<a name="l00275"></a>00275 <span class="comment">* @brief Alias de options::clavierJoueur( unsigned char clavier_numero )</span>
+<a name="l00276"></a>00276 <span class="comment">* @param[in] clavier_numero Le clavier que l&#39;on veut ( un nombre entre [0 et 3] )</span>
+<a name="l00277"></a>00277 <span class="comment">* @return Le port utilisé actuellement</span>
+<a name="l00278"></a>00278 <span class="comment">*/</span>
+<a name="l00279"></a><a class="code" href="classoptions.html#a2c3ea73f7f4333145a8a134dc942ec58">00279</a> <a class="code" href="classclavier.html" title="Gère les claviers.">clavier</a>* <a class="code" href="classoptions.html#a2c3ea73f7f4333145a8a134dc942ec58" title="Alias de options::clavierJoueur( unsigned char clavier_numero ).">options::operator[]</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> clavier_numero )
+<a name="l00280"></a>00280 {
+<a name="l00281"></a>00281     <span class="keywordflow">return</span> <a class="code" href="classoptions.html#a281d1464d4a4c827bcbac56ab3c9be94" title="Renvoie le clavier numéro {clavier_numero}.">clavierJoueur</a>( clavier_numero );
+<a name="l00282"></a>00282 }
+<a name="l00283"></a>00283 
+<a name="l00284"></a>00284 
+<a name="l00285"></a>00285 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00286"></a>00286 <span class="comment">* @fn void options::enregistrerConfig()</span>
+<a name="l00287"></a>00287 <span class="comment">* @brief Permet d&#39;enregistrer la config</span>
+<a name="l00288"></a>00288 <span class="comment">* @note Fichier stocké sous la forme : {port} {nb_touches} {clavier[1]} ... {clavier[i]}</span>
+<a name="l00289"></a>00289 <span class="comment">* @note fwrite( &amp;DATA, sizeof(DATA), nb_DATA, *stream ); (retourne le nombre de varaibles correctement écrites)</span>
+<a name="l00290"></a>00290 <span class="comment">*/</span>
+<a name="l00291"></a><a class="code" href="classoptions.html#a30947cfb97ac0346a6557388cb6cab9b">00291</a> <span class="keywordtype">void</span> <a class="code" href="classoptions.html#a30947cfb97ac0346a6557388cb6cab9b" title="Permet d&amp;#39;enregistrer la config.">options::enregistrerConfig</a>()
+<a name="l00292"></a>00292 {
+<a name="l00293"></a>00293     FILE *fp=0;
+<a name="l00294"></a>00294     <span class="keywordflow">if</span>( !(fp=fopen(CONFIG_FILE, <span class="stringliteral">&quot;wb&quot;</span>)) ){
+<a name="l00295"></a>00295         stdError(<span class="stringliteral">&quot;Erreur lors de l&#39;ouverture du fichier &lt;%s&gt;&quot;</span>, CONFIG_FILE);
+<a name="l00296"></a>00296         return ;
+<a name="l00297"></a>00297     }
+<a name="l00298"></a>00298 
+<a name="l00299"></a>00299     <span class="comment">/***********************************************************************</span>
+<a name="l00300"></a>00300 <span class="comment">    * Ecriture du port</span>
+<a name="l00301"></a>00301 <span class="comment">    */</span>
+<a name="l00302"></a>00302     <span class="keywordflow">if</span>( fwrite( &amp;<a class="code" href="classoptions.html#aaf14aa3eb46d54063ac815438d48ca34" title="Le port utilisé ( par défaut 947 ).">c_port</a>, <span class="keyword">sizeof</span>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>), 1, fp) != 1 ){
+<a name="l00303"></a>00303         <span class="comment">// Si bug d&#39;écriture on le signal et on stop tout !</span>
+<a name="l00304"></a>00304         fclose(fp);
+<a name="l00305"></a>00305         stdError(<span class="stringliteral">&quot;Erreur lors de l&#39;enregistrement du fichier &lt;%s&gt; {c_port=%d} =&gt; resetData()&quot;</span>, CONFIG_FILE, <a class="code" href="classoptions.html#aaf14aa3eb46d54063ac815438d48ca34" title="Le port utilisé ( par défaut 947 ).">c_port</a>);
+<a name="l00306"></a>00306 
+<a name="l00307"></a>00307         <span class="comment">// On remet à zéro la config du fichier pour éviter les bug zarb lors d&#39;une lecture =&gt; del All !</span>
+<a name="l00308"></a>00308         <a class="code" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration.">supprimerFichierConfiguation</a>();
+<a name="l00309"></a>00309         return ;
+<a name="l00310"></a>00310     }
+<a name="l00311"></a>00311 
+<a name="l00312"></a>00312 
+<a name="l00313"></a>00313     <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_touches = <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[0].<a class="code" href="classclavier.html#a8929b689468a574630f32dbb108b5f3a" title="Renvoie le nombre d&amp;#39;actions possibles sur ce clavier.">nb_touches</a>();<span class="comment">// On a au minimum le joueur 1</span>
+<a name="l00314"></a>00314     <span class="keywordflow">if</span>( nb_touches == 0 ){<span class="comment">// ON PEUT PAS AVOIR 0 TOUCHES !</span>
+<a name="l00315"></a>00315         fclose(fp);
+<a name="l00316"></a>00316         stdError(<span class="stringliteral">&quot;Erreur lors de l&#39;enregistrement du fichier %s {nb_touches == 0 !?} =&gt; resetData()&quot;</span>, CONFIG_FILE);
+<a name="l00317"></a>00317 
+<a name="l00318"></a>00318         <span class="comment">// On remet à zéro la config du fichier pour éviter les bug zarb lors d&#39;une lecture =&gt; del All !</span>
+<a name="l00319"></a>00319         <a class="code" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration.">supprimerFichierConfiguation</a>();
+<a name="l00320"></a>00320         return ;
+<a name="l00321"></a>00321     }
+<a name="l00322"></a>00322 
+<a name="l00323"></a>00323     <span class="comment">/***********************************************************************</span>
+<a name="l00324"></a>00324 <span class="comment">    * Ecriture du nombre de touches</span>
+<a name="l00325"></a>00325 <span class="comment">    */</span>
+<a name="l00326"></a>00326     <span class="keywordflow">if</span>( fwrite( &amp;nb_touches , <span class="keyword">sizeof</span>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>), 1, fp) != 1 ){
+<a name="l00327"></a>00327         <span class="comment">// Si bug d&#39;écriture on le signal et on stop tout !</span>
+<a name="l00328"></a>00328         fclose(fp);
+<a name="l00329"></a>00329         stdError(<span class="stringliteral">&quot;Erreur lors de l&#39;enregistrement du fichier &lt;%s&gt; {nb_touches=%d;}&quot;</span>, CONFIG_FILE, nb_touches);
+<a name="l00330"></a>00330 
+<a name="l00331"></a>00331         <span class="comment">// On remet à zéro la config du fichier pour éviter les bug zarb lors d&#39;une lecture =&gt; del All !</span>
+<a name="l00332"></a>00332         <a class="code" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration.">supprimerFichierConfiguation</a>();
+<a name="l00333"></a>00333         return ;
+<a name="l00334"></a>00334     }
+<a name="l00335"></a>00335 
+<a name="l00336"></a>00336 
+<a name="l00337"></a>00337     <span class="comment">/***********************************************************************</span>
+<a name="l00338"></a>00338 <span class="comment">    * Ecriture des claviers</span>
+<a name="l00339"></a>00339 <span class="comment">    */</span>
+<a name="l00340"></a>00340     <span class="keywordflow">for</span>( <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> i=0; i&lt;4; i++ ){
+<a name="l00341"></a>00341         <span class="keywordflow">if</span>(! <a class="code" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c" title="Les claviers dispo en mémoire ( 4 dans tous les cas ! ).">c_ClavierJoueur</a>[i].<a class="code" href="classoptions.html#a30947cfb97ac0346a6557388cb6cab9b" title="Permet d&amp;#39;enregistrer la config.">enregistrerConfig</a>(fp) ){
+<a name="l00342"></a>00342             <span class="comment">// Si bug d&#39;écriture on le signal et on stop tout !</span>
+<a name="l00343"></a>00343             fclose(fp);
+<a name="l00344"></a>00344             stdError(<span class="stringliteral">&quot;Erreur lors de l&#39;enregistrement du clavier &lt;%d&gt;&quot;</span>, (<span class="keywordtype">int</span>)i);
+<a name="l00345"></a>00345 
+<a name="l00346"></a>00346             <span class="comment">// On remet à zéro la config du fichier pour éviter les bug zarb lors d&#39;une lecture =&gt; del All !</span>
+<a name="l00347"></a>00347             <a class="code" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration.">supprimerFichierConfiguation</a>();
+<a name="l00348"></a>00348             return ;<span class="comment">// On arrête tout</span>
+<a name="l00349"></a>00349         }
+<a name="l00350"></a>00350     }
+<a name="l00351"></a>00351 
+<a name="l00352"></a>00352     fclose(fp);
+<a name="l00353"></a>00353 }
+<a name="l00354"></a>00354 
+<a name="l00355"></a>00355 
+<a name="l00356"></a>00356 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00357"></a>00357 <span class="comment">* @fn void options::supprimerFichierConfiguation() const</span>
+<a name="l00358"></a>00358 <span class="comment">* @brief Supprime le fichier de configuration</span>
+<a name="l00359"></a>00359 <span class="comment">*/</span>
+<a name="l00360"></a><a class="code" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8">00360</a> <span class="keywordtype">void</span> <a class="code" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration.">options::supprimerFichierConfiguation</a>()<span class="keyword"> const</span>
+<a name="l00361"></a>00361 <span class="keyword"></span>{
+<a name="l00362"></a>00362     <span class="keywordflow">if</span>( <span class="keyword">remove</span>(CONFIG_FILE) != 0 )
+<a name="l00363"></a>00363         stdError(<span class="stringliteral">&quot;Erreur lors de la suppression du fichier &lt;%s&gt;&quot;</span>, CONFIG_FILE);
+<a name="l00364"></a>00364 }
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

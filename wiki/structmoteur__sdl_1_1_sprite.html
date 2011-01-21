@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la structure moteur_sdl::Sprite</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+  <div class="navpath">
+    <ul>
+      <li><a class="el" href="classmoteur__sdl.html">moteur_sdl</a>      </li>
+      <li><a class="el" href="structmoteur__sdl_1_1_sprite.html">moteur_sdl::Sprite</a>      </li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Attributs publics</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la structure moteur_sdl::Sprite</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="moteur_sdl::Sprite" -->
+<p>Contient les données pour faire un <a class="el" href="structmoteur__sdl_1_1_sprite.html" title="Contient les données pour faire un Sprite.">Sprite</a>.  
+<a href="#_details">Plus de détails...</a></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Graphe de collaboration de moteur_sdl::Sprite:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="structmoteur__sdl_1_1_sprite__coll__graph.png" border="0" usemap="#moteur__sdl_1_1_sprite_coll__map" alt="Collaboration graph"/></div>
+<map name="moteur__sdl_1_1_sprite_coll__map" id="moteur__sdl_1_1_sprite_coll__map">
+<area shape="rect" id="node2" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )" alt="" coords="15,6,135,109"/></map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">légende</a>]</span></center></div>
+
+<p><a href="structmoteur__sdl_1_1_sprite-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmoteur__sdl_1_1_sprite.html#a3f5a772212bae4b24f6d7b7f580eaff3">pos</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bd">t_obj</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmoteur__sdl_1_1_sprite.html#ada9443479e923a317f605450502f68aa">objet</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmoteur__sdl_1_1_sprite.html#aa82cbf2bf9a4c54b61df8304ff3071f5">frame</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">clock_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmoteur__sdl_1_1_sprite.html#ae91b39254b86ca40caf07c2f8d2a024a">refresh</a></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Contient les données pour faire un <a class="el" href="structmoteur__sdl_1_1_sprite.html" title="Contient les données pour faire un Sprite.">Sprite</a>. </p>
+
+<p>Définition à la ligne <a class="el" href="moteur__sdl_8h_source.html#l00073">73</a> du fichier <a class="el" href="moteur__sdl_8h_source.html">moteur_sdl.h</a>.</p>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="aa82cbf2bf9a4c54b61df8304ff3071f5"></a><!-- doxytag: member="moteur_sdl::Sprite::frame" ref="aa82cbf2bf9a4c54b61df8304ff3071f5" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char <a class="el" href="structmoteur__sdl_1_1_sprite.html#aa82cbf2bf9a4c54b61df8304ff3071f5">moteur_sdl::Sprite::frame</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="moteur__sdl_8h_source.html#l00076">76</a> du fichier <a class="el" href="moteur__sdl_8h_source.html">moteur_sdl.h</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ada9443479e923a317f605450502f68aa"></a><!-- doxytag: member="moteur_sdl::Sprite::objet" ref="ada9443479e923a317f605450502f68aa" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bd">t_obj</a> <a class="el" href="structmoteur__sdl_1_1_sprite.html#ada9443479e923a317f605450502f68aa">moteur_sdl::Sprite::objet</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="moteur__sdl_8h_source.html#l00075">75</a> du fichier <a class="el" href="moteur__sdl_8h_source.html">moteur_sdl.h</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3f5a772212bae4b24f6d7b7f580eaff3"></a><!-- doxytag: member="moteur_sdl::Sprite::pos" ref="a3f5a772212bae4b24f6d7b7f580eaff3" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a> <a class="el" href="structmoteur__sdl_1_1_sprite.html#a3f5a772212bae4b24f6d7b7f580eaff3">moteur_sdl::Sprite::pos</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="moteur__sdl_8h_source.html#l00074">74</a> du fichier <a class="el" href="moteur__sdl_8h_source.html">moteur_sdl.h</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae91b39254b86ca40caf07c2f8d2a024a"></a><!-- doxytag: member="moteur_sdl::Sprite::refresh" ref="ae91b39254b86ca40caf07c2f8d2a024a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">clock_t <a class="el" href="structmoteur__sdl_1_1_sprite.html#ae91b39254b86ca40caf07c2f8d2a024a">moteur_sdl::Sprite::refresh</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="moteur__sdl_8h_source.html#l00077">77</a> du fichier <a class="el" href="moteur__sdl_8h_source.html">moteur_sdl.h</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette structure a été générée à partir du fichier suivant :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="moteur__sdl_8h_source.html">moteur_sdl.h</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

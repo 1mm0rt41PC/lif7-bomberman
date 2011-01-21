@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la structure bonus::s_bonus</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+  <div class="navpath">
+    <ul>
+      <li><a class="el" href="classbonus.html">bonus</a>      </li>
+      <li><a class="el" href="structbonus_1_1s__bonus.html">bonus::s_bonus</a>      </li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Attributs publics</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la structure bonus::s_bonus</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="bonus::s_bonus" -->
+<p>Cette sturcture accueil un bonus d'un joueur.  
+<a href="#_details">Plus de détails...</a></p>
+
+<p><a href="structbonus_1_1s__bonus-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbonus_1_1s__bonus.html#a62b740418b6788c8a0ebccccbad25acf">quantite_utilisable</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Nombre d'objet possédé actuellement et utilisable (1o).  <a href="#a62b740418b6788c8a0ebccccbad25acf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbonus_1_1s__bonus.html#aefa1216766fa9669a39ae9229b472c23">quantite_MAX_en_stock</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Quantité Maxi d'un objet (1o).  <a href="#aefa1216766fa9669a39ae9229b472c23"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Cette sturcture accueil un bonus d'un joueur. </p>
+<p>( un tableau de cette structure forme l'ensemble des bonus d'un joueur ) quantite_utilisable: Nombre d'objet possédé actuellement et utilisable quantite_MAX_en_stock: Quantité Maxi d'un objet ( ex: 5 bonus de type bombe =&gt; 5 Bombes max en stock ! ) </p>
+<dl class="note"><dt><b>Note:</b></dt><dd>Passe -Wpadded pour 32bit (4o) </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8h_source.html#l00103">103</a> du fichier <a class="el" href="bonus_8h_source.html">bonus.h</a>.</p>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="aefa1216766fa9669a39ae9229b472c23"></a><!-- doxytag: member="bonus::s_bonus::quantite_MAX_en_stock" ref="aefa1216766fa9669a39ae9229b472c23" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char <a class="el" href="structbonus_1_1s__bonus.html#aefa1216766fa9669a39ae9229b472c23">bonus::s_bonus::quantite_MAX_en_stock</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Quantité Maxi d'un objet (1o). </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8h_source.html#l00105">105</a> du fichier <a class="el" href="bonus_8h_source.html">bonus.h</a>.</p>
+
+<p>Référencé par <a class="el" href="bonus_8cpp_source.html#l00270">bonus::decQuantiteMAX_en_stock()</a>, <a class="el" href="bonus_8cpp_source.html#l00366">bonus::defBonus()</a>, <a class="el" href="bonus_8cpp_source.html#l00317">bonus::defQuantiteMAX()</a>, <a class="el" href="bonus_8cpp_source.html#l00295">bonus::defQuantiteUtilisable()</a>, <a class="el" href="bonus_8cpp_source.html#l00197">bonus::incQuantiteMAX_en_stock()</a>, <a class="el" href="bonus_8cpp_source.html#l00096">bonus::param_Par_Defaut()</a>, et <a class="el" href="bonus_8cpp_source.html#l00138">bonus::quantiteMAX()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a62b740418b6788c8a0ebccccbad25acf"></a><!-- doxytag: member="bonus::s_bonus::quantite_utilisable" ref="a62b740418b6788c8a0ebccccbad25acf" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char <a class="el" href="structbonus_1_1s__bonus.html#a62b740418b6788c8a0ebccccbad25acf">bonus::s_bonus::quantite_utilisable</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Nombre d'objet possédé actuellement et utilisable (1o). </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8h_source.html#l00104">104</a> du fichier <a class="el" href="bonus_8h_source.html">bonus.h</a>.</p>
+
+<p>Référencé par <a class="el" href="bonus_8cpp_source.html#l00270">bonus::decQuantiteMAX_en_stock()</a>, <a class="el" href="bonus_8cpp_source.html#l00218">bonus::decQuantiteUtilisable()</a>, <a class="el" href="bonus_8cpp_source.html#l00366">bonus::defBonus()</a>, <a class="el" href="bonus_8cpp_source.html#l00295">bonus::defQuantiteUtilisable()</a>, <a class="el" href="bonus_8cpp_source.html#l00197">bonus::incQuantiteMAX_en_stock()</a>, <a class="el" href="bonus_8cpp_source.html#l00177">bonus::incQuantiteUtilisable()</a>, <a class="el" href="bonus_8cpp_source.html#l00096">bonus::param_Par_Defaut()</a>, et <a class="el" href="bonus_8cpp_source.html#l00119">bonus::quantiteUtilisable()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette structure a été générée à partir du fichier suivant :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="bonus_8h_source.html">bonus.h</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

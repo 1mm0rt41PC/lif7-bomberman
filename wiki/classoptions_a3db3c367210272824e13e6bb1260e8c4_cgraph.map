@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d" title="Initialise la class options." alt="" coords="207,59,329,88"/>
+<area shape="rect" id="node5" href="$classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp; clavier )." alt="" coords="640,32,819,61"/>
+<area shape="rect" id="node11" href="$classoptions.html#ade7f5fcd45bd4a6c56c4064ce5c2f915" title="Remet (et enregistre) les paramètres par défaut." alt="" coords="379,84,549,113"/>
+<area shape="rect" id="node7" href="$classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&#39;une touche." alt="" coords="911,5,1044,35"/>
+<area shape="rect" id="node9" href="$classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche." alt="" coords="911,59,1044,88"/>
+<area shape="rect" id="node14" href="$classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration." alt="" coords="599,85,860,115"/>
+</map>

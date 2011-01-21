@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/ClientServer/Server/class_server.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/ClientServer/Server/class_server.h</h1>  </div>
+</div>
+<div class="contents">
+<a href="class__server_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef CLASS_SERVER_h</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define CLASS_SERVER_h</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &quot;../class_BaseClientServer.h&quot;</span>
+<a name="l00005"></a>00005 
+<a name="l00006"></a>00006 <span class="comment"></span>
+<a name="l00007"></a>00007 <span class="comment">/*!</span>
+<a name="l00008"></a>00008 <span class="comment">* @class server</span>
+<a name="l00009"></a>00009 <span class="comment">* @brief Cette class permet de gérer facilement un serveur.</span>
+<a name="l00010"></a>00010 <span class="comment">*</span>
+<a name="l00011"></a>00011 <span class="comment">* Exemple d&#39;utilisation</span>
+<a name="l00012"></a>00012 <span class="comment">* @code</span>
+<a name="l00013"></a>00013 <span class="comment">*   SOCKET s;</span>
+<a name="l00014"></a>00014 <span class="comment">*   char buffer[20];</span>
+<a name="l00015"></a>00015 <span class="comment">*</span>
+<a name="l00016"></a>00016 <span class="comment">*   server serv;</span>
+<a name="l00017"></a>00017 <span class="comment">*   serv.setPort( 1234 );</span>
+<a name="l00018"></a>00018 <span class="comment">*   serv.setNbClientMax( 5 );</span>
+<a name="l00019"></a>00019 <span class="comment">*   serv.setWait( 0 , 100000);// 0.1secs</span>
+<a name="l00020"></a>00020 <span class="comment">*   serv.Listening();</span>
+<a name="l00021"></a>00021 <span class="comment">*</span>
+<a name="l00022"></a>00022 <span class="comment">*   do {</span>
+<a name="l00023"></a>00023 <span class="comment">*       serv.lookupNewConnection();// A faire en 1er !</span>
+<a name="l00024"></a>00024 <span class="comment">*       serv.lookupConnectionClient();</span>
+<a name="l00025"></a>00025 <span class="comment">*</span>
+<a name="l00026"></a>00026 <span class="comment">*       while( (s = serv.lookupConnectionClient()) != INVALID_SOCKET )</span>
+<a name="l00027"></a>00027 <span class="comment">*       {</span>
+<a name="l00028"></a>00028 <span class="comment">*           serv.readClient( s, buffer, 20 );</span>
+<a name="l00029"></a>00029 <span class="comment">*           printf(&quot;%s&quot;, buffer);</span>
+<a name="l00030"></a>00030 <span class="comment">*           serv.send_message(s, &quot;Message reçut&quot;, 14);</span>
+<a name="l00031"></a>00031 <span class="comment">*       }</span>
+<a name="l00032"></a>00032 <span class="comment">*</span>
+<a name="l00033"></a>00033 <span class="comment">*   }while( serv.nb_clientConnecter() != 3 );// S&#39;il y a 3 client alors, on quitte la boucle</span>
+<a name="l00034"></a>00034 <span class="comment">*</span>
+<a name="l00035"></a>00035 <span class="comment">*   serv.endListen();</span>
+<a name="l00036"></a>00036 <span class="comment">* @endcode</span>
+<a name="l00037"></a>00037 <span class="comment">*/</span>
+<a name="l00038"></a><a class="code" href="classserver.html">00038</a> <span class="keyword">class </span><a class="code" href="classserver.html" title="Cette class permet de gérer facilement un serveur.">server</a> : <span class="keyword">public</span> <a class="code" href="classbase_client_server.html" title="Support pour la création d&amp;#39;une class client/serveur.">baseClientServer</a>
+<a name="l00039"></a>00039 {
+<a name="l00040"></a>00040     <span class="keyword">public</span>:<span class="comment"></span>
+<a name="l00041"></a>00041 <span class="comment">        /*!</span>
+<a name="l00042"></a>00042 <span class="comment">        * @struct sClient</span>
+<a name="l00043"></a>00043 <span class="comment">        * @brief Contient les information d&#39;un client</span>
+<a name="l00044"></a>00044 <span class="comment">        */</span>
+<a name="l00045"></a><a class="code" href="structserver_1_1s_client.html">00045</a>         <span class="keyword">typedef</span> <span class="keyword">struct </span>{
+<a name="l00046"></a><a class="code" href="structserver_1_1s_client.html#a71fe0aadaf55f5fad0f75915fad4ebea">00046</a>             <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a>      listenSocket;
+<a name="l00047"></a><a class="code" href="structserver_1_1s_client.html#ad98880e020c788871979fbec62139c1e">00047</a>             <a class="code" href="class___base_client_server_8h.html#a29046dc0232f0e5c70adbc25090d77b8">SOCKADDR_IN</a> addr;
+<a name="l00048"></a>00048         } <a class="code" href="structserver_1_1s_client.html" title="Contient les information d&amp;#39;un client.">sClient</a>;
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050     <span class="keyword">private</span>:
+<a name="l00051"></a><a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7">00051</a>         <a class="code" href="structserver_1_1s_client.html" title="Contient les information d&amp;#39;un client.">sClient</a>* <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>;<span class="comment">//!&lt; Liste des client connecté</span>
+<a name="l00052"></a><a class="code" href="classserver.html#ae5c08d5767b242760df76eac0ea6ba0e">00052</a> <span class="comment"></span>        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classserver.html#ae5c08d5767b242760df76eac0ea6ba0e" title="Nombre maximum de client. Si = à 0 =&amp;gt; pas de limite.">c_nb_Max_Client</a>;<span class="comment">//!&lt; Nombre maximum de client. Si = à 0 =&gt; pas de limite</span>
+<a name="l00053"></a><a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f">00053</a> <span class="comment"></span>        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f" title="Nombre de client actuellement connecté.">c_nb_clientConnecter</a>;<span class="comment">//!&lt; Nombre de client actuellement connecté</span>
+<a name="l00054"></a><a class="code" href="classserver.html#ae87095dfcbbd0e699a781de553115d08">00054</a> <span class="comment"></span>        <a class="code" href="class___base_client_server_8h.html#a6b82106923cc13b3a9734520ecc29514">socklen_t</a> <a class="code" href="classserver.html#ae87095dfcbbd0e699a781de553115d08" title="Taille de la structure sClient ( sizeof(sClient) ) (N&amp;#39;EST JAMAIS MODIFIE).">c_clientDataSize</a>;<span class="comment">//!&lt; Taille de la structure sClient ( sizeof(sClient) ) (N&#39;EST JAMAIS MODIFIE)</span>
+<a name="l00055"></a><a class="code" href="classserver.html#a26b49db872f0b16d02acc6dfdf9c824b">00055</a> <span class="comment"></span>        <span class="keywordtype">int</span> <a class="code" href="classserver.html#a26b49db872f0b16d02acc6dfdf9c824b" title="Le fd (socket) le plus grand (DOIT être maintenu à jour !).">c_max_fd</a>;<span class="comment">//!&lt; Le fd (socket) le plus grand (DOIT être maintenu à jour !)</span>
+<a name="l00056"></a>00056 <span class="comment"></span>
+<a name="l00057"></a>00057     <span class="keyword">public</span>:
+<a name="l00058"></a>00058         <a class="code" href="classserver.html#a30853862a28dda8c4c9b57b4e8f7de1a" title="Constructeur par defaut.">server</a>();
+<a name="l00059"></a>00059         <a class="code" href="classserver.html#ae3de4182db6fe6c656036f9e4da49204" title="Destructeur par defaut.">~server</a>();
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061         <span class="comment">// Accésseurs</span>
+<a name="l00062"></a>00062         <span class="keyword">inline</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classserver.html#a4797f37f86d2e0f0153798d10866de27" title="Retourne le nombre maximum de client simultané.">nb_Max_Client</a>() <span class="keyword">const</span>;
+<a name="l00063"></a>00063         <span class="keyword">inline</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classserver.html#ab054937318f26d19ae895e0ece9cbc18" title="Retourne le nombre de client actuellement connecté.">nb_clientConnecter</a>() <span class="keyword">const</span>;
+<a name="l00064"></a>00064         <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="structserver_1_1s_client.html" title="Contient les information d&amp;#39;un client.">sClient</a>* <a class="code" href="classserver.html#a7abaefe5ead76c775f741095a9b988ff" title="Renvoie le tableau des client actuellement connecté.">listClient</a>() <span class="keyword">const</span>;
+<a name="l00065"></a>00065         <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="code" href="classserver.html#a9f03663df3cb618c70e34cac773ff55b" title="Retourne le socket affecté à l&amp;#39;id.">getClientSOCK</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span> ) <span class="keyword">const</span>;
+<a name="l00066"></a>00066         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classserver.html#af29d65fecf50b8ba68ffee1a21d32f50" title="Retourne l&amp;#39;id du client qui a le socket s.">getClientID</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> ) <span class="keyword">const</span>;
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068         <span class="comment">// Modificateurs</span>
+<a name="l00069"></a>00069         <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classserver.html#a72ed5380818b2a60241cdfe9f7b315a8" title="Defini le nombre maximum de client simultané.">setNbClientMax</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nbClient );
+<a name="l00070"></a>00070         <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classserver.html#a5763b1fe8cfe5a31e5217e0a7584d839" title="Supprime le client qui a le socket s.">rmClient</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> s );
+<a name="l00071"></a>00071         <span class="keywordtype">void</span> <a class="code" href="classserver.html#ac0cf2372772a90dbe308c784266939e1" title="Déconnecte le client puis le supprime de la liste.">rmClientID</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classclient.html" title="Cette class permet de gérer facilement un client.">client</a> );
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073         <span class="comment">// Récéption de message</span>
+<a name="l00074"></a>00074         <span class="keywordtype">int</span> <a class="code" href="classserver.html#a3958ab35efdf8daed31591a7c5c4eacb" title="Récupère les données envoyées par un client.">readClient</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> sock, <span class="keywordtype">char</span>* buffer, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classbase_client_server.html#afc826d31816db85c53667361e303c37d">bufferSize</a> );
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076         <span class="comment">// Autres</span>
+<a name="l00077"></a>00077         <span class="keywordtype">void</span> <a class="code" href="classserver.html#a86e0b7cfa19dc5aee949533eb617e41f" title="Met le serveur en activité. Lance l&amp;#39;écoute sur le port demandé.">Listening</a>();
+<a name="l00078"></a>00078         <span class="keywordtype">void</span> <a class="code" href="classserver.html#a86e0b7cfa19dc5aee949533eb617e41f" title="Met le serveur en activité. Lance l&amp;#39;écoute sur le port demandé.">Listening</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classbase_client_server.html#a61011c973d5f71ddd0894f1f99f8959e" title="Defini le port à utiliser.">port</a> );
+<a name="l00079"></a>00079         <span class="keywordtype">void</span> <a class="code" href="classserver.html#a36c3ecd67ea956c01bf8f4064c1e2078" title="Met fin a une écoute sur un port.">endListen</a>();
+<a name="l00080"></a>00080         <span class="comment">// Récéption des activités ( Nouvelle connnection, Déconnection, message en attante )</span>
+<a name="l00081"></a>00081         <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="code" href="classserver.html#a970c338624781ad9b8db82d0e853210f" title="Envoie une message (buffer) au client.">lookupNewConnection</a>();
+<a name="l00082"></a>00082         <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classserver.html#ab25aea3888274547f75fdd6b44e2d0be" title="Recherche une activité pour tout les clients.">lookupConnectionClient</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="code" href="classclient.html" title="Cette class permet de gérer facilement un client.">client</a> );
+<a name="l00083"></a>00083         <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="code" href="classserver.html#ab25aea3888274547f75fdd6b44e2d0be" title="Recherche une activité pour tout les clients.">lookupConnectionClient</a>();
+<a name="l00084"></a>00084 };
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086 <span class="preprocessor">#include &quot;<a class="code" href="class__server_8inl.html">class_server.inl</a>&quot;</span>
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088 <span class="preprocessor">#endif</span>
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

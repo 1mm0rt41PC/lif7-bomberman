@@ -1,0 +1,19 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classmap.html#ac7e126e8c0555f9f2e9c86cc81865b9f" title="Ajoute des meta donnée ( ou info joueurs ) dans le block (X, Y)." alt="" coords="773,11,939,40"/>
+<area shape="rect" id="node7" href="$classmap.html#a5ab949cacaad5148299aa70f55bb0c93" title="Retourn le block qui est à la position X, Y." alt="" coords="799,64,913,93"/>
+<area shape="rect" id="node9" href="$classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="265,325,393,355"/>
+<area shape="rect" id="node34" href="$classmap.html#a69992d77d390166473f758436777a415" title="Supprime les info du joueur du block (X, Y)." alt="" coords="787,485,925,515"/>
+<area shape="rect" id="node36" href="$classmap.html#a9daefd4b8e29eba7b98b734ce4530fea" title="Modifie le block qui est à la position X, Y." alt="" coords="800,539,912,568"/>
+<area shape="rect" id="node5" href="$coordonnees_8h.html#a6672966a8002c5f5e0a711f7029b0e7d" title="Permet de créer facillement une stucture s_Coordonnees initialisée." alt="" coords="1023,116,1169,145"/>
+<area shape="rect" id="node11" href="$classperso.html#add0aebd55226ce05235400c09a529441" title="Renvoie les armes et bonus du personnage." alt="" coords="785,220,927,249"/>
+<area shape="rect" id="node14" href="$classbonus.html#aab77df64a0e6931d90af3f500721e5cd" title="Décrémente quantite_MAX_en_stock." alt="" coords="448,219,685,248"/>
+<area shape="rect" id="node16" href="$classbonus.html#a09ddd6bcfc30cc20ee55f41ee1885136" title="Décrémente quantite_utilisable." alt="" coords="464,272,669,301"/>
+<area shape="rect" id="node18" href="$classbonus.html#ac503bb19af6f4486c412d011e20bd97e" title="Met fin au temps d&#39;attente de tout les event." alt="" coords="489,325,644,355"/>
+<area shape="rect" id="node21" href="$classbonus.html#ad6c7196687883d064c8937d8b0b742b3" title="Met fin au temps d&#39;attente de tous les event et ajoute le signal kill, qui signifit, qu&#39;il faut supprimer l&#39;armement." alt="" coords="524,379,609,408"/>
+<area shape="rect" id="node23" href="$classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="444,432,689,461"/>
+<area shape="rect" id="node40" href="$classmap.html#abc682d96c6d194b75d2e8a6430b5b076" title="Renvoie la taille X de la map." alt="" coords="533,536,600,565"/>
+<area shape="rect" id="node42" href="$classmap.html#abcb25776d119cd3f2864c67ec05a6a4a" title="Renvoie la taille Y de la map." alt="" coords="533,589,600,619"/>
+<area shape="rect" id="node27" href="$classperso.html#a3c273f65aee2b958e0d2b1112762feab" title="Modifie la position du personnage." alt="" coords="801,325,911,355"/>
+<area shape="rect" id="node30" href="$classbonus.html#aab3137a4c074a64f24c1c725fac1fe76" title="Incrémente quantite_MAX_en_stock et quantite_utilisable." alt="" coords="739,379,973,408"/>
+<area shape="rect" id="node32" href="$classmap.html#a69a17c9066d0cc1b9cf2f0123db3114e" title="Renvoie la position initial du joueur." alt="" coords="765,432,947,461"/>
+</map>
