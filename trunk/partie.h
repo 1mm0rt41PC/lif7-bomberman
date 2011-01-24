@@ -59,7 +59,7 @@ class partie
 		} t_Connection;
 		// Réseau ( Variable constante )
 		enum {
-			PACK_bufferSize = getSizeOfNumber<-1>::value*4/*4 uint32*/+getSizeOfNumber<map::bombe_poser_AVEC_plusieurs_joueurs>::value/*1 type*/+4/*virgule*/+1/*²*/+1/*0*/
+			PACK_bufferSize = getSizeOfNumber<-1>::value*4/*4 uint32*/+getSizeOfNumber<map::bombe_poser_AVEC_plusieurs_joueurs>::value/*1 type*/+4/*virgule*/+1/*²*/+1/*0*/ //!< Taille du buffer réseau
 		};
 		/*!
 		* @typedef libAff
@@ -79,7 +79,6 @@ class partie
 		// struct {
 			std::vector<s_EventBombe>		c_listEventBombe;
 			QList<s_EventPousseBombe>		c_listEventPouseBombe;
-			std::vector<unsigned char>		c_listPlayerRefresh;
 			map*							c_map;//!< SIMPLE POINTEUR !
 			perso*							c_joueurs;//!< Tableau de joueur (utilisé si offline ou si host)
 			t_Connection					c_connection;//!< Partie en Host, Client
@@ -90,7 +89,7 @@ class partie
 				server*						c_server;
 			};
 			char							c_buffer[PACK_bufferSize+1];//!< Buffer pour communiquer sur le réseau
-			std::string						c_winnerName;
+			unsigned char					c_winnerID;
 			clock_t							c_timeOut;
 			unsigned int					c_timerAttak;
 			unsigned char					c_uniqueJoueurID;//!< Si connection client -> ID du joueur (correspond au numéro dans le tableau c_joueur)
@@ -135,10 +134,9 @@ class partie
 		unsigned char nbJoueurVivant() const;
 		server* getServeur() const;
 		client* getClient() const;
-		inline std::string getWinnerName() const;
+		inline unsigned char getWinnerID() const;
 		inline clock_t timeOut() const;
 		inline unsigned char getUniqueJoueurID() const;
-		bool playerNeedRefresh( unsigned char idJoueur );
 
 		// Autres
 		char main( libAff * afficherMapEtEvent );

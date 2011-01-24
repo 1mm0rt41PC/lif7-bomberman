@@ -4,7 +4,7 @@
 #ifndef stdError
 	#include <stdio.h>
 	#include <stdlib.h>
-	
+
 	// Permet de mettre entre quot (")
 	#define QUOT_ME( data ) #data
 
@@ -38,6 +38,7 @@ class QList
 		void operator<<( const Type& newObj );
 		void insert( unsigned int at, const Type& newObj );
 		void remove( unsigned int at );
+		void clear();
 };
 
 #include "QList.inl"

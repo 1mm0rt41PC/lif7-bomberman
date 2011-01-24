@@ -56,6 +56,9 @@ class moteur_sdl
 			gain_puissance_flamme,
 			gain_pousse_bombe,
 			gain_vie,
+			bonus_teleporteur,
+			bonus_inversseur_touche,
+			bonus_force_explosion,
 
 			__nombre_de_decors__
 		} t_obj;
@@ -63,7 +66,12 @@ class moteur_sdl
 
 		// Liste des vitesses des sprites
 		enum {
-			VitesseSpriteBombe = CLOCKS_PER_SEC/6
+			VitesseSpriteBombe	= CLOCKS_PER_SEC/6,
+			VitessePerso		= CLOCKS_PER_SEC/10000
+		};
+		// Divers
+		enum {
+			Marge_menu = 300
 		};
 
 		/*!
@@ -98,25 +106,30 @@ class moteur_sdl
 
 
 	private:
-		static moteur_sdl* c_Instance;
-		std::vector<sStatistique>	c_ListStatistique;
-		std::vector<Sprite>			c_ListSprite;
-		SDL_Surface*				c_ecranGeneral;
-		SDL_Surface*				c_background;
-		TTF_Font*					c_policeGeneral;
-		SDL_Surface**				c_Decor;
-		bool						c_premierAffichage;
-		bool						c_fenetreOuverte;
+		//struct {
+			static moteur_sdl* c_Instance;
+			std::vector<sStatistique>	c_ListStatistique;
+			std::vector<Sprite>			c_ListSprite;
+			QList<Sprite>				c_ListSpriteJoueur;
+			SDL_Surface*				c_ecranGeneral;
+			SDL_Surface*				c_background;
+			TTF_Font*					c_policeTitre;
+			TTF_Font*					c_policeGeneral;
+			SDL_Surface**				c_Decor;
+			bool						c_premierAffichage;
+			bool						c_fenetreOuverte;
+			static SDL_Color			c_mainColor;
+		// }
 
 	private:
 		SDL_Surface* chargerImage( const char image[] ) const;
-		SDL_Surface* ecritTexte( const char texte[] ) const;
+		inline SDL_Surface* ecritTexte( const char texte[] ) const;
 		SDL_Surface* ecritTexte( const char texte[], const SDL_Color& couleur ) const;
 		SDL_Surface* ecritTexte( const char texte[], Uint8 r, Uint8 g, Uint8 b ) const;
 		SDL_Surface* ecritTexte( const char texte[], const SDL_Color& couleur, unsigned int taille ) const;
-		SDL_Surface* ecritTexte( const char texte[], TTF_Font* police ) const;
+		inline SDL_Surface* ecritTexte( const char texte[], TTF_Font* police ) const;
 		SDL_Surface* ecritTexte( const char texte[], TTF_Font* police, const SDL_Color& couleur ) const;
-		void joueur_orientation( perso::t_Orientation ori, unsigned char joueur, SDL_Rect* pos ) const;
+		void joueur_orientation( perso::t_Orientation ori, unsigned char joueur, SDL_Rect* pos, unsigned char frame ) const;
 
 		static char* completerMot( char texte[], unsigned int taille );
 

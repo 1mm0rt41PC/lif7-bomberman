@@ -134,7 +134,7 @@ void server::Listening()
 	if( setsockopt(c_listenSocket, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse)) == SOCKET_ERROR )
 		reportError("Erreur(%d). Impossible de permettre la réutilisation du port ! setsockopt(). Detail: <%s>", SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
 
-	setTCP_NoDelay( false );
+	setTCP_NoDelay( __TCP_NODELAY__ );
 
 	// Bind lie un socket avec une structure sockaddr.
 	if( bind(c_listenSocket, (SOCKADDR*)&c_addr, sizeof(c_addr)) == SOCKET_ERROR )

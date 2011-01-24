@@ -75,6 +75,7 @@ void partie::genMap()
 		if( c_joueurs[i].isLocal() || (!c_joueurs[i].isLocal() && c_joueurs[i].socket() != INVALID_SOCKET) ){
 			p = c_map->mettreJoueurA_sa_PositionInitial( i+1 );
 			c_joueurs[i].defPos(p.x, p.y);
+			c_joueurs[i].defOldPos(p);
 		}
 	}
 }
@@ -205,27 +206,6 @@ client* partie::getClient() const
 
 
 /***************************************************************************//*!
-* @fn bool partie::playerNeedRefresh( unsigned char idJoueur )
-* @brief Indique si les données graphiques du joueur ont besoin d'un raffraichissement graphique.
-*/
-bool partie::playerNeedRefresh( unsigned char idJoueur )
-{
-	if( idJoueur >= c_nb_joueurs )
-		stdErrorE("idJoueur=%u alors qu'il n'y a que %d joueur ! Donnez un nombre entre [0 et %d]", idJoueur, c_nb_joueurs, c_nb_joueurs-1);
-
-	for( unsigned int i=0; i<c_listPlayerRefresh.size(); i++ )
-	{
-		if( c_listPlayerRefresh.at(i) == idJoueur ){
-			c_listPlayerRefresh.erase(c_listPlayerRefresh.begin()+i);
-			return true;
-		}
-	}
-
-	return false;
-}
-
-
-/***************************************************************************//*!
 * @fn char partie::main( libAff * afficherMapEtEvent )
 * @brief Lance le jeu
 * @param[in] afficherMapEtEvent La fonction qui va servir à afficher la map
@@ -247,12 +227,11 @@ char partie::main( libAff * afficherMapEtEvent )
 	bool continuerScanClavier=1;
 	options* opt = options::getInstance();
 	bonus::s_Event bonusEvent;
-	char JoueurGagnant = 0;// Aucune joueur n'a gagné par défaut
 	s_EventBombe e;
 	SOCKET s;
 	uint32_t X=0, Y=0;// Utilisé uniquement lors de partie online ( host & client )
 	clavier::t_touche onlineClavier;// Utilisé uniquement lors de partie online ( host & client )
-	c_winnerName.clear();
+	c_winnerID = 0;// Aucune joueur n'a gagné par défaut
 	c_timerAttak = 0;
 	bool envoyerInfoJoueur = 0;
 
@@ -483,8 +462,7 @@ char partie::main( libAff * afficherMapEtEvent )
 						}
 						case '4': {// Fin de partie
 							c_buffer[strlen(c_buffer)-1] = 0;
-							JoueurGagnant = c_buffer[2]-'0';
-							c_winnerName = c_buffer+4;
+							c_winnerID = c_buffer[2]-'0';
 							break;
 						}
 						case '5': {// Nombre de joueur
@@ -520,7 +498,7 @@ char partie::main( libAff * afficherMapEtEvent )
 
 		bonus::unInitBonusProp();
 
-		return JoueurGagnant;
+		return c_winnerID;
 	}
 
 	/*##########################################################################
@@ -531,7 +509,7 @@ char partie::main( libAff * afficherMapEtEvent )
 	{
 		c_joueurs[i].defArmements( new bonus() );
 		c_joueurs[i].armements()->param_Par_Defaut();
-		c_listPlayerRefresh.push_back(i);
+		c_joueurs[i].defNeed_Refresh(1);
 	}
 
 	// On génère la map
@@ -540,14 +518,10 @@ char partie::main( libAff * afficherMapEtEvent )
 
 	if( c_connection == CNX_Host ){// Si on est en mode serveur alors on connecte le serveur
 		// On détermine le nombre maximum de player online
-		unsigned int nbLocal=0;
-		for( i=0; i<c_nb_joueurs; i++ )
-			nbLocal += c_joueurs[i].isLocal();
-
-		//stdError("Nombre de player online max: %u",c_nb_joueurs-nbLocal);
+		unsigned char nbLocal=nbJoueursReel();
 
 		// Ajustement des paramètres
-		c_server->setNbClientMax(c_nb_joueurs-nbLocal);
+		c_server->setNbClientMax(c_nb_joueurs-nbJoueursReel());
 		c_server->Listening();
 
 		// Teste sur les types
@@ -628,6 +602,10 @@ char partie::main( libAff * afficherMapEtEvent )
 						c_listEventBombe.push_back( e );
 						break;
 					}
+					case bonus::inversseur_touche: {
+						c_joueurs[i].armements()->decQuantiteUtilisable(bonus::inversseur_touche);
+						break;
+					}
 					default:
 						stdError("Event bonus non pris en charge bonus=%d", bonusEvent.type);
 						break;
@@ -648,8 +626,13 @@ char partie::main( libAff * afficherMapEtEvent )
 					break;
 				}
 				case clavier::haut: {
-					c_joueurs[i].defOrientation(perso::ORI_haut);
-					deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()-1, i );
+					if( c_joueurs[i].armements()->quantiteUtilisable(bonus::inversseur_touche) ){
+						c_joueurs[i].defOrientation(perso::ORI_bas);
+						deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()+1, i );
+					}else{
+						c_joueurs[i].defOrientation(perso::ORI_haut);
+						deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()-1, i );
+					}
 					// Suplace pour afficher les mouvement de rotation lorsque le perso ne bouge pas vraiment
 					c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
 					continuerScanClavier = 0;
@@ -657,24 +640,42 @@ char partie::main( libAff * afficherMapEtEvent )
 					break;
 				}
 				case clavier::bas: {
-					c_joueurs[i].defOrientation(perso::ORI_bas);
-					deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()+1, i );
+					if( c_joueurs[i].armements()->quantiteUtilisable(bonus::inversseur_touche) ){
+						c_joueurs[i].defOrientation(perso::ORI_haut);
+						deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()-1, i );
+					}else{
+						c_joueurs[i].defOrientation(perso::ORI_bas);
+						deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()+1, i );
+					}
+					// Suplace pour afficher les mouvement de rotation lorsque le perso ne bouge pas vraiment
 					c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
 					continuerScanClavier = 0;
 					envoyerInfoJoueur = 1;
 					break;
 				}
 				case clavier::droite: {
-					c_joueurs[i].defOrientation(perso::ORI_droite);
-					deplacer_le_Perso_A( c_joueurs[i].X()+1, c_joueurs[i].Y(), i );
+					if( c_joueurs[i].armements()->quantiteUtilisable(bonus::inversseur_touche) ){
+						c_joueurs[i].defOrientation(perso::ORI_gauche);
+						deplacer_le_Perso_A( c_joueurs[i].X()-1, c_joueurs[i].Y(), i );
+					}else{
+						c_joueurs[i].defOrientation(perso::ORI_droite);
+						deplacer_le_Perso_A( c_joueurs[i].X()+1, c_joueurs[i].Y(), i );
+					}
+					// Suplace pour afficher les mouvement de rotation lorsque le perso ne bouge pas vraiment
 					c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
 					continuerScanClavier = 0;
 					envoyerInfoJoueur = 1;
 					break;
 				}
 				case clavier::gauche: {
-					c_joueurs[i].defOrientation(perso::ORI_gauche);
-					deplacer_le_Perso_A( c_joueurs[i].X()-1, c_joueurs[i].Y(), i );
+					if( c_joueurs[i].armements()->quantiteUtilisable(bonus::inversseur_touche) ){
+						c_joueurs[i].defOrientation(perso::ORI_droite);
+						deplacer_le_Perso_A( c_joueurs[i].X()+1, c_joueurs[i].Y(), i );
+					}else{
+						c_joueurs[i].defOrientation(perso::ORI_gauche);
+						deplacer_le_Perso_A( c_joueurs[i].X()-1, c_joueurs[i].Y(), i );
+					}
+					// Suplace pour afficher les mouvement de rotation lorsque le perso ne bouge pas vraiment
 					c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
 					continuerScanClavier = 0;
 					envoyerInfoJoueur = 1;
@@ -1015,8 +1016,7 @@ char partie::main( libAff * afficherMapEtEvent )
 			)
 			&& c_joueurs[i].armements()
 		){
-			JoueurGagnant = i+1;// ( on veut un nombre entre 1 et ... )
-			c_winnerName = *c_joueurs[i].nom();
+			c_winnerID = i+1;// ( on veut un nombre entre 1 et ... )
 			break;
 		}
 	}
@@ -1024,7 +1024,7 @@ char partie::main( libAff * afficherMapEtEvent )
 	// Si on est host, alors, on envoie le nom du gagnant au clients
 	if( c_connection == CNX_Host ){
 		memset(c_buffer, 0, PACK_bufferSize);// On vide le buffer
-		sprintf(c_buffer, "4:%d,%s²", (int)JoueurGagnant, c_winnerName.c_str());
+		sprintf(c_buffer, "4:%c²", c_winnerID+'0');
 		for( i=0; i<c_nb_joueurs; i++ )
 		{
 			// Si le joueur est local où non connecté, on passe
@@ -1032,6 +1032,8 @@ char partie::main( libAff * afficherMapEtEvent )
 				continue;
 
 			c_server->send_message(c_joueurs[i].socket(), c_buffer, PACK_bufferSize);// Envoie du signal: Fin de partie + Nom du joueur gagnant. Note => Fin de transmition.
+			c_server->rmClient(c_joueurs[i].socket());
+			c_joueurs[i].defSocket(INVALID_SOCKET);
 		}
 	}
 
@@ -1042,7 +1044,7 @@ char partie::main( libAff * afficherMapEtEvent )
 		c_server->endListen();
 
 	if( nbJoueurVivant() == 1 )
-		return JoueurGagnant;
+		return c_winnerID;
 
 	return 0;
 }
@@ -1051,6 +1053,7 @@ char partie::main( libAff * afficherMapEtEvent )
 /***************************************************************************//*!
 * @fn void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned char joueur )
 * @brief Test si un personnage peut se déplacer à un endroit.
+*
 * Si on peut déplacer le perso dans la zone demandé => on déplace le perso
 * SINON rien.
 * C'est aussi par cette fonction que l'on :
@@ -1074,6 +1077,15 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 	if( joueur >= c_nb_joueurs )
 		stdErrorE("Le joueur %d n'existe pas ! Impossible de déplacer le joueur !", joueur);
 
+	/***********************************************************************
+	* On check les dim avant tout !
+	* NOTE: newX, newY unsigned ! => pas besoin de check => 0
+	*/
+	if( !(	/*0 <= newX &&*/ newX < c_map->X()// On vérif si on ne dépasse pas la
+		&&	/*0 <= newY &&*/ newY < c_map->Y()// taille de la map
+	))
+		return ;
+
 	// Ce qui a sur la nouvelle case
 	elementNouvellePosition = c_map->getBlock(newX, newY)->element;
 
@@ -1082,9 +1094,7 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 	* Si l'une d'elle pas bonne => return void;
 	* NOTE: newX, newY unsigned ! => pas besoin de check => 0
 	*/
-	if( !(	/*0 <= newX &&*/ newX < c_map->X()// On vérif si on ne dépasse pas la
-		&&	/*0 <= newY &&*/ newY < c_map->Y()// taille de la map
-		&&	elementNouvellePosition != map::Mur_destructible		// On vérif s'il n'y a pas
+	if( !(	elementNouvellePosition != map::Mur_destructible		// On vérif s'il n'y a pas
 		&&	elementNouvellePosition != map::Mur_INdestructible		// d'objet solid
 		&& (
 				(
@@ -1251,12 +1261,72 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 				stdErrorE("BONUS: Problème de pointeur ! c_map->getBlock(%u, %u)->joueur = 0 !", newX, newY);
 			if( !c_map->getBlock(newX, newY)->joueur->size() )
 				stdErrorE("BONUS: Problème de contenu ! c_map->getBlock(%u, %u)->joueur->size() = 0 !", newX, newY);
-			if( c_map->getBlock(newX, newY)->joueur->at(0) >= bonus::NB_ELEMENT_t_Bonus )
+
+			bonus::t_Bonus b = (bonus::t_Bonus)c_map->getBlock(newX, newY)->joueur->at(0);
+
+			if( b >= bonus::NB_ELEMENT_t_Bonus )
 				stdErrorE("BONUS: Problème de contenu ! c_map->getBlock(%u, %u)->joueur->at(0){%u} >= {%d}NB_ELEMENT_t_Bonus !", newX, newY, (unsigned int)c_map->getBlock(newX, newY)->joueur->at(0), bonus::NB_ELEMENT_t_Bonus);
 			// Ajout de l'armement
 			if( !c_joueurs[joueur].armements() )
 				stdErrorE("Le joueur %d n'a pas d'armement ! Erreur lors du déplacement sur le bonus !", joueur);
-			c_joueurs[joueur].armements()->incQuantiteMAX_en_stock((bonus::t_Bonus)c_map->getBlock(newX, newY)->joueur->at(0));
+
+
+			/*********************************************************************
+			* Bonus spécial : Le téléporteur
+			*/
+			if( b == bonus::teleporteur )
+			{
+				unsigned int rj, rx, ry;
+				do{
+					rj = myRand(0, c_nb_joueurs-1);
+				}while( !c_joueurs[rj].armements() );
+
+				do{
+					rx = myRand(0, c_map->X()-1);
+					ry = myRand(0, c_map->Y()-1);
+				}while( rx >= c_map->X() || ry >= c_map->Y() || c_map->getBlock(rx, ry)->element != map::vide );
+
+				if( rj != joueur ){
+					deplacer_le_Perso_A(rx, ry, rj);
+				}else{
+					c_map->setBlock(newX, newY, map::vide);// On surrpime tout ce qui avait avant
+					// Placement du perso
+					c_map->setBlock(rx, ry, map::UN_joueur);
+					c_map->ajouterInfoJoueur(rx, ry, joueur+1);
+					c_joueurs[joueur].defPos(rx, ry);
+					break;
+				}
+
+			}else if( b == bonus::inversseur_touche ){
+				/***************************************************************
+				* Bonus inversseur de touches
+				*/
+				unsigned char rj;
+				do{
+					rj = myRand(0, c_nb_joueurs-1);
+				}while( !c_joueurs[rj].armements() || rj == joueur );
+
+				if( c_joueurs[rj].armements()->quantiteMAX(bonus::inversseur_touche) )
+					c_joueurs[rj].armements()->incQuantiteUtilisable_Event(bonus::inversseur_touche);
+				else
+					c_joueurs[rj].armements()->incQuantiteMAX_en_stock_Event(bonus::inversseur_touche);
+
+			}else if( b == bonus::force_explosion ){
+				/***************************************************************
+				* Bonus inversseur de touches
+				*/
+				for( unsigned char j=0; j<c_nb_joueurs; j++ )
+				{
+					if( c_joueurs[j].armements() )
+						c_joueurs[j].armements()->forceTimeOut();
+				}
+
+			}else{
+				/***************************************************************
+				* Bonus classique
+				*/
+				c_joueurs[joueur].armements()->incQuantiteMAX_en_stock(b);
+			}
 			c_map->setBlock(newX, newY, map::vide);// On surrpime tout ce qui avait avant
 			// Placement du perso
 			c_map->setBlock(newX, newY, map::UN_joueur);
@@ -1353,6 +1423,7 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 /***************************************************************************//*!
 * @fn void partie::placer_perso_position_initial( unsigned char joueur )
 * @brief Place un perso a sa position d'initial
+*
 * Si la case initial, contient :
 *		- un bonus, => ramasse le bonus
 *		- des flammes -> nétoyage de la case puis on place le perso
@@ -1462,13 +1533,15 @@ void partie::placer_perso_position_initial( unsigned char joueur )
 * Le code contenu dans cette fonction devrait normalement aller directement dans la fonction
 * partie::checkInternalEvent(). Or sous SDL, le code contenu dans cette fonction provoque un bug
 * d'accélération des personnages. Ce bug ne touche que les joueurs qui ont des touches comprises
-* entre a et z. Même si le code n'est jamais traité, le bug ce produit quand même. De plsu si
+* entre a et z. Même si le code n'est jamais traité, le bug ce produit quand même. De plus si
 * l'on essaye de tracer le bug avec stdError(...) au niveau du clavier ou même au niveau de
 * perso::defPos( unsigned int Xpos, unsigned int Ypos ) alors le bug n'existe plus...<br />
 * Pour info, ce bug existe UNIQUEMENT depuis la création du bonus "Pousse Bombe"<br />
+* De plus le bug en question n'existe que sous windows. Le même code compilé sur GNU/UNIX marche parfaitement.<br />
 * A première vu, ce bout de code a lui seul fait apparaitre le bug, alors que le code
-* en lui même ne fait que lire des infos :
+* en lui même ne fait que lire des infos : (Cette ligne n'a pas besoin d'être traitée, pour que le bug apparaisse)
 * @code
+* // Le i provient du for( unsigned int i=0; i<c_listEventPouseBombe.size(); i++ )
 * c_joueurs[c_listEventPouseBombe.at(i).joueur].armements()->getEvent(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y);
 * @endcode
 */
@@ -1735,6 +1808,9 @@ void partie::checkInternalEvent()
 				if( r == 0 || r == 1 )
 					e.deflagration.push_back( coordonneeConvert(e.pos.x, e.pos.y+e.Nb_Repetition) );
 			}
+
+			if( !e.continue_negativeX && !e.continue_X && !e.continue_negativeY && !e.continue_Y )
+				e.Nb_Repetition = e.Nb_Repetition_MAX;
 
 			c_listEventBombe.at(i).Nb_Repetition++;
 			c_listEventBombe.at(i).repetionSuivante = clock() + bonus::VITESSE_flammes;// * CLOCKS_PER_SEC;// Ajustement du temps
@@ -2227,10 +2303,10 @@ void partie::unPackIt()
 	}
 	i++;// Pour virer la,
 
-	if( idJoueur > c_nb_joueurs )
+	if( idJoueur >= c_nb_joueurs )
 		stdErrorE("Erreur ! idJoueur incorrect ! idJoueur=%u, c_nb_joueurs=%u", idJoueur, c_nb_joueurs);
 
-	c_listPlayerRefresh.push_back(idJoueur);
+	c_joueurs[idJoueur].defNeed_Refresh(1);
 
 	/***************************************************************************
 	* On détermine l'orientation du joueur
@@ -2461,6 +2537,5 @@ void partie::ajouterNouvelleConnection( SOCKET s )
 	strcpy(c_buffer, "0:end");
 	c_server->send_message( s, c_buffer, PACK_bufferSize);// Fin de transmition
 
-	c_listPlayerRefresh.push_back(idJoueur);
+	c_joueurs[idJoueur].defNeed_Refresh(1);
 }
-                                                                                                                                                                                                                                                                                  

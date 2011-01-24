@@ -20,8 +20,13 @@
 *	- Lors de la colision de 2 flammes
 *
 * A FAIRE
-*	- Mettre des const la où il faut dans les *.h
-*	- Optimiser avec des inline
+*	- Bonus: super flamme
+*	- fin partie
+*	- menu mieux agencé
+*	- inverseur de touche sur le client
+*	- perso animer
+*	- Finir de normaliser avec Marge_menu
+*	- faire que les menus réagissent à un seul click au lieu de 2
 *
 */
 
@@ -130,7 +135,7 @@ int main( int argc, char* arvg[] )
 										m.forcerRafraichissement();
 										tmp = jeu.main( m.afficherMapEtEvent );
 										if( tmp >= 1 )
-											sprintf(finPartie, "Le joueur(%d) %s a gagne !", tmp, jeu.getWinnerName().c_str());
+											sprintf(finPartie, "Le joueur(%d) %s a gagne !", tmp, jeu.joueur(jeu.getWinnerID()-1)->nom()->c_str());
 										if( tmp == 0 )
 											sprintf(finPartie, "Match nul ! Pas de gagnant !");
 
@@ -185,7 +190,7 @@ int main( int argc, char* arvg[] )
 														m.forcerRafraichissement();
 														tmp = jeu.main( m.afficherMapEtEvent );
 														if( tmp >= 1 )
-															sprintf(finPartie, "Le joueur(%d) %s a gagne !", tmp, jeu.getWinnerName().c_str());
+															sprintf(finPartie, "Le joueur(%d) %s a gagne !", tmp, jeu.joueur(jeu.getWinnerID()-1)->nom()->c_str());
 														if( tmp == 0 )
 															sprintf(finPartie, "Match nul ! Pas de gagnant !");
 
@@ -223,7 +228,7 @@ int main( int argc, char* arvg[] )
 													m.forcerRafraichissement();
 													tmp = jeu.main( m.afficherMapEtEvent );
 													if( tmp >= 1 )
-														sprintf(finPartie, "Le joueur(%d) %s a gagne !", tmp, jeu.getWinnerName().c_str());
+														sprintf(finPartie, "Le joueur(%d) %s a gagne !", tmp, jeu.joueur(jeu.getWinnerID()-1)->nom()->c_str());
 													if( tmp == 0 )
 														sprintf(finPartie, "Match nul ! Pas de gagnant !");
 

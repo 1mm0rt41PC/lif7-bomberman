@@ -47,7 +47,7 @@ bonus::s_bonus_proprieter* bonus::bonusProp()
 
 	C_bonusProp = new s_bonus_proprieter[NB_ELEMENT_t_Bonus];
 
-	C_bonusProp[bombe].probabiliter_pop = 40;// 40% de pop
+	C_bonusProp[bombe].probabiliter_pop = 60;// 60% de pop
 	C_bonusProp[bombe].quantite_MAX_Ramassable = 20;
 	C_bonusProp[bombe].duree = CLOCKS_PER_SEC+CLOCKS_PER_SEC/2;// 1.5secs avant explosion
 
@@ -55,16 +55,29 @@ bonus::s_bonus_proprieter* bonus::bonusProp()
 	C_bonusProp[puissance_flamme].quantite_MAX_Ramassable = 15;
 	C_bonusProp[puissance_flamme].duree = -1;
 
-	C_bonusProp[declancheur].probabiliter_pop = 25;// 25% de pop
+	C_bonusProp[declancheur].probabiliter_pop = 30;// 30% de pop
 	C_bonusProp[declancheur].quantite_MAX_Ramassable = 1;
 	C_bonusProp[declancheur].duree = -1;
 
-	C_bonusProp[pousse_bombe].probabiliter_pop = 15;// 15% de pop
+	C_bonusProp[pousse_bombe].probabiliter_pop = 30;// 30% de pop
 	C_bonusProp[pousse_bombe].quantite_MAX_Ramassable = 1;
+	C_bonusProp[pousse_bombe].duree = -1;
 
 	C_bonusProp[vie].probabiliter_pop = 5;// 5% de pop
 	C_bonusProp[vie].quantite_MAX_Ramassable = 10;
 	C_bonusProp[vie].duree = -1;
+
+	C_bonusProp[teleporteur].probabiliter_pop = 30;// 30% de pop
+	C_bonusProp[teleporteur].quantite_MAX_Ramassable = 1;// Au moins 1, sinan pas pop
+	C_bonusProp[teleporteur].duree = -1;
+
+	C_bonusProp[inversseur_touche].probabiliter_pop = 25;// 25% de pop
+	C_bonusProp[inversseur_touche].quantite_MAX_Ramassable = 1;
+	C_bonusProp[inversseur_touche].duree = CLOCKS_PER_SEC*10;
+
+	C_bonusProp[force_explosion].probabiliter_pop = 30;// 30% de pop
+	C_bonusProp[force_explosion].quantite_MAX_Ramassable = 1;// Au moins 1, sinan pas pop
+	C_bonusProp[force_explosion].duree = -1;
 
 	return C_bonusProp;
 }
@@ -109,6 +122,15 @@ void bonus::param_Par_Defaut()// Pour une partie classique ( F4A )
 
 	c_liste[vie].quantite_utilisable = 0;
 	c_liste[vie].quantite_MAX_en_stock = 0;
+
+	c_liste[teleporteur].quantite_utilisable = 0;
+	c_liste[teleporteur].quantite_MAX_en_stock = 0;
+
+	c_liste[inversseur_touche].quantite_utilisable = 0;
+	c_liste[inversseur_touche].quantite_MAX_en_stock = 0;
+
+	c_liste[force_explosion].quantite_utilisable = 0;
+	c_liste[force_explosion].quantite_MAX_en_stock = 0;
 }
 
 
@@ -190,6 +212,35 @@ bool bonus::incQuantiteUtilisable( t_Bonus b )
 
 
 /***************************************************************************//*!
+* @fn bool bonus::incQuantiteUtilisable_Event( t_Bonus b )
+* @brief Incrémente quantite_utilisable et active l'event
+* @param[in] b Le bonus que l'on veut modifier
+* @return Renvoie vrais si on a pu incrémenter la valeur
+*
+* Cette fonction permet d'activer le déclancheur d'event du bonus
+* @warning Le déclancheur d'event va ajouter +1 a ce bonus au bout de C_bonusProp[b].duree.<br />C'est a vous de traiter l'objet
+*/
+bool bonus::incQuantiteUtilisable_Event( t_Bonus b )
+{
+	if( bombe > b || b >= NB_ELEMENT_t_Bonus ){
+		stdError("Bonus non trouvé ou erreur > bonus=%d", b);
+		return false;
+	}
+
+	if( c_liste[b].quantite_utilisable+1 <= c_liste[b].quantite_MAX_en_stock ){
+		c_liste[b].quantite_utilisable++;
+		// Création de l'event
+		s_Event e;
+		e.type = b;
+		e.finEvent = clock() + C_bonusProp[b].duree;// Ajustement du temps
+		c_listEvent.push_back( e );// On ajout l'event à la liste des event
+		return true;
+	}
+	return false;
+}
+
+
+/***************************************************************************//*!
 * @fn bool bonus::incQuantiteMAX_en_stock( t_Bonus b )
 * @brief Incrémente quantite_MAX_en_stock et quantite_utilisable
 * @return Renvoie vrais si on a pu incrémenter la valeur
@@ -204,6 +255,37 @@ bool bonus::incQuantiteMAX_en_stock( t_Bonus b )
 	if( c_liste[b].quantite_MAX_en_stock+1 <= C_bonusProp[b].quantite_MAX_Ramassable ){
 		c_liste[b].quantite_utilisable++;
 		c_liste[b].quantite_MAX_en_stock++;
+		return true;
+	}
+	return false;
+}
+
+
+/***************************************************************************//*!
+* @fn bool bonus::incQuantiteMAX_en_stock_Event( t_Bonus b )
+* @brief Incrémente quantite_MAX_en_stock et quantite_utilisable puis active l'event
+* @param[in] b Le bonus que l'on veut modifier
+* @return Renvoie vrais si on a pu incrémenter la valeur
+*
+* Cette fonction permet d'activer le déclancheur d'event du bonus
+* @warning Le déclancheur d'event va ajouter +1 a ce bonus au bout de C_bonusProp[b].duree.<br />C'est a vous de traiter l'objet
+*/
+bool bonus::incQuantiteMAX_en_stock_Event( t_Bonus b )
+{
+	if( bombe > b || b >= NB_ELEMENT_t_Bonus ){
+		stdError("Bonus non trouvé ou erreur > bonus=%d", b);
+		return false;
+	}
+
+	if( c_liste[b].quantite_MAX_en_stock+1 <= C_bonusProp[b].quantite_MAX_Ramassable ){
+		c_liste[b].quantite_utilisable++;
+		c_liste[b].quantite_MAX_en_stock++;
+
+		// Création de l'event
+		s_Event e;
+		e.type = b;
+		e.finEvent = clock() + C_bonusProp[b].duree;// Ajustement du temps
+		c_listEvent.push_back( e );// On ajout l'event à la liste des event
 		return true;
 	}
 	return false;

@@ -57,7 +57,7 @@ bool client::connection()
 	c_addr.sin_addr			= c_serverAdress;
 	// c_addr.sin_zero // padding ( packed )
 
-	setTCP_NoDelay( true );
+	setTCP_NoDelay( __TCP_NODELAY__ );
 
 	if( connect(c_listenSocket, (SOCKADDR *)&c_addr, sizeof(c_addr)) == SOCKET_ERROR ){
 		stdError("Erreur(%d) lors de la connection au serveur. Detail: <%s>", SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
