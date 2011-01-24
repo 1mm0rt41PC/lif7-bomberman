@@ -92,7 +92,15 @@ void map::setBlock( unsigned int X, unsigned int Y, map::t_type what )
 		stdErrorE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, what=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, what);
 
 	c_block[X * c_taille.x + Y].element = what;
-	c_listDesChangement.push_back( coordonneeConvert(X,Y) );
+
+	if( c_listDesChangement.size() ){
+		if( c_listDesChangement.back().x != X && c_listDesChangement.back().y != Y )
+			c_listDesChangement.push_back( coordonneeConvert(X,Y) );
+		else
+			c_listDesChangement.push_back( coordonneeConvert(X,Y) );
+	}else{
+		c_listDesChangement.push_back( coordonneeConvert(X,Y) );
+	}
 
 	// Nétoyage des méta données si le block est vide
 	if( what == vide && c_block[X * c_taille.x + Y].joueur )

@@ -232,7 +232,7 @@ bool baseClientServer::TCP_NoDelay( SOCKET s )
 
 
 /***************************************************************************//*!
-* @fn void baseClientServer::printAllBuffer( const char buffer[], unsigned int bufferSize, const char file[], unsigned int line )
+* @fn static void baseClientServer::printAllBuffer( const char buffer[], unsigned int bufferSize, const char file[], unsigned int line )
 * @brief Permet de voir TOUT le buffer
 * @param[in] buffer		Le buffer a afficher
 * @param[in] bufferSize	La taille du buffer. [0 à bufferSize[

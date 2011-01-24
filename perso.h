@@ -26,13 +26,15 @@ class perso
 
 	private:
 		// struct {
-		std::string c_nom;
-		s_Coordonnees c_pos;
-		bonus* c_armements;
-		t_Orientation c_orientation;
-		bool c_isLocal;
-		SOCKET c_MySocket;//!< Socket a utiliser pour le perso. Valeur par defaut: INVALID_SOCKET
-		//clavier c_Touches; <- CLAVIER géré en global ( options général )
+			std::string c_nom;
+			s_Coordonnees c_pos;
+			s_Coordonnees c_OldPos;
+			bonus* c_armements;
+			t_Orientation c_orientation;
+			SOCKET c_MySocket;//!< Socket a utiliser pour le perso. Valeur par defaut: INVALID_SOCKET
+			bool c_isLocal;
+			bool c_need_refresh;//<! Permet de dire si le perso a besoin que son interface de présentation soit raffraichit
+			//clavier c_Touches; <- CLAVIER géré en global ( options général )
 		// }
 
 	public:
@@ -42,25 +44,34 @@ class perso
 		~perso();
 
 		// Modificateurs
-		void defNom( std::string nom );
+		inline void defNom( std::string nom );
 		void defPos( unsigned int Xpos, unsigned int Ypos );
-		void defPos( s_Coordonnees pos );
+		void defPos( const s_Coordonnees& pos );
+		inline void defOldPos( unsigned int Xpos, unsigned int Ypos );
+		inline void defOldPos( const s_Coordonnees& OldPos );
 		void defX( unsigned int Xpos );
 		void defY( unsigned int Ypos );
+		inline void defNeed_Refresh( bool refresh );
 		void defArmements( bonus* a );
-		void defOrientation( t_Orientation ori );
-		void defLocal( bool isLocal );
-		void defSocket( SOCKET MySocket );
+		inline void defOrientation( t_Orientation ori );
+		inline void defLocal( bool isLocal );
+		inline void defSocket( SOCKET MySocket );
 
 		// Accesseurs
 		const std::string* nom() const;
-		unsigned int X() const;
-		unsigned int Y() const;
+		inline unsigned int X() const;
+		inline unsigned int Y() const;
+		inline unsigned int old_X() const;
+		inline unsigned int old_Y() const;
+		inline const s_Coordonnees* old_Pos() const;
 		bool estVivant() const;
-		bonus* armements() const;
-		t_Orientation orientation() const;
-		bool isLocal() const;
-		SOCKET socket() const;
+		inline bonus* armements() const;
+		inline t_Orientation orientation() const;
+		inline bool isLocal() const;
+		inline SOCKET socket() const;
+		inline bool need_refresh();
 };
+
+#include "perso.inl"
 
 #endif

@@ -47,12 +47,13 @@ inline partie::t_Connection partie::connection() const
 
 
 /***************************************************************************//*!
-* @fn std::string partie::getWinnerName() const
-* @brief Renvoie le nom du gagnant de la partie
+* @fn unsigned char partie::getWinnerID() const
+* @brief Renvoie l'ID du gagnant de la partie
+* @warning Attention l'ID est comprise entre [1-c_nb_joueur] ! Si = 0 => Pas de winner !
 */
-inline std::string partie::getWinnerName() const
+inline unsigned char partie::getWinnerID() const
 {
-	return c_winnerName;
+	return c_winnerID;
 }
 
 

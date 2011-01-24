@@ -127,3 +127,12 @@ void QList<Type>::remove( unsigned int at )
 	c_list = tmp;
 	c_nb_ojb--;
 }
+
+
+template<class Type>
+void QList<Type>::clear()
+{
+	delete[] c_list;
+	c_nb_ojb = 0;
+	c_list = 0;
+}

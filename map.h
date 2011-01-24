@@ -41,20 +41,12 @@ class map
 			bombe_poser,
 			// Bonus
 			bonus,
-			//gain_bombe,
-			//gain_puissance_flamme,
-			//gain_declancheur_manuel,
 			// Player
 			UN_joueur,
 			plusieurs_joueurs,
 			// Combinaison
 			bombe_poser_AVEC_UN_joueur,
 			bombe_poser_AVEC_plusieurs_joueurs
-			// Points de départ
-			//point_de_depart_j1,
-			//point_de_depart_j2,
-			//point_de_depart_j3,
-			//point_de_depart_j4
 		};
 
 

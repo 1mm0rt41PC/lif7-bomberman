@@ -44,6 +44,9 @@ class bonus
 			declancheur,
 			pousse_bombe,
 			vie,
+			teleporteur,
+			inversseur_touche,
+			force_explosion,
 
 			NB_ELEMENT_t_Bonus,
 			// Signal pour les event
@@ -128,7 +131,9 @@ class bonus
 
 		// Modificateurs
 		bool incQuantiteUtilisable( t_Bonus b );// Incrémenter quantite_utilisable
+		bool incQuantiteUtilisable_Event( t_Bonus b );// Incrémenter quantite_utilisable + activation du système d'event
 		bool incQuantiteMAX_en_stock( t_Bonus b );// Incrémenter quantite_MAX_en_stock
+		bool incQuantiteMAX_en_stock_Event( t_Bonus b );// Incrémenter quantite_MAX_en_stock + activation du système d'event
 		bool decQuantiteUtilisable( t_Bonus b );// Décrémenter quantite_utilisable
 		bool decQuantiteUtilisable( t_Bonus b, unsigned int x, unsigned int y );
 		inline bool decQuantiteUtilisable( t_Bonus b, s_Coordonnees pos );

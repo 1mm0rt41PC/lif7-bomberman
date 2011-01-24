@@ -54,4 +54,24 @@ inline bool coordonneeEgal( const s_Coordonnees& c1, const s_Coordonnees& c2 )
 	return ( c1.x == c2.x && c1.y == c2.y );
 }
 
+
+/*!
+* @fn bool operator==( const s_Coordonnees& c1, const s_Coordonnees& c2 )
+* @brief Permet comparer le contenue de 2 variables de type s_Coordonnees
+* @param[in] c1 Coordonnées à comparer avec c2
+* @param[in] c2 Coordonnées à comparer avec c1
+*
+* Utilisation :
+* @code
+*	s_Coordonnees pos={0,0};
+*	s_Coordonnees pos2={1,0};
+*	if( pox == pos2 )
+*		printf("==");
+* @endcode
+*/
+inline bool operator==( const s_Coordonnees& c1, const s_Coordonnees& c2 )
+{
+	return ( c1.x == c2.x && c1.y == c2.y );
+}
+
 #endif
