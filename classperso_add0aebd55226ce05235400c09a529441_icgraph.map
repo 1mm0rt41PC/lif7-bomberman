@@ -1,0 +1,14 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="212,5,436,35"/>
+<area shape="rect" id="node5" href="$classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="196,59,452,88"/>
+<area shape="rect" id="node7" href="$classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="503,163,740,192"/>
+<area shape="rect" id="node9" href="$classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1355,212,1453,241"/>
+<area shape="rect" id="node13" href="$classpartie.html#aa5cca051f9f07d1b267f5a4df8dabd24" title="Scan les event du bonus pousse bombe." alt="" coords="789,368,1069,397"/>
+<area shape="rect" id="node18" href="$classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="523,216,720,245"/>
+<area shape="rect" id="node21" href="$classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="557,292,685,321"/>
+<area shape="rect" id="node28" href="$classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="201,264,447,293"/>
+<area shape="rect" id="node33" href="$classpartie.html#a1c02eb26617ee76e5bae9f75e27f600c" title="Désempaquette le buffer et met les données dans le joueur correspondant." alt="" coords="1152,393,1272,423"/>
+<area shape="rect" id="node11" href="$main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1503,212,1556,241"/>
+<area shape="rect" id="node15" href="$classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="1119,289,1305,319"/>
+<area shape="rect" id="node23" href="$classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="824,315,1035,344"/>
+</map>

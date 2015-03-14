@@ -1,0 +1,726 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la classe options</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="#pub-static-methods">Fonctions membres publiques statiques</a> &#124;
+<a href="#pri-methods">Fonctions membres privées</a> &#124;
+<a href="#pri-attribs">Attributs privés</a> &#124;
+<a href="#pri-static-attribs">Attributs privés statiques</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la classe options</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="options" -->
+<p>Gère les options.  
+<a href="#_details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="options_8h_source.html">options.h</a>&gt;</code></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Graphe de collaboration de options:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions__coll__graph.png" border="0" usemap="#options_coll__map" alt="Collaboration graph"/></div>
+<map name="options_coll__map" id="options_coll__map">
+<area shape="rect" id="node3" href="classclavier.html" title="Gère les claviers." alt="" coords="40,6,197,282"/></map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">légende</a>]</span></center></div>
+
+<p><a href="classoptions-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#acb1a8837861a00fa69ed734598ee2b07">configParDefaut</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet de charger la config par défaut ( port &amp; clavier ).  <a href="#acb1a8837861a00fa69ed734598ee2b07"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#ade7f5fcd45bd4a6c56c4064ce5c2f915">remise_a_zero</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Remet (et enregistre) les paramètres par défaut.  <a href="#ade7f5fcd45bd4a6c56c4064ce5c2f915"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#aacf689ad8af10573989f26fd5de3c3aa">defPort</a> (unsigned int port)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet de définir un port compris entre [0 et 9999].  <a href="#aacf689ad8af10573989f26fd5de3c3aa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#a4eeb468347a4f33dee3b565a35efe7a8">port</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Donne le port utilisé pour le jeu.  <a href="#a4eeb468347a4f33dee3b565a35efe7a8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classclavier.html">clavier</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#a281d1464d4a4c827bcbac56ab3c9be94">clavierJoueur</a> (unsigned char clavier_numero)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie le clavier numéro {clavier_numero}.  <a href="#a281d1464d4a4c827bcbac56ab3c9be94"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classclavier.html">clavier</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#a2c3ea73f7f4333145a8a134dc942ec58">operator[]</a> (unsigned char clavier_numero)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Alias de <a class="el" href="classoptions.html#a281d1464d4a4c827bcbac56ab3c9be94" title="Renvoie le clavier numéro {clavier_numero}.">options::clavierJoueur( unsigned char clavier_numero )</a>.  <a href="#a2c3ea73f7f4333145a8a134dc942ec58"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#a30947cfb97ac0346a6557388cb6cab9b">enregistrerConfig</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet d'enregistrer la config.  <a href="#a30947cfb97ac0346a6557388cb6cab9b"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-methods"></a>
+Fonctions membres publiques statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classoptions.html">options</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4">getInstance</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initialise la class options.  <a href="#a3db3c367210272824e13e6bb1260e8c4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#a5be99ac3b975b5dd294788678147688f">uInit</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Désinitialise la class options.  <a href="#a5be99ac3b975b5dd294788678147688f"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-methods"></a>
+Fonctions membres privées</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8">supprimerFichierConfiguation</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Supprime le fichier de configuration.  <a href="#a1afbc8baea208c989f8dd96e82a4eef8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d">options</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initialise la class options.  <a href="#a41a256b4ba3b2d68a2d72b9245aa0c4d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#aeb360f60766b8cff26c8ec46c1bc78ca">~options</a> ()</td></tr>
+<tr><td colspan="2"><h2><a name="pri-attribs"></a>
+Attributs privés</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classclavier.html">clavier</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c">c_ClavierJoueur</a> [4]</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Les claviers dispo en mémoire ( 4 dans tous les cas ! ).  <a href="#aa9a73d0c547f40e9ed67706134e48f2c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#aaf14aa3eb46d54063ac815438d48ca34">c_port</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Le port utilisé ( par défaut 947 ).  <a href="#aaf14aa3eb46d54063ac815438d48ca34"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-static-attribs"></a>
+Attributs privés statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classoptions.html">options</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classoptions.html#aa731f5b457d9cdcd45dbaa21b3aa4e5e">c_Instance</a> = NULL</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">L'instance de notre class.  <a href="#aa731f5b457d9cdcd45dbaa21b3aa4e5e"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Gère les options. </p>
+<p>La class manipule le port de jeu et les claviers ( 4 min et 4 max =&gt; 4 claviers tout le temps ^^ ) <b>Il ne peut y avoir qu'une seule et unique instance de cette class !</b><br/>
+ <span style="text-decoration:underline;">Utilisation:</span><br/>
+</p>
+<ul>
+<li>Pour créer l'instance: option* optGeneral = <a class="el" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options.">options::getInstance()</a>;</li>
+<li>Pour récup l'instance: option* optGeneral = <a class="el" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options.">options::getInstance()</a>;</li>
+</ul>
+<p>Exemple: </p>
+<div class="fragment"><pre class="fragment"> <span class="comment">// Va créer l&#39;instance si elle n&#39;existe pas</span>
+ <span class="comment">// puis va charger la config</span>
+ <span class="comment">// puis attribut 5 comme port</span>
+ <a class="code" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options.">options::getInstance</a>()-&gt;<a class="code" href="classoptions.html#aacf689ad8af10573989f26fd5de3c3aa" title="Permet de définir un port compris entre [0 et 9999].">defPort</a>( 5 );
+
+ <a class="code" href="classclavier.html" title="Gère les claviers.">clavier</a>* j1 = <a class="code" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options.">options::getInstance</a>()-&gt;<a class="code" href="classoptions.html#a281d1464d4a4c827bcbac56ab3c9be94" title="Renvoie le clavier numéro {clavier_numero}.">clavierJoueur</a>( 1 );<span class="comment">// &lt;- Retourne le clavier du joueur 2 ( nombre de [0 à 3] )</span>
+ <span class="comment">// NOTE: Dans la ligne juste audessus, le port est bien 5</span>
+</pre></div><dl class="warning"><dt><b>Avertissement:</b></dt><dd>Utiliser <a class="el" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options.">options::getInstance()</a> pour récupérer l'instance général ( ou la créer si elle n'existe pas ) </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">À faire:</a></b></dt><dd>Prendre en compte le clavier pour SDL, SFML </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="options_8h_source.html#l00041">41</a> du fichier <a class="el" href="options_8h_source.html">options.h</a>.</p>
+<hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="a41a256b4ba3b2d68a2d72b9245aa0c4d"></a><!-- doxytag: member="options::options" ref="a41a256b4ba3b2d68a2d72b9245aa0c4d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">options::options </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Initialise la class options. </p>
+<p>Lit le fichier de configuration s'il existe, sinon on charge la config par défaut </p>
+<dl class="note"><dt><b>Note:</b></dt><dd>Fichier stocké sous la forme : {port} {nb_touches} {clavier[1]} ... {clavier[i]} </dd>
+<dd>
+fread( &amp;DATA, sizeof(DATA), nb_DATA, *stream ); (renvoie le nombre de varible correctement initialisées) </dd></dl>
+<dl class="warning"><dt><b>Avertissement:</b></dt><dd>NE PAS PASSER PAR LE CONSTRUCTEUR ! Utilisez <a class="el" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options.">options::getInstance()</a> </dd></dl>
+<dl class="see"><dt><b>Voir également:</b></dt><dd><a class="el" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options.">options::getInstance()</a> </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="options_8cpp_source.html#l00017">17</a> du fichier <a class="el" href="options_8cpp_source.html">options.cpp</a>.</p>
+
+<p>Références <a class="el" href="options_8h_source.html#l00045">c_ClavierJoueur</a>, <a class="el" href="options_8h_source.html#l00046">c_port</a>, <a class="el" href="options_8cpp_source.html#l00119">configParDefaut()</a>, et <a class="el" href="options_8cpp_source.html#l00208">remise_a_zero()</a>.</p>
+
+<p>Référencé par <a class="el" href="options_8cpp_source.html#l00090">getInstance()</a>.</p>
+
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_a41a256b4ba3b2d68a2d72b9245aa0c4d_cgraph.png" border="0" usemap="#classoptions_a41a256b4ba3b2d68a2d72b9245aa0c4d_cgraph" alt=""/></div>
+<map name="classoptions_a41a256b4ba3b2d68a2d72b9245aa0c4d_cgraph" id="classoptions_a41a256b4ba3b2d68a2d72b9245aa0c4d_cgraph">
+<area shape="rect" id="node3" href="classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp; clavier )." alt="" coords="440,32,619,61"/><area shape="rect" id="node9" href="classoptions.html#ade7f5fcd45bd4a6c56c4064ce5c2f915" title="Remet (et enregistre) les paramètres par défaut." alt="" coords="179,84,349,113"/><area shape="rect" id="node5" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&#39;une touche." alt="" coords="711,5,844,35"/><area shape="rect" id="node7" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche." alt="" coords="711,59,844,88"/><area shape="rect" id="node12" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration." alt="" coords="399,85,660,115"/></map>
+</div>
+</p>
+
+<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_a41a256b4ba3b2d68a2d72b9245aa0c4d_icgraph.png" border="0" usemap="#classoptions_a41a256b4ba3b2d68a2d72b9245aa0c4d_icgraph" alt=""/></div>
+<map name="classoptions_a41a256b4ba3b2d68a2d72b9245aa0c4d_icgraph" id="classoptions_a41a256b4ba3b2d68a2d72b9245aa0c4d_icgraph">
+<area shape="rect" id="node3" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options." alt="" coords="179,59,331,88"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#a5a5da4538be5bc5b7e78cc7f96d2f6a8" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="379,5,688,35"/><area shape="rect" id="node7" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="484,59,583,88"/><area shape="rect" id="node9" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="737,85,791,115"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aeb360f60766b8cff26c8ec46c1bc78ca"></a><!-- doxytag: member="options::~options" ref="aeb360f60766b8cff26c8ec46c1bc78ca" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">options::~options </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline, private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="options_8h_source.html#l00054">54</a> du fichier <a class="el" href="options_8h_source.html">options.h</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="a281d1464d4a4c827bcbac56ab3c9be94"></a><!-- doxytag: member="options::clavierJoueur" ref="a281d1464d4a4c827bcbac56ab3c9be94" args="(unsigned char clavier_numero)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classclavier.html">clavier</a> * options::clavierJoueur </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>clavier_numero</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie le clavier numéro {clavier_numero}. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>clavier_numero</em>&nbsp;</td><td>Le clavier que l'on veut ( un nombre entre [0 et 3] ) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Le port utilisé actuellement </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="options_8cpp_source.html#l00262">262</a> du fichier <a class="el" href="options_8cpp_source.html">options.cpp</a>.</p>
+
+<p>Références <a class="el" href="options_8h_source.html#l00045">c_ClavierJoueur</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__ncurses_8cpp_source.html#l00206">moteur_ncurses::afficherConfigurationClavier()</a>, <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>, et <a class="el" href="options_8cpp_source.html#l00279">operator[]()</a>.</p>
+
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_a281d1464d4a4c827bcbac56ab3c9be94_icgraph.png" border="0" usemap="#classoptions_a281d1464d4a4c827bcbac56ab3c9be94_icgraph" alt=""/></div>
+<map name="classoptions_a281d1464d4a4c827bcbac56ab3c9be94_icgraph" id="classoptions_a281d1464d4a4c827bcbac56ab3c9be94_icgraph">
+<area shape="rect" id="node3" href="classmoteur__ncurses.html#a5a5da4538be5bc5b7e78cc7f96d2f6a8" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="213,5,523,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="319,59,417,88"/><area shape="rect" id="node9" href="classoptions.html#a2c3ea73f7f4333145a8a134dc942ec58" title="Alias de options::clavierJoueur( unsigned char clavier_numero )." alt="" coords="297,112,439,141"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="572,59,625,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="acb1a8837861a00fa69ed734598ee2b07"></a><!-- doxytag: member="options::configParDefaut" ref="acb1a8837861a00fa69ed734598ee2b07" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void options::configParDefaut </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de charger la config par défaut ( port &amp; clavier ). </p>
+
+<p>Définition à la ligne <a class="el" href="options_8cpp_source.html#l00119">119</a> du fichier <a class="el" href="options_8cpp_source.html">options.cpp</a>.</p>
+
+<p>Références <a class="el" href="clavier_8h_source.html#l00032">clavier::bas</a>, <a class="el" href="options_8h_source.html#l00045">c_ClavierJoueur</a>, <a class="el" href="options_8h_source.html#l00046">c_port</a>, <a class="el" href="clavier_8h_source.html#l00036">clavier::declancheur</a>, <a class="el" href="clavier_8cpp_source.html#l00053">clavier::defTouche()</a>, <a class="el" href="clavier_8h_source.html#l00033">clavier::droite</a>, <a class="el" href="clavier_8h_source.html#l00034">clavier::gauche</a>, <a class="el" href="clavier_8h_source.html#l00031">clavier::haut</a>, <a class="el" href="clavier_8cpp_source.html#l00035">clavier::initClavier()</a>, et <a class="el" href="clavier_8h_source.html#l00035">clavier::lancerBombe</a>.</p>
+
+<p>Référencé par <a class="el" href="options_8cpp_source.html#l00017">options()</a>, et <a class="el" href="options_8cpp_source.html#l00208">remise_a_zero()</a>.</p>
+
+<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_acb1a8837861a00fa69ed734598ee2b07_cgraph.png" border="0" usemap="#classoptions_acb1a8837861a00fa69ed734598ee2b07_cgraph" alt=""/></div>
+<map name="classoptions_acb1a8837861a00fa69ed734598ee2b07_cgraph" id="classoptions_acb1a8837861a00fa69ed734598ee2b07_cgraph">
+<area shape="rect" id="node3" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&#39;une touche." alt="" coords="233,5,367,35"/><area shape="rect" id="node5" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche." alt="" coords="233,59,367,88"/></map>
+</div>
+</p>
+
+<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_acb1a8837861a00fa69ed734598ee2b07_icgraph.png" border="0" usemap="#classoptions_acb1a8837861a00fa69ed734598ee2b07_icgraph" alt=""/></div>
+<map name="classoptions_acb1a8837861a00fa69ed734598ee2b07_icgraph" id="classoptions_acb1a8837861a00fa69ed734598ee2b07_icgraph">
+<area shape="rect" id="node3" href="classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d" title="Initialise la class options." alt="" coords="452,59,575,88"/><area shape="rect" id="node14" href="classoptions.html#ade7f5fcd45bd4a6c56c4064ce5c2f915" title="Remet (et enregistre) les paramètres par défaut." alt="" coords="232,84,403,113"/><area shape="rect" id="node5" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options." alt="" coords="624,59,776,88"/><area shape="rect" id="node7" href="classmoteur__ncurses.html#a5a5da4538be5bc5b7e78cc7f96d2f6a8" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="824,5,1133,35"/><area shape="rect" id="node9" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="929,59,1028,88"/><area shape="rect" id="node11" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1183,85,1236,115"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aacf689ad8af10573989f26fd5de3c3aa"></a><!-- doxytag: member="options::defPort" ref="aacf689ad8af10573989f26fd5de3c3aa" args="(unsigned int port)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool options::defPort </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>port</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de définir un port compris entre [0 et 9999]. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>port</em>&nbsp;</td><td>Le port a utiliser. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Vrais si le port est accèpté </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="options_8cpp_source.html#l00229">229</a> du fichier <a class="el" href="options_8cpp_source.html">options.cpp</a>.</p>
+
+<p>Références <a class="el" href="options_8h_source.html#l00046">c_port</a>, et <a class="el" href="options_8cpp_source.html#l00291">enregistrerConfig()</a>.</p>
+
+<p>Référencé par <a class="el" href="main_8cpp_source.html#l00029">main()</a>.</p>
+
+<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_aacf689ad8af10573989f26fd5de3c3aa_cgraph.png" border="0" usemap="#classoptions_aacf689ad8af10573989f26fd5de3c3aa_cgraph" alt=""/></div>
+<map name="classoptions_aacf689ad8af10573989f26fd5de3c3aa_cgraph" id="classoptions_aacf689ad8af10573989f26fd5de3c3aa_cgraph">
+<area shape="rect" id="node3" href="classoptions.html#a30947cfb97ac0346a6557388cb6cab9b" title="Permet d&#39;enregistrer la config." alt="" coords="176,32,363,61"/><area shape="rect" id="node5" href="classclavier.html#a8929b689468a574630f32dbb108b5f3a" title="Renvoie le nombre d&#39;actions possibles sur ce clavier." alt="" coords="471,5,615,35"/><area shape="rect" id="node7" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration." alt="" coords="412,59,673,88"/></map>
+</div>
+</p>
+
+<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_aacf689ad8af10573989f26fd5de3c3aa_icgraph.png" border="0" usemap="#classoptions_aacf689ad8af10573989f26fd5de3c3aa_icgraph" alt=""/></div>
+<map name="classoptions_aacf689ad8af10573989f26fd5de3c3aa_icgraph" id="classoptions_aacf689ad8af10573989f26fd5de3c3aa_icgraph">
+<area shape="rect" id="node3" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="177,5,231,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a30947cfb97ac0346a6557388cb6cab9b"></a><!-- doxytag: member="options::enregistrerConfig" ref="a30947cfb97ac0346a6557388cb6cab9b" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void options::enregistrerConfig </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet d'enregistrer la config. </p>
+<dl class="note"><dt><b>Note:</b></dt><dd>Fichier stocké sous la forme : {port} {nb_touches} {clavier[1]} ... {clavier[i]} </dd>
+<dd>
+fwrite( &amp;DATA, sizeof(DATA), nb_DATA, *stream ); (retourne le nombre de varaibles correctement écrites) </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="options_8cpp_source.html#l00291">291</a> du fichier <a class="el" href="options_8cpp_source.html">options.cpp</a>.</p>
+
+<p>Références <a class="el" href="options_8h_source.html#l00045">c_ClavierJoueur</a>, <a class="el" href="options_8h_source.html#l00046">c_port</a>, <a class="el" href="clavier_8cpp_source.html#l00116">clavier::nb_touches()</a>, et <a class="el" href="options_8cpp_source.html#l00360">supprimerFichierConfiguation()</a>.</p>
+
+<p>Référencé par <a class="el" href="options_8cpp_source.html#l00229">defPort()</a>, et <a class="el" href="main_8cpp_source.html#l00029">main()</a>.</p>
+
+<p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_a30947cfb97ac0346a6557388cb6cab9b_cgraph.png" border="0" usemap="#classoptions_a30947cfb97ac0346a6557388cb6cab9b_cgraph" alt=""/></div>
+<map name="classoptions_a30947cfb97ac0346a6557388cb6cab9b_cgraph" id="classoptions_a30947cfb97ac0346a6557388cb6cab9b_cgraph">
+<area shape="rect" id="node3" href="classclavier.html#a8929b689468a574630f32dbb108b5f3a" title="Renvoie le nombre d&#39;actions possibles sur ce clavier." alt="" coords="300,5,444,35"/><area shape="rect" id="node5" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration." alt="" coords="241,59,503,88"/></map>
+</div>
+</p>
+
+<p><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_a30947cfb97ac0346a6557388cb6cab9b_icgraph.png" border="0" usemap="#classoptions_a30947cfb97ac0346a6557388cb6cab9b_icgraph" alt=""/></div>
+<map name="classoptions_a30947cfb97ac0346a6557388cb6cab9b_icgraph" id="classoptions_a30947cfb97ac0346a6557388cb6cab9b_icgraph">
+<area shape="rect" id="node3" href="classoptions.html#aacf689ad8af10573989f26fd5de3c3aa" title="Permet de définir un port compris entre [0 et 9999]." alt="" coords="240,5,363,35"/><area shape="rect" id="node5" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="412,32,465,61"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a3db3c367210272824e13e6bb1260e8c4"></a><!-- doxytag: member="options::getInstance" ref="a3db3c367210272824e13e6bb1260e8c4" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classoptions.html">options</a> * options::getInstance </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Initialise la class options. </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>L'instance UNIQUE de la class.</dd></dl>
+<p>Si aucune instance de la class n'existe, alors appel au constructeur <a class="el" href="classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d" title="Initialise la class options.">options::options()</a><br/>
+ S'il existe déjà une instance de la class alors on renvoie simplement l'instance en cours. </p>
+
+<p>Définition à la ligne <a class="el" href="options_8cpp_source.html#l00090">90</a> du fichier <a class="el" href="options_8cpp_source.html">options.cpp</a>.</p>
+
+<p>Références <a class="el" href="options_8h_source.html#l00047">c_Instance</a>, et <a class="el" href="options_8cpp_source.html#l00017">options()</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__ncurses_8cpp_source.html#l00206">moteur_ncurses::afficherConfigurationClavier()</a>, <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>, et <a class="el" href="main_8cpp_source.html#l00029">main()</a>.</p>
+
+<p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_a3db3c367210272824e13e6bb1260e8c4_cgraph.png" border="0" usemap="#classoptions_a3db3c367210272824e13e6bb1260e8c4_cgraph" alt=""/></div>
+<map name="classoptions_a3db3c367210272824e13e6bb1260e8c4_cgraph" id="classoptions_a3db3c367210272824e13e6bb1260e8c4_cgraph">
+<area shape="rect" id="node3" href="classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d" title="Initialise la class options." alt="" coords="207,59,329,88"/><area shape="rect" id="node5" href="classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp; clavier )." alt="" coords="640,32,819,61"/><area shape="rect" id="node11" href="classoptions.html#ade7f5fcd45bd4a6c56c4064ce5c2f915" title="Remet (et enregistre) les paramètres par défaut." alt="" coords="379,84,549,113"/><area shape="rect" id="node7" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&#39;une touche." alt="" coords="911,5,1044,35"/><area shape="rect" id="node9" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche." alt="" coords="911,59,1044,88"/><area shape="rect" id="node14" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration." alt="" coords="599,85,860,115"/></map>
+</div>
+</p>
+
+<p><div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_a3db3c367210272824e13e6bb1260e8c4_icgraph.png" border="0" usemap="#classoptions_a3db3c367210272824e13e6bb1260e8c4_icgraph" alt=""/></div>
+<map name="classoptions_a3db3c367210272824e13e6bb1260e8c4_icgraph" id="classoptions_a3db3c367210272824e13e6bb1260e8c4_icgraph">
+<area shape="rect" id="node3" href="classmoteur__ncurses.html#a5a5da4538be5bc5b7e78cc7f96d2f6a8" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="205,5,515,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="311,59,409,88"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="564,85,617,115"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a2c3ea73f7f4333145a8a134dc942ec58"></a><!-- doxytag: member="options::operator[]" ref="a2c3ea73f7f4333145a8a134dc942ec58" args="(unsigned char clavier_numero)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classclavier.html">clavier</a> * options::operator[] </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>clavier_numero</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Alias de <a class="el" href="classoptions.html#a281d1464d4a4c827bcbac56ab3c9be94" title="Renvoie le clavier numéro {clavier_numero}.">options::clavierJoueur( unsigned char clavier_numero )</a>. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>clavier_numero</em>&nbsp;</td><td>Le clavier que l'on veut ( un nombre entre [0 et 3] ) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Le port utilisé actuellement </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="options_8cpp_source.html#l00279">279</a> du fichier <a class="el" href="options_8cpp_source.html">options.cpp</a>.</p>
+
+<p>Références <a class="el" href="options_8cpp_source.html#l00262">clavierJoueur()</a>.</p>
+
+<p><div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_a2c3ea73f7f4333145a8a134dc942ec58_cgraph.png" border="0" usemap="#classoptions_a2c3ea73f7f4333145a8a134dc942ec58_cgraph" alt=""/></div>
+<map name="classoptions_a2c3ea73f7f4333145a8a134dc942ec58_cgraph" id="classoptions_a2c3ea73f7f4333145a8a134dc942ec58_cgraph">
+<area shape="rect" id="node3" href="classoptions.html#a281d1464d4a4c827bcbac56ab3c9be94" title="Renvoie le clavier numéro {clavier_numero}." alt="" coords="199,5,356,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a4eeb468347a4f33dee3b565a35efe7a8"></a><!-- doxytag: member="options::port" ref="a4eeb468347a4f33dee3b565a35efe7a8" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int options::port </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Donne le port utilisé pour le jeu. </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Le port utilisé actuellement </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="options_8cpp_source.html#l00249">249</a> du fichier <a class="el" href="options_8cpp_source.html">options.cpp</a>.</p>
+
+<p>Références <a class="el" href="options_8h_source.html#l00046">c_port</a>.</p>
+
+<p>Référencé par <a class="el" href="main_8cpp_source.html#l00029">main()</a>.</p>
+
+<p><div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_a4eeb468347a4f33dee3b565a35efe7a8_icgraph.png" border="0" usemap="#classoptions_a4eeb468347a4f33dee3b565a35efe7a8_icgraph" alt=""/></div>
+<map name="classoptions_a4eeb468347a4f33dee3b565a35efe7a8_icgraph" id="classoptions_a4eeb468347a4f33dee3b565a35efe7a8_icgraph">
+<area shape="rect" id="node3" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="159,5,212,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ade7f5fcd45bd4a6c56c4064ce5c2f915"></a><!-- doxytag: member="options::remise_a_zero" ref="ade7f5fcd45bd4a6c56c4064ce5c2f915" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void options::remise_a_zero </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Remet (et enregistre) les paramètres par défaut. </p>
+<p>Cette fonction effectue :</p>
+<ul>
+<li>Une suppression du fichier de configuration</li>
+<li>Un chargement des paramètres par défaut ( <a class="el" href="classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp; clavier ).">options::configParDefaut()</a> ) </li>
+</ul>
+
+<p>Définition à la ligne <a class="el" href="options_8cpp_source.html#l00208">208</a> du fichier <a class="el" href="options_8cpp_source.html">options.cpp</a>.</p>
+
+<p>Références <a class="el" href="options_8cpp_source.html#l00119">configParDefaut()</a>, et <a class="el" href="options_8cpp_source.html#l00360">supprimerFichierConfiguation()</a>.</p>
+
+<p>Référencé par <a class="el" href="options_8cpp_source.html#l00017">options()</a>.</p>
+
+<p><div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-14-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_ade7f5fcd45bd4a6c56c4064ce5c2f915_cgraph.png" border="0" usemap="#classoptions_ade7f5fcd45bd4a6c56c4064ce5c2f915_cgraph" alt=""/></div>
+<map name="classoptions_ade7f5fcd45bd4a6c56c4064ce5c2f915_cgraph" id="classoptions_ade7f5fcd45bd4a6c56c4064ce5c2f915_cgraph">
+<area shape="rect" id="node3" href="classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp; clavier )." alt="" coords="267,32,445,61"/><area shape="rect" id="node9" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration." alt="" coords="225,85,487,115"/><area shape="rect" id="node5" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&#39;une touche." alt="" coords="537,5,671,35"/><area shape="rect" id="node7" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche." alt="" coords="537,59,671,88"/></map>
+</div>
+</p>
+
+<p><div id="dynsection-15" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-15-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-15-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_ade7f5fcd45bd4a6c56c4064ce5c2f915_icgraph.png" border="0" usemap="#classoptions_ade7f5fcd45bd4a6c56c4064ce5c2f915_icgraph" alt=""/></div>
+<map name="classoptions_ade7f5fcd45bd4a6c56c4064ce5c2f915_icgraph" id="classoptions_ade7f5fcd45bd4a6c56c4064ce5c2f915_icgraph">
+<area shape="rect" id="node3" href="classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d" title="Initialise la class options." alt="" coords="225,59,348,88"/><area shape="rect" id="node5" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options." alt="" coords="397,59,549,88"/><area shape="rect" id="node7" href="classmoteur__ncurses.html#a5a5da4538be5bc5b7e78cc7f96d2f6a8" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="597,5,907,35"/><area shape="rect" id="node9" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="703,59,801,88"/><area shape="rect" id="node11" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="956,85,1009,115"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a1afbc8baea208c989f8dd96e82a4eef8"></a><!-- doxytag: member="options::supprimerFichierConfiguation" ref="a1afbc8baea208c989f8dd96e82a4eef8" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void options::supprimerFichierConfiguation </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Supprime le fichier de configuration. </p>
+
+<p>Définition à la ligne <a class="el" href="options_8cpp_source.html#l00360">360</a> du fichier <a class="el" href="options_8cpp_source.html">options.cpp</a>.</p>
+
+<p>Référencé par <a class="el" href="options_8cpp_source.html#l00291">enregistrerConfig()</a>, et <a class="el" href="options_8cpp_source.html#l00208">remise_a_zero()</a>.</p>
+
+<p><div id="dynsection-16" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-16-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-16-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_a1afbc8baea208c989f8dd96e82a4eef8_icgraph.png" border="0" usemap="#classoptions_a1afbc8baea208c989f8dd96e82a4eef8_icgraph" alt=""/></div>
+<map name="classoptions_a1afbc8baea208c989f8dd96e82a4eef8_icgraph" id="classoptions_a1afbc8baea208c989f8dd96e82a4eef8_icgraph">
+<area shape="rect" id="node3" href="classoptions.html#a30947cfb97ac0346a6557388cb6cab9b" title="Permet d&#39;enregistrer la config." alt="" coords="709,57,896,87"/><area shape="rect" id="node10" href="classoptions.html#ade7f5fcd45bd4a6c56c4064ce5c2f915" title="Remet (et enregistre) les paramètres par défaut." alt="" coords="317,125,488,155"/><area shape="rect" id="node5" href="classoptions.html#aacf689ad8af10573989f26fd5de3c3aa" title="Permet de définir un port compris entre [0 et 9999]." alt="" coords="1037,5,1160,35"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1303,83,1356,112"/><area shape="rect" id="node12" href="classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d" title="Initialise la class options." alt="" coords="537,151,660,180"/><area shape="rect" id="node14" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options." alt="" coords="727,157,879,187"/><area shape="rect" id="node16" href="classmoteur__ncurses.html#a5a5da4538be5bc5b7e78cc7f96d2f6a8" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="944,160,1253,189"/><area shape="rect" id="node18" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1049,213,1148,243"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a5be99ac3b975b5dd294788678147688f"></a><!-- doxytag: member="options::uInit" ref="a5be99ac3b975b5dd294788678147688f" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void options::uInit </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Désinitialise la class options. </p>
+<p>Si aucune instance de la class n'existe, alors cette fonction ne fait rien. </p>
+
+<p>Définition à la ligne <a class="el" href="options_8cpp_source.html#l00105">105</a> du fichier <a class="el" href="options_8cpp_source.html">options.cpp</a>.</p>
+
+<p>Références <a class="el" href="options_8h_source.html#l00047">c_Instance</a>.</p>
+
+<p>Référencé par <a class="el" href="main_8cpp_source.html#l00029">main()</a>.</p>
+
+<p><div id="dynsection-17" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-17-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-17-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classoptions_a5be99ac3b975b5dd294788678147688f_icgraph.png" border="0" usemap="#classoptions_a5be99ac3b975b5dd294788678147688f_icgraph" alt=""/></div>
+<map name="classoptions_a5be99ac3b975b5dd294788678147688f_icgraph" id="classoptions_a5be99ac3b975b5dd294788678147688f_icgraph">
+<area shape="rect" id="node3" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="159,5,212,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="aa9a73d0c547f40e9ed67706134e48f2c"></a><!-- doxytag: member="options::c_ClavierJoueur" ref="aa9a73d0c547f40e9ed67706134e48f2c" args="[4]" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classclavier.html">clavier</a> <a class="el" href="classoptions.html#aa9a73d0c547f40e9ed67706134e48f2c">options::c_ClavierJoueur</a>[4]<code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Les claviers dispo en mémoire ( 4 dans tous les cas ! ). </p>
+
+<p>Définition à la ligne <a class="el" href="options_8h_source.html#l00045">45</a> du fichier <a class="el" href="options_8h_source.html">options.h</a>.</p>
+
+<p>Référencé par <a class="el" href="options_8cpp_source.html#l00262">clavierJoueur()</a>, <a class="el" href="options_8cpp_source.html#l00119">configParDefaut()</a>, <a class="el" href="options_8cpp_source.html#l00291">enregistrerConfig()</a>, et <a class="el" href="options_8cpp_source.html#l00017">options()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa731f5b457d9cdcd45dbaa21b3aa4e5e"></a><!-- doxytag: member="options::c_Instance" ref="aa731f5b457d9cdcd45dbaa21b3aa4e5e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classoptions.html">options</a> * <a class="el" href="classoptions.html#aa731f5b457d9cdcd45dbaa21b3aa4e5e">options::c_Instance</a> = NULL<code> [static, private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>L'instance de notre class. </p>
+
+<p>Définition à la ligne <a class="el" href="options_8h_source.html#l00047">47</a> du fichier <a class="el" href="options_8h_source.html">options.h</a>.</p>
+
+<p>Référencé par <a class="el" href="options_8cpp_source.html#l00090">getInstance()</a>, et <a class="el" href="options_8cpp_source.html#l00105">uInit()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaf14aa3eb46d54063ac815438d48ca34"></a><!-- doxytag: member="options::c_port" ref="aaf14aa3eb46d54063ac815438d48ca34" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="classoptions.html#aaf14aa3eb46d54063ac815438d48ca34">options::c_port</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Le port utilisé ( par défaut 947 ). </p>
+
+<p>Définition à la ligne <a class="el" href="options_8h_source.html#l00046">46</a> du fichier <a class="el" href="options_8h_source.html">options.h</a>.</p>
+
+<p>Référencé par <a class="el" href="options_8cpp_source.html#l00119">configParDefaut()</a>, <a class="el" href="options_8cpp_source.html#l00229">defPort()</a>, <a class="el" href="options_8cpp_source.html#l00291">enregistrerConfig()</a>, <a class="el" href="options_8cpp_source.html#l00017">options()</a>, et <a class="el" href="options_8cpp_source.html#l00249">port()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="options_8h_source.html">options.h</a></li>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="options_8cpp_source.html">options.cpp</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

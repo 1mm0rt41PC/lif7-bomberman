@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classperso.html#a3a8713fdb8d5c58803f29b3b91ae47b6" title="Renvoie si le perso est vivant ou pas." alt="" coords="236,5,361,35"/>
+<area shape="rect" id="node5" href="$classbonus.html#a8599049c6a2e5870cfa6b0ded416595e" title="Vérifit que le si le temps est écoulé pour une bombe posé." alt="" coords="241,59,356,88"/>
+<area shape="rect" id="node7" href="$classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="249,112,348,141"/>
+<area shape="rect" id="node9" href="$main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="412,112,465,141"/>
+</map>

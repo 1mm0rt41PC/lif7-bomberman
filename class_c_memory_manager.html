@@ -1,0 +1,733 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la classe CMemoryManager</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="#pub-static-methods">Fonctions membres publiques statiques</a> &#124;
+<a href="#pri-types">Types privés</a> &#124;
+<a href="#pri-methods">Fonctions membres privées</a> &#124;
+<a href="#pri-attribs">Attributs privés</a> &#124;
+<a href="#pri-static-attribs">Attributs privés statiques</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la classe CMemoryManager</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="CMemoryManager" -->
+<p>Système de vérification de fuite mémoire.  
+<a href="#_details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>&gt;</code></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Graphe de collaboration de CMemoryManager:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="class_c_memory_manager__coll__graph.png" border="0" usemap="#_c_memory_manager_coll__map" alt="Collaboration graph"/></div>
+<map name="_c_memory_manager_coll__map" id="_c_memory_manager_coll__map">
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">légende</a>]</span></center></div>
+
+<p><a href="class_c_memory_manager-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html">s_AllocatatedBlock</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Stock les info sur les block mémoires alloués.  <a href="struct_c_memory_manager_1_1s___allocatated_block.html#_details">Plus de détails...</a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#a72136456ec234a5abee8537160855a45">allocate</a> (size_t size, const char fileName[], unsigned int line, bool is_array)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Récolte les informations sur les allocations.  <a href="#a72136456ec234a5abee8537160855a45"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#a05f473d76591319066c50dbc071c5be1">Free</a> (void *ptr, bool is_array)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Récolte les informations sur les désallocations.  <a href="#a05f473d76591319066c50dbc071c5be1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#ab70c6566b859092c13dcdbabafbea33e">nextDelete</a> (const char fileName[], unsigned int line)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sauvegarde les infos sur la désallocation courante.  <a href="#ab70c6566b859092c13dcdbabafbea33e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">SDL_Surface *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#a990328b78646a11ef3079a44e1b9115c">IMG_Load_Debug</a> (const char fileImg[], const char fileName[], unsigned int line)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#a728395871f1562c6710b1c741af62a8a">SDL_FreeSurface_Debug</a> (SDL_Surface *ptr, const char fileName[], unsigned int line)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Récolte les informations sur les désallocations des Surfaces SDL.  <a href="#a728395871f1562c6710b1c741af62a8a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">SDL_Surface *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#ab57e5a6810861762c3c029be90b0da31">TTF_RenderText_Blended_Debug</a> (TTF_Font *font, const char text[], SDL_Color color, const char fileName[], unsigned int line)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Récolte les informations sur les allocations des Surfaces SDL:TTF.  <a href="#ab57e5a6810861762c3c029be90b0da31"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">TTF_Font *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#ae0497df49ff60463727c867150d530c5">TTF_OpenFont_Debug</a> (const char file[], int size, const char fileName[], unsigned int line)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Récolte les informations sur les allocations des TTF_Font.  <a href="#ae0497df49ff60463727c867150d530c5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#aa9445f0e6fe11a1933f7018b477554fd">TTF_CloseFont_Debug</a> (TTF_Font *ptr, const char fileName[], unsigned int line)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Récolte les informations sur les désallocations des TTF_Font.  <a href="#aa9445f0e6fe11a1933f7018b477554fd"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-methods"></a>
+Fonctions membres publiques statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_c_memory_manager.html">CMemoryManager</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d">getInstance</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie l'intance de la class.  <a href="#abd2c21f7bb412aa1f473e92ca029733d"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-types"></a>
+Types privés</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#ab8c28bbacbf41e539dcb0d1185588f99">t_obj</a> { <a class="el" href="class_c_memory_manager.html#ab8c28bbacbf41e539dcb0d1185588f99aa32ed10d616a4e916ec2f4abb3addfc7">__classic__</a>, 
+<a class="el" href="class_c_memory_manager.html#ab8c28bbacbf41e539dcb0d1185588f99a9b94b817a58d40cd639aa7325ee2d42c">__SDL_Surface__</a>, 
+<a class="el" href="class_c_memory_manager.html#ab8c28bbacbf41e539dcb0d1185588f99aa48ce3cc6f7b50a9267bdcedd9f648f2">__SDL_Font__</a>
+ }</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>Type d'objet alloué: Classic ( new / delete ), SDL_... ( Surface, TTF ). </p>
+ <a href="class_c_memory_manager.html#ab8c28bbacbf41e539dcb0d1185588f99">Plus de détails...</a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef std::vector<br class="typebreak"/>
+&lt; <a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html">s_AllocatatedBlock</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#a419ced32e7de6033429b19e49c608126">v_AllocatatedBlock</a></td></tr>
+<tr><td colspan="2"><h2><a name="pri-methods"></a>
+Fonctions membres privées</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#a348ff8aeb43bb768c0425f578c9f2480">CMemoryManager</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Le constructeur par défaut.  <a href="#a348ff8aeb43bb768c0425f578c9f2480"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#a2e609b1276459d743cfb91669007eee2">~CMemoryManager</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Le desconstructeur par défaut.  <a href="#a2e609b1276459d743cfb91669007eee2"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-attribs"></a>
+Attributs privés</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_memory_manager.html#a419ced32e7de6033429b19e49c608126">v_AllocatatedBlock</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#ab2d64d7c15f3b3d06cfa10d9e565c396">c_Blocks</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Blocs de mémoire alloués.  <a href="#ab2d64d7c15f3b3d06cfa10d9e565c396"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::stack&lt; <a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html">s_AllocatatedBlock</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#a66fa4e51f5c81fcf128365a217ffe46e">c_DeleteStack</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pile contenant les infos sur les prochaines désallocations.  <a href="#a66fa4e51f5c81fcf128365a217ffe46e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">FILE *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#ad8837a903dd88682e2c19a4d12d9168d">c_fp</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pointeur de fichier où sera stocké le rapport.  <a href="#ad8837a903dd88682e2c19a4d12d9168d"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-static-attribs"></a>
+Attributs privés statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_c_memory_manager.html">CMemoryManager</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_memory_manager.html#a48a8bd38d884d860ba2482b1cff0e135">c_inst</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">L'instance de la class.  <a href="#a48a8bd38d884d860ba2482b1cff0e135"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Système de vérification de fuite mémoire. </p>
+<dl class="warning"><dt><b>Avertissement:</b></dt><dd><b>Cette class n'est pas faites pour être utilisée directement !</b><br/>
+ Cette class surcharge les operateurs new et delete.<br/>
+ La class ne peut être instancié qu'une seule fois (class singleton) !<br/>
+ De plus elle s'instancie sans pointeur =&gt; Si une autre class singleton utilise la même technologie =&gt; BUG</dd></dl>
+<p>Pour utiliser cette class, mettre le code suivant dans les fichiers <b>.cpp</b> <span style="text-decoration:underline;">UNIQUEMENT</span> ! </p>
+<div class="fragment"><pre class="fragment"><span class="preprocessor"> #define __DEBUG_MEMORY__// Active le debug memoire</span>
+<span class="preprocessor"> #inlcude &quot;debug_memory.h&quot;</span>
+</pre></div> 
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00033">33</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+<hr/><h2>Documentation des définitions de type membres</h2>
+<a class="anchor" id="a419ced32e7de6033429b19e49c608126"></a><!-- doxytag: member="CMemoryManager::v_AllocatatedBlock" ref="a419ced32e7de6033429b19e49c608126" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::vector&lt;<a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html">s_AllocatatedBlock</a>&gt; <a class="el" href="class_c_memory_manager.html#a419ced32e7de6033429b19e49c608126">CMemoryManager::v_AllocatatedBlock</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00058">58</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des énumérations membres</h2>
+<a class="anchor" id="ab8c28bbacbf41e539dcb0d1185588f99"></a><!-- doxytag: member="CMemoryManager::t_obj" ref="ab8c28bbacbf41e539dcb0d1185588f99" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="class_c_memory_manager.html#ab8c28bbacbf41e539dcb0d1185588f99">CMemoryManager::t_obj</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Type d'objet alloué: Classic ( new / delete ), SDL_... ( Surface, TTF ). </p>
+<dl><dt><b>Valeurs énumérées: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="ab8c28bbacbf41e539dcb0d1185588f99aa32ed10d616a4e916ec2f4abb3addfc7"></a><!-- doxytag: member="__classic__" ref="ab8c28bbacbf41e539dcb0d1185588f99aa32ed10d616a4e916ec2f4abb3addfc7" args="" -->__classic__</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ab8c28bbacbf41e539dcb0d1185588f99a9b94b817a58d40cd639aa7325ee2d42c"></a><!-- doxytag: member="__SDL_Surface__" ref="ab8c28bbacbf41e539dcb0d1185588f99a9b94b817a58d40cd639aa7325ee2d42c" args="" -->__SDL_Surface__</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ab8c28bbacbf41e539dcb0d1185588f99aa48ce3cc6f7b50a9267bdcedd9f648f2"></a><!-- doxytag: member="__SDL_Font__" ref="ab8c28bbacbf41e539dcb0d1185588f99aa48ce3cc6f7b50a9267bdcedd9f648f2" args="" -->__SDL_Font__</em>&nbsp;</td><td>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00040">40</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="a348ff8aeb43bb768c0425f578c9f2480"></a><!-- doxytag: member="CMemoryManager::CMemoryManager" ref="a348ff8aeb43bb768c0425f578c9f2480" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMemoryManager::CMemoryManager </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Le constructeur par défaut. </p>
+<dl class="note"><dt><b>Note:</b></dt><dd>Initialise uniquement l'ouverture du fichier de rapport </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8cpp_source.html#l00012">12</a> du fichier <a class="el" href="debug__memory_8cpp_source.html">debug_memory.cpp</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8h_source.html#l00062">c_fp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2e609b1276459d743cfb91669007eee2"></a><!-- doxytag: member="CMemoryManager::~CMemoryManager" ref="a2e609b1276459d743cfb91669007eee2" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMemoryManager::~CMemoryManager </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Le desconstructeur par défaut. </p>
+<p>C'est ici que l'on :</p>
+<ul>
+<li>détermine s'il y a une fuite mémoire.</li>
+<li>construit la fin de rapport. </li>
+</ul>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8cpp_source.html#l00027">27</a> du fichier <a class="el" href="debug__memory_8cpp_source.html">debug_memory.cpp</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8h_source.html#l00041">__classic__</a>, <a class="el" href="debug__memory_8h_source.html#l00043">__SDL_Font__</a>, <a class="el" href="debug__memory_8h_source.html#l00042">__SDL_Surface__</a>, <a class="el" href="debug__memory_8h_source.html#l00060">c_Blocks</a>, et <a class="el" href="debug__memory_8h_source.html#l00062">c_fp</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="a72136456ec234a5abee8537160855a45"></a><!-- doxytag: member="CMemoryManager::allocate" ref="a72136456ec234a5abee8537160855a45" args="(size_t size, const char fileName[], unsigned int line, bool is_array)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void * CMemoryManager::allocate </td>
+          <td>(</td>
+          <td class="paramtype">size_t&nbsp;</td>
+          <td class="paramname"> <em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>fileName</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>line</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>is_array</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Récolte les informations sur les allocations. </p>
+<p>Permet grace aux surchages de new de compter et d'identifier les allocations </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8cpp_source.html#l00084">84</a> du fichier <a class="el" href="debug__memory_8cpp_source.html">debug_memory.cpp</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8h_source.html#l00060">c_Blocks</a>, <a class="el" href="debug__memory_8h_source.html#l00062">c_fp</a>, <a class="el" href="debug__memory_8h_source.html#l00051">CMemoryManager::s_AllocatatedBlock::fileName</a>, <a class="el" href="debug__memory_8h_source.html#l00056">CMemoryManager::s_AllocatatedBlock::is_array</a>, <a class="el" href="debug__memory_8h_source.html#l00054">CMemoryManager::s_AllocatatedBlock::line</a>, <a class="el" href="debug__memory_8h_source.html#l00052">CMemoryManager::s_AllocatatedBlock::ptr</a>, <a class="el" href="debug__memory_8h_source.html#l00053">CMemoryManager::s_AllocatatedBlock::size</a>, et <a class="el" href="debug__memory_8h_source.html#l00055">CMemoryManager::s_AllocatatedBlock::type</a>.</p>
+
+<p>Référencé par <a class="el" href="debug__memory_8h_source.html#l00092">operator new()</a>, et <a class="el" href="debug__memory_8h_source.html#l00096">operator new[]()</a>.</p>
+
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="class_c_memory_manager_a72136456ec234a5abee8537160855a45_icgraph.png" border="0" usemap="#class_c_memory_manager_a72136456ec234a5abee8537160855a45_icgraph" alt=""/></div>
+<map name="class_c_memory_manager_a72136456ec234a5abee8537160855a45_icgraph" id="class_c_memory_manager_a72136456ec234a5abee8537160855a45_icgraph">
+<area shape="rect" id="node3" href="debug__memory_8h.html#a7eef29661fb85236ced6e989f457c1b4" title="operator new" alt="" coords="256,5,363,35"/><area shape="rect" id="node5" href="debug__memory_8h.html#ab14f58432455bd6705c00748da4575a7" title="operator new[]" alt="" coords="252,59,367,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a05f473d76591319066c50dbc071c5be1"></a><!-- doxytag: member="CMemoryManager::Free" ref="a05f473d76591319066c50dbc071c5be1" args="(void *ptr, bool is_array)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CMemoryManager::Free </td>
+          <td>(</td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname"> <em>ptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>is_array</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Récolte les informations sur les désallocations. </p>
+<p>Permet grace aux surchages de delete de compter et d'identifier les désallocations.<br/>
+ ( Retire une allocation mémoire ) </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8cpp_source.html#l00113">113</a> du fichier <a class="el" href="debug__memory_8cpp_source.html">debug_memory.cpp</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8h_source.html#l00060">c_Blocks</a>, <a class="el" href="debug__memory_8h_source.html#l00061">c_DeleteStack</a>, et <a class="el" href="debug__memory_8h_source.html#l00062">c_fp</a>.</p>
+
+<p>Référencé par <a class="el" href="debug__memory_8h_source.html#l00100">operator delete()</a>, et <a class="el" href="debug__memory_8h_source.html#l00104">operator delete[]()</a>.</p>
+
+<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="class_c_memory_manager_a05f473d76591319066c50dbc071c5be1_icgraph.png" border="0" usemap="#class_c_memory_manager_a05f473d76591319066c50dbc071c5be1_icgraph" alt=""/></div>
+<map name="class_c_memory_manager_a05f473d76591319066c50dbc071c5be1_icgraph" id="class_c_memory_manager_a05f473d76591319066c50dbc071c5be1_icgraph">
+<area shape="rect" id="node3" href="debug__memory_8h.html#a3d97a7e2a0208075b4b37328c96ed390" title="operator delete" alt="" coords="235,5,355,35"/><area shape="rect" id="node5" href="debug__memory_8h.html#a1d8b2d6f17242ae0d182b0f7a98ba54f" title="operator delete[]" alt="" coords="229,59,360,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="abd2c21f7bb412aa1f473e92ca029733d"></a><!-- doxytag: member="CMemoryManager::getInstance" ref="abd2c21f7bb412aa1f473e92ca029733d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_c_memory_manager.html">CMemoryManager</a> &amp; CMemoryManager::getInstance </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie l'intance de la class. </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8cpp_source.html#l00174">174</a> du fichier <a class="el" href="debug__memory_8cpp_source.html">debug_memory.cpp</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8h_source.html#l00063">c_inst</a>.</p>
+
+<p>Référencé par <a class="el" href="debug__memory_8h_source.html#l00100">operator delete()</a>, <a class="el" href="debug__memory_8h_source.html#l00104">operator delete[]()</a>, <a class="el" href="debug__memory_8h_source.html#l00092">operator new()</a>, et <a class="el" href="debug__memory_8h_source.html#l00096">operator new[]()</a>.</p>
+
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="class_c_memory_manager_abd2c21f7bb412aa1f473e92ca029733d_icgraph.png" border="0" usemap="#class_c_memory_manager_abd2c21f7bb412aa1f473e92ca029733d_icgraph" alt=""/></div>
+<map name="class_c_memory_manager_abd2c21f7bb412aa1f473e92ca029733d_icgraph" id="class_c_memory_manager_abd2c21f7bb412aa1f473e92ca029733d_icgraph">
+<area shape="rect" id="node3" href="debug__memory_8h.html#a3d97a7e2a0208075b4b37328c96ed390" title="operator delete" alt="" coords="283,5,403,35"/><area shape="rect" id="node5" href="debug__memory_8h.html#a1d8b2d6f17242ae0d182b0f7a98ba54f" title="operator delete[]" alt="" coords="277,59,408,88"/><area shape="rect" id="node7" href="debug__memory_8h.html#a7eef29661fb85236ced6e989f457c1b4" title="operator new" alt="" coords="289,112,396,141"/><area shape="rect" id="node9" href="debug__memory_8h.html#ab14f58432455bd6705c00748da4575a7" title="operator new[]" alt="" coords="285,165,400,195"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a990328b78646a11ef3079a44e1b9115c"></a><!-- doxytag: member="CMemoryManager::IMG_Load_Debug" ref="a990328b78646a11ef3079a44e1b9115c" args="(const char fileImg[], const char fileName[], unsigned int line)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SDL_Surface * CMemoryManager::IMG_Load_Debug </td>
+          <td>(</td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>fileImg</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>fileName</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>line</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8cpp_source.html#l00197">197</a> du fichier <a class="el" href="debug__memory_8cpp_source.html">debug_memory.cpp</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8h_source.html#l00060">c_Blocks</a>, <a class="el" href="debug__memory_8h_source.html#l00062">c_fp</a>, <a class="el" href="debug__memory_8h_source.html#l00051">CMemoryManager::s_AllocatatedBlock::fileName</a>, <a class="el" href="debug__memory_8h_source.html#l00056">CMemoryManager::s_AllocatatedBlock::is_array</a>, <a class="el" href="debug__memory_8h_source.html#l00054">CMemoryManager::s_AllocatatedBlock::line</a>, <a class="el" href="debug__memory_8h_source.html#l00052">CMemoryManager::s_AllocatatedBlock::ptr</a>, <a class="el" href="debug__memory_8h_source.html#l00053">CMemoryManager::s_AllocatatedBlock::size</a>, et <a class="el" href="debug__memory_8h_source.html#l00055">CMemoryManager::s_AllocatatedBlock::type</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab70c6566b859092c13dcdbabafbea33e"></a><!-- doxytag: member="CMemoryManager::nextDelete" ref="ab70c6566b859092c13dcdbabafbea33e" args="(const char fileName[], unsigned int line)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CMemoryManager::nextDelete </td>
+          <td>(</td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>fileName</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>line</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Sauvegarde les infos sur la désallocation courante. </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8cpp_source.html#l00159">159</a> du fichier <a class="el" href="debug__memory_8cpp_source.html">debug_memory.cpp</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8h_source.html#l00061">c_DeleteStack</a>, <a class="el" href="debug__memory_8h_source.html#l00051">CMemoryManager::s_AllocatatedBlock::fileName</a>, et <a class="el" href="debug__memory_8h_source.html#l00054">CMemoryManager::s_AllocatatedBlock::line</a>.</p>
+
+<p>Référencé par <a class="el" href="debug__memory_8h_source.html#l00108">operator delete()</a>, et <a class="el" href="debug__memory_8h_source.html#l00113">operator delete[]()</a>.</p>
+
+<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="class_c_memory_manager_ab70c6566b859092c13dcdbabafbea33e_icgraph.png" border="0" usemap="#class_c_memory_manager_ab70c6566b859092c13dcdbabafbea33e_icgraph" alt=""/></div>
+<map name="class_c_memory_manager_ab70c6566b859092c13dcdbabafbea33e_icgraph" id="class_c_memory_manager_ab70c6566b859092c13dcdbabafbea33e_icgraph">
+<area shape="rect" id="node3" href="debug__memory_8h.html#a41ebeeeb4443ae2efbc12791b6ec80b7" title="operator delete" alt="" coords="277,5,397,35"/><area shape="rect" id="node5" href="debug__memory_8h.html#afd1ddbb824746bb76da4e10565800a33" title="operator delete[]" alt="" coords="272,59,403,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a728395871f1562c6710b1c741af62a8a"></a><!-- doxytag: member="CMemoryManager::SDL_FreeSurface_Debug" ref="a728395871f1562c6710b1c741af62a8a" args="(SDL_Surface *ptr, const char fileName[], unsigned int line)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CMemoryManager::SDL_FreeSurface_Debug </td>
+          <td>(</td>
+          <td class="paramtype">SDL_Surface *&nbsp;</td>
+          <td class="paramname"> <em>ptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>fileName</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>line</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Récolte les informations sur les désallocations des Surfaces SDL. </p>
+<p>Permet grace aux surchages de compter et d'identifier les désallocations.<br/>
+ ( Retire une allocation mémoire ) </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8cpp_source.html#l00224">224</a> du fichier <a class="el" href="debug__memory_8cpp_source.html">debug_memory.cpp</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8h_source.html#l00060">c_Blocks</a>, et <a class="el" href="debug__memory_8h_source.html#l00062">c_fp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa9445f0e6fe11a1933f7018b477554fd"></a><!-- doxytag: member="CMemoryManager::TTF_CloseFont_Debug" ref="aa9445f0e6fe11a1933f7018b477554fd" args="(TTF_Font *ptr, const char fileName[], unsigned int line)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CMemoryManager::TTF_CloseFont_Debug </td>
+          <td>(</td>
+          <td class="paramtype">TTF_Font *&nbsp;</td>
+          <td class="paramname"> <em>ptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>fileName</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>line</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Récolte les informations sur les désallocations des TTF_Font. </p>
+<p>Permet grace aux surchages de compter et d'identifier les désallocations.<br/>
+ ( Retire une allocation mémoire ) </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8cpp_source.html#l00318">318</a> du fichier <a class="el" href="debug__memory_8cpp_source.html">debug_memory.cpp</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8h_source.html#l00060">c_Blocks</a>, et <a class="el" href="debug__memory_8h_source.html#l00062">c_fp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae0497df49ff60463727c867150d530c5"></a><!-- doxytag: member="CMemoryManager::TTF_OpenFont_Debug" ref="ae0497df49ff60463727c867150d530c5" args="(const char file[], int size, const char fileName[], unsigned int line)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TTF_Font * CMemoryManager::TTF_OpenFont_Debug </td>
+          <td>(</td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>file</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>fileName</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>line</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Récolte les informations sur les allocations des TTF_Font. </p>
+<p>Permet grace aux surchages de compter et d'identifier les allocations </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8cpp_source.html#l00291">291</a> du fichier <a class="el" href="debug__memory_8cpp_source.html">debug_memory.cpp</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8h_source.html#l00060">c_Blocks</a>, <a class="el" href="debug__memory_8h_source.html#l00062">c_fp</a>, <a class="el" href="debug__memory_8h_source.html#l00051">CMemoryManager::s_AllocatatedBlock::fileName</a>, <a class="el" href="debug__memory_8h_source.html#l00056">CMemoryManager::s_AllocatatedBlock::is_array</a>, <a class="el" href="debug__memory_8h_source.html#l00054">CMemoryManager::s_AllocatatedBlock::line</a>, <a class="el" href="debug__memory_8h_source.html#l00052">CMemoryManager::s_AllocatatedBlock::ptr</a>, <a class="el" href="debug__memory_8h_source.html#l00053">CMemoryManager::s_AllocatatedBlock::size</a>, et <a class="el" href="debug__memory_8h_source.html#l00055">CMemoryManager::s_AllocatatedBlock::type</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab57e5a6810861762c3c029be90b0da31"></a><!-- doxytag: member="CMemoryManager::TTF_RenderText_Blended_Debug" ref="ab57e5a6810861762c3c029be90b0da31" args="(TTF_Font *font, const char text[], SDL_Color color, const char fileName[], unsigned int line)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SDL_Surface * CMemoryManager::TTF_RenderText_Blended_Debug </td>
+          <td>(</td>
+          <td class="paramtype">TTF_Font *&nbsp;</td>
+          <td class="paramname"> <em>font</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>text</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Color&nbsp;</td>
+          <td class="paramname"> <em>color</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>fileName</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>line</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Récolte les informations sur les allocations des Surfaces SDL:TTF. </p>
+<p>Permet grace aux surchages de compter et d'identifier les allocations </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8cpp_source.html#l00265">265</a> du fichier <a class="el" href="debug__memory_8cpp_source.html">debug_memory.cpp</a>.</p>
+
+<p>Références <a class="el" href="debug__memory_8h_source.html#l00060">c_Blocks</a>, <a class="el" href="debug__memory_8h_source.html#l00062">c_fp</a>, <a class="el" href="debug__memory_8h_source.html#l00051">CMemoryManager::s_AllocatatedBlock::fileName</a>, <a class="el" href="debug__memory_8h_source.html#l00056">CMemoryManager::s_AllocatatedBlock::is_array</a>, <a class="el" href="debug__memory_8h_source.html#l00054">CMemoryManager::s_AllocatatedBlock::line</a>, <a class="el" href="debug__memory_8h_source.html#l00052">CMemoryManager::s_AllocatatedBlock::ptr</a>, <a class="el" href="debug__memory_8h_source.html#l00053">CMemoryManager::s_AllocatatedBlock::size</a>, et <a class="el" href="debug__memory_8h_source.html#l00055">CMemoryManager::s_AllocatatedBlock::type</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="ab2d64d7c15f3b3d06cfa10d9e565c396"></a><!-- doxytag: member="CMemoryManager::c_Blocks" ref="ab2d64d7c15f3b3d06cfa10d9e565c396" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_c_memory_manager.html#a419ced32e7de6033429b19e49c608126">v_AllocatatedBlock</a> <a class="el" href="class_c_memory_manager.html#ab2d64d7c15f3b3d06cfa10d9e565c396">CMemoryManager::c_Blocks</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Blocs de mémoire alloués. </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00060">60</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Référencé par <a class="el" href="debug__memory_8cpp_source.html#l00084">allocate()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00113">Free()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00197">IMG_Load_Debug()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00224">SDL_FreeSurface_Debug()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00318">TTF_CloseFont_Debug()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00291">TTF_OpenFont_Debug()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00265">TTF_RenderText_Blended_Debug()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00027">~CMemoryManager()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a66fa4e51f5c81fcf128365a217ffe46e"></a><!-- doxytag: member="CMemoryManager::c_DeleteStack" ref="a66fa4e51f5c81fcf128365a217ffe46e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::stack&lt;<a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html">s_AllocatatedBlock</a>&gt; <a class="el" href="class_c_memory_manager.html#a66fa4e51f5c81fcf128365a217ffe46e">CMemoryManager::c_DeleteStack</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Pile contenant les infos sur les prochaines désallocations. </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00061">61</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Référencé par <a class="el" href="debug__memory_8cpp_source.html#l00113">Free()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00159">nextDelete()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad8837a903dd88682e2c19a4d12d9168d"></a><!-- doxytag: member="CMemoryManager::c_fp" ref="ad8837a903dd88682e2c19a4d12d9168d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">FILE* <a class="el" href="class_c_memory_manager.html#ad8837a903dd88682e2c19a4d12d9168d">CMemoryManager::c_fp</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Pointeur de fichier où sera stocké le rapport. </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00062">62</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Référencé par <a class="el" href="debug__memory_8cpp_source.html#l00084">allocate()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00012">CMemoryManager()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00113">Free()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00197">IMG_Load_Debug()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00224">SDL_FreeSurface_Debug()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00318">TTF_CloseFont_Debug()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00291">TTF_OpenFont_Debug()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00265">TTF_RenderText_Blended_Debug()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00027">~CMemoryManager()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a48a8bd38d884d860ba2482b1cff0e135"></a><!-- doxytag: member="CMemoryManager::c_inst" ref="a48a8bd38d884d860ba2482b1cff0e135" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_c_memory_manager.html">CMemoryManager</a> <a class="el" href="class_c_memory_manager.html#a48a8bd38d884d860ba2482b1cff0e135">CMemoryManager::c_inst</a><code> [static, private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>L'instance de la class. </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00063">63</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Référencé par <a class="el" href="debug__memory_8cpp_source.html#l00174">getInstance()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="debug__memory_8h_source.html">debug_memory.h</a></li>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="debug__memory_8cpp_source.html">debug_memory.cpp</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

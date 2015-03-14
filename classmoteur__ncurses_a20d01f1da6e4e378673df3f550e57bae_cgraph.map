@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classmoteur__ncurses.html#aa5d8fae6272f29e7fc0981a988b71a49" title="Affiche un cadre au tour (interieur) de la fenêtre." alt="" coords="253,5,424,35"/>
+<area shape="rect" id="node5" href="$classmoteur__ncurses.html#a208a8f8e69a8bcfe2fe3b01291195d1c" title="Permet d&#39;effacer une ligne." alt="" coords="244,59,433,88"/>
+<area shape="rect" id="node7" href="$outils_8cpp.html#a867f58846060922b50a272361337cc96" title="Vire les espaces avant et après une chaine de caractère." alt="" coords="296,112,381,141"/>
+</map>

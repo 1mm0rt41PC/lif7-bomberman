@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="1007,67,1193,97"/>
+<area shape="rect" id="node9" href="$classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="239,119,484,149"/>
+<area shape="rect" id="node5" href="$classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1248,145,1347,174"/>
+<area shape="rect" id="node7" href="$main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1396,145,1449,174"/>
+<area shape="rect" id="node11" href="$classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="713,145,951,174"/>
+<area shape="rect" id="node14" href="$classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="1001,197,1199,226"/>
+<area shape="rect" id="node17" href="$classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="535,93,663,122"/>
+<area shape="rect" id="node19" href="$classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="727,41,937,70"/>
+</map>

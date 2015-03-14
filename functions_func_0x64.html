@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Membres de classe - Fonctions</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="functions.html"><span>Tout</span></a></li>
+      <li class="current"><a href="functions_func.html"><span>Fonctions</span></a></li>
+      <li><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_type.html"><span>Définition&nbsp;de&nbsp;type</span></a></li>
+      <li><a href="functions_enum.html"><span>Énumérations</span></a></li>
+      <li><a href="functions_eval.html"><span>Valeurs&nbsp;énumérées</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs3">
+    <ul class="tablist">
+      <li><a href="functions_func.html#index_a"><span>a</span></a></li>
+      <li><a href="functions_func_0x62.html#index_b"><span>b</span></a></li>
+      <li><a href="functions_func_0x63.html#index_c"><span>c</span></a></li>
+      <li class="current"><a href="functions_func_0x64.html#index_d"><span>d</span></a></li>
+      <li><a href="functions_func_0x65.html#index_e"><span>e</span></a></li>
+      <li><a href="functions_func_0x66.html#index_f"><span>f</span></a></li>
+      <li><a href="functions_func_0x67.html#index_g"><span>g</span></a></li>
+      <li><a href="functions_func_0x69.html#index_i"><span>i</span></a></li>
+      <li><a href="functions_func_0x6a.html#index_j"><span>j</span></a></li>
+      <li><a href="functions_func_0x6b.html#index_k"><span>k</span></a></li>
+      <li><a href="functions_func_0x6c.html#index_l"><span>l</span></a></li>
+      <li><a href="functions_func_0x6d.html#index_m"><span>m</span></a></li>
+      <li><a href="functions_func_0x6e.html#index_n"><span>n</span></a></li>
+      <li><a href="functions_func_0x6f.html#index_o"><span>o</span></a></li>
+      <li><a href="functions_func_0x70.html#index_p"><span>p</span></a></li>
+      <li><a href="functions_func_0x71.html#index_q"><span>q</span></a></li>
+      <li><a href="functions_func_0x72.html#index_r"><span>r</span></a></li>
+      <li><a href="functions_func_0x73.html#index_s"><span>s</span></a></li>
+      <li><a href="functions_func_0x74.html#index_t"><span>t</span></a></li>
+      <li><a href="functions_func_0x75.html#index_u"><span>u</span></a></li>
+      <li><a href="functions_func_0x78.html#index_x"><span>x</span></a></li>
+      <li><a href="functions_func_0x79.html#index_y"><span>y</span></a></li>
+      <li><a href="functions_func_0x7e.html#index_~"><span>~</span></a></li>
+    </ul>
+  </div>
+<div class="contents">
+&nbsp;
+
+<h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
+<li>decQuantiteMAX_en_stock()
+: <a class="el" href="classbonus.html#aab77df64a0e6931d90af3f500721e5cd">bonus</a>
+</li>
+<li>decQuantiteUtilisable()
+: <a class="el" href="classbonus.html#a09ddd6bcfc30cc20ee55f41ee1885136">bonus</a>
+</li>
+<li>def_connection()
+: <a class="el" href="classpartie.html#ade01e6f9ef64f5dbc1cc1cb725a7a379">partie</a>
+</li>
+<li>def_modeJeu()
+: <a class="el" href="classpartie.html#a16e34369e5a807a559219bbdf10e78ac">partie</a>
+</li>
+<li>def_nbJoueurs()
+: <a class="el" href="classpartie.html#a2003f42af8a8c3f3038e0707ca966821">partie</a>
+</li>
+<li>defArmements()
+: <a class="el" href="classperso.html#aa19fd01c37bed0b375dcc4362be08ed1">perso</a>
+</li>
+<li>defBonus()
+: <a class="el" href="classbonus.html#a8337e02b55592ebd4c41f79e563e39a5">bonus</a>
+</li>
+<li>defLocal()
+: <a class="el" href="classperso.html#aabdabe266d21f553cd3814cd3b560c64">perso</a>
+</li>
+<li>defNom()
+: <a class="el" href="classperso.html#a790e87487c0adb4360d690b2f2f2d05b">perso</a>
+</li>
+<li>defOrientation()
+: <a class="el" href="classperso.html#a1b34094c6f485175dfe7ddcfc58c3534">perso</a>
+</li>
+<li>defPort()
+: <a class="el" href="classoptions.html#aacf689ad8af10573989f26fd5de3c3aa">options</a>
+</li>
+<li>defPos()
+: <a class="el" href="classperso.html#a99d225bebd697687503d2b450ecdda0b">perso</a>
+</li>
+<li>defProbabiliter()
+: <a class="el" href="classbonus.html#a0a454a5b2b187ef3973b59655f18f029">bonus</a>
+</li>
+<li>defQuantiteMAX()
+: <a class="el" href="classbonus.html#a4d41164c735c2d89f03dc4bd8b1abc1f">bonus</a>
+</li>
+<li>defQuantiteMAX_Ramassable()
+: <a class="el" href="classbonus.html#aa9f84e2d744bdf1542e4be434df85981">bonus</a>
+</li>
+<li>defQuantiteUtilisable()
+: <a class="el" href="classbonus.html#af7954b0264f5afd63d9c708009f2c1e4">bonus</a>
+</li>
+<li>defSocket()
+: <a class="el" href="classperso.html#ad5afe81f43724128d79b57acfabcda3a">perso</a>
+</li>
+<li>defTouche()
+: <a class="el" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50">clavier</a>
+</li>
+<li>defX()
+: <a class="el" href="classperso.html#af4dcf10ad3cd83ccc43e4038273b2d7d">perso</a>
+</li>
+<li>defY()
+: <a class="el" href="classperso.html#a3e19c82c00755e3ad1a5c65a760b9ad8">perso</a>
+</li>
+<li>deplacer_le_Perso_A()
+: <a class="el" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1">partie</a>
+</li>
+<li>disconnection()
+: <a class="el" href="classclient.html#a8d1188c4d73c355ca3233bd7efbedc75">client</a>
+</li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

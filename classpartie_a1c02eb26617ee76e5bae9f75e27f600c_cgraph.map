@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classperso.html#add0aebd55226ce05235400c09a529441" title="Renvoie les armes et bonus du personnage." alt="" coords="197,5,339,35"/>
+<area shape="rect" id="node5" href="$classperso.html#aa19fd01c37bed0b375dcc4362be08ed1" title="Modif l&#39;armement du perso." alt="" coords="187,59,349,88"/>
+<area shape="rect" id="node7" href="$classperso.html#a790e87487c0adb4360d690b2f2f2d05b" title="Modifie le nom du personnage." alt="" coords="209,112,327,141"/>
+<area shape="rect" id="node9" href="$classperso.html#a1b34094c6f485175dfe7ddcfc58c3534" title="Modif l&#39;orientation du perso." alt="" coords="189,165,347,195"/>
+<area shape="rect" id="node11" href="$classbonus.html#a4d41164c735c2d89f03dc4bd8b1abc1f" title="Modifie la quantité MAX en stock. (quantite_MAX_en_stock)." alt="" coords="183,219,353,248"/>
+<area shape="rect" id="node13" href="$classbonus.html#af91e74965a273a977bf3eea41dc19c13" title="Charge en mémoire les paramètres par defaut pour une partie F4A." alt="" coords="175,272,361,301"/>
+</map>

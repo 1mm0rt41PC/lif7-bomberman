@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&#39;une touche." alt="" coords="368,5,501,35"/>
+<area shape="rect" id="node5" href="$classmoteur__sfml.html#aa5290106520ad011241051d3f60435f1" title="Renvoie l&#39;instance de la class. Si pas d&#39;instance, alors création d&#39;une instance..." alt="" coords="341,59,528,88"/>
+<area shape="rect" id="node7" href="$classclavier.html#a64ea9fed59e7a3a07c987a412b96880a" title="Renvoie la touche affecté pour une action." alt="" coords="377,112,492,141"/>
+</map>

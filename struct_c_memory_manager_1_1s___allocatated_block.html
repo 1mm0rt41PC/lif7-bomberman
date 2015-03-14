@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la structure CMemoryManager::s_AllocatatedBlock</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+  <div class="navpath">
+    <ul>
+      <li><a class="el" href="class_c_memory_manager.html">CMemoryManager</a>      </li>
+      <li><a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html">CMemoryManager::s_AllocatatedBlock</a>      </li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Attributs publics</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la structure CMemoryManager::s_AllocatatedBlock</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="CMemoryManager::s_AllocatatedBlock" -->
+<p>Stock les info sur les block mémoires alloués.  
+<a href="#_details">Plus de détails...</a></p>
+
+<p><a href="struct_c_memory_manager_1_1s___allocatated_block-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="partie_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html#a050ffa267c9f209f6a1159b6c2832142">fileName</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Fichier contenant l'allocation.  <a href="#a050ffa267c9f209f6a1159b6c2832142"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html#afa806a065eca6cf997823dd160e6503c">ptr</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Le pointeur.  <a href="#afa806a065eca6cf997823dd160e6503c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html#a66687bce2aeeb39d1066c878e37136b0">size</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Taille allouée.  <a href="#a66687bce2aeeb39d1066c878e37136b0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html#a04a808fd7b875bb64b2e712c5da7968c">line</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Ligne de l'allocation.  <a href="#a04a808fd7b875bb64b2e712c5da7968c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_memory_manager.html#ab8c28bbacbf41e539dcb0d1185588f99">t_obj</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html#ad77e2f233ea15004acfd3206b00dc1dc">type</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Type d'objet (SDL ou classic ?).  <a href="#ad77e2f233ea15004acfd3206b00dc1dc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html#ae08523066b3c9def225d38452557750f">is_array</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Est-ce un objet ou un tableau ?  <a href="#ae08523066b3c9def225d38452557750f"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Stock les info sur les block mémoires alloués. </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00050">50</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="a050ffa267c9f209f6a1159b6c2832142"></a><!-- doxytag: member="CMemoryManager::s_AllocatatedBlock::fileName" ref="a050ffa267c9f209f6a1159b6c2832142" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="partie_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a> <a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html#a050ffa267c9f209f6a1159b6c2832142">CMemoryManager::s_AllocatatedBlock::fileName</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Fichier contenant l'allocation. </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00051">51</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Référencé par <a class="el" href="debug__memory_8cpp_source.html#l00084">CMemoryManager::allocate()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00197">CMemoryManager::IMG_Load_Debug()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00159">CMemoryManager::nextDelete()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00291">CMemoryManager::TTF_OpenFont_Debug()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00265">CMemoryManager::TTF_RenderText_Blended_Debug()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae08523066b3c9def225d38452557750f"></a><!-- doxytag: member="CMemoryManager::s_AllocatatedBlock::is_array" ref="ae08523066b3c9def225d38452557750f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html#ae08523066b3c9def225d38452557750f">CMemoryManager::s_AllocatatedBlock::is_array</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Est-ce un objet ou un tableau ? </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00056">56</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Référencé par <a class="el" href="debug__memory_8cpp_source.html#l00084">CMemoryManager::allocate()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00197">CMemoryManager::IMG_Load_Debug()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00291">CMemoryManager::TTF_OpenFont_Debug()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00265">CMemoryManager::TTF_RenderText_Blended_Debug()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a04a808fd7b875bb64b2e712c5da7968c"></a><!-- doxytag: member="CMemoryManager::s_AllocatatedBlock::line" ref="a04a808fd7b875bb64b2e712c5da7968c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html#a04a808fd7b875bb64b2e712c5da7968c">CMemoryManager::s_AllocatatedBlock::line</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Ligne de l'allocation. </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00054">54</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Référencé par <a class="el" href="debug__memory_8cpp_source.html#l00084">CMemoryManager::allocate()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00197">CMemoryManager::IMG_Load_Debug()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00159">CMemoryManager::nextDelete()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00291">CMemoryManager::TTF_OpenFont_Debug()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00265">CMemoryManager::TTF_RenderText_Blended_Debug()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afa806a065eca6cf997823dd160e6503c"></a><!-- doxytag: member="CMemoryManager::s_AllocatatedBlock::ptr" ref="afa806a065eca6cf997823dd160e6503c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* <a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html#afa806a065eca6cf997823dd160e6503c">CMemoryManager::s_AllocatatedBlock::ptr</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Le pointeur. </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00052">52</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Référencé par <a class="el" href="debug__memory_8cpp_source.html#l00084">CMemoryManager::allocate()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00197">CMemoryManager::IMG_Load_Debug()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00291">CMemoryManager::TTF_OpenFont_Debug()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00265">CMemoryManager::TTF_RenderText_Blended_Debug()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a66687bce2aeeb39d1066c878e37136b0"></a><!-- doxytag: member="CMemoryManager::s_AllocatatedBlock::size" ref="a66687bce2aeeb39d1066c878e37136b0" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html#a66687bce2aeeb39d1066c878e37136b0">CMemoryManager::s_AllocatatedBlock::size</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Taille allouée. </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00053">53</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Référencé par <a class="el" href="debug__memory_8cpp_source.html#l00084">CMemoryManager::allocate()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00197">CMemoryManager::IMG_Load_Debug()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00291">CMemoryManager::TTF_OpenFont_Debug()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00265">CMemoryManager::TTF_RenderText_Blended_Debug()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad77e2f233ea15004acfd3206b00dc1dc"></a><!-- doxytag: member="CMemoryManager::s_AllocatatedBlock::type" ref="ad77e2f233ea15004acfd3206b00dc1dc" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_c_memory_manager.html#ab8c28bbacbf41e539dcb0d1185588f99">t_obj</a> <a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html#ad77e2f233ea15004acfd3206b00dc1dc">CMemoryManager::s_AllocatatedBlock::type</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Type d'objet (SDL ou classic ?). </p>
+
+<p>Définition à la ligne <a class="el" href="debug__memory_8h_source.html#l00055">55</a> du fichier <a class="el" href="debug__memory_8h_source.html">debug_memory.h</a>.</p>
+
+<p>Référencé par <a class="el" href="debug__memory_8cpp_source.html#l00084">CMemoryManager::allocate()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00197">CMemoryManager::IMG_Load_Debug()</a>, <a class="el" href="debug__memory_8cpp_source.html#l00291">CMemoryManager::TTF_OpenFont_Debug()</a>, et <a class="el" href="debug__memory_8cpp_source.html#l00265">CMemoryManager::TTF_RenderText_Blended_Debug()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette structure a été générée à partir du fichier suivant :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="debug__memory_8h_source.html">debug_memory.h</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

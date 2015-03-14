@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="180,5,404,35"/>
+<area shape="rect" id="node5" href="$classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="164,59,420,88"/>
+<area shape="rect" id="node7" href="$classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="243,112,341,141"/>
+<area shape="rect" id="node9" href="$main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="471,112,524,141"/>
+</map>

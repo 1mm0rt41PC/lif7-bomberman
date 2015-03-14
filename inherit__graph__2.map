@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node1" href="$classbase_client_server.html" title="Support pour la création d&#39;une class client/serveur." alt="" coords="5,32,136,61"/>
+<area shape="rect" id="node3" href="$classclient.html" title="Cette class permet de gérer facilement un client." alt="" coords="188,5,244,35"/>
+<area shape="rect" id="node5" href="$classserver.html" title="Cette class permet de gérer facilement un serveur." alt="" coords="185,59,247,88"/>
+</map>

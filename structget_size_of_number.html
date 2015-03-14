@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la structure getSizeOfNumber&lt; N &gt; (modèle)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Types publics</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la structure getSizeOfNumber&lt; N &gt; (modèle)</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="getSizeOfNumber" -->
+<p>Détermine le nombre de chiffre dans un nombre. (NOMBRE POSITIF !).  
+<a href="#_details">Plus de détails...</a></p>
+
+<p><a href="structget_size_of_number-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-types"></a>
+Types publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="structget_size_of_number.html#aaeef8257b65933e34908c9ac75d1e41ca9623f6ed283d05a13844b76982e92b6d">value</a> =  1+ getSizeOfNumber&lt; N/10 &gt;::value
+ }</td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<h3>template&lt;unsigned int N&gt;<br/>
+ struct getSizeOfNumber&lt; N &gt;</h3>
+
+<p>Détermine le nombre de chiffre dans un nombre. (NOMBRE POSITIF !). </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>N</em>&nbsp;</td><td>Le nombre a calculer</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Utilisation: </p>
+<div class="fragment"><pre class="fragment"> printf(<span class="stringliteral">&quot;Il y a %d chiffre dans le nombre 5380&quot;</span>, <a class="code" href="structget_size_of_number.html" title="Détermine le nombre de chiffre dans un nombre. (NOMBRE POSITIF !).">getSizeOfNumber&lt;5380&gt;::value</a>);
+</pre></div> <dl class="note"><dt><b>Note:</b></dt><dd>Calculs effectués à la compilation </dd></dl>
+<dl class="warning"><dt><b>Avertissement:</b></dt><dd>NE PAS METTRE DE VALEUR INCONNUE ! </dd></dl>
+<dl class="see"><dt><b>Voir également:</b></dt><dd>struct <a class="el" href="structget_size_of_number_s.html">getSizeOfNumberS</a> </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="meta_prog_8inl_source.html#l00056">56</a> du fichier <a class="el" href="meta_prog_8inl_source.html">metaProg.inl</a>.</p>
+<hr/><h2>Documentation des énumérations membres</h2>
+<a class="anchor" id="aaeef8257b65933e34908c9ac75d1e41c"></a><!-- doxytag: member="getSizeOfNumber::@7" ref="aaeef8257b65933e34908c9ac75d1e41c" args="" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;unsigned int N&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl><dt><b>Valeurs énumérées: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="aaeef8257b65933e34908c9ac75d1e41ca9623f6ed283d05a13844b76982e92b6d"></a><!-- doxytag: member="value" ref="aaeef8257b65933e34908c9ac75d1e41ca9623f6ed283d05a13844b76982e92b6d" args="" -->value</em>&nbsp;</td><td>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="meta_prog_8inl_source.html#l00058">58</a> du fichier <a class="el" href="meta_prog_8inl_source.html">metaProg.inl</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette structure a été générée à partir du fichier suivant :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="meta_prog_8inl_source.html">metaProg.inl</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

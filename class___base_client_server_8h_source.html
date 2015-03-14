@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/ClientServer/class_BaseClientServer.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/ClientServer/class_BaseClientServer.h</h1>  </div>
+</div>
+<div class="contents">
+<a href="class___base_client_server_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef CLASS_BASECLIENTSERVER_h</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define CLASS_BASECLIENTSERVER_h</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;string.h&gt;</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;errno.h&gt;</span>
+<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;limits.h&gt;</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="comment">// Réseau</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#define __TCP_NODELAY__ true</span>
+<a name="l00012"></a>00012 <span class="preprocessor"></span>
+<a name="l00013"></a>00013 <span class="preprocessor">#if defined(WIN32) || defined(WIN64)</span>
+<a name="l00014"></a>00014 <span class="preprocessor"></span><span class="preprocessor">    #include &lt;winsock2.h&gt;</span>
+<a name="l00015"></a>00015     <span class="comment">//#pragma comment(lib, &quot;wsock32.lib&quot;)</span>
+<a name="l00016"></a><a class="code" href="class___base_client_server_8h.html#a6b82106923cc13b3a9734520ecc29514">00016</a>     <span class="keyword">typedef</span> <span class="keywordtype">int</span> socklen_t;
+<a name="l00017"></a>00017 <span class="preprocessor">    #define IF_WINDOWS( ... ) __VA_ARGS__</span>
+<a name="l00018"></a>00018 <span class="preprocessor"></span><span class="preprocessor">    #define IF_LINUX( ... )</span>
+<a name="l00019"></a>00019 <span class="preprocessor"></span><span class="preprocessor">    #define SOCKET_REPPORT_ERROR WSAGetLastError()</span>
+<a name="l00020"></a>00020 <span class="preprocessor"></span><span class="preprocessor">    #define SHUT_RDWR SD_BOTH</span>
+<a name="l00021"></a>00021 <span class="preprocessor"></span>
+<a name="l00022"></a>00022 <span class="preprocessor">#elif defined (linux)</span>
+<a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">    #include &lt;sys/types.h&gt;</span>
+<a name="l00024"></a>00024 <span class="preprocessor">    #include &lt;sys/socket.h&gt;</span>
+<a name="l00025"></a>00025 <span class="preprocessor">    #include &lt;netinet/in.h&gt;</span>
+<a name="l00026"></a>00026 <span class="preprocessor">    #include &lt;netinet/tcp.h&gt;</span>        <span class="comment">// Pour TCP_NODELAY et SOL_TCP.</span>
+<a name="l00027"></a>00027 <span class="preprocessor">    #include &lt;arpa/inet.h&gt;</span>
+<a name="l00028"></a>00028 <span class="preprocessor">    #include &lt;unistd.h&gt;</span> <span class="comment">/* close */</span>
+<a name="l00029"></a>00029 <span class="preprocessor">    #include &lt;netdb.h&gt;</span> <span class="comment">/* gethostbyname */</span>
+<a name="l00030"></a>00030 <span class="preprocessor">    #include &lt;errno.h&gt;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">    #define INVALID_SOCKET -1</span>
+<a name="l00032"></a>00032 <span class="preprocessor"></span><span class="preprocessor">    #define SOCKET_ERROR -1</span>
+<a name="l00033"></a>00033 <span class="preprocessor"></span><span class="preprocessor">    #define closesocket(s) close(s)</span>
+<a name="l00034"></a><a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">00034</a> <span class="preprocessor"></span>    <span class="keyword">typedef</span> <span class="keywordtype">int</span> SOCKET;
+<a name="l00035"></a><a class="code" href="class___base_client_server_8h.html#a29046dc0232f0e5c70adbc25090d77b8">00035</a>     <span class="keyword">typedef</span> <span class="keyword">struct </span>sockaddr_in <a class="code" href="class___base_client_server_8h.html#a29046dc0232f0e5c70adbc25090d77b8">SOCKADDR_IN</a>;
+<a name="l00036"></a><a class="code" href="class___base_client_server_8h.html#ae334b73cedf7204187dce3f817576009">00036</a>     <span class="keyword">typedef</span> <span class="keyword">struct </span>sockaddr <a class="code" href="class___base_client_server_8h.html#ae334b73cedf7204187dce3f817576009">SOCKADDR</a>;
+<a name="l00037"></a><a class="code" href="class___base_client_server_8h.html#a328d951616d1a7f289fef8e6b23a926b">00037</a>     <span class="keyword">typedef</span> <span class="keyword">struct </span>in_addr <a class="code" href="class___base_client_server_8h.html#a328d951616d1a7f289fef8e6b23a926b">IN_ADDR</a>;
+<a name="l00038"></a><a class="code" href="class___base_client_server_8h.html#a00efd0fdd0cb87ebd4106b85293990ed">00038</a>     <span class="keyword">typedef</span> <span class="keyword">struct </span>hostent <a class="code" href="class___base_client_server_8h.html#a00efd0fdd0cb87ebd4106b85293990ed">HOSTENT</a>;
+<a name="l00039"></a>00039 <span class="preprocessor">    #define IF_WINDOWS( ... )</span>
+<a name="l00040"></a>00040 <span class="preprocessor"></span><span class="preprocessor">    #define IF_LINUX( ... ) __VA_ARGS__</span>
+<a name="l00041"></a>00041 <span class="preprocessor"></span><span class="preprocessor">    #define SOCKET_REPPORT_ERROR errno</span>
+<a name="l00042"></a>00042 <span class="preprocessor"></span>
+<a name="l00043"></a>00043 <span class="preprocessor">#else</span>
+<a name="l00044"></a>00044 <span class="preprocessor"></span><span class="preprocessor">    #error Pas de support pour votre platforme</span>
+<a name="l00045"></a>00045 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00046"></a>00046 <span class="preprocessor"></span>
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048 <span class="preprocessor">#ifndef stdError</span>
+<a name="l00049"></a>00049 <span class="preprocessor"></span>    <span class="comment">// Système d&#39;erreur SANS EXIT</span>
+<a name="l00050"></a>00050 <span class="preprocessor">    #define stdError( msg, ... ) {fprintf(stderr, &quot;[file &quot; __FILE__ &quot;, line %d]: &quot; msg &quot;\n&quot;, __LINE__, ##__VA_ARGS__); fflush(stderr);}</span>
+<a name="l00051"></a>00051 <span class="preprocessor"></span>
+<a name="l00052"></a>00052     <span class="comment">// Système d&#39;erreur AVEC EXIT</span>
+<a name="l00053"></a>00053 <span class="preprocessor">    #define stdErrorE( msg, ... ) {fprintf(stderr, &quot;[file &quot; __FILE__ &quot;, line %d]: &quot; msg &quot;\n&quot;, __LINE__, ##__VA_ARGS__); exit(__LINE__);}</span>
+<a name="l00054"></a>00054 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00055"></a>00055 <span class="preprocessor"></span>
+<a name="l00056"></a>00056 <span class="comment"></span>
+<a name="l00057"></a>00057 <span class="comment">/*!</span>
+<a name="l00058"></a>00058 <span class="comment">* @class baseClientServer</span>
+<a name="l00059"></a>00059 <span class="comment">* @brief Support pour la création d&#39;une class client/serveur</span>
+<a name="l00060"></a>00060 <span class="comment">* @warning Cette class ne contient pas les outils nécéssaire pour être considérée comme un serveur ou un client</span>
+<a name="l00061"></a>00061 <span class="comment">*/</span>
+<a name="l00062"></a><a class="code" href="classbase_client_server.html">00062</a> <span class="keyword">class </span><a class="code" href="classbase_client_server.html" title="Support pour la création d&amp;#39;une class client/serveur.">baseClientServer</a>
+<a name="l00063"></a>00063 {
+<a name="l00064"></a>00064     <span class="keyword">private</span>:
+<a name="l00065"></a><a class="code" href="classbase_client_server.html#a2dea81cee139f918358e36b8650fa37e">00065</a>         <a class="code" href="classbase_client_server.html#a6415a999d34d9969e6b7d7108df74c0f">IF_WINDOWS</a>(
+<a name="l00066"></a>00066             <span class="keyword">static</span> WSADATA c_wsaData;
+<a name="l00067"></a>00067         )
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070     <span class="keyword">protected</span>:
+<a name="l00071"></a>00071         timeval c_wait;<span class="comment">//!&lt; Temps d&#39;attente au niveau du select</span>
+<a name="l00072"></a>00072 <span class="comment"></span>        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classbase_client_server.html#a2dea81cee139f918358e36b8650fa37e" title="&amp;lt; Temps d&amp;#39;attente au niveau du select">c_port</a>;<span class="comment">//!&lt; Port a utiliser</span>
+<a name="l00073"></a><a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3">00073</a> <span class="comment"></span>        <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a>;<span class="comment">//!&lt; Le socket principal. ( c&#39;est clui là quit sert pour l&#39;écoute sur le port c_port )</span>
+<a name="l00074"></a><a class="code" href="classbase_client_server.html#a9a11cce8df298490560c391275736be9">00074</a> <span class="comment"></span>        <a class="code" href="class___base_client_server_8h.html#a29046dc0232f0e5c70adbc25090d77b8">SOCKADDR_IN</a> <a class="code" href="classbase_client_server.html#a9a11cce8df298490560c391275736be9">c_addr</a>;
+<a name="l00075"></a><a class="code" href="classbase_client_server.html#a72e8655cd3ede0bea9cdb934ff40fa42">00075</a>         fd_set <a class="code" href="classbase_client_server.html#a72e8655cd3ede0bea9cdb934ff40fa42" title="Le fd qui est utiliser pour check les signaux en lecture.">c_rdfs</a>;<span class="comment">//!&lt; Le fd qui est utiliser pour check les signaux en lecture</span>
+<a name="l00076"></a>00076 <span class="comment"></span>
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078     <span class="keyword">public</span>:
+<a name="l00079"></a>00079         <a class="code" href="classbase_client_server.html#ada968cd92346f898f60216c738da2737">baseClientServer</a>();
+<a name="l00080"></a>00080         <a class="code" href="classbase_client_server.html#ab05d86575998b22718aad38aec0027d4" title="Destructeur par defaut.">~baseClientServer</a>();
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082         <span class="comment">// Accésseurs</span>
+<a name="l00083"></a>00083         <span class="keyword">inline</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classbase_client_server.html#a61011c973d5f71ddd0894f1f99f8959e" title="Defini le port à utiliser.">port</a>() <span class="keyword">const</span>;
+<a name="l00084"></a>00084         <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classbase_client_server.html#a676e6d281c3ff4a5c9e2b91c04d6b99a" title="Permet de savoir l&amp;#39;état du paramètre TCP_NoDelay ( Algorithme de Nagle ) pour le socket c_listenS...">TCP_NoDelay</a>();
+<a name="l00085"></a>00085         <span class="keywordtype">bool</span> <a class="code" href="classbase_client_server.html#a676e6d281c3ff4a5c9e2b91c04d6b99a" title="Permet de savoir l&amp;#39;état du paramètre TCP_NoDelay ( Algorithme de Nagle ) pour le socket c_listenS...">TCP_NoDelay</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> s );
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087         <span class="comment">// Modificateurs</span>
+<a name="l00088"></a>00088         <span class="keywordtype">void</span> <a class="code" href="classbase_client_server.html#ae24984bbf180c9fe1e75160e108dbaa4" title="Modifier le port d&amp;#39;écoute.">setPort</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classbase_client_server.html#a61011c973d5f71ddd0894f1f99f8959e" title="Defini le port à utiliser.">port</a> );
+<a name="l00089"></a>00089         <span class="keywordtype">void</span> <a class="code" href="classbase_client_server.html#acf92891d022c8c20e68b634ba1701757" title="Modifier le temps d&amp;#39;attente d&amp;#39;une réponse.">setWait</a>( <span class="keywordtype">long</span> tv_sec, <span class="keywordtype">long</span> tv_usec );
+<a name="l00090"></a>00090         <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classbase_client_server.html#acf92891d022c8c20e68b634ba1701757" title="Modifier le temps d&amp;#39;attente d&amp;#39;une réponse.">setWait</a>( <span class="keyword">const</span> timeval* wait );
+<a name="l00091"></a>00091         <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classbase_client_server.html#a94f59ec6bf09f3c90f25e57781632df5">setTCP_NoDelay</a>( <span class="keywordtype">bool</span> activer );
+<a name="l00092"></a>00092         <span class="keywordtype">void</span> <a class="code" href="classbase_client_server.html#a94f59ec6bf09f3c90f25e57781632df5">setTCP_NoDelay</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> s, <span class="keywordtype">bool</span> activer );
+<a name="l00093"></a>00093 
+<a name="l00094"></a>00094         <span class="comment">// Récéption de message</span>
+<a name="l00095"></a>00095         <span class="keywordtype">int</span> <a class="code" href="classbase_client_server.html#a6eeb24edfb7b92dd6311817d848bb953" title="Récupère les données envoyées par un client.">readClient</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> sock, <span class="keywordtype">char</span>* buffer, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classbase_client_server.html#afc826d31816db85c53667361e303c37d">bufferSize</a> );
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097         <span class="comment">// Envoie de message</span>
+<a name="l00098"></a>00098         <span class="keywordtype">void</span> <a class="code" href="classbase_client_server.html#afaeac42db5822c4582e54e51daaa35a8" title="Envoie un message (buffer) au client.">send_message</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> sock, <span class="keyword">const</span> <span class="keywordtype">char</span>* buffer, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classbase_client_server.html#afc826d31816db85c53667361e303c37d">bufferSize</a> );
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100         <span class="comment">// Compactiblité</span>
+<a name="l00101"></a>00101         <a class="code" href="classbase_client_server.html#a6415a999d34d9969e6b7d7108df74c0f">IF_WINDOWS</a>(
+<a name="l00102"></a>00102             <span class="keyword">inline</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* strerror( <span class="keywordtype">int</span> ){ <span class="keywordflow">return</span> <span class="stringliteral">&quot;?&quot;</span>; }
+<a name="l00103"></a>00103         )
+<a name="l00104"></a>00104 
+<a name="l00105"></a><a class="code" href="classbase_client_server.html#a54c04653116419cadf5900d8947a21a5">00105</a>         <span class="keyword">static</span> <span class="keywordtype">void</span> printAllBuffer( <span class="keyword">const</span> <span class="keywordtype">char</span> buffer[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classbase_client_server.html#afc826d31816db85c53667361e303c37d">bufferSize</a>, <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="classbase_client_server.html#a3a94c4ce7ae9e5b911bd03edc4d0e2ae">file</a>[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classbase_client_server.html#a54c04653116419cadf5900d8947a21a5">line</a> );
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107         <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classbase_client_server.html#a09c15f21a6970e5a5f9103802291c502" title="Permet de savoir si l&amp;#39;on est sur une machine Intel, une machine qui lit les octects en Little End...">isLittleEndian</a>();<span class="comment">// isIntel</span>
+<a name="l00108"></a>00108         <span class="comment">// Conversion Little Endian &lt;-&gt; Big Endian</span>
+<a name="l00109"></a>00109         <span class="keyword">template</span>&lt;<span class="keyword">class</span> Type&gt; <span class="keyword">static</span> Type <a class="code" href="classbase_client_server.html#ad64908eb927871b5d9544ea664d6d5ce" title="Conversion Little Endian &amp;lt;-&amp;gt; Big Endian (Inversion des octets).">reverseByte</a>( Type var );<span class="comment">// Inverse les octets</span>
+<a name="l00110"></a>00110         <span class="comment">//template&lt;class Type&gt; Type reverseBit( Type var );// Inverse les bits</span>
+<a name="l00111"></a>00111 };
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113 <span class="preprocessor">#include &quot;<a class="code" href="class___base_client_server_8inl.html">class_BaseClientServer.inl</a>&quot;</span>
+<a name="l00114"></a>00114 
+<a name="l00115"></a>00115 <span class="preprocessor">#endif</span>
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

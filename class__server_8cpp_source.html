@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/ClientServer/Server/class_server.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/ClientServer/Server/class_server.cpp</h1>  </div>
+</div>
+<div class="contents">
+<a href="class__server_8cpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#include &quot;<a class="code" href="class__server_8h.html">class_server.h</a>&quot;</span>
+<a name="l00002"></a>00002 <span class="preprocessor">#include &quot;../../debug.h&quot;</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="comment">// Permet de déconnecter tout les client, de décharger Winsock de la mémoire, puis de rapporter une erreur + exit</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#define reportError( ... ) {this-&gt;~baseClientServer(); this-&gt;~server(); stdErrorE( __VA_ARGS__ )}</span>
+<a name="l00006"></a>00006 <span class="preprocessor"></span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00009"></a>00009 <span class="comment">* @fn server::server()</span>
+<a name="l00010"></a>00010 <span class="comment">* @brief Constructeur par defaut</span>
+<a name="l00011"></a>00011 <span class="comment">*</span>
+<a name="l00012"></a>00012 <span class="comment">* - Si la platforme est windows =&gt; on charge Winsock en mémoire</span>
+<a name="l00013"></a>00013 <span class="comment">* - Paramétrage pas défaut.</span>
+<a name="l00014"></a>00014 <span class="comment">*/</span>
+<a name="l00015"></a><a class="code" href="classserver.html#a30853862a28dda8c4c9b57b4e8f7de1a">00015</a> <a class="code" href="classserver.html#a30853862a28dda8c4c9b57b4e8f7de1a" title="Constructeur par defaut.">server::server</a>()
+<a name="l00016"></a>00016 {
+<a name="l00017"></a>00017     <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a> = 0;
+<a name="l00018"></a>00018     <a class="code" href="classserver.html#ae5c08d5767b242760df76eac0ea6ba0e" title="Nombre maximum de client. Si = à 0 =&amp;gt; pas de limite.">c_nb_Max_Client</a> = 0;
+<a name="l00019"></a>00019     <a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f" title="Nombre de client actuellement connecté.">c_nb_clientConnecter</a> = 0;
+<a name="l00020"></a>00020     <a class="code" href="classserver.html#ae87095dfcbbd0e699a781de553115d08" title="Taille de la structure sClient ( sizeof(sClient) ) (N&amp;#39;EST JAMAIS MODIFIE).">c_clientDataSize</a> = <span class="keyword">sizeof</span>(SOCKADDR_IN);
+<a name="l00021"></a>00021 }
+<a name="l00022"></a>00022 
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00025"></a>00025 <span class="comment">* @fn server::~server()</span>
+<a name="l00026"></a>00026 <span class="comment">* @brief Destructeur par defaut</span>
+<a name="l00027"></a>00027 <span class="comment">*</span>
+<a name="l00028"></a>00028 <span class="comment">* - Appel server::endListen()</span>
+<a name="l00029"></a>00029 <span class="comment">* - Si la platforme est windows =&gt; on décharge Winsock de la mémoire</span>
+<a name="l00030"></a>00030 <span class="comment">*/</span>
+<a name="l00031"></a><a class="code" href="classserver.html#ae3de4182db6fe6c656036f9e4da49204">00031</a> <a class="code" href="classserver.html#ae3de4182db6fe6c656036f9e4da49204" title="Destructeur par defaut.">server::~server</a>()
+<a name="l00032"></a>00032 {
+<a name="l00033"></a>00033     <a class="code" href="classserver.html#a36c3ecd67ea956c01bf8f4064c1e2078" title="Met fin a une écoute sur un port.">endListen</a>();
+<a name="l00034"></a>00034 }
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00038"></a>00038 <span class="comment">* @fn SOCKET server::getClientSOCK( unsigned int id ) const</span>
+<a name="l00039"></a>00039 <span class="comment">* @brief Retourne le socket affecté à l&#39;id</span>
+<a name="l00040"></a>00040 <span class="comment">* @param[in] id L&#39;id du client</span>
+<a name="l00041"></a>00041 <span class="comment">* @return Le socket affecté à l&#39;id</span>
+<a name="l00042"></a>00042 <span class="comment">*/</span>
+<a name="l00043"></a><a class="code" href="classserver.html#a9f03663df3cb618c70e34cac773ff55b">00043</a> <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="code" href="classserver.html#a9f03663df3cb618c70e34cac773ff55b" title="Retourne le socket affecté à l&amp;#39;id.">server::getClientSOCK</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">id</span> )<span class="keyword"> const</span>
+<a name="l00044"></a>00044 <span class="keyword"></span>{
+<a name="l00045"></a>00045     <span class="keywordflow">if</span>( <span class="keywordtype">id</span> &gt;= <a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f" title="Nombre de client actuellement connecté.">c_nb_clientConnecter</a> )
+<a name="l00046"></a>00046         reportError(<span class="stringliteral">&quot;Le client(%u) demandé n&#39;existe pas ! Il y a actuellement %u client connecté. Le numéro client doit donc être compris entre : 0 &lt;= client &lt; %u&quot;</span>, <span class="keywordtype">id</span>, <a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f" title="Nombre de client actuellement connecté.">c_nb_clientConnecter</a>, <a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f" title="Nombre de client actuellement connecté.">c_nb_clientConnecter</a>);
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048     <span class="keywordflow">return</span> <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>[id].<a class="code" href="structserver_1_1s_client.html#a71fe0aadaf55f5fad0f75915fad4ebea">listenSocket</a>;
+<a name="l00049"></a>00049 }
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00053"></a>00053 <span class="comment">* @fn unsigned int server::getClientID( SOCKET s ) const</span>
+<a name="l00054"></a>00054 <span class="comment">* @brief Retourne l&#39;id du client qui a le socket s</span>
+<a name="l00055"></a>00055 <span class="comment">* @param[in] s Le socket dont on veux déterminer l&#39;id qui y est affecté</span>
+<a name="l00056"></a>00056 <span class="comment">* @return L&#39;id affectée au socket</span>
+<a name="l00057"></a>00057 <span class="comment">*</span>
+<a name="l00058"></a>00058 <span class="comment">* @warning En cas d&#39;erreur errno=EINVAL</span>
+<a name="l00059"></a>00059 <span class="comment">*/</span>
+<a name="l00060"></a><a class="code" href="classserver.html#af29d65fecf50b8ba68ffee1a21d32f50">00060</a> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classserver.html#af29d65fecf50b8ba68ffee1a21d32f50" title="Retourne l&amp;#39;id du client qui a le socket s.">server::getClientID</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> s )<span class="keyword"> const</span>
+<a name="l00061"></a>00061 <span class="keyword"></span>{
+<a name="l00062"></a>00062     <span class="keywordflow">for</span>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f" title="Nombre de client actuellement connecté.">c_nb_clientConnecter</a>; i++ )<span class="comment">// -1 pour contrer le ++</span>
+<a name="l00063"></a>00063         <span class="keywordflow">if</span>( <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>[i].listenSocket == s )
+<a name="l00064"></a>00064             <span class="keywordflow">return</span> i;
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066     stdError(<span class="stringliteral">&quot;Le socket demandé n&#39;est pas dans la liste des socket référencé !&quot;</span>);
+<a name="l00067"></a>00067     errno = EINVAL;
+<a name="l00068"></a>00068     <span class="keywordflow">return</span> 0;
+<a name="l00069"></a>00069 }
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00073"></a>00073 <span class="comment">* @fn void server::rmClientID( unsigned int client )</span>
+<a name="l00074"></a>00074 <span class="comment">* @brief Déconnecte le client puis le supprime de la liste</span>
+<a name="l00075"></a>00075 <span class="comment">* @param[in] client id du client dans la liste. 0 &lt;= client &lt; server::nb_clientConnecter()</span>
+<a name="l00076"></a>00076 <span class="comment">*/</span>
+<a name="l00077"></a><a class="code" href="classserver.html#ac0cf2372772a90dbe308c784266939e1">00077</a> <span class="keywordtype">void</span> <a class="code" href="classserver.html#ac0cf2372772a90dbe308c784266939e1" title="Déconnecte le client puis le supprime de la liste.">server::rmClientID</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classclient.html" title="Cette class permet de gérer facilement un client.">client</a> )
+<a name="l00078"></a>00078 {
+<a name="l00079"></a>00079     <span class="keywordflow">if</span>( client &gt;= <a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f" title="Nombre de client actuellement connecté.">c_nb_clientConnecter</a> )
+<a name="l00080"></a>00080         reportError(<span class="stringliteral">&quot;Le client(%u) demandé n&#39;existe pas ! Il y a actuellement %u client connecté. Le numéro client doit donc être compris entre : 0 &lt;= client &lt; %u&quot;</span>, client, <a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f" title="Nombre de client actuellement connecté.">c_nb_clientConnecter</a>, <a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f" title="Nombre de client actuellement connecté.">c_nb_clientConnecter</a>);
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082     <span class="comment">// Fermeture de la connection avec le client</span>
+<a name="l00083"></a>00083     closesocket(<a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>[client].listenSocket);
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085     <span class="keywordflow">for</span>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i=client+1; i&lt;<a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f" title="Nombre de client actuellement connecté.">c_nb_clientConnecter</a>; i++ )<span class="comment">// -1 pour contrer le ++</span>
+<a name="l00086"></a>00086     {
+<a name="l00087"></a>00087         memcpy( <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>+i-1, <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>+i, <span class="keyword">sizeof</span>(<a class="code" href="structserver_1_1s_client.html" title="Contient les information d&amp;#39;un client.">sClient</a>) );
+<a name="l00088"></a>00088     }
+<a name="l00089"></a>00089     c_nb_clientConnecter--;
+<a name="l00090"></a>00090 }
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00094"></a>00094 <span class="comment">* @fn void server::Listening( unsigned int port )</span>
+<a name="l00095"></a>00095 <span class="comment">* @brief Met le serveur en activité sur le port {port}</span>
+<a name="l00096"></a>00096 <span class="comment">* @param[in] port Port d&#39;écoute</span>
+<a name="l00097"></a>00097 <span class="comment">*/</span>
+<a name="l00098"></a><a class="code" href="classserver.html#ae99f6766fe520a13022e3aee4d7c2d94">00098</a> <span class="keywordtype">void</span> <a class="code" href="classserver.html#a86e0b7cfa19dc5aee949533eb617e41f" title="Met le serveur en activité. Lance l&amp;#39;écoute sur le port demandé.">server::Listening</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> port )
+<a name="l00099"></a>00099 {
+<a name="l00100"></a>00100     <a class="code" href="classbase_client_server.html#ae24984bbf180c9fe1e75160e108dbaa4" title="Modifier le port d&amp;#39;écoute.">setPort</a>( port );
+<a name="l00101"></a>00101     <a class="code" href="classserver.html#a86e0b7cfa19dc5aee949533eb617e41f" title="Met le serveur en activité. Lance l&amp;#39;écoute sur le port demandé.">Listening</a>();
+<a name="l00102"></a>00102 }
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00106"></a>00106 <span class="comment">* @fn void server::Listening()</span>
+<a name="l00107"></a>00107 <span class="comment">* @brief Met le serveur en activité. Lance l&#39;écoute sur le port demandé</span>
+<a name="l00108"></a>00108 <span class="comment">*/</span>
+<a name="l00109"></a><a class="code" href="classserver.html#a86e0b7cfa19dc5aee949533eb617e41f">00109</a> <span class="keywordtype">void</span> <a class="code" href="classserver.html#a86e0b7cfa19dc5aee949533eb617e41f" title="Met le serveur en activité. Lance l&amp;#39;écoute sur le port demandé.">server::Listening</a>()
+<a name="l00110"></a>00110 {
+<a name="l00111"></a>00111     <span class="comment">// AF_INET, PF_INET := The Internet Protocol version 4 (IPv4) address family.</span>
+<a name="l00112"></a>00112     <span class="comment">// AF_INET6, PF_INET6 := The Internet Protocol version 6 (IPv6) address family.</span>
+<a name="l00113"></a>00113     <span class="comment">// AF_INET = Address Format, Internet = IP Addresses</span>
+<a name="l00114"></a>00114     <span class="comment">// PF_INET = Packet Format, Internet = IP, TCP/IP or UDP/IP</span>
+<a name="l00115"></a>00115     <span class="comment">// SOCK_STREAM := A socket type that provides sequenced, reliable, two-way, connection-based byte streams with an OOB data transmission mechanism. This socket type uses the Transmission Control Protocol (TCP) for the Internet address family (AF_INET or AF_INET6).</span>
+<a name="l00116"></a>00116     <span class="comment">// SOCK_DGRAM := A socket type that supports datagrams, which are connectionless, unreliable buffers of a fixed (typically small) maximum length. This socket type uses the User Datagram Protocol (UDP) for the Internet address family (AF_INET or AF_INET6).</span>
+<a name="l00117"></a>00117     <a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a> = socket(PF_INET, SOCK_STREAM, 0<span class="comment">/* Pas de protocole */</span>);
+<a name="l00118"></a>00118     <span class="keywordflow">if</span>( <a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a> == INVALID_SOCKET )
+<a name="l00119"></a>00119         reportError(<span class="stringliteral">&quot;Erreur(%d) lors de l&#39;ouverture du socket. Detail: &lt;%s&gt;&quot;</span>, SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121     <span class="comment">// Paramètrage du serveur</span>
+<a name="l00122"></a>00122     <a class="code" href="classbase_client_server.html#a9a11cce8df298490560c391275736be9">c_addr</a>.sin_family      = AF_INET;           <span class="comment">// Address family</span>
+<a name="l00123"></a>00123     <a class="code" href="classbase_client_server.html#a9a11cce8df298490560c391275736be9">c_addr</a>.sin_port        = htons(<a class="code" href="classbase_client_server.html#a2dea81cee139f918358e36b8650fa37e" title="&amp;lt; Temps d&amp;#39;attente au niveau du select">c_port</a>);     <span class="comment">// IP port ( The htons function converts a u_short from host to TCP/IP network byte order (which is big-endian).)</span>
+<a name="l00124"></a>00124     <span class="comment">// The in_addr structure is the IPv4 equivalent of the IPv6-based in6_addr structure.</span>
+<a name="l00125"></a>00125     <a class="code" href="classbase_client_server.html#a9a11cce8df298490560c391275736be9">c_addr</a>.sin_addr.s_addr = INADDR_ANY;        <span class="comment">// IP address ( ex d&#39;une autre utilisation: inet_aton // inet_addr(&quot;127.0.0.1&quot;) )</span>
+<a name="l00126"></a>00126     <span class="comment">// c_addr.sin_zero // padding ( packed )</span>
+<a name="l00127"></a>00127 
+<a name="l00128"></a>00128     <a class="code" href="classbase_client_server.html#a6415a999d34d9969e6b7d7108df74c0f">IF_WINDOWS</a>(
+<a name="l00129"></a>00129         <span class="keywordtype">char</span> reuse = 1;
+<a name="l00130"></a>00130     )
+<a name="l00131"></a>00131     IF_LINUX(
+<a name="l00132"></a>00132         <span class="keywordtype">int</span> reuse = 1;
+<a name="l00133"></a>00133     )
+<a name="l00134"></a>00134     <span class="keywordflow">if</span>( setsockopt(<a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a>, SOL_SOCKET, SO_REUSEADDR, &amp;reuse, <span class="keyword">sizeof</span>(reuse)) == SOCKET_ERROR )
+<a name="l00135"></a>00135         reportError(<span class="stringliteral">&quot;Erreur(%d). Impossible de permettre la réutilisation du port ! setsockopt(). Detail: &lt;%s&gt;&quot;</span>, SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
+<a name="l00136"></a>00136 
+<a name="l00137"></a>00137     <a class="code" href="classbase_client_server.html#a94f59ec6bf09f3c90f25e57781632df5">setTCP_NoDelay</a>( __TCP_NODELAY__ );
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139     <span class="comment">// Bind lie un socket avec une structure sockaddr.</span>
+<a name="l00140"></a>00140     <span class="keywordflow">if</span>( bind(<a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a>, (<a class="code" href="class___base_client_server_8h.html#ae334b73cedf7204187dce3f817576009">SOCKADDR</a>*)&amp;<a class="code" href="classbase_client_server.html#a9a11cce8df298490560c391275736be9">c_addr</a>, <span class="keyword">sizeof</span>(c_addr)) == SOCKET_ERROR )
+<a name="l00141"></a>00141         reportError(<span class="stringliteral">&quot;Erreur(%d) lors de l&#39;association de l&#39;adresse local avec le socket. Port deja occupe ? Detail: &lt;%s&gt;&quot;</span>, SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143     <span class="comment">// The listen function places a socket in a state in which it is listening for an incoming connection.</span>
+<a name="l00144"></a>00144     <span class="comment">// Nb de connection 0=oo</span>
+<a name="l00145"></a>00145     <span class="keywordflow">if</span>( listen(<a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a>, <a class="code" href="classserver.html#ae5c08d5767b242760df76eac0ea6ba0e" title="Nombre maximum de client. Si = à 0 =&amp;gt; pas de limite.">c_nb_Max_Client</a>) == SOCKET_ERROR )
+<a name="l00146"></a>00146         reportError(<span class="stringliteral">&quot;Erreur(%d) lors de l&#39;écoute sur le socket. Detail: &lt;%s&gt;&quot;</span>, SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
+<a name="l00147"></a>00147 
+<a name="l00148"></a>00148     <a class="code" href="classserver.html#a26b49db872f0b16d02acc6dfdf9c824b" title="Le fd (socket) le plus grand (DOIT être maintenu à jour !).">c_max_fd</a> = (int)<a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a>;<span class="comment">// Pour le fd de select</span>
+<a name="l00149"></a>00149 }
+<a name="l00150"></a>00150 
+<a name="l00151"></a>00151 
+<a name="l00152"></a>00152 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00153"></a>00153 <span class="comment">* @fn void server::endListen()</span>
+<a name="l00154"></a>00154 <span class="comment">* @brief Met fin a une écoute sur un port</span>
+<a name="l00155"></a>00155 <span class="comment">*</span>
+<a name="l00156"></a>00156 <span class="comment">* - Déconnection des client</span>
+<a name="l00157"></a>00157 <span class="comment">* - Déconnection du port</span>
+<a name="l00158"></a>00158 <span class="comment">*</span>
+<a name="l00159"></a>00159 <span class="comment">* Après cette fonction, un nouvel appel server::Listening() peut être fait.</span>
+<a name="l00160"></a>00160 <span class="comment">*/</span>
+<a name="l00161"></a><a class="code" href="classserver.html#a36c3ecd67ea956c01bf8f4064c1e2078">00161</a> <span class="keywordtype">void</span> <a class="code" href="classserver.html#a36c3ecd67ea956c01bf8f4064c1e2078" title="Met fin a une écoute sur un port.">server::endListen</a>()
+<a name="l00162"></a>00162 {
+<a name="l00163"></a>00163     <span class="comment">// Fermeture des socket</span>
+<a name="l00164"></a>00164     <span class="keywordflow">for</span>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f" title="Nombre de client actuellement connecté.">c_nb_clientConnecter</a>; i++ )
+<a name="l00165"></a>00165     {
+<a name="l00166"></a>00166         closesocket(<a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>[i].listenSocket);
+<a name="l00167"></a>00167         <span class="comment">//shutdown(c_listClient[i].listenSocket, SHUT_RDWR);// SHUT_RDWR = No more receptions or transmissions.</span>
+<a name="l00168"></a>00168     }
+<a name="l00169"></a>00169     <span class="keywordflow">if</span>( <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a> )
+<a name="l00170"></a>00170         <span class="keyword">delete</span>[] <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>;
+<a name="l00171"></a>00171     <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a> = 0;
+<a name="l00172"></a>00172     c_nb_clientConnecter = 0;
+<a name="l00173"></a>00173 
+<a name="l00174"></a>00174     <span class="keywordflow">if</span>( <a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a> ){
+<a name="l00175"></a>00175         closesocket(<a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a>);
+<a name="l00176"></a>00176         <span class="comment">//shutdown(c_listenSocket, SHUT_RDWR);// SHUT_RDWR = No more receptions or transmissions.</span>
+<a name="l00177"></a>00177     }
+<a name="l00178"></a>00178 
+<a name="l00179"></a>00179     <a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a> = 0;
+<a name="l00180"></a>00180 }
+<a name="l00181"></a>00181 
+<a name="l00182"></a>00182 
+<a name="l00183"></a>00183 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00184"></a>00184 <span class="comment">* @fn SOCKET server::lookupNewConnection()</span>
+<a name="l00185"></a>00185 <span class="comment">* @brief Envoie une message (buffer) au client</span>
+<a name="l00186"></a>00186 <span class="comment">* @return   - INVALID_SOCKET Si pas d&#39;activité ( pas de nouvelle connection )</span>
+<a name="l00187"></a>00187 <span class="comment">*           - Le SOCKET du nouveau client</span>
+<a name="l00188"></a>00188 <span class="comment">*</span>
+<a name="l00189"></a>00189 <span class="comment">* Cette fonction met à jour les fd, puis execute le select</span>
+<a name="l00190"></a>00190 <span class="comment">*/</span>
+<a name="l00191"></a><a class="code" href="classserver.html#a970c338624781ad9b8db82d0e853210f">00191</a> <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="code" href="classserver.html#a970c338624781ad9b8db82d0e853210f" title="Envoie une message (buffer) au client.">server::lookupNewConnection</a>()
+<a name="l00192"></a>00192 {
+<a name="l00193"></a>00193     <span class="comment">// Remise à 0 du fd read</span>
+<a name="l00194"></a>00194     FD_ZERO(&amp;<a class="code" href="classbase_client_server.html#a72e8655cd3ede0bea9cdb934ff40fa42" title="Le fd qui est utiliser pour check les signaux en lecture.">c_rdfs</a>);
+<a name="l00195"></a>00195 
+<a name="l00196"></a>00196     <span class="comment">// Ajout du socket principal dans la liste des écoute non bloquante</span>
+<a name="l00197"></a>00197     FD_SET(<a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a>, &amp;<a class="code" href="classbase_client_server.html#a72e8655cd3ede0bea9cdb934ff40fa42" title="Le fd qui est utiliser pour check les signaux en lecture.">c_rdfs</a>);
+<a name="l00198"></a>00198 
+<a name="l00199"></a>00199     <span class="comment">// Ajout du socket principal dans la liste des écoute non bloquante</span>
+<a name="l00200"></a>00200     <span class="keywordflow">for</span>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f" title="Nombre de client actuellement connecté.">c_nb_clientConnecter</a>; i++ )
+<a name="l00201"></a>00201     {
+<a name="l00202"></a>00202         FD_SET(<a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>[i].listenSocket, &amp;<a class="code" href="classbase_client_server.html#a72e8655cd3ede0bea9cdb934ff40fa42" title="Le fd qui est utiliser pour check les signaux en lecture.">c_rdfs</a>);
+<a name="l00203"></a>00203     }
+<a name="l00204"></a>00204 
+<a name="l00205"></a>00205     <span class="comment">// Lecture du socket principal</span>
+<a name="l00206"></a>00206     <span class="keywordflow">if</span>( select(<a class="code" href="classserver.html#a26b49db872f0b16d02acc6dfdf9c824b" title="Le fd (socket) le plus grand (DOIT être maintenu à jour !).">c_max_fd</a>+1, &amp;<a class="code" href="classbase_client_server.html#a72e8655cd3ede0bea9cdb934ff40fa42" title="Le fd qui est utiliser pour check les signaux en lecture.">c_rdfs</a>, NULL, NULL, &amp;c_wait) == SOCKET_ERROR )
+<a name="l00207"></a>00207         reportError(<span class="stringliteral">&quot;Erreur(%d) lors de la lecture (select) du socket principal. Detail: &lt;%s&gt;&quot;</span>, SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
+<a name="l00208"></a>00208 
+<a name="l00209"></a>00209     <span class="comment">// On vérifit si new client</span>
+<a name="l00210"></a>00210     <span class="keywordflow">if</span>( FD_ISSET(<a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a>, &amp;<a class="code" href="classbase_client_server.html#a72e8655cd3ede0bea9cdb934ff40fa42" title="Le fd qui est utiliser pour check les signaux en lecture.">c_rdfs</a>) ){
+<a name="l00211"></a>00211         <a class="code" href="structserver_1_1s_client.html" title="Contient les information d&amp;#39;un client.">sClient</a> newClient;
+<a name="l00212"></a>00212         newClient.<a class="code" href="structserver_1_1s_client.html#a71fe0aadaf55f5fad0f75915fad4ebea">listenSocket</a> = accept(<a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a>, (<a class="code" href="class___base_client_server_8h.html#ae334b73cedf7204187dce3f817576009">SOCKADDR</a>*)&amp;newClient.<a class="code" href="structserver_1_1s_client.html#ad98880e020c788871979fbec62139c1e">addr</a>, &amp;<a class="code" href="classserver.html#ae87095dfcbbd0e699a781de553115d08" title="Taille de la structure sClient ( sizeof(sClient) ) (N&amp;#39;EST JAMAIS MODIFIE).">c_clientDataSize</a>);
+<a name="l00213"></a>00213         <span class="keywordflow">if</span>( newClient.<a class="code" href="structserver_1_1s_client.html#a71fe0aadaf55f5fad0f75915fad4ebea">listenSocket</a> != INVALID_SOCKET ){
+<a name="l00214"></a>00214             <span class="keywordflow">if</span>( <a class="code" href="classserver.html#ae5c08d5767b242760df76eac0ea6ba0e" title="Nombre maximum de client. Si = à 0 =&amp;gt; pas de limite.">c_nb_Max_Client</a> == 0 || c_nb_clientConnecter+1 &lt;= <a class="code" href="classserver.html#ae5c08d5767b242760df76eac0ea6ba0e" title="Nombre maximum de client. Si = à 0 =&amp;gt; pas de limite.">c_nb_Max_Client</a> ){<span class="comment">// On regarde si on a encore de la place</span>
+<a name="l00215"></a>00215                 <span class="comment">//stdError(&quot;Nouveau client ! Actuelement %u client.&quot;, c_nb_clientConnecter+1);</span>
+<a name="l00216"></a>00216                 c_nb_clientConnecter++;
+<a name="l00217"></a>00217                 <a class="code" href="structserver_1_1s_client.html" title="Contient les information d&amp;#39;un client.">sClient</a>* tmp = <span class="keyword">new</span> <a class="code" href="structserver_1_1s_client.html" title="Contient les information d&amp;#39;un client.">sClient</a>[c_nb_clientConnecter];
+<a name="l00218"></a>00218                 <span class="keywordflow">for</span>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i=0; i&lt;c_nb_clientConnecter-1; i++ )<span class="comment">// -1 pour contrer le ++</span>
+<a name="l00219"></a>00219                 {
+<a name="l00220"></a>00220                     memcpy( tmp+i, <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>+i, <span class="keyword">sizeof</span>(<a class="code" href="structserver_1_1s_client.html" title="Contient les information d&amp;#39;un client.">sClient</a>) );
+<a name="l00221"></a>00221                 }
+<a name="l00222"></a>00222                 <span class="keywordflow">if</span>( <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a> )
+<a name="l00223"></a>00223                     <span class="keyword">delete</span>[] <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>;
+<a name="l00224"></a>00224                 <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a> = tmp;
+<a name="l00225"></a>00225                 <span class="comment">// Ajout du nouveau client</span>
+<a name="l00226"></a>00226                 <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>[c_nb_clientConnecter-1].<a class="code" href="structserver_1_1s_client.html#a71fe0aadaf55f5fad0f75915fad4ebea">listenSocket</a> = newClient.<a class="code" href="structserver_1_1s_client.html#a71fe0aadaf55f5fad0f75915fad4ebea">listenSocket</a>;
+<a name="l00227"></a>00227                 <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>[c_nb_clientConnecter-1].<a class="code" href="structserver_1_1s_client.html#ad98880e020c788871979fbec62139c1e">addr</a> = newClient.<a class="code" href="structserver_1_1s_client.html#ad98880e020c788871979fbec62139c1e">addr</a>;
+<a name="l00228"></a>00228 
+<a name="l00229"></a>00229                 <a class="code" href="classbase_client_server.html#a94f59ec6bf09f3c90f25e57781632df5">setTCP_NoDelay</a>( newClient.<a class="code" href="structserver_1_1s_client.html#a71fe0aadaf55f5fad0f75915fad4ebea">listenSocket</a>, <a class="code" href="classbase_client_server.html#a676e6d281c3ff4a5c9e2b91c04d6b99a" title="Permet de savoir l&amp;#39;état du paramètre TCP_NoDelay ( Algorithme de Nagle ) pour le socket c_listenS...">TCP_NoDelay</a>() );
+<a name="l00230"></a>00230 
+<a name="l00231"></a>00231                 <span class="comment">// Ne pas oublier de changer le fd maximum !</span>
+<a name="l00232"></a>00232                 <span class="keywordflow">if</span>( newClient.<a class="code" href="structserver_1_1s_client.html#a71fe0aadaf55f5fad0f75915fad4ebea">listenSocket</a> &gt; (<a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a>)<a class="code" href="classserver.html#a26b49db872f0b16d02acc6dfdf9c824b" title="Le fd (socket) le plus grand (DOIT être maintenu à jour !).">c_max_fd</a> )
+<a name="l00233"></a>00233                     c_max_fd = newClient.<a class="code" href="structserver_1_1s_client.html#a71fe0aadaf55f5fad0f75915fad4ebea">listenSocket</a>;
+<a name="l00234"></a>00234 
+<a name="l00235"></a>00235                 <span class="keywordflow">return</span> newClient.<a class="code" href="structserver_1_1s_client.html#a71fe0aadaf55f5fad0f75915fad4ebea">listenSocket</a>;
+<a name="l00236"></a>00236             }<span class="keywordflow">else</span>{<span class="comment">// Plus de place =&gt; OUT</span>
+<a name="l00237"></a>00237                 stdError(<span class="stringliteral">&quot;Un client a ete refoule.&quot;</span>);
+<a name="l00238"></a>00238                 closesocket(newClient.<a class="code" href="structserver_1_1s_client.html#a71fe0aadaf55f5fad0f75915fad4ebea">listenSocket</a>);
+<a name="l00239"></a>00239             }
+<a name="l00240"></a>00240         }<span class="keywordflow">else</span>{
+<a name="l00241"></a>00241             stdError(<span class="stringliteral">&quot;Erreur(%d) lors de la connection d&#39;un client. Detail: &lt;%s&gt;&quot;</span>, SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
+<a name="l00242"></a>00242         }
+<a name="l00243"></a>00243     }
+<a name="l00244"></a>00244 
+<a name="l00245"></a>00245     <span class="keywordflow">return</span> INVALID_SOCKET;
+<a name="l00246"></a>00246 }
+<a name="l00247"></a>00247 
+<a name="l00248"></a>00248 
+<a name="l00249"></a>00249 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00250"></a>00250 <span class="comment">* @fn SOCKET server::lookupConnectionClient()</span>
+<a name="l00251"></a>00251 <span class="comment">* @brief Recherche une activité pour tout les clients</span>
+<a name="l00252"></a>00252 <span class="comment">* @return Le SOCKET du client qui a eu une activité OU INVALID_SOCKET si pas d&#39;activité</span>
+<a name="l00253"></a>00253 <span class="comment">*</span>
+<a name="l00254"></a>00254 <span class="comment">* Pour récup l&#39;activité server::readClient( SOCKET sock, char* buffer, unsigned int bufferSize )</span>
+<a name="l00255"></a>00255 <span class="comment">*</span>
+<a name="l00256"></a>00256 <span class="comment">* @warning Veuillez executer server::lookupNewConnection() avant !</span>
+<a name="l00257"></a>00257 <span class="comment">*/</span>
+<a name="l00258"></a><a class="code" href="classserver.html#ab25aea3888274547f75fdd6b44e2d0be">00258</a> <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="code" href="classserver.html#ab25aea3888274547f75fdd6b44e2d0be" title="Recherche une activité pour tout les clients.">server::lookupConnectionClient</a>()
+<a name="l00259"></a>00259 {
+<a name="l00260"></a>00260     <span class="comment">// On check les client actuel</span>
+<a name="l00261"></a>00261     <span class="keywordflow">for</span>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="classserver.html#a5524b30b3ed5f070951d2e83d5cd568f" title="Nombre de client actuellement connecté.">c_nb_clientConnecter</a>; i++ )
+<a name="l00262"></a>00262         <span class="keywordflow">if</span>( FD_ISSET(<a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>[i].listenSocket, &amp;<a class="code" href="classbase_client_server.html#a72e8655cd3ede0bea9cdb934ff40fa42" title="Le fd qui est utiliser pour check les signaux en lecture.">c_rdfs</a>) )
+<a name="l00263"></a>00263             <span class="keywordflow">return</span> <a class="code" href="classserver.html#ad2f7318fbde008c413e40c1b1b2792f7" title="Liste des client connecté.">c_listClient</a>[i].<a class="code" href="structserver_1_1s_client.html#a71fe0aadaf55f5fad0f75915fad4ebea">listenSocket</a>;
+<a name="l00264"></a>00264 
+<a name="l00265"></a>00265     <span class="keywordflow">return</span> INVALID_SOCKET;
+<a name="l00266"></a>00266 }
+<a name="l00267"></a>00267 
+<a name="l00268"></a>00268 
+<a name="l00269"></a>00269 
+<a name="l00270"></a><a class="code" href="classserver.html#a3958ab35efdf8daed31591a7c5c4eacb">00270</a> <span class="keywordtype">int</span> <a class="code" href="classserver.html#a3958ab35efdf8daed31591a7c5c4eacb" title="Récupère les données envoyées par un client.">server::readClient</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> sock, <span class="keywordtype">char</span>* buffer, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> bufferSize )
+<a name="l00271"></a>00271 {
+<a name="l00272"></a>00272     <span class="keywordtype">int</span> nbByte = <a class="code" href="classserver.html#a3958ab35efdf8daed31591a7c5c4eacb" title="Récupère les données envoyées par un client.">baseClientServer::readClient</a>( sock, buffer, bufferSize );
+<a name="l00273"></a>00273     <span class="keywordflow">if</span>( !nbByte )
+<a name="l00274"></a>00274         <span class="comment">//stdError(&quot;Le client s&#39;est deco !&quot;);</span>
+<a name="l00275"></a>00275         <a class="code" href="classserver.html#a5763b1fe8cfe5a31e5217e0a7584d839" title="Supprime le client qui a le socket s.">rmClient</a>(sock);
+<a name="l00276"></a>00276 
+<a name="l00277"></a>00277     <span class="keywordflow">return</span> nbByte;
+<a name="l00278"></a>00278 }
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classmoteur__ncurses.html#a5a5da4538be5bc5b7e78cc7f96d2f6a8" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="245,5,555,35"/>
+<area shape="rect" id="node5" href="$classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="272,59,528,88"/>
+<area shape="rect" id="node7" href="$classmoteur__ncurses.html#a1d09cbe9608be4025643c0e7db9a0069" title="Créer un menu pour récupérer un nombre entré par un utilisateur." alt="" coords="297,112,503,141"/>
+<area shape="rect" id="node9" href="$classmoteur__ncurses.html#a20d01f1da6e4e378673df3f550e57bae" title="Permet d&#39;obtenir du texte." alt="" coords="307,165,493,195"/>
+</map>

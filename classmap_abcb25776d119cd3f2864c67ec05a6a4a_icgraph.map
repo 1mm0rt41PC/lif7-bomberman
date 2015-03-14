@@ -1,0 +1,12 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="137,5,361,35"/>
+<area shape="rect" id="node5" href="$classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="121,59,377,88"/>
+<area shape="rect" id="node7" href="$classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="448,109,685,139"/>
+<area shape="rect" id="node13" href="$classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="761,263,948,292"/>
+<area shape="rect" id="node16" href="$classpartie.html#aa5cca051f9f07d1b267f5a4df8dabd24" title="Scan les event du bonus pousse bombe." alt="" coords="427,368,707,397"/>
+<area shape="rect" id="node19" href="$classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="756,161,953,191"/>
+<area shape="rect" id="node22" href="$classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="185,264,313,293"/>
+<area shape="rect" id="node9" href="$classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1003,161,1101,191"/>
+<area shape="rect" id="node11" href="$main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1151,161,1204,191"/>
+<area shape="rect" id="node24" href="$classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="461,315,672,344"/>
+</map>

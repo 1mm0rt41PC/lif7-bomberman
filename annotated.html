@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Liste des classes</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>Liste des classes</h1>  </div>
+</div>
+<div class="contents">
+Liste des classes, structures, unions et interfaces avec une brève description :<table>
+  <tr><td class="indexkey"><a class="el" href="struct__get_size_of_number_s.html">_getSizeOfNumberS&lt; N &gt;</a></td><td class="indexvalue">Détermine le nombre de chiffre dans un nombre. (Positif ou négatif). Prise en compte du signe - dans les calculs </td></tr>
+  <tr><td class="indexkey"><a class="el" href="struct__get_size_of_number_s_3_010_01_4.html">_getSizeOfNumberS&lt; 0 &gt;</a></td><td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"><a class="el" href="classbase_client_server.html">baseClientServer</a></td><td class="indexvalue">Support pour la création d'une class client/serveur </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classbonus.html">bonus</a></td><td class="indexvalue">Gère les bonus </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classclavier.html">clavier</a></td><td class="indexvalue">Gère les claviers </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classclient.html">client</a></td><td class="indexvalue">Cette class permet de gérer facilement un client </td></tr>
+  <tr><td class="indexkey"><a class="el" href="class_c_memory_manager.html">CMemoryManager</a></td><td class="indexvalue">Système de vérification de fuite mémoire </td></tr>
+  <tr><td class="indexkey"><a class="el" href="struct_fact.html">Fact&lt; N &gt;</a></td><td class="indexvalue">Fonction de calcule Factorielle </td></tr>
+  <tr><td class="indexkey"><a class="el" href="struct_fact_3_010_01_4.html">Fact&lt; 0 &gt;</a></td><td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"><a class="el" href="structget_size_of_number.html">getSizeOfNumber&lt; N &gt;</a></td><td class="indexvalue">Détermine le nombre de chiffre dans un nombre. (NOMBRE POSITIF !) </td></tr>
+  <tr><td class="indexkey"><a class="el" href="structget_size_of_number_3_010_01_4.html">getSizeOfNumber&lt; 0 &gt;</a></td><td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"><a class="el" href="structget_size_of_number_s.html">getSizeOfNumberS&lt; N &gt;</a></td><td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmap.html">map</a></td><td class="indexvalue">Gère une map </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmoteur__ncurses.html">moteur_ncurses</a></td><td class="indexvalue">Gère l'affichage via le moteur "graphique" NCurses </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmoteur__sdl.html">moteur_sdl</a></td><td class="indexvalue">Gère l'affichage via le moteur graphique SDL </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmoteur__sfml.html">moteur_sfml</a></td><td class="indexvalue">Gère l'affichage via le moteur graphique SFML </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classoptions.html">options</a></td><td class="indexvalue">Gère les options </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classpartie.html">partie</a></td><td class="indexvalue">Permet de gérer une partie offline ou online ( host et client ) </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classperso.html">perso</a></td><td class="indexvalue">Gère un personnage </td></tr>
+  <tr><td class="indexkey"><a class="el" href="struct_pow.html">Pow&lt; N, puiss &gt;</a></td><td class="indexvalue">Fonction de calcule un nombre (N) à Puissance (puiss) </td></tr>
+  <tr><td class="indexkey"><a class="el" href="struct_pow_3_01_n_00_010_01_4.html">Pow&lt; N, 0 &gt;</a></td><td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"><a class="el" href="class_q_list.html">QList&lt; Type &gt;</a></td><td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"><a class="el" href="struct_c_memory_manager_1_1s___allocatated_block.html">CMemoryManager::s_AllocatatedBlock</a></td><td class="indexvalue">Stock les info sur les block mémoires alloués </td></tr>
+  <tr><td class="indexkey"><a class="el" href="structbonus_1_1s__bonus.html">bonus::s_bonus</a></td><td class="indexvalue">Cette sturcture accueil un bonus d'un joueur </td></tr>
+  <tr><td class="indexkey"><a class="el" href="structbonus_1_1s__bonus__proprieter.html">bonus::s_bonus_proprieter</a></td><td class="indexvalue">Cette structure accueil la propriété des bonus </td></tr>
+  <tr><td class="indexkey"><a class="el" href="structmap_1_1s___case.html">map::s_Case</a></td><td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a></td><td class="indexvalue">Struct de coordonnées ( x,y ) </td></tr>
+  <tr><td class="indexkey"><a class="el" href="structbonus_1_1s___event.html">bonus::s_Event</a></td><td class="indexvalue">Cette sturcture accueil les Events posées </td></tr>
+  <tr><td class="indexkey"><a class="el" href="structpartie_1_1s___event_bombe.html">partie::s_EventBombe</a></td><td class="indexvalue">Permet de gérer les event des bombes </td></tr>
+  <tr><td class="indexkey"><a class="el" href="structpartie_1_1s___event_pousse_bombe.html">partie::s_EventPousseBombe</a></td><td class="indexvalue">Permet de gérer les event des pousses bombes </td></tr>
+  <tr><td class="indexkey"><a class="el" href="structserver_1_1s_client.html">server::sClient</a></td><td class="indexvalue">Contient les information d'un client </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classserver.html">server</a></td><td class="indexvalue">Cette class permet de gérer facilement un serveur </td></tr>
+  <tr><td class="indexkey"><a class="el" href="structmoteur__sdl_1_1_sprite.html">moteur_sdl::Sprite</a></td><td class="indexvalue">Contient les données pour faire un <a class="el" href="structmoteur__sdl_1_1_sprite.html" title="Contient les données pour faire un Sprite.">Sprite</a> </td></tr>
+  <tr><td class="indexkey"><a class="el" href="structmoteur__sdl_1_1s_statistique.html">moteur_sdl::sStatistique</a></td><td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"><a class="el" href="structtest.html">test&lt; N &gt;</a></td><td class="indexvalue">Ensemble de test </td></tr>
+</table>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

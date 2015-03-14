@@ -1,0 +1,797 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la classe moteur_ncurses</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="#pub-static-methods">Fonctions membres publiques statiques</a> &#124;
+<a href="#pri-methods">Fonctions membres privées</a> &#124;
+<a href="#pri-static-methods">Fonctions membres privées statiques</a> &#124;
+<a href="#pri-static-attribs">Attributs privés statiques</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la classe moteur_ncurses</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="moteur_ncurses" -->
+<p>Gère l'affichage via le moteur "graphique" NCurses.  
+<a href="#_details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="moteur__ncurses_8h_source.html">moteur_ncurses.h</a>&gt;</code></p>
+
+<p><a href="classmoteur__ncurses-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#adfdc27c0e515a91a72146f93c91ccbe6">moteur_ncurses</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initialise la class <a class="el" href="classmoteur__ncurses.html" title="Gère l&#39;affichage via le moteur &quot;graphique&quot; NCurses.">moteur_ncurses</a>.  <a href="#adfdc27c0e515a91a72146f93c91ccbe6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#a9dd6bbae39e6224f1f88e27b4b23b969">~moteur_ncurses</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Désinitialise la class <a class="el" href="classmoteur__ncurses.html" title="Gère l&#39;affichage via le moteur &quot;graphique&quot; NCurses.">moteur_ncurses</a>.  <a href="#a9dd6bbae39e6224f1f88e27b4b23b969"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#ade52341b4b08a8eca9ee3c81c01abe7c">menu</a> (const char titre[], const char *choix[], unsigned int nb_choix)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Créé une sous fenêtre centré.  <a href="#ade52341b4b08a8eca9ee3c81c01abe7c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#a5a5da4538be5bc5b7e78cc7f96d2f6a8">afficherConfigurationClavier</a> (unsigned char joueur)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Menu permettant d'afficher et de modifier la configuration du clavier d'un joueur.  <a href="#a5a5da4538be5bc5b7e78cc7f96d2f6a8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#a1d09cbe9608be4025643c0e7db9a0069">getNombre</a> (const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int *returnValue)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Créer un menu pour récupérer un nombre entré par un utilisateur.  <a href="#a1d09cbe9608be4025643c0e7db9a0069"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#a20d01f1da6e4e378673df3f550e57bae">getTexte</a> (const char titre[], char texteRetour[21])</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet d'obtenir du texte.  <a href="#a20d01f1da6e4e378673df3f550e57bae"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#a7d67a62cc712313d3039d96711a0581d">isWindowOpen</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#aadccb49d9c68b26a71686e7478b64ca7">forcerRafraichissement</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet de forcer un affichage complet.  <a href="#aadccb49d9c68b26a71686e7478b64ca7"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-methods"></a>
+Fonctions membres publiques statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static SYS_CLAVIER&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2">afficherMapEtEvent</a> (<a class="el" href="classpartie.html">partie</a> *p)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Affiche une map.  <a href="#a4befeea46ae3cc1fd4fa76164f02a8c2"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-methods"></a>
+Fonctions membres privées</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#aa5d8fae6272f29e7fc0981a988b71a49">cadre</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Affiche un cadre au tour (interieur) de la fenêtre.  <a href="#aa5d8fae6272f29e7fc0981a988b71a49"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#a4e1ecb3c99e46d3088caff0d4c57e1f3">affichageTouche</a> (WINDOW *win, int y, int x, int key)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Affiche une touche. Si nécessaire, un affichage spécifique est fait.  <a href="#a4e1ecb3c99e46d3088caff0d4c57e1f3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#a6df6bd2e3e0477715282266b6f830c68">cleanline</a> (WINDOW *win, int y)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Alias de cleanline( win, y, 1, getmaxx(win)-2 );.  <a href="#a6df6bd2e3e0477715282266b6f830c68"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-static-methods"></a>
+Fonctions membres privées statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#a208a8f8e69a8bcfe2fe3b01291195d1c">cleanline</a> (WINDOW *win, int y, int x_begin, int x_end)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet d'effacer une ligne.  <a href="#a208a8f8e69a8bcfe2fe3b01291195d1c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static chtype&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#a4c23b0d0242fcc5f3c90c8162112559d">getCouleurJoueur</a> (unsigned char joueur)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie la couleur d'un joueur.  <a href="#a4c23b0d0242fcc5f3c90c8162112559d"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-static-attribs"></a>
+Attributs privés statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmoteur__ncurses.html#a80ff5f97779c081cf278601e0e77757a">c_premierAffichage</a> = 1</td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Gère l'affichage via le moteur "graphique" NCurses. </p>
+<dl class="note"><dt><b>Note:</b></dt><dd>Aucune variable n'est membre de ce module </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8h_source.html#l00051">51</a> du fichier <a class="el" href="moteur__ncurses_8h_source.html">moteur_ncurses.h</a>.</p>
+<hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="adfdc27c0e515a91a72146f93c91ccbe6"></a><!-- doxytag: member="moteur_ncurses::moteur_ncurses" ref="adfdc27c0e515a91a72146f93c91ccbe6" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">moteur_ncurses::moteur_ncurses </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Initialise la class <a class="el" href="classmoteur__ncurses.html" title="Gère l&#39;affichage via le moteur &quot;graphique&quot; NCurses.">moteur_ncurses</a>. </p>
+<p>Initialise l'écran ncurses et prépare le "terrain" pour les traitements future </p>
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8cpp_source.html#l00018">18</a> du fichier <a class="el" href="moteur__ncurses_8cpp_source.html">moteur_ncurses.cpp</a>.</p>
+
+<p>Références <a class="el" href="moteur__ncurses_8cpp_source.html#l00076">~moteur_ncurses()</a>.</p>
+
+<p><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__ncurses_adfdc27c0e515a91a72146f93c91ccbe6_cgraph.png" border="0" usemap="#classmoteur__ncurses_adfdc27c0e515a91a72146f93c91ccbe6_cgraph" alt=""/></div>
+<map name="classmoteur__ncurses_adfdc27c0e515a91a72146f93c91ccbe6_cgraph" id="classmoteur__ncurses_adfdc27c0e515a91a72146f93c91ccbe6_cgraph">
+<area shape="rect" id="node3" href="classmoteur__ncurses.html#a9dd6bbae39e6224f1f88e27b4b23b969" title="Désinitialise la class moteur_ncurses." alt="" coords="295,5,543,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a9dd6bbae39e6224f1f88e27b4b23b969"></a><!-- doxytag: member="moteur_ncurses::~moteur_ncurses" ref="a9dd6bbae39e6224f1f88e27b4b23b969" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">moteur_ncurses::~moteur_ncurses </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Désinitialise la class <a class="el" href="classmoteur__ncurses.html" title="Gère l&#39;affichage via le moteur &quot;graphique&quot; NCurses.">moteur_ncurses</a>. </p>
+<ol type="1">
+<li>Rétablis le cursor orginel</li>
+<li>Nétoie l'écran</li>
+<li>Supprime l'écran NCurses</li>
+<li>Désactive NCurses </li>
+</ol>
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8cpp_source.html#l00076">76</a> du fichier <a class="el" href="moteur__ncurses_8cpp_source.html">moteur_ncurses.cpp</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__ncurses_8cpp_source.html#l00018">moteur_ncurses()</a>.</p>
+
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__ncurses_a9dd6bbae39e6224f1f88e27b4b23b969_icgraph.png" border="0" usemap="#classmoteur__ncurses_a9dd6bbae39e6224f1f88e27b4b23b969_icgraph" alt=""/></div>
+<map name="classmoteur__ncurses_a9dd6bbae39e6224f1f88e27b4b23b969_icgraph" id="classmoteur__ncurses_a9dd6bbae39e6224f1f88e27b4b23b969_icgraph">
+<area shape="rect" id="node3" href="classmoteur__ncurses.html#adfdc27c0e515a91a72146f93c91ccbe6" title="Initialise la class moteur_ncurses." alt="" coords="305,5,543,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="a4e1ecb3c99e46d3088caff0d4c57e1f3"></a><!-- doxytag: member="moteur_ncurses::affichageTouche" ref="a4e1ecb3c99e46d3088caff0d4c57e1f3" args="(WINDOW *win, int y, int x, int key)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void moteur_ncurses::affichageTouche </td>
+          <td>(</td>
+          <td class="paramtype">WINDOW *&nbsp;</td>
+          <td class="paramname"> <em>win</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>key</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Affiche une touche. Si nécessaire, un affichage spécifique est fait. </p>
+<p>Exemple d'affichage necessaire la touche KEY_UP ( flèche du haut ) </p>
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8cpp_source.html#l00350">350</a> du fichier <a class="el" href="moteur__ncurses_8cpp_source.html">moteur_ncurses.cpp</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__ncurses_8cpp_source.html#l00206">afficherConfigurationClavier()</a>.</p>
+
+<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__ncurses_a4e1ecb3c99e46d3088caff0d4c57e1f3_icgraph.png" border="0" usemap="#classmoteur__ncurses_a4e1ecb3c99e46d3088caff0d4c57e1f3_icgraph" alt=""/></div>
+<map name="classmoteur__ncurses_a4e1ecb3c99e46d3088caff0d4c57e1f3_icgraph" id="classmoteur__ncurses_a4e1ecb3c99e46d3088caff0d4c57e1f3_icgraph">
+<area shape="rect" id="node3" href="classmoteur__ncurses.html#a5a5da4538be5bc5b7e78cc7f96d2f6a8" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="291,5,600,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a5a5da4538be5bc5b7e78cc7f96d2f6a8"></a><!-- doxytag: member="moteur_ncurses::afficherConfigurationClavier" ref="a5a5da4538be5bc5b7e78cc7f96d2f6a8" args="(unsigned char joueur)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void moteur_ncurses::afficherConfigurationClavier </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>joueur</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Menu permettant d'afficher et de modifier la configuration du clavier d'un joueur. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>joueur</em>&nbsp;</td><td>Le numéro du joueur ( de 1 à ... ) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8cpp_source.html#l00206">206</a> du fichier <a class="el" href="moteur__ncurses_8cpp_source.html">moteur_ncurses.cpp</a>.</p>
+
+<p>Références <a class="el" href="moteur__ncurses_8cpp_source.html#l00350">affichageTouche()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00090">cadre()</a>, <a class="el" href="options_8cpp_source.html#l00262">options::clavierJoueur()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00789">cleanline()</a>, <a class="el" href="clavier_8cpp_source.html#l00053">clavier::defTouche()</a>, <a class="el" href="options_8cpp_source.html#l00090">options::getInstance()</a>, <a class="el" href="clavier_8h_source.html#l00031">clavier::haut</a>, et <a class="el" href="clavier_8cpp_source.html#l00144">clavier::touche()</a>.</p>
+
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__ncurses_a5a5da4538be5bc5b7e78cc7f96d2f6a8_cgraph.png" border="0" usemap="#classmoteur__ncurses_a5a5da4538be5bc5b7e78cc7f96d2f6a8_cgraph" alt=""/></div>
+<map name="classmoteur__ncurses_a5a5da4538be5bc5b7e78cc7f96d2f6a8_cgraph" id="classmoteur__ncurses_a5a5da4538be5bc5b7e78cc7f96d2f6a8_cgraph">
+<area shape="rect" id="node3" href="classmoteur__ncurses.html#a4e1ecb3c99e46d3088caff0d4c57e1f3" title="Affiche une touche. Si nécessaire, un affichage spécifique est fait." alt="" coords="364,5,599,35"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#aa5d8fae6272f29e7fc0981a988b71a49" title="Affiche un cadre au tour (interieur) de la fenêtre." alt="" coords="396,59,567,88"/><area shape="rect" id="node7" href="classoptions.html#a281d1464d4a4c827bcbac56ab3c9be94" title="Renvoie le clavier numéro {clavier_numero}." alt="" coords="403,112,560,141"/><area shape="rect" id="node9" href="classmoteur__ncurses.html#a208a8f8e69a8bcfe2fe3b01291195d1c" title="Permet d&#39;effacer une ligne." alt="" coords="387,165,576,195"/><area shape="rect" id="node11" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&#39;une touche." alt="" coords="1353,217,1487,247"/><area shape="rect" id="node13" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options." alt="" coords="405,269,557,299"/><area shape="rect" id="node27" href="classclavier.html#a64ea9fed59e7a3a07c987a412b96880a" title="Renvoie la touche affecté pour une action." alt="" coords="424,323,539,352"/><area shape="rect" id="node15" href="classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d" title="Initialise la class options." alt="" coords="649,269,772,299"/><area shape="rect" id="node17" href="classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp; clavier )." alt="" coords="1083,269,1261,299"/><area shape="rect" id="node22" href="classoptions.html#ade7f5fcd45bd4a6c56c4064ce5c2f915" title="Remet (et enregistre) les paramètres par défaut." alt="" coords="821,321,992,351"/><area shape="rect" id="node20" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche." alt="" coords="1353,271,1487,300"/><area shape="rect" id="node25" href="classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration." alt="" coords="1041,323,1303,352"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a4befeea46ae3cc1fd4fa76164f02a8c2"></a><!-- doxytag: member="moteur_ncurses::afficherMapEtEvent" ref="a4befeea46ae3cc1fd4fa76164f02a8c2" args="(partie *p)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SYS_CLAVIER moteur_ncurses::afficherMapEtEvent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classpartie.html">partie</a> *&nbsp;</td>
+          <td class="paramname"> <em>p</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Affiche une map. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>p</em>&nbsp;</td><td>La partie en cours a afficher </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>La touche actuellement appuyé </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">841</a> du fichier <a class="el" href="moteur__ncurses_8cpp_source.html">moteur_ncurses.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8cpp_source.html#l00194">perso::armements()</a>, <a class="el" href="bonus_8h_source.html#l00042">bonus::bombe</a>, <a class="el" href="map_8h_source.html#l00041">map::bombe_poser</a>, <a class="el" href="map_8h_source.html#l00052">map::bombe_poser_AVEC_plusieurs_joueurs</a>, <a class="el" href="map_8h_source.html#l00051">map::bombe_poser_AVEC_UN_joueur</a>, <a class="el" href="map_8h_source.html#l00043">map::bonus</a>, <a class="el" href="moteur__ncurses_8h_source.html#l00054">c_premierAffichage</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00789">cleanline()</a>, <a class="el" href="partie_8h_source.html#l00058">partie::CNX_None</a>, <a class="el" href="partie_8inl_source.html#l00043">partie::connection()</a>, <a class="el" href="bonus_8h_source.html#l00044">bonus::declancheur</a>, <a class="el" href="map_8h_source.html#l00033">map::flamme_horizontal</a>, <a class="el" href="map_8h_source.html#l00035">map::flamme_origine</a>, <a class="el" href="map_8h_source.html#l00037">map::flamme_pointe_bas</a>, <a class="el" href="map_8h_source.html#l00038">map::flamme_pointe_droite</a>, <a class="el" href="map_8h_source.html#l00039">map::flamme_pointe_gauche</a>, <a class="el" href="map_8h_source.html#l00036">map::flamme_pointe_haut</a>, <a class="el" href="map_8h_source.html#l00034">map::flamme_vertical</a>, <a class="el" href="map_8cpp_source.html#l00388">map::getBlock()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00814">getCouleurJoueur()</a>, <a class="el" href="partie_8inl_source.html#l00033">partie::getMap()</a>, <a class="el" href="map_8cpp_source.html#l00458">map::getModifications()</a>, <a class="el" href="perso_8cpp_source.html#l00213">perso::isLocal()</a>, <a class="el" href="partie_8cpp_source.html#l00124">partie::joueur()</a>, <a class="el" href="map_8h_source.html#l00030">map::Mur_destructible</a>, <a class="el" href="map_8h_source.html#l00031">map::Mur_INdestructible</a>, <a class="el" href="partie_8inl_source.html#l00014">partie::nbJoueurs()</a>, <a class="el" href="perso_8cpp_source.html#l00149">perso::nom()</a>, <a class="el" href="map_8h_source.html#l00049">map::plusieurs_joueurs</a>, <a class="el" href="bonus_8h_source.html#l00045">bonus::pousse_bombe</a>, <a class="el" href="bonus_8h_source.html#l00043">bonus::puissance_flamme</a>, <a class="el" href="bonus_8cpp_source.html#l00138">bonus::quantiteMAX()</a>, <a class="el" href="perso_8cpp_source.html#l00223">perso::socket()</a>, <a class="el" href="partie_8inl_source.html#l00063">partie::timeOut()</a>, <a class="el" href="map_8h_source.html#l00048">map::UN_joueur</a>, <a class="el" href="map_8h_source.html#l00028">map::vide</a>, <a class="el" href="bonus_8h_source.html#l00046">bonus::vie</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, <a class="el" href="map_8inl_source.html#l00007">map::X()</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>, et <a class="el" href="map_8inl_source.html#l00017">map::Y()</a>.</p>
+
+<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__ncurses_a4befeea46ae3cc1fd4fa76164f02a8c2_cgraph.png" border="0" usemap="#classmoteur__ncurses_a4befeea46ae3cc1fd4fa76164f02a8c2_cgraph" alt=""/></div>
+<map name="classmoteur__ncurses_a4befeea46ae3cc1fd4fa76164f02a8c2_cgraph" id="classmoteur__ncurses_a4befeea46ae3cc1fd4fa76164f02a8c2_cgraph">
+<area shape="rect" id="node3" href="classperso.html#add0aebd55226ce05235400c09a529441" title="Renvoie les armes et bonus du personnage." alt="" coords="364,5,505,35"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#a208a8f8e69a8bcfe2fe3b01291195d1c" title="Permet d&#39;effacer une ligne." alt="" coords="340,59,529,88"/><area shape="rect" id="node7" href="classpartie.html#a54be3942d34eaa369cfe6a8430da639d" title="Renvoie le type de connection: Host, Local, None ( pas de connection )." alt="" coords="367,112,503,141"/><area shape="rect" id="node9" href="classmap.html#a5ab949cacaad5148299aa70f55bb0c93" title="Retourn le block qui est à la position X, Y." alt="" coords="377,165,492,195"/><area shape="rect" id="node11" href="classmoteur__ncurses.html#a4c23b0d0242fcc5f3c90c8162112559d" title="Renvoie la couleur d&#39;un joueur." alt="" coords="313,219,556,248"/><area shape="rect" id="node13" href="classpartie.html#ae1902153955d80b676fe96ef395e58c5" title="Renvoie la map actuel." alt="" coords="377,272,492,301"/><area shape="rect" id="node15" href="classmap.html#a3453f2495334983df3bbf1737908e25e" title="Retourne les positions X,Y des case modifiées depuis le dernier cycle." alt="" coords="353,325,516,355"/><area shape="rect" id="node17" href="classperso.html#a73febc8006d08e4414cf6463a3b8ad9d" title="Renvoie l&#39;état du personnage vis à vis du reseau. (Local ou non)." alt="" coords="380,379,489,408"/><area shape="rect" id="node19" href="classpartie.html#aa259db60507f45e2307fa457879be8ee" title="Renvoie un joueur." alt="" coords="381,432,488,461"/><area shape="rect" id="node21" href="classpartie.html#ac5fd40da2e74478b0dee7fb7fe505929" title="Retourne le nombre de joueur." alt="" coords="369,485,500,515"/><area shape="rect" id="node23" href="classperso.html#a815c8505a10a43da797e0424a0192f92" title="Renvoie le nom du personnage." alt="" coords="388,539,481,568"/><area shape="rect" id="node25" href="classbonus.html#a24519446ce39620ac958f7702c9ba868" title="Renvoie la quantité MAX que le joueur a rammassé d&#39;un bonus." alt="" coords="360,592,509,621"/><area shape="rect" id="node27" href="classperso.html#a33ea05f68d9ddf2cf242b9b19c8b1ceb" title="Renvoie le socket utilisé (Par defaut: INVALID_SOCKET)." alt="" coords="381,645,488,675"/><area shape="rect" id="node29" href="classpartie.html#ab15f2837f87963336ba2f5e8feec1e44" title="Renvoie le temps de fin / mort subite. (Ne change pas en cours de partie)." alt="" coords="376,699,493,728"/><area shape="rect" id="node31" href="classmap.html#abc682d96c6d194b75d2e8a6430b5b076" title="Renvoie la taille X de la map." alt="" coords="401,752,468,781"/><area shape="rect" id="node33" href="classmap.html#abcb25776d119cd3f2864c67ec05a6a4a" title="Renvoie la taille Y de la map." alt="" coords="401,805,468,835"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aa5d8fae6272f29e7fc0981a988b71a49"></a><!-- doxytag: member="moteur_ncurses::cadre" ref="aa5d8fae6272f29e7fc0981a988b71a49" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void moteur_ncurses::cadre </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Affiche un cadre au tour (interieur) de la fenêtre. </p>
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8cpp_source.html#l00090">90</a> du fichier <a class="el" href="moteur__ncurses_8cpp_source.html">moteur_ncurses.cpp</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__ncurses_8cpp_source.html#l00206">afficherConfigurationClavier()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00422">getNombre()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00620">getTexte()</a>, et <a class="el" href="moteur__ncurses_8cpp_source.html#l00126">menu()</a>.</p>
+
+<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__ncurses_aa5d8fae6272f29e7fc0981a988b71a49_icgraph.png" border="0" usemap="#classmoteur__ncurses_aa5d8fae6272f29e7fc0981a988b71a49_icgraph" alt=""/></div>
+<map name="classmoteur__ncurses_aa5d8fae6272f29e7fc0981a988b71a49_icgraph" id="classmoteur__ncurses_aa5d8fae6272f29e7fc0981a988b71a49_icgraph">
+<area shape="rect" id="node3" href="classmoteur__ncurses.html#a5a5da4538be5bc5b7e78cc7f96d2f6a8" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="224,5,533,35"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#a1d09cbe9608be4025643c0e7db9a0069" title="Créer un menu pour récupérer un nombre entré par un utilisateur." alt="" coords="276,59,481,88"/><area shape="rect" id="node7" href="classmoteur__ncurses.html#a20d01f1da6e4e378673df3f550e57bae" title="Permet d&#39;obtenir du texte." alt="" coords="285,112,472,141"/><area shape="rect" id="node9" href="classmoteur__ncurses.html#ade52341b4b08a8eca9ee3c81c01abe7c" title="Créé une sous fenêtre centré." alt="" coords="293,165,464,195"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a6df6bd2e3e0477715282266b6f830c68"></a><!-- doxytag: member="moteur_ncurses::cleanline" ref="a6df6bd2e3e0477715282266b6f830c68" args="(WINDOW *win, int y)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void moteur_ncurses::cleanline </td>
+          <td>(</td>
+          <td class="paramtype">WINDOW *&nbsp;</td>
+          <td class="paramname"> <em>win</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>y</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline, private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Alias de cleanline( win, y, 1, getmaxx(win)-2 );. </p>
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8h_source.html#l00060">60</a> du fichier <a class="el" href="moteur__ncurses_8h_source.html">moteur_ncurses.h</a>.</p>
+
+<p>Références <a class="el" href="moteur__ncurses_8h_source.html#l00060">cleanline()</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__ncurses_8h_source.html#l00060">cleanline()</a>.</p>
+
+<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__ncurses_a6df6bd2e3e0477715282266b6f830c68_cgraph.png" border="0" usemap="#classmoteur__ncurses_a6df6bd2e3e0477715282266b6f830c68_cgraph" alt=""/></div>
+<map name="classmoteur__ncurses_a6df6bd2e3e0477715282266b6f830c68_cgraph" id="classmoteur__ncurses_a6df6bd2e3e0477715282266b6f830c68_cgraph">
+</map>
+</div>
+</p>
+
+<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__ncurses_a6df6bd2e3e0477715282266b6f830c68_icgraph.png" border="0" usemap="#classmoteur__ncurses_a6df6bd2e3e0477715282266b6f830c68_icgraph" alt=""/></div>
+<map name="classmoteur__ncurses_a6df6bd2e3e0477715282266b6f830c68_icgraph" id="classmoteur__ncurses_a6df6bd2e3e0477715282266b6f830c68_icgraph">
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a208a8f8e69a8bcfe2fe3b01291195d1c"></a><!-- doxytag: member="moteur_ncurses::cleanline" ref="a208a8f8e69a8bcfe2fe3b01291195d1c" args="(WINDOW *win, int y, int x_begin, int x_end)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void moteur_ncurses::cleanline </td>
+          <td>(</td>
+          <td class="paramtype">WINDOW *&nbsp;</td>
+          <td class="paramname"> <em>win</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>x_begin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>x_end</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [static, private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet d'effacer une ligne. </p>
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8cpp_source.html#l00789">789</a> du fichier <a class="el" href="moteur__ncurses_8cpp_source.html">moteur_ncurses.cpp</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__ncurses_8cpp_source.html#l00206">afficherConfigurationClavier()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">afficherMapEtEvent()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00422">getNombre()</a>, et <a class="el" href="moteur__ncurses_8cpp_source.html#l00620">getTexte()</a>.</p>
+
+<p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__ncurses_a208a8f8e69a8bcfe2fe3b01291195d1c_icgraph.png" border="0" usemap="#classmoteur__ncurses_a208a8f8e69a8bcfe2fe3b01291195d1c_icgraph" alt=""/></div>
+<map name="classmoteur__ncurses_a208a8f8e69a8bcfe2fe3b01291195d1c_icgraph" id="classmoteur__ncurses_a208a8f8e69a8bcfe2fe3b01291195d1c_icgraph">
+<area shape="rect" id="node3" href="classmoteur__ncurses.html#a5a5da4538be5bc5b7e78cc7f96d2f6a8" title="Menu permettant d&#39;afficher et de modifier la configuration du clavier d&#39;un joueur..." alt="" coords="245,5,555,35"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="272,59,528,88"/><area shape="rect" id="node7" href="classmoteur__ncurses.html#a1d09cbe9608be4025643c0e7db9a0069" title="Créer un menu pour récupérer un nombre entré par un utilisateur." alt="" coords="297,112,503,141"/><area shape="rect" id="node9" href="classmoteur__ncurses.html#a20d01f1da6e4e378673df3f550e57bae" title="Permet d&#39;obtenir du texte." alt="" coords="307,165,493,195"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aadccb49d9c68b26a71686e7478b64ca7"></a><!-- doxytag: member="moteur_ncurses::forcerRafraichissement" ref="aadccb49d9c68b26a71686e7478b64ca7" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void moteur_ncurses::forcerRafraichissement </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de forcer un affichage complet. </p>
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8h_source.html#l00075">75</a> du fichier <a class="el" href="moteur__ncurses_8h_source.html">moteur_ncurses.h</a>.</p>
+
+<p>Références <a class="el" href="moteur__ncurses_8h_source.html#l00054">c_premierAffichage</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4c23b0d0242fcc5f3c90c8162112559d"></a><!-- doxytag: member="moteur_ncurses::getCouleurJoueur" ref="a4c23b0d0242fcc5f3c90c8162112559d" args="(unsigned char joueur)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">chtype moteur_ncurses::getCouleurJoueur </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>joueur</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [static, private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie la couleur d'un joueur. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>joueur</em>&nbsp;</td><td>Numéro du joueur de 1 à ... </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie la couleur à utiliser ( couleur directement utilisable dans wattron() )</dd></dl>
+<p>Exemple: </p>
+<div class="fragment"><pre class="fragment"> wattron(win, <a class="code" href="classmoteur__ncurses.html#a4c23b0d0242fcc5f3c90c8162112559d" title="Renvoie la couleur d&amp;#39;un joueur.">getCouleurJoueur</a>( 1 ));
+</pre></div><dl class="note"><dt><b>Note:</b></dt><dd>Si le numéro de joueur n'a pas de correspondance, alors :<ul>
+<li>un message d'erreur ( sur le cannal d'erreur ) est envoyé</li>
+<li>La couleur blanche sera utilisée </li>
+</ul>
+</dd></dl>
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8cpp_source.html#l00814">814</a> du fichier <a class="el" href="moteur__ncurses_8cpp_source.html">moteur_ncurses.cpp</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">afficherMapEtEvent()</a>.</p>
+
+<p><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__ncurses_a4c23b0d0242fcc5f3c90c8162112559d_icgraph.png" border="0" usemap="#classmoteur__ncurses_a4c23b0d0242fcc5f3c90c8162112559d_icgraph" alt=""/></div>
+<map name="classmoteur__ncurses_a4c23b0d0242fcc5f3c90c8162112559d_icgraph" id="classmoteur__ncurses_a4c23b0d0242fcc5f3c90c8162112559d_icgraph">
+<area shape="rect" id="node3" href="classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="300,5,556,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a1d09cbe9608be4025643c0e7db9a0069"></a><!-- doxytag: member="moteur_ncurses::getNombre" ref="a1d09cbe9608be4025643c0e7db9a0069" args="(const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int *returnValue)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int moteur_ncurses::getNombre </td>
+          <td>(</td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>titre</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>valeurParDefaut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>valeurMin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>valeurMax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&nbsp;</td>
+          <td class="paramname"> <em>returnValue</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Créer un menu pour récupérer un nombre entré par un utilisateur. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>titre</em>&nbsp;</td><td>Le titre du menu </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>valeurParDefaut</em>&nbsp;</td><td>La valeur par défaut </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>valeurMin</em>&nbsp;</td><td>La valeur minimum </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>valeurMax</em>&nbsp;</td><td>La valeur maximum </td></tr>
+    <tr><td valign="top"><tt>[out]</tt>&nbsp;</td><td valign="top"><em>returnValue</em>&nbsp;</td><td>Dans cette variable sera stocké, le nombre obtenu a la fin de la fonction </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd><ul>
+<li>2 : Nombre validé et accèpté</li>
+<li>3 : Action annulée </li>
+</ul>
+</dd></dl>
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8cpp_source.html#l00422">422</a> du fichier <a class="el" href="moteur__ncurses_8cpp_source.html">moteur_ncurses.cpp</a>.</p>
+
+<p>Références <a class="el" href="moteur__ncurses_8cpp_source.html#l00090">cadre()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00789">cleanline()</a>, et <a class="el" href="outils_8cpp_source.html#l00026">getTailleNombre()</a>.</p>
+
+<p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__ncurses_a1d09cbe9608be4025643c0e7db9a0069_cgraph.png" border="0" usemap="#classmoteur__ncurses_a1d09cbe9608be4025643c0e7db9a0069_cgraph" alt=""/></div>
+<map name="classmoteur__ncurses_a1d09cbe9608be4025643c0e7db9a0069_cgraph" id="classmoteur__ncurses_a1d09cbe9608be4025643c0e7db9a0069_cgraph">
+<area shape="rect" id="node3" href="classmoteur__ncurses.html#aa5d8fae6272f29e7fc0981a988b71a49" title="Affiche un cadre au tour (interieur) de la fenêtre." alt="" coords="272,5,443,35"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#a208a8f8e69a8bcfe2fe3b01291195d1c" title="Permet d&#39;effacer une ligne." alt="" coords="263,59,452,88"/><area shape="rect" id="node7" href="outils_8cpp.html#ab0a855d1eae4c34ffa5b7805b268dbbe" title="Calcule la longueur d&#39;un nombre." alt="" coords="295,136,420,165"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a20d01f1da6e4e378673df3f550e57bae"></a><!-- doxytag: member="moteur_ncurses::getTexte" ref="a20d01f1da6e4e378673df3f550e57bae" args="(const char titre[], char texteRetour[21])" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int moteur_ncurses::getTexte </td>
+          <td>(</td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>titre</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&nbsp;</td>
+          <td class="paramname"> <em>texteRetour</em>[21]</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet d'obtenir du texte. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>titre</em>&nbsp;</td><td>Le titre du menu </td></tr>
+    <tr><td valign="top"><tt>[out]</tt>&nbsp;</td><td valign="top"><em>texteRetour</em>&nbsp;</td><td>Dans cette variable sera stocké, le texte obtenu a la fin de la fonction </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd><ul>
+<li>2 : Texte validé et accèpté</li>
+<li>3 : Action annulée </li>
+</ul>
+</dd></dl>
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8cpp_source.html#l00620">620</a> du fichier <a class="el" href="moteur__ncurses_8cpp_source.html">moteur_ncurses.cpp</a>.</p>
+
+<p>Références <a class="el" href="moteur__ncurses_8cpp_source.html#l00090">cadre()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00789">cleanline()</a>, et <a class="el" href="outils_8cpp_source.html#l00061">trimString()</a>.</p>
+
+<p><div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__ncurses_a20d01f1da6e4e378673df3f550e57bae_cgraph.png" border="0" usemap="#classmoteur__ncurses_a20d01f1da6e4e378673df3f550e57bae_cgraph" alt=""/></div>
+<map name="classmoteur__ncurses_a20d01f1da6e4e378673df3f550e57bae_cgraph" id="classmoteur__ncurses_a20d01f1da6e4e378673df3f550e57bae_cgraph">
+<area shape="rect" id="node3" href="classmoteur__ncurses.html#aa5d8fae6272f29e7fc0981a988b71a49" title="Affiche un cadre au tour (interieur) de la fenêtre." alt="" coords="253,5,424,35"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#a208a8f8e69a8bcfe2fe3b01291195d1c" title="Permet d&#39;effacer une ligne." alt="" coords="244,59,433,88"/><area shape="rect" id="node7" href="outils_8cpp.html#a867f58846060922b50a272361337cc96" title="Vire les espaces avant et après une chaine de caractère." alt="" coords="296,112,381,141"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a7d67a62cc712313d3039d96711a0581d"></a><!-- doxytag: member="moteur_ncurses::isWindowOpen" ref="a7d67a62cc712313d3039d96711a0581d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool moteur_ncurses::isWindowOpen </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8h_source.html#l00072">72</a> du fichier <a class="el" href="moteur__ncurses_8h_source.html">moteur_ncurses.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ade52341b4b08a8eca9ee3c81c01abe7c"></a><!-- doxytag: member="moteur_ncurses::menu" ref="ade52341b4b08a8eca9ee3c81c01abe7c" args="(const char titre[], const char *choix[], unsigned int nb_choix)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int moteur_ncurses::menu </td>
+          <td>(</td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>titre</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>choix</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>nb_choix</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Créé une sous fenêtre centré. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>titre</em>&nbsp;</td><td>Titre de la sous fenêtre </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>choix</em>&nbsp;</td><td>Liste des choix a mettre dans la sous fenêtre. ( Tableau de chaine de caractères ) </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>nb_choix</em>&nbsp;</td><td>Nombre d'élement dans la liste des choix </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Le choix selectionné (sous forme d'un nombre: le ième element de la liste a été selectionné)</dd></dl>
+<p>La sous fenêtre propose de naviguer parmit une liste ( <em>choix</em> )<br/>
+ Puis renvoie le choix (sous forme d'un nombre: ième element de la liste)<br/>
+ </p>
+<div class="fragment"><pre class="fragment"> <span class="comment">// Exemple</span>
+ <span class="keyword">const</span> <span class="keywordtype">char</span>* choix[] = {
+    <span class="stringliteral">&quot;Choix 1&quot;</span>,
+    <span class="stringliteral">&quot;Choix 2&quot;</span>,
+    <span class="stringliteral">&quot;Choix 3&quot;</span>,
+    <span class="stringliteral">&quot;Choix 4&quot;</span>,
+    <span class="stringliteral">&quot;Choix 5&quot;</span>
+ };
+ <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> choix_selectionner = <a class="code" href="classmoteur__ncurses.html#ade52341b4b08a8eca9ee3c81c01abe7c" title="Créé une sous fenêtre centré.">menu</a>( <span class="stringliteral">&quot;Liste de mes choix&quot;</span>, choix, 5 );
+</pre></div> 
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8cpp_source.html#l00126">126</a> du fichier <a class="el" href="moteur__ncurses_8cpp_source.html">moteur_ncurses.cpp</a>.</p>
+
+<p>Références <a class="el" href="moteur__ncurses_8cpp_source.html#l00090">cadre()</a>.</p>
+
+<p><div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmoteur__ncurses_ade52341b4b08a8eca9ee3c81c01abe7c_cgraph.png" border="0" usemap="#classmoteur__ncurses_ade52341b4b08a8eca9ee3c81c01abe7c_cgraph" alt=""/></div>
+<map name="classmoteur__ncurses_ade52341b4b08a8eca9ee3c81c01abe7c_cgraph" id="classmoteur__ncurses_ade52341b4b08a8eca9ee3c81c01abe7c_cgraph">
+<area shape="rect" id="node3" href="classmoteur__ncurses.html#aa5d8fae6272f29e7fc0981a988b71a49" title="Affiche un cadre au tour (interieur) de la fenêtre." alt="" coords="224,5,395,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="a80ff5f97779c081cf278601e0e77757a"></a><!-- doxytag: member="moteur_ncurses::c_premierAffichage" ref="a80ff5f97779c081cf278601e0e77757a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmoteur__ncurses.html#a80ff5f97779c081cf278601e0e77757a">moteur_ncurses::c_premierAffichage</a> = 1<code> [static, private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="moteur__ncurses_8h_source.html#l00054">54</a> du fichier <a class="el" href="moteur__ncurses_8h_source.html">moteur_ncurses.h</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">afficherMapEtEvent()</a>, et <a class="el" href="moteur__ncurses_8h_source.html#l00075">forcerRafraichissement()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="moteur__ncurses_8h_source.html">moteur_ncurses.h</a></li>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="moteur__ncurses_8cpp_source.html">moteur_ncurses.cpp</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Membres de classe - Fonctions</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="functions.html"><span>Tout</span></a></li>
+      <li class="current"><a href="functions_func.html"><span>Fonctions</span></a></li>
+      <li><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_type.html"><span>Définition&nbsp;de&nbsp;type</span></a></li>
+      <li><a href="functions_enum.html"><span>Énumérations</span></a></li>
+      <li><a href="functions_eval.html"><span>Valeurs&nbsp;énumérées</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs3">
+    <ul class="tablist">
+      <li><a href="functions_func.html#index_a"><span>a</span></a></li>
+      <li><a href="functions_func_0x62.html#index_b"><span>b</span></a></li>
+      <li><a href="functions_func_0x63.html#index_c"><span>c</span></a></li>
+      <li><a href="functions_func_0x64.html#index_d"><span>d</span></a></li>
+      <li><a href="functions_func_0x65.html#index_e"><span>e</span></a></li>
+      <li><a href="functions_func_0x66.html#index_f"><span>f</span></a></li>
+      <li class="current"><a href="functions_func_0x67.html#index_g"><span>g</span></a></li>
+      <li><a href="functions_func_0x69.html#index_i"><span>i</span></a></li>
+      <li><a href="functions_func_0x6a.html#index_j"><span>j</span></a></li>
+      <li><a href="functions_func_0x6b.html#index_k"><span>k</span></a></li>
+      <li><a href="functions_func_0x6c.html#index_l"><span>l</span></a></li>
+      <li><a href="functions_func_0x6d.html#index_m"><span>m</span></a></li>
+      <li><a href="functions_func_0x6e.html#index_n"><span>n</span></a></li>
+      <li><a href="functions_func_0x6f.html#index_o"><span>o</span></a></li>
+      <li><a href="functions_func_0x70.html#index_p"><span>p</span></a></li>
+      <li><a href="functions_func_0x71.html#index_q"><span>q</span></a></li>
+      <li><a href="functions_func_0x72.html#index_r"><span>r</span></a></li>
+      <li><a href="functions_func_0x73.html#index_s"><span>s</span></a></li>
+      <li><a href="functions_func_0x74.html#index_t"><span>t</span></a></li>
+      <li><a href="functions_func_0x75.html#index_u"><span>u</span></a></li>
+      <li><a href="functions_func_0x78.html#index_x"><span>x</span></a></li>
+      <li><a href="functions_func_0x79.html#index_y"><span>y</span></a></li>
+      <li><a href="functions_func_0x7e.html#index_~"><span>~</span></a></li>
+    </ul>
+  </div>
+<div class="contents">
+&nbsp;
+
+<h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
+<li>genMap()
+: <a class="el" href="classpartie.html#adea76917bafe42b34b4fefae60c965d8">partie</a>
+</li>
+<li>getBlock()
+: <a class="el" href="classmap.html#a5ab949cacaad5148299aa70f55bb0c93">map</a>
+</li>
+<li>getBonusAleatoire()
+: <a class="el" href="classbonus.html#a4b5bd7441505cebab7959b7b7b49ec70">bonus</a>
+</li>
+<li>getClient()
+: <a class="el" href="classpartie.html#aba546895433f712feea797aee65aeb96">partie</a>
+</li>
+<li>getClientID()
+: <a class="el" href="classserver.html#af29d65fecf50b8ba68ffee1a21d32f50">server</a>
+</li>
+<li>getClientSOCK()
+: <a class="el" href="classserver.html#a9f03663df3cb618c70e34cac773ff55b">server</a>
+</li>
+<li>getCouleurJoueur()
+: <a class="el" href="classmoteur__ncurses.html#a4c23b0d0242fcc5f3c90c8162112559d">moteur_ncurses</a>
+</li>
+<li>getEvent()
+: <a class="el" href="classbonus.html#ae6328103dfcaf03ee9cd2656ca5fa6e6">bonus</a>
+</li>
+<li>getInstance()
+: <a class="el" href="class_c_memory_manager.html#abd2c21f7bb412aa1f473e92ca029733d">CMemoryManager</a>
+, <a class="el" href="classmoteur__sdl.html#a275eb203b7d8d395945c03ba036e1360">moteur_sdl</a>
+, <a class="el" href="classmoteur__sfml.html#aa5290106520ad011241051d3f60435f1">moteur_sfml</a>
+, <a class="el" href="classoptions.html#a3db3c367210272824e13e6bb1260e8c4">options</a>
+</li>
+<li>getMap()
+: <a class="el" href="classpartie.html#ae1902153955d80b676fe96ef395e58c5">partie</a>
+</li>
+<li>getModifications()
+: <a class="el" href="classmap.html#a37db5c6e03a1245a8c461d56d7f011ef">map</a>
+</li>
+<li>getNombre()
+: <a class="el" href="classmoteur__sfml.html#a924bb726b5d2a413f4da0fe7a00962a2">moteur_sfml</a>
+, <a class="el" href="classmoteur__sdl.html#a8a6ebf2258858708040bffa6f01eb4c6">moteur_sdl</a>
+, <a class="el" href="classmoteur__ncurses.html#a1d09cbe9608be4025643c0e7db9a0069">moteur_ncurses</a>
+</li>
+<li>getServeur()
+: <a class="el" href="classpartie.html#a6e482f58cab5db9b2e529ec23784f8ae">partie</a>
+</li>
+<li>getTexte()
+: <a class="el" href="classmoteur__sfml.html#a8628e69118d8923eff8fad979f791da2">moteur_sfml</a>
+, <a class="el" href="classmoteur__ncurses.html#a20d01f1da6e4e378673df3f550e57bae">moteur_ncurses</a>
+, <a class="el" href="classmoteur__sdl.html#a25a38bdd2e51b9184130c3e90d808a8c">moteur_sdl</a>
+</li>
+<li>getUniqueJoueurID()
+: <a class="el" href="classpartie.html#ae36da47667e320abaa1943000d7c8c04">partie</a>
+</li>
+<li>getWinnerName()
+: <a class="el" href="classpartie.html#adb715dd93594bf27e53b84236a3abd31">partie</a>
+</li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

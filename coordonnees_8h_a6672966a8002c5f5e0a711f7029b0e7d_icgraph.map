@@ -1,0 +1,16 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="204,5,428,35"/>
+<area shape="rect" id="node5" href="$classmap.html#ac7e126e8c0555f9f2e9c86cc81865b9f" title="Ajoute des meta donnée ( ou info joueurs ) dans le block (X, Y)." alt="" coords="233,288,399,317"/>
+<area shape="rect" id="node9" href="$classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="1343,263,1529,292"/>
+<area shape="rect" id="node19" href="$classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="807,573,1004,603"/>
+<area shape="rect" id="node29" href="$classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="841,109,969,139"/>
+<area shape="rect" id="node38" href="$classmap.html#a9daefd4b8e29eba7b98b734ce4530fea" title="Modifie le block qui est à la position X, Y." alt="" coords="260,495,372,524"/>
+<area shape="rect" id="node7" href="$classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="1068,197,1279,227"/>
+<area shape="rect" id="node11" href="$classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1579,469,1677,499"/>
+<area shape="rect" id="node16" href="$classpartie.html#aa5cca051f9f07d1b267f5a4df8dabd24" title="Scan les event du bonus pousse bombe." alt="" coords="477,416,757,445"/>
+<area shape="rect" id="node23" href="$classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="495,469,740,499"/>
+<area shape="rect" id="node33" href="$classpartie.html#a690624a8847be8257bd1d89e23018614" title="Désempaquette le buffer et met les données dans le tableau." alt="" coords="557,211,677,240"/>
+<area shape="rect" id="node13" href="$main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1727,469,1780,499"/>
+<area shape="rect" id="node25" href="$classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="1055,469,1292,499"/>
+<area shape="rect" id="node46" href="$classmap.html#a5d865615ead2c9f10768e8504b1adb23" title="Modifie le block qui est à la position X, Y." alt="" coords="561,675,673,704"/>
+</map>

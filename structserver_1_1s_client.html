@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la structure server::sClient</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+  <div class="navpath">
+    <ul>
+      <li><a class="el" href="classserver.html">server</a>      </li>
+      <li><a class="el" href="structserver_1_1s_client.html">server::sClient</a>      </li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Attributs publics</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la structure server::sClient</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="server::sClient" -->
+<p>Contient les information d'un client.  
+<a href="#_details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="class__server_8h_source.html">class_server.h</a>&gt;</code></p>
+
+<p><a href="structserver_1_1s_client-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structserver_1_1s_client.html#a71fe0aadaf55f5fad0f75915fad4ebea">listenSocket</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class___base_client_server_8h.html#a29046dc0232f0e5c70adbc25090d77b8">SOCKADDR_IN</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structserver_1_1s_client.html#ad98880e020c788871979fbec62139c1e">addr</a></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Contient les information d'un client. </p>
+
+<p>Définition à la ligne <a class="el" href="class__server_8h_source.html#l00045">45</a> du fichier <a class="el" href="class__server_8h_source.html">class_server.h</a>.</p>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="ad98880e020c788871979fbec62139c1e"></a><!-- doxytag: member="server::sClient::addr" ref="ad98880e020c788871979fbec62139c1e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class___base_client_server_8h.html#a29046dc0232f0e5c70adbc25090d77b8">SOCKADDR_IN</a> <a class="el" href="structserver_1_1s_client.html#ad98880e020c788871979fbec62139c1e">server::sClient::addr</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="class__server_8h_source.html#l00047">47</a> du fichier <a class="el" href="class__server_8h_source.html">class_server.h</a>.</p>
+
+<p>Référencé par <a class="el" href="class__server_8cpp_source.html#l00191">server::lookupNewConnection()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a71fe0aadaf55f5fad0f75915fad4ebea"></a><!-- doxytag: member="server::sClient::listenSocket" ref="a71fe0aadaf55f5fad0f75915fad4ebea" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="el" href="structserver_1_1s_client.html#a71fe0aadaf55f5fad0f75915fad4ebea">server::sClient::listenSocket</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="class__server_8h_source.html#l00046">46</a> du fichier <a class="el" href="class__server_8h_source.html">class_server.h</a>.</p>
+
+<p>Référencé par <a class="el" href="class__server_8cpp_source.html#l00043">server::getClientSOCK()</a>, <a class="el" href="class__server_8cpp_source.html#l00258">server::lookupConnectionClient()</a>, et <a class="el" href="class__server_8cpp_source.html#l00191">server::lookupNewConnection()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette structure a été générée à partir du fichier suivant :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/ClientServer/Server/<a class="el" href="class__server_8h_source.html">class_server.h</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:29 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

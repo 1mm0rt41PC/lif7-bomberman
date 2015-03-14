@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/config.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/config.h</h1>  </div>
+</div>
+<div class="contents">
+<a href="config_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef CONFIG_h</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define CONFIG_h</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 
+<a name="l00005"></a>00005 <span class="comment">// Define LIB : __LIB_ncurses__, __LIB_SDL__, __LIB_SFML__</span>
+<a name="l00006"></a>00006 
+<a name="l00007"></a>00007 <span class="comment">// Pour les IDE et ne pas interférer avec les commandes make</span>
+<a name="l00008"></a>00008 <span class="preprocessor">#if !defined(__LIB_ncurses__) &amp;&amp; !defined(__LIB_SDL__) &amp;&amp; !defined(__LIB_SFML__)</span>
+<a name="l00009"></a>00009 <span class="preprocessor"></span><span class="preprocessor">    #define __LIB_SDL__ 1</span>
+<a name="l00010"></a>00010 <span class="preprocessor"></span><span class="preprocessor">    #warning &quot;Veuillez definir la lib d&#39;affichage ! ( __LIB_ncurses__, __LIB_SDL__, __LIB_SFML__ ) !&quot;</span>
+<a name="l00011"></a>00011 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00012"></a>00012 <span class="preprocessor"></span>
+<a name="l00013"></a>00013 <span class="comment">// NOTE: si DEFAULT_PORT &lt; 1024 alors les droits root sont nécéssaire</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#define DEFAULT_PORT 947 // 947 = &#39;b&#39;+&#39;o&#39;+&#39;m&#39;+&#39;b&#39;+&#39;e&#39;+&#39;r&#39;+&#39;m&#39;+&#39;a&#39;+&#39;n&#39; °(^_^)°</span>
+<a name="l00015"></a>00015 <span class="preprocessor"></span>
+<a name="l00016"></a>00016 <span class="keyword">enum</span> {
+<a name="l00017"></a><a class="code" href="config_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a7a96c5436c2b93e73f491800d240a6d9">00017</a>     <a class="code" href="config_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a7a96c5436c2b93e73f491800d240a6d9">__BOMBERMAN_VERSION__</a> = 1
+<a name="l00018"></a>00018 };
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020 <span class="preprocessor">#if defined(_WIN32) || defined(WIN32) || defined(WIN64) || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__BORLANDC__)</span>
+<a name="l00021"></a>00021 <span class="preprocessor"></span><span class="preprocessor">    #define OS_WINDOWS 1</span>
+<a name="l00022"></a>00022 <span class="preprocessor"></span><span class="preprocessor">#else</span>
+<a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00024"></a>00024 <span class="preprocessor"></span>
+<a name="l00025"></a>00025 <span class="comment">/*******************************************************************************</span>
+<a name="l00026"></a>00026 <span class="comment">* Lib SFML</span>
+<a name="l00027"></a>00027 <span class="comment">*/</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#ifdef __LIB_SFML__</span>
+<a name="l00029"></a>00029 <span class="preprocessor"></span><span class="preprocessor">    #include &lt;SFML/Window.hpp&gt;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">    #include &lt;SFML/Graphics.hpp&gt;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">    #define SYS_CLAVIER sf::Key::Code</span>
+<a name="l00032"></a>00032 <span class="preprocessor"></span><span class="preprocessor">    #define RETOUR_MENU_PRECEDENT sf::Key::Escape// Permet de faire la liaison pour quitter le menu principal</span>
+<a name="l00033"></a>00033 <span class="preprocessor"></span>
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035 <span class="comment">/*******************************************************************************</span>
+<a name="l00036"></a>00036 <span class="comment">* Lib NCruses</span>
+<a name="l00037"></a>00037 <span class="comment">*/</span>
+<a name="l00038"></a>00038 <span class="preprocessor">#elif __LIB_ncurses__</span>
+<a name="l00039"></a>00039 <span class="preprocessor"></span><span class="preprocessor">    #if defined(OS_WINDOWS)</span>
+<a name="l00040"></a>00040 <span class="preprocessor"></span><span class="preprocessor">        #include &lt;Ncurses/curses.h&gt;</span>
+<a name="l00041"></a>00041 <span class="preprocessor">    #else</span>
+<a name="l00042"></a>00042 <span class="preprocessor"></span><span class="preprocessor">        #include &lt;ncurses.h&gt;</span>
+<a name="l00043"></a>00043 <span class="preprocessor">    #endif</span>
+<a name="l00044"></a>00044 <span class="preprocessor"></span><span class="preprocessor">    #define SYS_CLAVIER int</span>
+<a name="l00045"></a>00045 <span class="preprocessor"></span>
+<a name="l00046"></a>00046     <span class="comment">// Touches</span>
+<a name="l00047"></a>00047 <span class="preprocessor">    #define KEY_ESCAP 27</span>
+<a name="l00048"></a>00048 <span class="preprocessor"></span><span class="preprocessor">    #define KEY_ENTER_bis 10</span>
+<a name="l00049"></a>00049 <span class="preprocessor"></span><span class="preprocessor">    #define KEY_BACKSPACE_bis 8</span>
+<a name="l00050"></a>00050 <span class="preprocessor"></span><span class="preprocessor">    #define RETOUR_MENU_PRECEDENT KEY_ESCAP// Permet de faire la liaison pour quitter le menu principal</span>
+<a name="l00051"></a>00051 <span class="preprocessor"></span>
+<a name="l00052"></a>00052 <span class="preprocessor">    #ifndef PADPLUS</span>
+<a name="l00053"></a>00053 <span class="preprocessor"></span><span class="preprocessor">        #define PADPLUS &#39;+&#39;</span>
+<a name="l00054"></a>00054 <span class="preprocessor"></span><span class="preprocessor">    #endif</span>
+<a name="l00055"></a>00055 <span class="preprocessor"></span>
+<a name="l00056"></a>00056 <span class="preprocessor">    #ifndef PADMINUS</span>
+<a name="l00057"></a>00057 <span class="preprocessor"></span><span class="preprocessor">        #define PADMINUS &#39;-&#39;</span>
+<a name="l00058"></a>00058 <span class="preprocessor"></span><span class="preprocessor">    #endif</span>
+<a name="l00059"></a>00059 <span class="preprocessor"></span>
+<a name="l00060"></a>00060 <span class="preprocessor">    #ifndef PADENTER</span>
+<a name="l00061"></a>00061 <span class="preprocessor"></span><span class="preprocessor">        #define PADENTER 0x1CB</span>
+<a name="l00062"></a>00062 <span class="preprocessor"></span><span class="preprocessor">    #endif</span>
+<a name="l00063"></a>00063 <span class="preprocessor"></span>
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065 <span class="comment">/*******************************************************************************</span>
+<a name="l00066"></a>00066 <span class="comment">* Lib SDL</span>
+<a name="l00067"></a>00067 <span class="comment">*/</span>
+<a name="l00068"></a>00068 <span class="preprocessor">#elif __LIB_SDL__</span>
+<a name="l00069"></a>00069 <span class="preprocessor"></span><span class="preprocessor">    #include &lt;SDL/SDL.h&gt;</span>
+<a name="l00070"></a>00070 <span class="preprocessor">    #include &lt;SDL/SDL_ttf.h&gt;</span>
+<a name="l00071"></a>00071 <span class="preprocessor">    #include &lt;SDL/SDL_image.h&gt;</span>
+<a name="l00072"></a>00072 <span class="preprocessor">    #define SYS_CLAVIER SDLKey //Uint8 || SDLKey</span>
+<a name="l00073"></a>00073 <span class="preprocessor"></span><span class="preprocessor">    #define RETOUR_MENU_PRECEDENT SDLK_ESCAPE// Permet de faire la liaison pour quitter le menu principal</span>
+<a name="l00074"></a>00074 <span class="preprocessor"></span>
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076 <span class="comment">/*******************************************************************************</span>
+<a name="l00077"></a>00077 <span class="comment">* BUG</span>
+<a name="l00078"></a>00078 <span class="comment">*/</span>
+<a name="l00079"></a>00079 <span class="preprocessor">#else</span>
+<a name="l00080"></a>00080 <span class="preprocessor"></span><span class="preprocessor">    #error &quot;Veuillez definir la lib d&#39;affichage ! ( __LIB_ncurses__, __LIB_SDL__, __LIB_SFML__ ) !&quot;</span>
+<a name="l00081"></a>00081 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00082"></a>00082 <span class="preprocessor"></span>
+<a name="l00083"></a>00083 <span class="preprocessor">#endif</span>
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

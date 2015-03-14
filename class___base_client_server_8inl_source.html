@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/ClientServer/class_BaseClientServer.inl</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/ClientServer/class_BaseClientServer.inl</h1>  </div>
+</div>
+<div class="contents">
+<a href="class___base_client_server_8inl.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00002"></a>00002 <span class="comment">* @fn void baseClientServer::setWait( const timeval* wait )</span>
+<a name="l00003"></a>00003 <span class="comment">* @brief Modifier le temps d&#39;attente d&#39;une réponse</span>
+<a name="l00004"></a>00004 <span class="comment">* @param[in] wait Le temps d&#39;attente</span>
+<a name="l00005"></a>00005 <span class="comment">* @note Le temps d&#39;attente par défaut est de 0.01sec&lt;br /&gt;</span>
+<a name="l00006"></a>00006 <span class="comment">* Cette fonction est un simple alias de baseClientServer::setWait( long tv_sec, long tv_usec )</span>
+<a name="l00007"></a>00007 <span class="comment">*/</span>
+<a name="l00008"></a><a class="code" href="classbase_client_server.html#a5d0d1ef1417eb5ca0a25147576e99710">00008</a> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classbase_client_server.html#acf92891d022c8c20e68b634ba1701757" title="Modifier le temps d&amp;#39;attente d&amp;#39;une réponse.">baseClientServer::setWait</a>( <span class="keyword">const</span> timeval* wait )
+<a name="l00009"></a>00009 {
+<a name="l00010"></a>00010     <a class="code" href="classbase_client_server.html#acf92891d022c8c20e68b634ba1701757" title="Modifier le temps d&amp;#39;attente d&amp;#39;une réponse.">setWait</a>( wait-&gt;tv_sec, wait-&gt;tv_usec );
+<a name="l00011"></a>00011 }
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 
+<a name="l00014"></a>00014 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00015"></a>00015 <span class="comment">* @fn unsigned int baseClientServer::port() const</span>
+<a name="l00016"></a>00016 <span class="comment">* @brief Defini le port à utiliser.</span>
+<a name="l00017"></a>00017 <span class="comment">* @note Le port n&#39;est effectivement pri en compte qu&#39;après un appel à baseClientServer::Listening()</span>
+<a name="l00018"></a>00018 <span class="comment">*/</span>
+<a name="l00019"></a><a class="code" href="classbase_client_server.html#a61011c973d5f71ddd0894f1f99f8959e">00019</a> <span class="keyword">inline</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classbase_client_server.html#a61011c973d5f71ddd0894f1f99f8959e" title="Defini le port à utiliser.">baseClientServer::port</a>()<span class="keyword"> const</span>
+<a name="l00020"></a>00020 <span class="keyword"></span>{
+<a name="l00021"></a>00021     <span class="keywordflow">return</span> <a class="code" href="classbase_client_server.html#a2dea81cee139f918358e36b8650fa37e" title="&amp;lt; Temps d&amp;#39;attente au niveau du select">c_port</a>;
+<a name="l00022"></a>00022 }
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024 
+<a name="l00025"></a>00025 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00026"></a>00026 <span class="comment">* @fn void baseClientServer::setTCP_NoDelay( SOCKET s, bool activer )</span>
+<a name="l00027"></a>00027 <span class="comment">* @brief Permet de modifier le paramètre TCP_NoDelay ( Algorithme de Nagle )</span>
+<a name="l00028"></a>00028 <span class="comment">* sur le socket c_listenSocket</span>
+<a name="l00029"></a>00029 <span class="comment">*</span>
+<a name="l00030"></a>00030 <span class="comment">* Cette fonction est un alias de baseClientServer::setTCP_NoDelay( SOCKET s, bool activer )</span>
+<a name="l00031"></a>00031 <span class="comment">*/</span>
+<a name="l00032"></a><a class="code" href="classbase_client_server.html#a94f59ec6bf09f3c90f25e57781632df5">00032</a> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classbase_client_server.html#a94f59ec6bf09f3c90f25e57781632df5">baseClientServer::setTCP_NoDelay</a>( <span class="keywordtype">bool</span> activer )
+<a name="l00033"></a>00033 {
+<a name="l00034"></a>00034     <a class="code" href="classbase_client_server.html#a94f59ec6bf09f3c90f25e57781632df5">setTCP_NoDelay</a>( <a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a>, activer );
+<a name="l00035"></a>00035 }
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00039"></a>00039 <span class="comment">* @fn bool baseClientServer::TCP_NoDelay()</span>
+<a name="l00040"></a>00040 <span class="comment">* @brief Permet de savoir l&#39;état du paramètre TCP_NoDelay ( Algorithme de Nagle )</span>
+<a name="l00041"></a>00041 <span class="comment">* pour le socket c_listenSocket</span>
+<a name="l00042"></a>00042 <span class="comment">*</span>
+<a name="l00043"></a>00043 <span class="comment">* Cette fonction est un alias de baseClientServer::TCP_NoDelay( SOCKET s )</span>
+<a name="l00044"></a>00044 <span class="comment">*/</span>
+<a name="l00045"></a><a class="code" href="classbase_client_server.html#a676e6d281c3ff4a5c9e2b91c04d6b99a">00045</a> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classbase_client_server.html#a676e6d281c3ff4a5c9e2b91c04d6b99a" title="Permet de savoir l&amp;#39;état du paramètre TCP_NoDelay ( Algorithme de Nagle ) pour le socket c_listenS...">baseClientServer::TCP_NoDelay</a>()
+<a name="l00046"></a>00046 {
+<a name="l00047"></a>00047     <span class="keywordflow">return</span> <a class="code" href="classbase_client_server.html#a676e6d281c3ff4a5c9e2b91c04d6b99a" title="Permet de savoir l&amp;#39;état du paramètre TCP_NoDelay ( Algorithme de Nagle ) pour le socket c_listenS...">TCP_NoDelay</a>( <a class="code" href="classbase_client_server.html#adcdb18e66a3751fd8edbd5d1f65e8bd3" title="Le socket principal. ( c&amp;#39;est clui là quit sert pour l&amp;#39;écoute sur le port c_port )...">c_listenSocket</a> );
+<a name="l00048"></a>00048 }
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

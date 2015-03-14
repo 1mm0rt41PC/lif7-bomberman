@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classclient.html#aafb3e1157b7e1f3e81c09fe1c7866a82" title="Permet de se connecter au serveur." alt="" coords="335,5,468,35"/>
+<area shape="rect" id="node9" href="$classserver.html#a86e0b7cfa19dc5aee949533eb617e41f" title="Met le serveur en activité. Lance l&#39;écoute sur le port demandé." alt="" coords="339,112,464,141"/>
+<area shape="rect" id="node14" href="$classserver.html#a970c338624781ad9b8db82d0e853210f" title="Envoie une message (buffer) au client." alt="" coords="296,59,507,88"/>
+<area shape="rect" id="node5" href="$classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="569,59,668,88"/>
+<area shape="rect" id="node7" href="$main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="732,59,785,88"/>
+<area shape="rect" id="node11" href="$classserver.html#ae99f6766fe520a13022e3aee4d7c2d94" title="Met le serveur en activité sur le port {port}." alt="" coords="556,112,681,141"/>
+</map>

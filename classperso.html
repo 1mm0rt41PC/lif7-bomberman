@@ -1,0 +1,962 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la classe perso</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Types publics</a> &#124;
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="#pri-attribs">Attributs privés</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la classe perso</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="perso" -->
+<p>Gère un personnage.  
+<a href="#_details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="perso_8h_source.html">perso.h</a>&gt;</code></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Graphe de collaboration de perso:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso__coll__graph.png" border="0" usemap="#perso_coll__map" alt="Collaboration graph"/></div>
+<map name="perso_coll__map" id="perso_coll__map">
+<area shape="rect" id="node2" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )" alt="" coords="5,443,125,546"/><area shape="rect" id="node4" href="classbonus.html" title="Gère les bonus." alt="" coords="149,192,384,797"/><area shape="rect" id="node6" href="structbonus_1_1s__bonus__proprieter.html" title="Cette structure accueil la propriété des bonus." alt="" coords="49,5,260,125"/><area shape="rect" id="node8" href="structbonus_1_1s__bonus.html" title="Cette sturcture accueil un bonus d&#39;un joueur." alt="" coords="284,14,473,117"/></map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">légende</a>]</span></center></div>
+
+<p><a href="classperso-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-types"></a>
+Types publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#af25facef489bc105b9fe42132b80cba5">t_Orientation</a> { <a class="el" href="classperso.html#af25facef489bc105b9fe42132b80cba5a634b23e64a1d353fdda76a2ec18248f4">ORI_haut</a>, 
+<a class="el" href="classperso.html#af25facef489bc105b9fe42132b80cba5aa59f5203b5e142fa7a139b875240ccb7">ORI_bas</a>, 
+<a class="el" href="classperso.html#af25facef489bc105b9fe42132b80cba5ab3e12149a43ed9f6c1ed651c7b7130a5">ORI_droite</a>, 
+<a class="el" href="classperso.html#af25facef489bc105b9fe42132b80cba5ab905cf580d7a21ed24b5917ddc8fe517">ORI_gauche</a>
+ }</td></tr>
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#af0f49599683fc9a7637ca6e650fbf4aa">perso</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a905a1edfdeb0887d41ad1f1a25b021a7">perso</a> (<a class="el" href="partie_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a> nom, unsigned int Xpos, unsigned int Ypos)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructeur surchargé.  <a href="#a905a1edfdeb0887d41ad1f1a25b021a7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a3fe28d7cf2d02fd9607c0538fd799017">~perso</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a790e87487c0adb4360d690b2f2f2d05b">defNom</a> (<a class="el" href="partie_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a> nom)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifie le nom du personnage.  <a href="#a790e87487c0adb4360d690b2f2f2d05b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a3c273f65aee2b958e0d2b1112762feab">defPos</a> (unsigned int Xpos, unsigned int Ypos)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifie la position du personnage.  <a href="#a3c273f65aee2b958e0d2b1112762feab"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a99d225bebd697687503d2b450ecdda0b">defPos</a> (<a class="el" href="structs___coordonnees.html">s_Coordonnees</a> pos)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifie la position du personnage.  <a href="#a99d225bebd697687503d2b450ecdda0b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#af4dcf10ad3cd83ccc43e4038273b2d7d">defX</a> (unsigned int Xpos)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet de modifier la position X du personnage.  <a href="#af4dcf10ad3cd83ccc43e4038273b2d7d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a3e19c82c00755e3ad1a5c65a760b9ad8">defY</a> (unsigned int Ypos)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet de modifier la position Y du personnage.  <a href="#a3e19c82c00755e3ad1a5c65a760b9ad8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#aa19fd01c37bed0b375dcc4362be08ed1">defArmements</a> (<a class="el" href="classbonus.html">bonus</a> *a)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modif l'armement du perso.  <a href="#aa19fd01c37bed0b375dcc4362be08ed1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a1b34094c6f485175dfe7ddcfc58c3534">defOrientation</a> (<a class="el" href="classperso.html#af25facef489bc105b9fe42132b80cba5">t_Orientation</a> ori)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modif l'orientation du perso.  <a href="#a1b34094c6f485175dfe7ddcfc58c3534"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#aabdabe266d21f553cd3814cd3b560c64">defLocal</a> (bool isLocal)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet de definir si ce perso est local ou distant.  <a href="#aabdabe266d21f553cd3814cd3b560c64"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#ad5afe81f43724128d79b57acfabcda3a">defSocket</a> (<a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> MySocket)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Permet de definir le socket utilisé par le perso.  <a href="#ad5afe81f43724128d79b57acfabcda3a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="partie_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a815c8505a10a43da797e0424a0192f92">nom</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie le nom du personnage.  <a href="#a815c8505a10a43da797e0424a0192f92"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#abdd033a1b14d1e2c8c6a58b7bd28de86">X</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie la position X du perso.  <a href="#abdd033a1b14d1e2c8c6a58b7bd28de86"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a728c317474ec0e762c2c36c283a1654c">Y</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie la position Y du perso.  <a href="#a728c317474ec0e762c2c36c283a1654c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a3a8713fdb8d5c58803f29b3b91ae47b6">estVivant</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie si le perso est vivant ou pas.  <a href="#a3a8713fdb8d5c58803f29b3b91ae47b6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbonus.html">bonus</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#add0aebd55226ce05235400c09a529441">armements</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie les armes et bonus du personnage.  <a href="#add0aebd55226ce05235400c09a529441"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classperso.html#af25facef489bc105b9fe42132b80cba5">t_Orientation</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a5db1bb1382ea2071bd744476542eaee2">orientation</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie l'orientation du personnage.  <a href="#a5db1bb1382ea2071bd744476542eaee2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a73febc8006d08e4414cf6463a3b8ad9d">isLocal</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie l'état du personnage vis à vis du reseau. (Local ou non).  <a href="#a73febc8006d08e4414cf6463a3b8ad9d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a33ea05f68d9ddf2cf242b9b19c8b1ceb">socket</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie le socket utilisé (Par defaut: INVALID_SOCKET).  <a href="#a33ea05f68d9ddf2cf242b9b19c8b1ceb"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-attribs"></a>
+Attributs privés</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="partie_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a2200983133e90ff48ed2abc6a3d2a7aa">c_nom</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">c_pos</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbonus.html">bonus</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">c_armements</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classperso.html#af25facef489bc105b9fe42132b80cba5">t_Orientation</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#aaccc0ac764f0100e8126737ae37e7fc4">c_orientation</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#ac590574add82ac2695b0fa29f15b6b29">c_isLocal</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classperso.html#a4bca6631ede313a08e9e6da539079325">c_MySocket</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Socket a utiliser pour le perso. Valeur par defaut: INVALID_SOCKET.  <a href="#a4bca6631ede313a08e9e6da539079325"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Gère un personnage. </p>
+<p>Info :</p>
+<ul>
+<li>Pour mettre un perso sur en état: mort -&gt; defArmements(0)<br/>
+ Pas d'arme OU plus de vie -&gt; mort<br/>
+ Pour definir une partie avec un nombre de vie illimité : quantite_MAX_Ramassable = 0 =&gt; SANS VIE<br/>
+ </li>
+</ul>
+
+<p>Définition à la ligne <a class="el" href="perso_8h_source.html#l00017">17</a> du fichier <a class="el" href="perso_8h_source.html">perso.h</a>.</p>
+<hr/><h2>Documentation des énumérations membres</h2>
+<a class="anchor" id="af25facef489bc105b9fe42132b80cba5"></a><!-- doxytag: member="perso::t_Orientation" ref="af25facef489bc105b9fe42132b80cba5" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classperso.html#af25facef489bc105b9fe42132b80cba5">perso::t_Orientation</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl><dt><b>Valeurs énumérées: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="af25facef489bc105b9fe42132b80cba5a634b23e64a1d353fdda76a2ec18248f4"></a><!-- doxytag: member="ORI_haut" ref="af25facef489bc105b9fe42132b80cba5a634b23e64a1d353fdda76a2ec18248f4" args="" -->ORI_haut</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="af25facef489bc105b9fe42132b80cba5aa59f5203b5e142fa7a139b875240ccb7"></a><!-- doxytag: member="ORI_bas" ref="af25facef489bc105b9fe42132b80cba5aa59f5203b5e142fa7a139b875240ccb7" args="" -->ORI_bas</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="af25facef489bc105b9fe42132b80cba5ab3e12149a43ed9f6c1ed651c7b7130a5"></a><!-- doxytag: member="ORI_droite" ref="af25facef489bc105b9fe42132b80cba5ab3e12149a43ed9f6c1ed651c7b7130a5" args="" -->ORI_droite</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="af25facef489bc105b9fe42132b80cba5ab905cf580d7a21ed24b5917ddc8fe517"></a><!-- doxytag: member="ORI_gauche" ref="af25facef489bc105b9fe42132b80cba5ab905cf580d7a21ed24b5917ddc8fe517" args="" -->ORI_gauche</em>&nbsp;</td><td>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="perso_8h_source.html#l00020">20</a> du fichier <a class="el" href="perso_8h_source.html">perso.h</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="af0f49599683fc9a7637ca6e650fbf4aa"></a><!-- doxytag: member="perso::perso" ref="af0f49599683fc9a7637ca6e650fbf4aa" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">perso::perso </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00009">9</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00031">c_armements</a>, <a class="el" href="perso_8h_source.html#l00033">c_isLocal</a>, <a class="el" href="perso_8h_source.html#l00034">c_MySocket</a>, <a class="el" href="perso_8h_source.html#l00032">c_orientation</a>, <a class="el" href="perso_8h_source.html#l00030">c_pos</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a905a1edfdeb0887d41ad1f1a25b021a7"></a><!-- doxytag: member="perso::perso" ref="a905a1edfdeb0887d41ad1f1a25b021a7" args="(std::string nom, unsigned int Xpos, unsigned int Ypos)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">perso::perso </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="partie_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a>&nbsp;</td>
+          <td class="paramname"> <em>nom</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>Xpos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>Ypos</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructeur surchargé. </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00024">24</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00031">c_armements</a>, <a class="el" href="perso_8h_source.html#l00033">c_isLocal</a>, <a class="el" href="perso_8h_source.html#l00034">c_MySocket</a>, <a class="el" href="perso_8h_source.html#l00029">c_nom</a>, <a class="el" href="perso_8h_source.html#l00032">c_orientation</a>, <a class="el" href="perso_8h_source.html#l00030">c_pos</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3fe28d7cf2d02fd9607c0538fd799017"></a><!-- doxytag: member="perso::~perso" ref="a3fe28d7cf2d02fd9607c0538fd799017" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">perso::~perso </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00039">39</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00031">c_armements</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="add0aebd55226ce05235400c09a529441"></a><!-- doxytag: member="perso::armements" ref="add0aebd55226ce05235400c09a529441" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classbonus.html">bonus</a> * perso::armements </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie les armes et bonus du personnage. </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00194">194</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00031">c_armements</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">moteur_ncurses::afficherMapEtEvent()</a>, <a class="el" href="partie_8cpp_source.html#l02360">partie::ajouterNouvelleConnection()</a>, <a class="el" href="partie_8cpp_source.html#l01475">partie::checkInternalEventPousseBombe()</a>, <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, <a class="el" href="partie_8cpp_source.html#l01826">partie::killPlayers()</a>, <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>, <a class="el" href="partie_8cpp_source.html#l01363">partie::placer_perso_position_initial()</a>, et <a class="el" href="partie_8cpp_source.html#l02198">partie::unPackIt()</a>.</p>
+
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso_add0aebd55226ce05235400c09a529441_icgraph.png" border="0" usemap="#classperso_add0aebd55226ce05235400c09a529441_icgraph" alt=""/></div>
+<map name="classperso_add0aebd55226ce05235400c09a529441_icgraph" id="classperso_add0aebd55226ce05235400c09a529441_icgraph">
+<area shape="rect" id="node3" href="classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="212,5,436,35"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="196,59,452,88"/><area shape="rect" id="node7" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="503,163,740,192"/><area shape="rect" id="node9" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1355,212,1453,241"/><area shape="rect" id="node13" href="classpartie.html#aa5cca051f9f07d1b267f5a4df8dabd24" title="Scan les event du bonus pousse bombe." alt="" coords="789,368,1069,397"/><area shape="rect" id="node18" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="523,216,720,245"/><area shape="rect" id="node21" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="557,292,685,321"/><area shape="rect" id="node28" href="classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="201,264,447,293"/><area shape="rect" id="node33" href="classpartie.html#a1c02eb26617ee76e5bae9f75e27f600c" title="Désempaquette le buffer et met les données dans le joueur correspondant." alt="" coords="1152,393,1272,423"/><area shape="rect" id="node11" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1503,212,1556,241"/><area shape="rect" id="node15" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="1119,289,1305,319"/><area shape="rect" id="node23" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="824,315,1035,344"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aa19fd01c37bed0b375dcc4362be08ed1"></a><!-- doxytag: member="perso::defArmements" ref="aa19fd01c37bed0b375dcc4362be08ed1" args="(bonus *a)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void perso::defArmements </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbonus.html">bonus</a> *&nbsp;</td>
+          <td class="paramname"> <em>a</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modif l'armement du perso. </p>
+<p>Modifie implicitement l'état : vivant / mort<br/>
+ Armé =&gt; vivant<br/>
+ Désarmé =&gt; mort<br/>
+ </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00106">106</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00031">c_armements</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l02360">partie::ajouterNouvelleConnection()</a>, <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>, et <a class="el" href="partie_8cpp_source.html#l02198">partie::unPackIt()</a>.</p>
+
+<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso_aa19fd01c37bed0b375dcc4362be08ed1_icgraph.png" border="0" usemap="#classperso_aa19fd01c37bed0b375dcc4362be08ed1_icgraph" alt=""/></div>
+<map name="classperso_aa19fd01c37bed0b375dcc4362be08ed1_icgraph" id="classperso_aa19fd01c37bed0b375dcc4362be08ed1_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="217,5,455,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="504,57,603,87"/><area shape="rect" id="node10" href="classpartie.html#a1c02eb26617ee76e5bae9f75e27f600c" title="Désempaquette le buffer et met les données dans le joueur correspondant." alt="" coords="276,109,396,139"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="652,57,705,87"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aabdabe266d21f553cd3814cd3b560c64"></a><!-- doxytag: member="perso::defLocal" ref="aabdabe266d21f553cd3814cd3b560c64" args="(bool isLocal)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void perso::defLocal </td>
+          <td>(</td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>isLocal</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de definir si ce perso est local ou distant. </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00128">128</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00033">c_isLocal</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>, et <a class="el" href="main_8cpp_source.html#l00029">main()</a>.</p>
+
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso_aabdabe266d21f553cd3814cd3b560c64_icgraph.png" border="0" usemap="#classperso_aabdabe266d21f553cd3814cd3b560c64_icgraph" alt=""/></div>
+<map name="classperso_aabdabe266d21f553cd3814cd3b560c64_icgraph" id="classperso_aabdabe266d21f553cd3814cd3b560c64_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="173,5,272,35"/><area shape="rect" id="node5" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="321,32,375,61"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a790e87487c0adb4360d690b2f2f2d05b"></a><!-- doxytag: member="perso::defNom" ref="a790e87487c0adb4360d690b2f2f2d05b" args="(std::string nom)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void perso::defNom </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="partie_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a>&nbsp;</td>
+          <td class="paramname"> <em>nom</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifie le nom du personnage. </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00050">50</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00029">c_nom</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l02360">partie::ajouterNouvelleConnection()</a>, <a class="el" href="main_8cpp_source.html#l00029">main()</a>, et <a class="el" href="partie_8cpp_source.html#l02198">partie::unPackIt()</a>.</p>
+
+<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso_a790e87487c0adb4360d690b2f2f2d05b_icgraph.png" border="0" usemap="#classperso_a790e87487c0adb4360d690b2f2f2d05b_icgraph" alt=""/></div>
+<map name="classperso_a790e87487c0adb4360d690b2f2f2d05b_icgraph" id="classperso_a790e87487c0adb4360d690b2f2f2d05b_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="172,5,409,35"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="607,85,660,115"/><area shape="rect" id="node10" href="classpartie.html#a1c02eb26617ee76e5bae9f75e27f600c" title="Désempaquette le buffer et met les données dans le joueur correspondant." alt="" coords="231,59,351,88"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="459,59,557,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a1b34094c6f485175dfe7ddcfc58c3534"></a><!-- doxytag: member="perso::defOrientation" ref="a1b34094c6f485175dfe7ddcfc58c3534" args="(t_Orientation ori)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void perso::defOrientation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classperso.html#af25facef489bc105b9fe42132b80cba5">t_Orientation</a>&nbsp;</td>
+          <td class="paramname"> <em>ori</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modif l'orientation du perso. </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00118">118</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00032">c_orientation</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>, et <a class="el" href="partie_8cpp_source.html#l02198">partie::unPackIt()</a>.</p>
+
+<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso_a1b34094c6f485175dfe7ddcfc58c3534_icgraph.png" border="0" usemap="#classperso_a1b34094c6f485175dfe7ddcfc58c3534_icgraph" alt=""/></div>
+<map name="classperso_a1b34094c6f485175dfe7ddcfc58c3534_icgraph" id="classperso_a1b34094c6f485175dfe7ddcfc58c3534_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="379,5,477,35"/><area shape="rect" id="node7" href="classpartie.html#a1c02eb26617ee76e5bae9f75e27f600c" title="Désempaquette le buffer et met les données dans le joueur correspondant." alt="" coords="211,31,331,60"/><area shape="rect" id="node5" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="527,5,580,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a3c273f65aee2b958e0d2b1112762feab"></a><!-- doxytag: member="perso::defPos" ref="a3c273f65aee2b958e0d2b1112762feab" args="(unsigned int Xpos, unsigned int Ypos)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void perso::defPos </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>Xpos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>Ypos</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifie la position du personnage. </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00060">60</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00030">c_pos</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, et <a class="el" href="partie_8cpp_source.html#l01363">partie::placer_perso_position_initial()</a>.</p>
+
+<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso_a3c273f65aee2b958e0d2b1112762feab_icgraph.png" border="0" usemap="#classperso_a3c273f65aee2b958e0d2b1112762feab_icgraph" alt=""/></div>
+<map name="classperso_a3c273f65aee2b958e0d2b1112762feab_icgraph" id="classperso_a3c273f65aee2b958e0d2b1112762feab_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="460,5,657,35"/><area shape="rect" id="node9" href="classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="164,57,409,87"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1232,57,1331,87"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1380,57,1433,87"/><area shape="rect" id="node11" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="708,57,945,87"/><area shape="rect" id="node15" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="495,111,623,140"/><area shape="rect" id="node17" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="721,111,932,140"/><area shape="rect" id="node19" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="996,111,1183,140"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a99d225bebd697687503d2b450ecdda0b"></a><!-- doxytag: member="perso::defPos" ref="a99d225bebd697687503d2b450ecdda0b" args="(s_Coordonnees pos)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void perso::defPos </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a>&nbsp;</td>
+          <td class="paramname"> <em>pos</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifie la position du personnage. </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00072">72</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00030">c_pos</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad5afe81f43724128d79b57acfabcda3a"></a><!-- doxytag: member="perso::defSocket" ref="ad5afe81f43724128d79b57acfabcda3a" args="(SOCKET MySocket)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void perso::defSocket </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a>&nbsp;</td>
+          <td class="paramname"> <em>MySocket</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de definir le socket utilisé par le perso. </p>
+<dl class="note"><dt><b>Note:</b></dt><dd>Valeur par défaut: INVALID_SOCKET </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00139">139</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00034">c_MySocket</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l02360">partie::ajouterNouvelleConnection()</a>, et <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso_ad5afe81f43724128d79b57acfabcda3a_icgraph.png" border="0" usemap="#classperso_ad5afe81f43724128d79b57acfabcda3a_icgraph" alt=""/></div>
+<map name="classperso_ad5afe81f43724128d79b57acfabcda3a_icgraph" id="classperso_ad5afe81f43724128d79b57acfabcda3a_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="185,5,423,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="472,32,571,61"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="620,32,673,61"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="af4dcf10ad3cd83ccc43e4038273b2d7d"></a><!-- doxytag: member="perso::defX" ref="af4dcf10ad3cd83ccc43e4038273b2d7d" args="(unsigned int Xpos)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void perso::defX </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>Xpos</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de modifier la position X du personnage. </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00092">92</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00030">c_pos</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3e19c82c00755e3ad1a5c65a760b9ad8"></a><!-- doxytag: member="perso::defY" ref="a3e19c82c00755e3ad1a5c65a760b9ad8" args="(unsigned int Ypos)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void perso::defY </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>Ypos</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Permet de modifier la position Y du personnage. </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00082">82</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00030">c_pos</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3a8713fdb8d5c58803f29b3b91ae47b6"></a><!-- doxytag: member="perso::estVivant" ref="a3a8713fdb8d5c58803f29b3b91ae47b6" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool perso::estVivant </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie si le perso est vivant ou pas. </p>
+<p><b>Info</b> : Un perso est vivant si il dispose d'un armement et de [ Soit une quantitéRamassable de vie = à 0 ] [ Soit un nombre de vie &gt; 0] </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00182">182</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00031">c_armements</a>, <a class="el" href="bonus_8cpp_source.html#l00153">bonus::quantiteMAX_Ramassable()</a>, <a class="el" href="bonus_8cpp_source.html#l00119">bonus::quantiteUtilisable()</a>, et <a class="el" href="bonus_8h_source.html#l00046">bonus::vie</a>.</p>
+
+<p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso_a3a8713fdb8d5c58803f29b3b91ae47b6_cgraph.png" border="0" usemap="#classperso_a3a8713fdb8d5c58803f29b3b91ae47b6_cgraph" alt=""/></div>
+<map name="classperso_a3a8713fdb8d5c58803f29b3b91ae47b6_cgraph" id="classperso_a3a8713fdb8d5c58803f29b3b91ae47b6_cgraph">
+<area shape="rect" id="node3" href="classbonus.html#a4c2837caa68bfe4b796c7072c6001ca2" title="Renvoie la quantité Max que l&#39;on peut ramasser d&#39;un objet." alt="" coords="181,5,416,35"/><area shape="rect" id="node5" href="classbonus.html#a6d080874a788cfacfb23c9a03733709a" title="Renvoie la quantité utilisatble d&#39;un bonus." alt="" coords="209,59,388,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a73febc8006d08e4414cf6463a3b8ad9d"></a><!-- doxytag: member="perso::isLocal" ref="a73febc8006d08e4414cf6463a3b8ad9d" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool perso::isLocal </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie l'état du personnage vis à vis du reseau. (Local ou non). </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00213">213</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00033">c_isLocal</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">moteur_ncurses::afficherMapEtEvent()</a>, et <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso_a73febc8006d08e4414cf6463a3b8ad9d_icgraph.png" border="0" usemap="#classperso_a73febc8006d08e4414cf6463a3b8ad9d_icgraph" alt=""/></div>
+<map name="classperso_a73febc8006d08e4414cf6463a3b8ad9d_icgraph" id="classperso_a73febc8006d08e4414cf6463a3b8ad9d_icgraph">
+<area shape="rect" id="node3" href="classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="180,5,404,35"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="164,59,420,88"/><area shape="rect" id="node7" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="243,112,341,141"/><area shape="rect" id="node9" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="471,112,524,141"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a815c8505a10a43da797e0424a0192f92"></a><!-- doxytag: member="perso::nom" ref="a815c8505a10a43da797e0424a0192f92" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="map_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">string</a> * perso::nom </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie le nom du personnage. </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00149">149</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00029">c_nom</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">moteur_ncurses::afficherMapEtEvent()</a>, et <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso_a815c8505a10a43da797e0424a0192f92_icgraph.png" border="0" usemap="#classperso_a815c8505a10a43da797e0424a0192f92_icgraph" alt=""/></div>
+<map name="classperso_a815c8505a10a43da797e0424a0192f92_icgraph" id="classperso_a815c8505a10a43da797e0424a0192f92_icgraph">
+<area shape="rect" id="node3" href="classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="167,5,391,35"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="151,59,407,88"/><area shape="rect" id="node7" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="229,112,328,141"/><area shape="rect" id="node9" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="457,112,511,141"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a5db1bb1382ea2071bd744476542eaee2"></a><!-- doxytag: member="perso::orientation" ref="a5db1bb1382ea2071bd744476542eaee2" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classperso.html#af25facef489bc105b9fe42132b80cba5">perso::t_Orientation</a> perso::orientation </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie l'orientation du personnage. </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00203">203</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00032">c_orientation</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>, et <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>.</p>
+
+<p><div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso_a5db1bb1382ea2071bd744476542eaee2_icgraph.png" border="0" usemap="#classperso_a5db1bb1382ea2071bd744476542eaee2_icgraph" alt=""/></div>
+<map name="classperso_a5db1bb1382ea2071bd744476542eaee2_icgraph" id="classperso_a5db1bb1382ea2071bd744476542eaee2_icgraph">
+<area shape="rect" id="node3" href="classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="191,5,415,35"/><area shape="rect" id="node5" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="204,59,401,88"/><area shape="rect" id="node7" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="464,59,563,88"/><area shape="rect" id="node9" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="612,59,665,88"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a33ea05f68d9ddf2cf242b9b19c8b1ceb"></a><!-- doxytag: member="perso::socket" ref="a33ea05f68d9ddf2cf242b9b19c8b1ceb" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> perso::socket </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie le socket utilisé (Par defaut: INVALID_SOCKET). </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00223">223</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00034">c_MySocket</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">moteur_ncurses::afficherMapEtEvent()</a>, <a class="el" href="partie_8cpp_source.html#l02360">partie::ajouterNouvelleConnection()</a>, et <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso_a33ea05f68d9ddf2cf242b9b19c8b1ceb_icgraph.png" border="0" usemap="#classperso_a33ea05f68d9ddf2cf242b9b19c8b1ceb_icgraph" alt=""/></div>
+<map name="classperso_a33ea05f68d9ddf2cf242b9b19c8b1ceb_icgraph" id="classperso_a33ea05f68d9ddf2cf242b9b19c8b1ceb_icgraph">
+<area shape="rect" id="node3" href="classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="180,5,404,35"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="164,59,420,88"/><area shape="rect" id="node7" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="173,112,411,141"/><area shape="rect" id="node9" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="469,139,568,168"/><area shape="rect" id="node11" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="617,139,671,168"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="abdd033a1b14d1e2c8c6a58b7bd28de86"></a><!-- doxytag: member="perso::X" ref="abdd033a1b14d1e2c8c6a58b7bd28de86" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int perso::X </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie la position X du perso. </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00159">159</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00030">c_pos</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, et <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso_abdd033a1b14d1e2c8c6a58b7bd28de86_icgraph.png" border="0" usemap="#classperso_abdd033a1b14d1e2c8c6a58b7bd28de86_icgraph" alt=""/></div>
+<map name="classperso_abdd033a1b14d1e2c8c6a58b7bd28de86_icgraph" id="classperso_abdd033a1b14d1e2c8c6a58b7bd28de86_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="129,5,327,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="376,32,475,61"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="524,32,577,61"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a728c317474ec0e762c2c36c283a1654c"></a><!-- doxytag: member="perso::Y" ref="a728c317474ec0e762c2c36c283a1654c" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int perso::Y </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie la position Y du perso. </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8cpp_source.html#l00169">169</a> du fichier <a class="el" href="perso_8cpp_source.html">perso.cpp</a>.</p>
+
+<p>Références <a class="el" href="perso_8h_source.html#l00030">c_pos</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, et <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-14-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classperso_a728c317474ec0e762c2c36c283a1654c_icgraph.png" border="0" usemap="#classperso_a728c317474ec0e762c2c36c283a1654c_icgraph" alt=""/></div>
+<map name="classperso_a728c317474ec0e762c2c36c283a1654c_icgraph" id="classperso_a728c317474ec0e762c2c36c283a1654c_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="129,5,327,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="376,32,475,61"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="524,32,577,61"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="ad19be0ce285dd140a9c1b8afabab52ba"></a><!-- doxytag: member="perso::c_armements" ref="ad19be0ce285dd140a9c1b8afabab52ba" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classbonus.html">bonus</a>* <a class="el" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">perso::c_armements</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="perso_8h_source.html#l00031">31</a> du fichier <a class="el" href="perso_8h_source.html">perso.h</a>.</p>
+
+<p>Référencé par <a class="el" href="perso_8cpp_source.html#l00194">armements()</a>, <a class="el" href="perso_8cpp_source.html#l00106">defArmements()</a>, <a class="el" href="perso_8cpp_source.html#l00182">estVivant()</a>, <a class="el" href="perso_8cpp_source.html#l00009">perso()</a>, et <a class="el" href="perso_8cpp_source.html#l00039">~perso()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac590574add82ac2695b0fa29f15b6b29"></a><!-- doxytag: member="perso::c_isLocal" ref="ac590574add82ac2695b0fa29f15b6b29" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classperso.html#ac590574add82ac2695b0fa29f15b6b29">perso::c_isLocal</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="perso_8h_source.html#l00033">33</a> du fichier <a class="el" href="perso_8h_source.html">perso.h</a>.</p>
+
+<p>Référencé par <a class="el" href="perso_8cpp_source.html#l00128">defLocal()</a>, <a class="el" href="perso_8cpp_source.html#l00213">isLocal()</a>, et <a class="el" href="perso_8cpp_source.html#l00009">perso()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4bca6631ede313a08e9e6da539079325"></a><!-- doxytag: member="perso::c_MySocket" ref="a4bca6631ede313a08e9e6da539079325" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="el" href="classperso.html#a4bca6631ede313a08e9e6da539079325">perso::c_MySocket</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Socket a utiliser pour le perso. Valeur par defaut: INVALID_SOCKET. </p>
+
+<p>Définition à la ligne <a class="el" href="perso_8h_source.html#l00034">34</a> du fichier <a class="el" href="perso_8h_source.html">perso.h</a>.</p>
+
+<p>Référencé par <a class="el" href="perso_8cpp_source.html#l00139">defSocket()</a>, <a class="el" href="perso_8cpp_source.html#l00009">perso()</a>, et <a class="el" href="perso_8cpp_source.html#l00223">socket()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2200983133e90ff48ed2abc6a3d2a7aa"></a><!-- doxytag: member="perso::c_nom" ref="a2200983133e90ff48ed2abc6a3d2a7aa" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="partie_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a> <a class="el" href="classperso.html#a2200983133e90ff48ed2abc6a3d2a7aa">perso::c_nom</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="perso_8h_source.html#l00029">29</a> du fichier <a class="el" href="perso_8h_source.html">perso.h</a>.</p>
+
+<p>Référencé par <a class="el" href="perso_8cpp_source.html#l00050">defNom()</a>, <a class="el" href="perso_8cpp_source.html#l00149">nom()</a>, et <a class="el" href="perso_8cpp_source.html#l00024">perso()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaccc0ac764f0100e8126737ae37e7fc4"></a><!-- doxytag: member="perso::c_orientation" ref="aaccc0ac764f0100e8126737ae37e7fc4" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classperso.html#af25facef489bc105b9fe42132b80cba5">t_Orientation</a> <a class="el" href="classperso.html#aaccc0ac764f0100e8126737ae37e7fc4">perso::c_orientation</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="perso_8h_source.html#l00032">32</a> du fichier <a class="el" href="perso_8h_source.html">perso.h</a>.</p>
+
+<p>Référencé par <a class="el" href="perso_8cpp_source.html#l00118">defOrientation()</a>, <a class="el" href="perso_8cpp_source.html#l00203">orientation()</a>, et <a class="el" href="perso_8cpp_source.html#l00009">perso()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a81fed2fa9e0ca30e0f1db3a4b99c9409"></a><!-- doxytag: member="perso::c_pos" ref="a81fed2fa9e0ca30e0f1db3a4b99c9409" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a> <a class="el" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">perso::c_pos</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="perso_8h_source.html#l00030">30</a> du fichier <a class="el" href="perso_8h_source.html">perso.h</a>.</p>
+
+<p>Référencé par <a class="el" href="perso_8cpp_source.html#l00060">defPos()</a>, <a class="el" href="perso_8cpp_source.html#l00092">defX()</a>, <a class="el" href="perso_8cpp_source.html#l00082">defY()</a>, <a class="el" href="perso_8cpp_source.html#l00009">perso()</a>, <a class="el" href="perso_8cpp_source.html#l00159">X()</a>, et <a class="el" href="perso_8cpp_source.html#l00169">Y()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="perso_8h_source.html">perso.h</a></li>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="perso_8cpp_source.html">perso.cpp</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

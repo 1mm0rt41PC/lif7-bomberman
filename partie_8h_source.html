@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/partie.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/partie.h</h1>  </div>
+</div>
+<div class="contents">
+<a href="partie_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef PARTIE_h</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define PARTIE_h</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &quot;<a class="code" href="options_8h.html">options.h</a>&quot;</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &quot;<a class="code" href="perso_8h.html">perso.h</a>&quot;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &quot;<a class="code" href="map_8h.html">map.h</a>&quot;</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#include &quot;<a class="code" href="class__client_8h.html">ClientServer/Client/class_client.h</a>&quot;</span>
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;<a class="code" href="class__server_8h.html">ClientServer/Server/class_server.h</a>&quot;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &quot;<a class="code" href="meta_prog_8inl.html">metaProg.inl</a>&quot;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &quot;<a class="code" href="_q_list_8h.html">QList.h</a>&quot;</span>
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012 <span class="comment"></span>
+<a name="l00013"></a>00013 <span class="comment">/*!</span>
+<a name="l00014"></a>00014 <span class="comment">* @class partie</span>
+<a name="l00015"></a>00015 <span class="comment">* @brief Permet de gérer une partie offline ou online ( host et client )</span>
+<a name="l00016"></a>00016 <span class="comment">*/</span>
+<a name="l00017"></a><a class="code" href="classpartie.html">00017</a> <span class="keyword">class </span><a class="code" href="classpartie.html" title="Permet de gérer une partie offline ou online ( host et client ).">partie</a>
+<a name="l00018"></a>00018 {
+<a name="l00019"></a>00019     <span class="keyword">private</span>:<span class="comment"></span>
+<a name="l00020"></a>00020 <span class="comment">        /*!</span>
+<a name="l00021"></a>00021 <span class="comment">        * @struct s_EventBombe</span>
+<a name="l00022"></a>00022 <span class="comment">        * @brief Permet de gérer les event des bombes.</span>
+<a name="l00023"></a>00023 <span class="comment">        */</span>
+<a name="l00024"></a><a class="code" href="structpartie_1_1s___event_bombe.html">00024</a>         <span class="keyword">typedef</span> <span class="keyword">struct </span>{
+<a name="l00025"></a><a class="code" href="structpartie_1_1s___event_bombe.html#ab6257418de0a5cc8afd637447732c8f0">00025</a>             std::vector&lt;s_Coordonnees&gt;  listBlockDetruit;<span class="comment">//!&lt; Contient la liste des block qui ont été détruit =&gt; Bonus a la clef ^^</span>
+<a name="l00026"></a><a class="code" href="structpartie_1_1s___event_bombe.html#a5bc44336228acdabc2a017f0a6042057">00026</a> <span class="comment"></span>            std::vector&lt;s_Coordonnees&gt;  deflagration;<span class="comment">//!&lt; Contient la position de tous block qui ont été touchés par la déflagration</span>
+<a name="l00027"></a><a class="code" href="structpartie_1_1s___event_bombe.html#a9b17191ab60292057711dfb2051db55f">00027</a> <span class="comment"></span>            <a class="code" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a>               pos;<span class="comment">//!&lt; Position Originel de l&#39;event</span>
+<a name="l00028"></a><a class="code" href="structpartie_1_1s___event_bombe.html#ab02ea3876b8cead2d2aa77b294f2acc7">00028</a> <span class="comment"></span>            clock_t                     repetionSuivante;<span class="comment">//!&lt; Time de la prochaine répétion</span>
+<a name="l00029"></a><a class="code" href="structpartie_1_1s___event_bombe.html#a4fe3f1be04c668bce6931ce89da49767">00029</a> <span class="comment"></span>            <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>               joueur;<span class="comment">//!&lt; Le joueur qui est la cause de l&#39;event</span>
+<a name="l00030"></a><a class="code" href="structpartie_1_1s___event_bombe.html#a0f5ae6c44c08fb389bd21310c48ab27c">00030</a> <span class="comment"></span>            <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>               Nb_Repetition;<span class="comment">//!&lt; Nombre de répétition actuel pour l&#39;event</span>
+<a name="l00031"></a><a class="code" href="structpartie_1_1s___event_bombe.html#a243f3673f6e8c001dd287682f4faa7ea">00031</a> <span class="comment"></span>            <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>               Nb_Repetition_MAX;<span class="comment">//!&lt; Nombre de répétition MAX pour l&#39;event</span>
+<a name="l00032"></a><a class="code" href="structpartie_1_1s___event_bombe.html#adb2b43bd211a7c7a9d24ed1284ebe722">00032</a> <span class="comment"></span>            <span class="keywordtype">bool</span>                        continue_X,
+<a name="l00033"></a>00033                                         continue_negativeX,
+<a name="l00034"></a>00034                                         continue_Y,
+<a name="l00035"></a>00035                                         continue_negativeY;
+<a name="l00036"></a>00036         } <a class="code" href="structpartie_1_1s___event_bombe.html" title="Permet de gérer les event des bombes.">s_EventBombe</a>;
+<a name="l00037"></a>00037 <span class="comment"></span>
+<a name="l00038"></a>00038 <span class="comment">        /*!</span>
+<a name="l00039"></a>00039 <span class="comment">        * @struct s_EventPousseBombe</span>
+<a name="l00040"></a>00040 <span class="comment">        * @brief Permet de gérer les event des pousses bombes.</span>
+<a name="l00041"></a>00041 <span class="comment">        */</span>
+<a name="l00042"></a><a class="code" href="structpartie_1_1s___event_pousse_bombe.html">00042</a>         <span class="keyword">typedef</span> <span class="keyword">struct </span>{
+<a name="l00043"></a><a class="code" href="structpartie_1_1s___event_pousse_bombe.html#a09dda126b50ee4c1f29ed7b2b206c702">00043</a>             <a class="code" href="classperso.html#af25facef489bc105b9fe42132b80cba5">perso::t_Orientation</a>        direction;<span class="comment">//!&lt; Direction de la bombe</span>
+<a name="l00044"></a><a class="code" href="structpartie_1_1s___event_pousse_bombe.html#ad69694d75ceb3610fff0393c195f8272">00044</a> <span class="comment"></span>            <a class="code" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a>               pos;<span class="comment">//!&lt; Position de l&#39;event</span>
+<a name="l00045"></a><a class="code" href="structpartie_1_1s___event_pousse_bombe.html#a7bc9760c6a082bb8a4c6a5479cae8098">00045</a> <span class="comment"></span>            clock_t                     repetionSuivante;<span class="comment">//!&lt; Time de la prochaine répétion</span>
+<a name="l00046"></a><a class="code" href="structpartie_1_1s___event_pousse_bombe.html#a7968b0a108aea965ba8a35da7ab159f2">00046</a> <span class="comment"></span>            <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>               joueur;<span class="comment">//!&lt; Le joueur a qui appartient la bombe [0-...[</span>
+<a name="l00047"></a>00047 <span class="comment"></span>        } <a class="code" href="structpartie_1_1s___event_pousse_bombe.html" title="Permet de gérer les event des pousses bombes.">s_EventPousseBombe</a>;
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050     <span class="keyword">public</span>:
+<a name="l00051"></a><a class="code" href="classpartie.html#a814c99350cb9e3ee66e1a92df26b3fe0">00051</a>         <span class="keyword">enum</span> <a class="code" href="classpartie.html#a814c99350cb9e3ee66e1a92df26b3fe0">t_MODE</a> {
+<a name="l00052"></a><a class="code" href="classpartie.html#a814c99350cb9e3ee66e1a92df26b3fe0a114599feb50637c7edda70172bf6c579">00052</a>             Combat_Libre,       <span class="comment">// Free For All     ( F4A )</span>
+<a name="l00053"></a><a class="code" href="classpartie.html#a814c99350cb9e3ee66e1a92df26b3fe0a93f3f68757fe8def2ad470721587d015">00053</a>             <a class="code" href="classpartie.html#a814c99350cb9e3ee66e1a92df26b3fe0a93f3f68757fe8def2ad470721587d015">Attrape_drapeau</a>     <span class="comment">// Capture the Flag ( CTF )</span>
+<a name="l00054"></a>00054         };
+<a name="l00055"></a><a class="code" href="classpartie.html#ab404c2e853ee2e820a91f97bbb826207">00055</a>         <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00056"></a><a class="code" href="classpartie.html#ab404c2e853ee2e820a91f97bbb826207a07002cd38b9e91b9cc306606db34c632">00056</a>             CNX_Host,
+<a name="l00057"></a><a class="code" href="classpartie.html#ab404c2e853ee2e820a91f97bbb826207a44308fb32a7a5f92c250894c660caf3b">00057</a>             CNX_Client,
+<a name="l00058"></a><a class="code" href="classpartie.html#ab404c2e853ee2e820a91f97bbb826207ac19eeeee526d4057247f29b9530ec8fa">00058</a>             <a class="code" href="classpartie.html#ab404c2e853ee2e820a91f97bbb826207ac19eeeee526d4057247f29b9530ec8fa" title="Pas de connection.">CNX_None</a>            <span class="comment">//!&lt; Pas de connection</span>
+<a name="l00059"></a>00059 <span class="comment"></span>        } t_Connection;
+<a name="l00060"></a>00060         <span class="comment">// Réseau ( Variable constante )</span>
+<a name="l00061"></a>00061         <span class="keyword">enum</span> {
+<a name="l00062"></a><a class="code" href="classpartie.html#a4c2100881d9d60a63ca98c9b69f3605aafc64c3c0ad061e820d9d6dd2e268b4be">00062</a>             <a class="code" href="classpartie.html#a4c2100881d9d60a63ca98c9b69f3605aafc64c3c0ad061e820d9d6dd2e268b4be">PACK_bufferSize</a> = <a class="code" href="structget_size_of_number.html" title="Détermine le nombre de chiffre dans un nombre. (NOMBRE POSITIF !).">getSizeOfNumber</a>&lt;-1&gt;::value*4<span class="comment">/*4 uint32*/</span>+<a class="code" href="structget_size_of_number.html" title="Détermine le nombre de chiffre dans un nombre. (NOMBRE POSITIF !).">getSizeOfNumber&lt;map::bombe_poser_AVEC_plusieurs_joueurs&gt;::value</a><span class="comment">/*1 type*/</span>+4<span class="comment">/*virgule*/</span>+1<span class="comment">/*²*/</span>+1<span class="comment">/*0*/</span>
+<a name="l00063"></a>00063         };<span class="comment"></span>
+<a name="l00064"></a>00064 <span class="comment">        /*!</span>
+<a name="l00065"></a>00065 <span class="comment">        * @typedef libAff</span>
+<a name="l00066"></a>00066 <span class="comment">        * @brief Signature de la fonction a utiliser pour l&#39;affichage de la map</span>
+<a name="l00067"></a>00067 <span class="comment">        *</span>
+<a name="l00068"></a>00068 <span class="comment">        * La fonction en question doit prendre en paramètre la partie actuel.&lt;br /&gt;</span>
+<a name="l00069"></a>00069 <span class="comment">        * Elle doit afficher la map.&lt;br /&gt;</span>
+<a name="l00070"></a>00070 <span class="comment">        * Puis elle doit renvoyer la touche actuellement appuyée.</span>
+<a name="l00071"></a>00071 <span class="comment">        *</span>
+<a name="l00072"></a>00072 <span class="comment">        * @see partie::main(libAff * afficherMapEtEvent);</span>
+<a name="l00073"></a>00073 <span class="comment">        */</span>
+<a name="l00074"></a>00074         <span class="comment">//typedef SYS_CLAVIER(CLASS_TO_USE::*fctAff)(partie*);</span>
+<a name="l00075"></a><a class="code" href="classpartie.html#a020f8b0c1c43e57544ff99638324a525">00075</a>         <span class="keyword">typedef</span> SYS_CLAVIER(<a class="code" href="classpartie.html#a020f8b0c1c43e57544ff99638324a525" title="Signature de la fonction a utiliser pour l&amp;#39;affichage de la map.">libAff</a>)(<a class="code" href="classpartie.html" title="Permet de gérer une partie offline ou online ( host et client ).">partie</a>*);
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078     <span class="keyword">private</span>:
+<a name="l00079"></a>00079         <span class="comment">// struct {</span>
+<a name="l00080"></a><a class="code" href="classpartie.html#afbcb661bac4e4b37b054dbaa21b80b55">00080</a>             std::vector&lt;s_EventBombe&gt;       <a class="code" href="classpartie.html#afbcb661bac4e4b37b054dbaa21b80b55">c_listEventBombe</a>;
+<a name="l00081"></a><a class="code" href="classpartie.html#a9beddd8cb7b08b46ecf47997c0e3d969">00081</a>             <a class="code" href="class_q_list.html">QList&lt;s_EventPousseBombe&gt;</a>       <a class="code" href="classpartie.html#a9beddd8cb7b08b46ecf47997c0e3d969">c_listEventPouseBombe</a>;
+<a name="l00082"></a><a class="code" href="classpartie.html#a755a69e104dc7c643a5bb687e6281e2f">00082</a>             std::vector&lt;unsigned char&gt;      <a class="code" href="classpartie.html#a755a69e104dc7c643a5bb687e6281e2f">c_listPlayerRefresh</a>;
+<a name="l00083"></a><a class="code" href="classpartie.html#a2e8c085d8c52b47b06d485778b6493e1">00083</a>             <a class="code" href="classmap.html" title="Gère une map.">map</a>*                            <a class="code" href="classpartie.html#a2e8c085d8c52b47b06d485778b6493e1" title="SIMPLE POINTEUR !">c_map</a>;<span class="comment">//!&lt; SIMPLE POINTEUR !</span>
+<a name="l00084"></a><a class="code" href="classpartie.html#a2c15782977ad816f0c0a9e2459f11f06">00084</a> <span class="comment"></span>            <a class="code" href="classperso.html" title="Gère un personnage.">perso</a>*                          <a class="code" href="classpartie.html#a2c15782977ad816f0c0a9e2459f11f06" title="Tableau de joueur (utilisé si offline ou si host).">c_joueurs</a>;<span class="comment">//!&lt; Tableau de joueur (utilisé si offline ou si host)</span>
+<a name="l00085"></a><a class="code" href="classpartie.html#ad3ff9229ecd345365b6aaad8f66aae2b">00085</a> <span class="comment"></span>            <a class="code" href="classpartie.html#ab404c2e853ee2e820a91f97bbb826207">t_Connection</a>                    <a class="code" href="classpartie.html#ad3ff9229ecd345365b6aaad8f66aae2b" title="Partie en Host, Client.">c_connection</a>;<span class="comment">//!&lt; Partie en Host, Client</span>
+<a name="l00086"></a><a class="code" href="classpartie.html#a757d13f0587e2d2ec548c2a6bbeb59b9">00086</a> <span class="comment"></span>            <a class="code" href="classpartie.html#a814c99350cb9e3ee66e1a92df26b3fe0">t_MODE</a>                          <a class="code" href="classpartie.html#a757d13f0587e2d2ec548c2a6bbeb59b9">c_mode</a>;
+<a name="l00087"></a><a class="code" href="classpartie.html#a70f5ba5f9faea6fcbcb7aa3d2257450b">00087</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>                   <a class="code" href="classpartie.html#a70f5ba5f9faea6fcbcb7aa3d2257450b" title="Le nombre de joueur dans la partie.">c_nb_joueurs</a>;<span class="comment">//!&lt; Le nombre de joueur dans la partie</span>
+<a name="l00088"></a>00088 <span class="comment"></span>            <span class="keyword">union </span>{<span class="comment">// Rien ne sert de prendre 2 fois la taille d&#39;un pointeur, si on en a besoin que d&#39;un seul.</span>
+<a name="l00089"></a><a class="code" href="classpartie.html#a811c540cd4f31cf2d0b53dd9939f6cf4">00089</a>                 <a class="code" href="classclient.html" title="Cette class permet de gérer facilement un client.">client</a>*                     <a class="code" href="classpartie.html#a811c540cd4f31cf2d0b53dd9939f6cf4">c_client</a>;
+<a name="l00090"></a><a class="code" href="classpartie.html#aa295d96006105768e1055d8459e71736">00090</a>                 <a class="code" href="classserver.html" title="Cette class permet de gérer facilement un serveur.">server</a>*                     <a class="code" href="classpartie.html#aa295d96006105768e1055d8459e71736">c_server</a>;
+<a name="l00091"></a>00091             };
+<a name="l00092"></a><a class="code" href="classpartie.html#a0741ebdd0b38350980e684a78aebf17c">00092</a>             <span class="keywordtype">char</span>                            <a class="code" href="classpartie.html#a0741ebdd0b38350980e684a78aebf17c" title="Buffer pour communiquer sur le réseau.">c_buffer</a>[<a class="code" href="classpartie.html#a4c2100881d9d60a63ca98c9b69f3605aafc64c3c0ad061e820d9d6dd2e268b4be">PACK_bufferSize</a>+1];<span class="comment">//!&lt; Buffer pour communiquer sur le réseau</span>
+<a name="l00093"></a><a class="code" href="classpartie.html#a1e5f41da1f77f4e44cf5735f224e0388">00093</a> <span class="comment"></span>            <a class="code" href="map_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a>                     <a class="code" href="classpartie.html#a1e5f41da1f77f4e44cf5735f224e0388">c_winnerName</a>;
+<a name="l00094"></a><a class="code" href="classpartie.html#aaad2effe7ce5ae06ea184c9499ba4eb6">00094</a>             clock_t                         <a class="code" href="classpartie.html#aaad2effe7ce5ae06ea184c9499ba4eb6">c_timeOut</a>;
+<a name="l00095"></a><a class="code" href="classpartie.html#a49e9e36c859300de41d9396f5770016a">00095</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>                    <a class="code" href="classpartie.html#a49e9e36c859300de41d9396f5770016a">c_timerAttak</a>;
+<a name="l00096"></a><a class="code" href="classpartie.html#afb65c2ba5d2855f340b6e6183bcfa525">00096</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>                   <a class="code" href="classpartie.html#afb65c2ba5d2855f340b6e6183bcfa525" title="Si connection client -&amp;gt; ID du joueur (correspond au numéro dans le tableau c_joueur).">c_uniqueJoueurID</a>;<span class="comment">//!&lt; Si connection client -&gt; ID du joueur (correspond au numéro dans le tableau c_joueur)</span>
+<a name="l00097"></a>00097 <span class="comment"></span>        <span class="comment">// }</span>
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099         <span class="keywordtype">void</span> <a class="code" href="classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&amp;#39;initial Si la case initial, contient :un bonus, =&amp;gt; ramasse le bonusdes flammes -&amp;gt; nétoyage de la case puis on place le perso.">placer_perso_position_initial</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classpartie.html#aa259db60507f45e2307fa457879be8ee" title="Renvoie un joueur.">joueur</a> );
+<a name="l00100"></a>00100         <span class="keywordtype">void</span> <a class="code" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand...">deplacer_le_Perso_A</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> newX, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> newY, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classpartie.html#aa259db60507f45e2307fa457879be8ee" title="Renvoie un joueur.">joueur</a> );
+<a name="l00101"></a>00101         <span class="keywordtype">void</span> <a class="code" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A.">checkInternalEvent</a>();
+<a name="l00102"></a>00102         <span class="keywordtype">void</span> <a class="code" href="classpartie.html#aa5cca051f9f07d1b267f5a4df8dabd24" title="Scan les event du bonus pousse bombe.">checkInternalEventPousseBombe</a>();
+<a name="l00103"></a>00103         <span class="keywordtype">char</span> <a class="code" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&amp;#39;environement.">actionSurLesElements</a>( <a class="code" href="structpartie_1_1s___event_bombe.html" title="Permet de gérer les event des bombes.">s_EventBombe</a>* e, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> x, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> y, <span class="keywordtype">char</span> direction );
+<a name="l00104"></a>00104         <span class="keywordtype">char</span> <a class="code" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A).">killPlayers</a>( <a class="code" href="structpartie_1_1s___event_bombe.html" title="Permet de gérer les event des bombes.">s_EventBombe</a>* e, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> x, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> y );
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106         <span class="comment">// Réseau</span>
+<a name="l00107"></a>00107         <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classpartie.html#addde04ace47d77c95a6426d5a8b169fd" title="Empaquette les variables X, Y, type pour les envoyer sur le réseau.">packIt</a>( uint32_t X, uint32_t Y, <a class="code" href="classmap.html#ae2a076bf152add89e510bca3428f469b" title="Les types de d&amp;#39;objet sur la map.">map::t_type</a> type );
+<a name="l00108"></a>00108         <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classpartie.html#addde04ace47d77c95a6426d5a8b169fd" title="Empaquette les variables X, Y, type pour les envoyer sur le réseau.">packIt</a>( std::vector&lt;unsigned char&gt;* list );
+<a name="l00109"></a>00109         <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classpartie.html#addde04ace47d77c95a6426d5a8b169fd" title="Empaquette les variables X, Y, type pour les envoyer sur le réseau.">packIt</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165" title="Les actions possibles avec les touches.">clavier::t_touche</a> t );
+<a name="l00110"></a>00110         <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classpartie.html#addde04ace47d77c95a6426d5a8b169fd" title="Empaquette les variables X, Y, type pour les envoyer sur le réseau.">packIt</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classpartie.html#aa259db60507f45e2307fa457879be8ee" title="Renvoie un joueur.">joueur</a>, <span class="keywordtype">bool</span> includeWeapon );
+<a name="l00111"></a>00111         <span class="keywordtype">void</span> <a class="code" href="classpartie.html#a1c02eb26617ee76e5bae9f75e27f600c" title="Désempaquette le buffer et met les données dans le joueur correspondant.">unPackIt</a>( uint32_t* X, uint32_t* Y, <a class="code" href="classmap.html#ae2a076bf152add89e510bca3428f469b" title="Les types de d&amp;#39;objet sur la map.">map::t_type</a>* type );
+<a name="l00112"></a>00112         <span class="keywordtype">void</span> <a class="code" href="classpartie.html#a1c02eb26617ee76e5bae9f75e27f600c" title="Désempaquette le buffer et met les données dans le joueur correspondant.">unPackIt</a>( uint32_t X, uint32_t Y );
+<a name="l00113"></a>00113         <span class="keywordtype">void</span> <a class="code" href="classpartie.html#a1c02eb26617ee76e5bae9f75e27f600c" title="Désempaquette le buffer et met les données dans le joueur correspondant.">unPackIt</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165" title="Les actions possibles avec les touches.">clavier::t_touche</a>* t );
+<a name="l00114"></a>00114         <span class="keywordtype">void</span> <a class="code" href="classpartie.html#a1c02eb26617ee76e5bae9f75e27f600c" title="Désempaquette le buffer et met les données dans le joueur correspondant.">unPackIt</a>();
+<a name="l00115"></a>00115         <span class="keywordtype">void</span> <a class="code" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&amp;#39;ajouter un nouveau joueur à la partie.">ajouterNouvelleConnection</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> s );
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118     <span class="keyword">public</span>:
+<a name="l00119"></a>00119         <a class="code" href="classpartie.html#a8c7990dc4fb36412a4c198b4cde49e64" title="Initialise la class partie.">partie</a>();
+<a name="l00120"></a>00120         <a class="code" href="classpartie.html#a92c9aec35b42ad592f00be8a0772888a" title="Désinitialise la class partie et supprime tous les joueurs et la map.">~partie</a>();
+<a name="l00121"></a>00121         <span class="comment">// Modificateurs</span>
+<a name="l00122"></a>00122         <span class="keywordtype">void</span> <a class="code" href="classpartie.html#adea76917bafe42b34b4fefae60c965d8" title="Charge une map.">genMap</a>();
+<a name="l00123"></a>00123         <span class="keywordtype">void</span> <a class="code" href="classpartie.html#a2003f42af8a8c3f3038e0707ca966821" title="Definie le nombre de joueur.">def_nbJoueurs</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> nb );
+<a name="l00124"></a>00124         <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classpartie.html#a16e34369e5a807a559219bbdf10e78ac">def_modeJeu</a>( <a class="code" href="classpartie.html#a814c99350cb9e3ee66e1a92df26b3fe0">t_MODE</a> m );
+<a name="l00125"></a>00125         <span class="keywordtype">void</span> <a class="code" href="classpartie.html#ade01e6f9ef64f5dbc1cc1cb725a7a379" title="Permet de modifier la connection: Host, Local, None ( pas de connection ).">def_connection</a>( <a class="code" href="classpartie.html#ab404c2e853ee2e820a91f97bbb826207">t_Connection</a> cnx );
+<a name="l00126"></a>00126 
+<a name="l00127"></a>00127 
+<a name="l00128"></a>00128         <span class="comment">// Accesseurs</span>
+<a name="l00129"></a>00129         <span class="keyword">inline</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classpartie.html#ac5fd40da2e74478b0dee7fb7fe505929" title="Retourne le nombre de joueur.">nbJoueurs</a>() <span class="keyword">const</span>;
+<a name="l00130"></a>00130         <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classpartie.html#a729eac4c3ed1e70b018d36b70321b0b5" title="Retourne le nombre de joueur réel. (Lors de mode connecté).">nbJoueursReel</a>() <span class="keyword">const</span>;
+<a name="l00131"></a>00131         <span class="keyword">inline</span> <a class="code" href="classpartie.html#a814c99350cb9e3ee66e1a92df26b3fe0">t_MODE</a> <a class="code" href="classpartie.html#ab36793a9724c1a056863ffc214a0e0f1">modeJeu</a>() <span class="keyword">const</span>;
+<a name="l00132"></a>00132         <span class="keyword">inline</span> <a class="code" href="classpartie.html#ab404c2e853ee2e820a91f97bbb826207">t_Connection</a> <a class="code" href="classpartie.html#a54be3942d34eaa369cfe6a8430da639d" title="Renvoie le type de connection: Host, Local, None ( pas de connection ).">connection</a>() <span class="keyword">const</span>;
+<a name="l00133"></a>00133         <a class="code" href="classperso.html" title="Gère un personnage.">perso</a>* <a class="code" href="classpartie.html#aa259db60507f45e2307fa457879be8ee" title="Renvoie un joueur.">joueur</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> joueur_numero ) <span class="keyword">const</span>;
+<a name="l00134"></a>00134         <span class="keyword">inline</span> <a class="code" href="classmap.html" title="Gère une map.">map</a>* <a class="code" href="classpartie.html#ae1902153955d80b676fe96ef395e58c5" title="Renvoie la map actuel.">getMap</a>() <span class="keyword">const</span>;
+<a name="l00135"></a>00135         <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classpartie.html#a9d770bbd7b907ca0b8ed2f83f6c93adb" title="Renvoie le nombre de joueur en vie.">nbJoueurVivant</a>() <span class="keyword">const</span>;
+<a name="l00136"></a>00136         <a class="code" href="classserver.html" title="Cette class permet de gérer facilement un serveur.">server</a>* <a class="code" href="classpartie.html#a6e482f58cab5db9b2e529ec23784f8ae" title="Renvoie le serveur utilisé pour communiquer.">getServeur</a>() <span class="keyword">const</span>;
+<a name="l00137"></a>00137         <a class="code" href="classclient.html" title="Cette class permet de gérer facilement un client.">client</a>* <a class="code" href="classpartie.html#aba546895433f712feea797aee65aeb96" title="Renvoie le client utilisé pour communiquer.">getClient</a>() <span class="keyword">const</span>;
+<a name="l00138"></a>00138         <span class="keyword">inline</span> <a class="code" href="map_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a> <a class="code" href="classpartie.html#adb715dd93594bf27e53b84236a3abd31" title="Renvoie le nom du gagnant de la partie.">getWinnerName</a>() <span class="keyword">const</span>;
+<a name="l00139"></a>00139         <span class="keyword">inline</span> clock_t <a class="code" href="classpartie.html#ab15f2837f87963336ba2f5e8feec1e44" title="Renvoie le temps de fin / mort subite. (Ne change pas en cours de partie).">timeOut</a>() <span class="keyword">const</span>;
+<a name="l00140"></a>00140         <span class="keyword">inline</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classpartie.html#ae36da47667e320abaa1943000d7c8c04" title="Renvoie l&amp;#39;id du joueur de ce PC (client).">getUniqueJoueurID</a>() <span class="keyword">const</span>;
+<a name="l00141"></a>00141         <span class="keywordtype">bool</span> <a class="code" href="classpartie.html#a957dd9c9405332830ca5312fe600b139" title="Indique si les données graphiques du joueur ont besoin d&amp;#39;un raffraichissement graphique...">playerNeedRefresh</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> idJoueur );
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143         <span class="comment">// Autres</span>
+<a name="l00144"></a>00144         <span class="keywordtype">char</span> <a class="code" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu.">main</a>( <a class="code" href="classpartie.html#a020f8b0c1c43e57544ff99638324a525" title="Signature de la fonction a utiliser pour l&amp;#39;affichage de la map.">libAff</a> * afficherMapEtEvent );
+<a name="l00145"></a>00145 };
+<a name="l00146"></a>00146 
+<a name="l00147"></a>00147 <span class="preprocessor">#include &quot;<a class="code" href="partie_8inl.html">partie.inl</a>&quot;</span>
+<a name="l00148"></a>00148 
+<a name="l00149"></a>00149 <span class="preprocessor">#endif</span>
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

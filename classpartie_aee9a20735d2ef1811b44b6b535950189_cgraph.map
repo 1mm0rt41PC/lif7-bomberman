@@ -1,0 +1,29 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="245,817,456,847"/>
+<area shape="rect" id="node5" href="$classmap.html#ac7e126e8c0555f9f2e9c86cc81865b9f" title="Ajoute des meta donnée ( ou info joueurs ) dans le block (X, Y)." alt="" coords="1165,769,1331,799"/>
+<area shape="rect" id="node7" href="$coordonnees_8h.html#a6672966a8002c5f5e0a711f7029b0e7d" title="Permet de créer facillement une stucture s_Coordonnees initialisée." alt="" coords="1415,716,1561,745"/>
+<area shape="rect" id="node9" href="$classmap.html#a5ab949cacaad5148299aa70f55bb0c93" title="Retourn le block qui est à la position X, Y." alt="" coords="1191,716,1305,745"/>
+<area shape="rect" id="node11" href="$classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="583,969,711,999"/>
+<area shape="rect" id="node34" href="$classmap.html#a69a17c9066d0cc1b9cf2f0123db3114e" title="Renvoie la position initial du joueur." alt="" coords="1157,1389,1339,1419"/>
+<area shape="rect" id="node36" href="$classmap.html#a69992d77d390166473f758436777a415" title="Supprime les info du joueur du block (X, Y)." alt="" coords="1179,1312,1317,1341"/>
+<area shape="rect" id="node38" href="$classmap.html#a9daefd4b8e29eba7b98b734ce4530fea" title="Modifie le block qui est à la position X, Y." alt="" coords="1192,663,1304,692"/>
+<area shape="rect" id="node42" href="$classmap.html#abc682d96c6d194b75d2e8a6430b5b076" title="Renvoie la taille X de la map." alt="" coords="925,560,992,589"/>
+<area shape="rect" id="node44" href="$classmap.html#abcb25776d119cd3f2864c67ec05a6a4a" title="Renvoie la taille Y de la map." alt="" coords="925,613,992,643"/>
+<area shape="rect" id="node49" href="$classpartie.html#aa5cca051f9f07d1b267f5a4df8dabd24" title="Scan les event du bonus pousse bombe." alt="" coords="507,405,787,435"/>
+<area shape="rect" id="node67" href="$classbonus.html#a4b5bd7441505cebab7959b7b7b49ec70" title="Renvoie un bonus aléatoire." alt="" coords="257,1491,444,1520"/>
+<area shape="rect" id="node69" href="$outils_8cpp.html#a5ee0533ff07a519f3fce335a2f57f157" title="Créer un nombre aléatoire compris entre a et b." alt="" coords="609,1516,684,1545"/>
+<area shape="rect" id="node71" href="$classpartie.html#aa259db60507f45e2307fa457879be8ee" title="Renvoie un joueur." alt="" coords="297,1595,404,1624"/>
+<area shape="rect" id="node75" href="$classmap.html#a8d73464b1277da47780e984631039299" title="Renvoie le nombre de joueur maximum sur la carte en cours." alt="" coords="243,1648,459,1677"/>
+<area shape="rect" id="node13" href="$classperso.html#add0aebd55226ce05235400c09a529441" title="Renvoie les armes et bonus du personnage." alt="" coords="1177,969,1319,999"/>
+<area shape="rect" id="node16" href="$classbonus.html#aab77df64a0e6931d90af3f500721e5cd" title="Décrémente quantite_MAX_en_stock." alt="" coords="840,1075,1077,1104"/>
+<area shape="rect" id="node18" href="$classbonus.html#a09ddd6bcfc30cc20ee55f41ee1885136" title="Décrémente quantite_utilisable." alt="" coords="856,1128,1061,1157"/>
+<area shape="rect" id="node20" href="$classbonus.html#ac503bb19af6f4486c412d011e20bd97e" title="Met fin au temps d&#39;attente de tout les event." alt="" coords="881,1181,1036,1211"/>
+<area shape="rect" id="node23" href="$classbonus.html#ad6c7196687883d064c8937d8b0b742b3" title="Met fin au temps d&#39;attente de tous les event et ajoute le signal kill, qui signifit, qu&#39;il faut supprimer l&#39;armement." alt="" coords="916,1235,1001,1264"/>
+<area shape="rect" id="node25" href="$classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="836,1021,1081,1051"/>
+<area shape="rect" id="node29" href="$classperso.html#a3c273f65aee2b958e0d2b1112762feab" title="Modifie la position du personnage." alt="" coords="1193,1076,1303,1105"/>
+<area shape="rect" id="node32" href="$classbonus.html#aab3137a4c074a64f24c1c725fac1fe76" title="Incrémente quantite_MAX_en_stock et quantite_utilisable." alt="" coords="1131,1023,1365,1052"/>
+<area shape="rect" id="node53" href="$class_q_list.html#a250d44beb2d93d79cb9543ed6988f72f" title="QList::at" alt="" coords="921,245,996,275"/>
+<area shape="rect" id="node56" href="$classbonus.html#ae6328103dfcaf03ee9cd2656ca5fa6e6" title="Renvoie l&#39;envent qui se trouve a la position X, Y." alt="" coords="896,299,1021,328"/>
+<area shape="rect" id="node58" href="$class_q_list.html#a87d4d2405fe9f067a948d3edc24da1a0" title="QList::remove" alt="" coords="904,352,1013,381"/>
+<area shape="rect" id="node61" href="$class_q_list.html#a1ba2656b5fa0790c29790373e9fee411" title="QList::size" alt="" coords="916,405,1001,435"/>
+</map>

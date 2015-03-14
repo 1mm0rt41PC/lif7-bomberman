@@ -1,0 +1,1363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la classe map</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Types publics</a> &#124;
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="#pub-static-methods">Fonctions membres publiques statiques</a> &#124;
+<a href="#pri-attribs">Attributs privés</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la classe map</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="map" -->
+<p>Gère une map.  
+<a href="#_details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="map_8h_source.html">map.h</a>&gt;</code></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Graphe de collaboration de map:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap__coll__graph.png" border="0" usemap="#map_coll__map" alt="Collaboration graph"/></div>
+<map name="map_coll__map" id="map_coll__map">
+<area shape="rect" id="node2" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )" alt="" coords="5,6,125,109"/><area shape="rect" id="node4" href="structmap_1_1s___case.html" title="{map::s_Case\n|+ joueur\l+ element\l|}" alt="" coords="193,6,297,109"/></map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">légende</a>]</span></center></div>
+
+<p><a href="classmap-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmap_1_1s___case.html">s_Case</a></td></tr>
+<tr><td colspan="2"><h2><a name="pub-types"></a>
+Types publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469b">t_type</a> { <br/>
+&nbsp;&nbsp;<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469ba4a8d28cb4af64e5bf311ef83bc5e5ad4">inconnu</a>, 
+<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469ba508b0ad2c59b8c654beb73d2239c8e74">vide</a>, 
+<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469bac6281d911da21f4bb566114037266055">Mur_destructible</a>, 
+<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469ba1bae257451fe92ef4fafd02fed56a850">Mur_INdestructible</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469ba0b01d857d4519d6da4b8833433a718d0">flamme_horizontal</a>, 
+<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469bac2726a799ffd38fb4b89989f24d40e7e">flamme_vertical</a>, 
+<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469bac331e3cb1090bc086fc8aec8c40f8d90">flamme_origine</a>, 
+<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469bab794750be41b582091eb2b4c480581e4">flamme_pointe_haut</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469ba09c901a81e700c77bcd7886584f1c443">flamme_pointe_bas</a>, 
+<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469ba62944c1454be834def9f3dd83c71bfe1">flamme_pointe_droite</a>, 
+<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469ba08c81a1be9eb74cd270ee9aba56122a7">flamme_pointe_gauche</a>, 
+<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469ba00a358d27f9818438d9bd9b8e882fb2d">bombe_poser</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469ba5bb1e9e4730d4ba08f3dab2921bfce00">bonus</a>, 
+<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469ba4829d7f791fe2537aaa05edf28cc6630">UN_joueur</a>, 
+<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469baa94a2d9d84a636b26e656df3e5ae16b8">plusieurs_joueurs</a>, 
+<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469ba278e9245c0e1cfb455511d27114dc830">bombe_poser_AVEC_UN_joueur</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469ba7eeb793973ee8e2ce702d82fbcd9d759">bombe_poser_AVEC_plusieurs_joueurs</a>
+<br/>
+ }</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>Les types de d'objet sur la map. </p>
+ <a href="classmap.html#ae2a076bf152add89e510bca3428f469b">Plus de détails...</a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a3b81955b46d9d3b4ba6b0e2e053915df">t_direction</a> { <br/>
+&nbsp;&nbsp;<a class="el" href="classmap.html#a3b81955b46d9d3b4ba6b0e2e053915dfaf0452ecca05d109505ec333e9fcc2c58">DIRECT_haut</a>, 
+<a class="el" href="classmap.html#a3b81955b46d9d3b4ba6b0e2e053915dfa6549911f5caaa29bf59759bfc45418e9">DIRECT_bas</a>, 
+<a class="el" href="classmap.html#a3b81955b46d9d3b4ba6b0e2e053915dfa297302f99b0ae6abb90b00f2a6400433">DIRECT_droite</a>, 
+<a class="el" href="classmap.html#a3b81955b46d9d3b4ba6b0e2e053915dfa417531c3151e10796799ee3bb6685fd9">DIRECT_gauche</a>, 
+<br/>
+&nbsp;&nbsp;<a class="el" href="classmap.html#a3b81955b46d9d3b4ba6b0e2e053915dfadee5318e0b79fbc1e9165736bd6d4651">DIRECT_vertical</a>, 
+<a class="el" href="classmap.html#a3b81955b46d9d3b4ba6b0e2e053915dfa31eeab6cca9e59faefbd926604871383">DIRECT_sans_direction</a>
+<br/>
+ }</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>Les directions posssibles pour un personnages ou une flamme. </p>
+ <a href="classmap.html#a3b81955b46d9d3b4ba6b0e2e053915df">Plus de détails...</a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#abedfe6722ad83929739afd899c88fea4">map</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructeur :: Initialise juste les variables. NE Créer PAS de map !  <a href="#abedfe6722ad83929739afd899c88fea4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#af136234b2c37dec366f2ee328d3c8732">map</a> (unsigned int tailleX, unsigned int tailleY)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructeur :: Créer une map vide !  <a href="#af136234b2c37dec366f2ee328d3c8732"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a0cc22df7b44f7835fa10ed241848b041">~map</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Désinitialise la class map.  <a href="#a0cc22df7b44f7835fa10ed241848b041"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a9daefd4b8e29eba7b98b734ce4530fea">setBlock</a> (unsigned int X, unsigned int Y, <a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469b">map::t_type</a> what)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifie le block qui est à la position X, Y.  <a href="#a9daefd4b8e29eba7b98b734ce4530fea"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a5d865615ead2c9f10768e8504b1adb23">setBlock</a> (<a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &amp;pos, <a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469b">map::t_type</a> what)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifie le block qui est à la position X, Y.  <a href="#a5d865615ead2c9f10768e8504b1adb23"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#ac7e126e8c0555f9f2e9c86cc81865b9f">ajouterInfoJoueur</a> (unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierePosition=0)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Ajoute des meta donnée ( ou info joueurs ) dans le block (X, Y).  <a href="#ac7e126e8c0555f9f2e9c86cc81865b9f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a69992d77d390166473f758436777a415">rmInfoJoueur</a> (unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierEltInclu)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Supprime les info du joueur du block (X, Y).  <a href="#a69992d77d390166473f758436777a415"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#aaca5b27af4f0a9d46791e9ac88470be3">rmInfoJoueur</a> (unsigned int X, unsigned int Y)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Supprime toutes les meta-info du block (X, Y).  <a href="#aaca5b27af4f0a9d46791e9ac88470be3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a22d57ae0d2336e713c807d92af64ae11">setTaille</a> (unsigned int tailleX, unsigned int tailleY)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Modifie la taille de la map.  <a href="#a22d57ae0d2336e713c807d92af64ae11"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a5aec3f3890ccd081364731383bbb77c3">chargerMap</a> (const char fichier[]=0)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Charge une map en mémoire.  <a href="#a5aec3f3890ccd081364731383bbb77c3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a5de5675c9ac5f63b57bf05b355942caa">mettreJoueurA_sa_PositionInitial</a> (unsigned char joueur)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Met le perso {joueur} a sa place initial.  <a href="#a5de5675c9ac5f63b57bf05b355942caa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmap_1_1s___case.html">s_Case</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a5ab949cacaad5148299aa70f55bb0c93">getBlock</a> (unsigned int X, unsigned int Y) const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Retourn le block qui est à la position X, Y.  <a href="#a5ab949cacaad5148299aa70f55bb0c93"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmap_1_1s___case.html">s_Case</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#ab0dd18578b1ea7cbc5fdfe4cf1299b7d">getBlock</a> (<a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &amp;pos) const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Retourn le block qui est à la position X, Y.  <a href="#ab0dd18578b1ea7cbc5fdfe4cf1299b7d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#abc682d96c6d194b75d2e8a6430b5b076">X</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie la taille X de la map.  <a href="#abc682d96c6d194b75d2e8a6430b5b076"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#abcb25776d119cd3f2864c67ec05a6a4a">Y</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie la taille Y de la map.  <a href="#abcb25776d119cd3f2864c67ec05a6a4a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a69a17c9066d0cc1b9cf2f0123db3114e">positionInitialJoueur</a> (unsigned char joueur) const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie la position initial du joueur.  <a href="#a69a17c9066d0cc1b9cf2f0123db3114e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a8d73464b1277da47780e984631039299">nb_PointDeDepartJoueur</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie le nombre de joueur maximum sur la carte en cours.  <a href="#a8d73464b1277da47780e984631039299"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a27112670bd34ef701a81f727410ed3b4">nb_MAX_Joueur</a> () const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Alias de <a class="el" href="classmap.html#a8d73464b1277da47780e984631039299" title="Renvoie le nombre de joueur maximum sur la carte en cours.">map::nb_PointDeDepartJoueur()</a>.  <a href="#a27112670bd34ef701a81f727410ed3b4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#ab7ddadf37a30d0f56b8fe9fb5331e67f">nb_InfoJoueur</a> (unsigned int X, unsigned int Y) const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Renvoie le nombre d'info joueurs dans le block (X, Y) (meta données).  <a href="#ab7ddadf37a30d0f56b8fe9fb5331e67f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a3453f2495334983df3bbf1737908e25e">getModifications</a> (<a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &amp;pos)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Retourne les positions X,Y des case modifiées depuis le dernier cycle.  <a href="#a3453f2495334983df3bbf1737908e25e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const std::vector<br class="typebreak"/>
+&lt; <a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &gt; *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a37db5c6e03a1245a8c461d56d7f011ef">getModifications</a> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a42565c1df7cd77962409dffcb24e60b9">cleanModifications</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Vide la liste des modifications.  <a href="#a42565c1df7cd77962409dffcb24e60b9"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-methods"></a>
+Fonctions membres publiques statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a2580f0c7145597fb4dc54632a4f90e0b">readDir</a> (std::vector&lt; <a class="el" href="partie_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a> &gt; *files)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Lit le dossier ./map et retourne ( par files ) les fichiers (.map) qu'il contient.  <a href="#a2580f0c7145597fb4dc54632a4f90e0b"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-attribs"></a>
+Attributs privés</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a2bb86c76f29e21c88014ebbe05769096">c_listDesChangement</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Les changement qui ont eu lieu sur la map.  <a href="#a2bb86c76f29e21c88014ebbe05769096"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a12febb145e855330c3bfb0dbc3645259">c_taille</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Taille de la map.  <a href="#a12febb145e855330c3bfb0dbc3645259"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmap_1_1s___case.html">s_Case</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#aa8dc3f13b258509bd3ef0572f2d8d26d">c_block</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Tableau de case =&gt; la map en entère.  <a href="#aa8dc3f13b258509bd3ef0572f2d8d26d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a0e259cde2ef3b66ab1c06c1c10def1cc">c_PointDeDepartJoueur</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Liste des points de départ des joueurs ({point_de_depart_jXXX} numJ).  <a href="#a0e259cde2ef3b66ab1c06c1c10def1cc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmap.html#a7b627dce39ed81ebf1bcb398ee4075e3">c_nb_PointDeDepartJoueur</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Le nombre de points de départ =&gt; le nombre maximum de joueur sur une map.  <a href="#a7b627dce39ed81ebf1bcb398ee4075e3"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Gère une map. </p>
+
+<p>Définition à la ligne <a class="el" href="map_8h_source.html#l00016">16</a> du fichier <a class="el" href="map_8h_source.html">map.h</a>.</p>
+<hr/><h2>Documentation des énumérations membres</h2>
+<a class="anchor" id="a3b81955b46d9d3b4ba6b0e2e053915df"></a><!-- doxytag: member="map::t_direction" ref="a3b81955b46d9d3b4ba6b0e2e053915df" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classmap.html#a3b81955b46d9d3b4ba6b0e2e053915df">map::t_direction</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Les directions posssibles pour un personnages ou une flamme. </p>
+<dl><dt><b>Valeurs énumérées: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="a3b81955b46d9d3b4ba6b0e2e053915dfaf0452ecca05d109505ec333e9fcc2c58"></a><!-- doxytag: member="DIRECT_haut" ref="a3b81955b46d9d3b4ba6b0e2e053915dfaf0452ecca05d109505ec333e9fcc2c58" args="" -->DIRECT_haut</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3b81955b46d9d3b4ba6b0e2e053915dfa6549911f5caaa29bf59759bfc45418e9"></a><!-- doxytag: member="DIRECT_bas" ref="a3b81955b46d9d3b4ba6b0e2e053915dfa6549911f5caaa29bf59759bfc45418e9" args="" -->DIRECT_bas</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3b81955b46d9d3b4ba6b0e2e053915dfa297302f99b0ae6abb90b00f2a6400433"></a><!-- doxytag: member="DIRECT_droite" ref="a3b81955b46d9d3b4ba6b0e2e053915dfa297302f99b0ae6abb90b00f2a6400433" args="" -->DIRECT_droite</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3b81955b46d9d3b4ba6b0e2e053915dfa417531c3151e10796799ee3bb6685fd9"></a><!-- doxytag: member="DIRECT_gauche" ref="a3b81955b46d9d3b4ba6b0e2e053915dfa417531c3151e10796799ee3bb6685fd9" args="" -->DIRECT_gauche</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3b81955b46d9d3b4ba6b0e2e053915dfadee5318e0b79fbc1e9165736bd6d4651"></a><!-- doxytag: member="DIRECT_vertical" ref="a3b81955b46d9d3b4ba6b0e2e053915dfadee5318e0b79fbc1e9165736bd6d4651" args="" -->DIRECT_vertical</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3b81955b46d9d3b4ba6b0e2e053915dfa31eeab6cca9e59faefbd926604871383"></a><!-- doxytag: member="DIRECT_sans_direction" ref="a3b81955b46d9d3b4ba6b0e2e053915dfa31eeab6cca9e59faefbd926604871383" args="" -->DIRECT_sans_direction</em>&nbsp;</td><td>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="map_8h_source.html#l00065">65</a> du fichier <a class="el" href="map_8h_source.html">map.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae2a076bf152add89e510bca3428f469b"></a><!-- doxytag: member="map::t_type" ref="ae2a076bf152add89e510bca3428f469b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469b">map::t_type</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Les types de d'objet sur la map. </p>
+<p>Aller voir la def dans le .h </p>
+<dl><dt><b>Valeurs énumérées: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469ba4a8d28cb4af64e5bf311ef83bc5e5ad4"></a><!-- doxytag: member="inconnu" ref="ae2a076bf152add89e510bca3428f469ba4a8d28cb4af64e5bf311ef83bc5e5ad4" args="" -->inconnu</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469ba508b0ad2c59b8c654beb73d2239c8e74"></a><!-- doxytag: member="vide" ref="ae2a076bf152add89e510bca3428f469ba508b0ad2c59b8c654beb73d2239c8e74" args="" -->vide</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469bac6281d911da21f4bb566114037266055"></a><!-- doxytag: member="Mur_destructible" ref="ae2a076bf152add89e510bca3428f469bac6281d911da21f4bb566114037266055" args="" -->Mur_destructible</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469ba1bae257451fe92ef4fafd02fed56a850"></a><!-- doxytag: member="Mur_INdestructible" ref="ae2a076bf152add89e510bca3428f469ba1bae257451fe92ef4fafd02fed56a850" args="" -->Mur_INdestructible</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469ba0b01d857d4519d6da4b8833433a718d0"></a><!-- doxytag: member="flamme_horizontal" ref="ae2a076bf152add89e510bca3428f469ba0b01d857d4519d6da4b8833433a718d0" args="" -->flamme_horizontal</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469bac2726a799ffd38fb4b89989f24d40e7e"></a><!-- doxytag: member="flamme_vertical" ref="ae2a076bf152add89e510bca3428f469bac2726a799ffd38fb4b89989f24d40e7e" args="" -->flamme_vertical</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469bac331e3cb1090bc086fc8aec8c40f8d90"></a><!-- doxytag: member="flamme_origine" ref="ae2a076bf152add89e510bca3428f469bac331e3cb1090bc086fc8aec8c40f8d90" args="" -->flamme_origine</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469bab794750be41b582091eb2b4c480581e4"></a><!-- doxytag: member="flamme_pointe_haut" ref="ae2a076bf152add89e510bca3428f469bab794750be41b582091eb2b4c480581e4" args="" -->flamme_pointe_haut</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469ba09c901a81e700c77bcd7886584f1c443"></a><!-- doxytag: member="flamme_pointe_bas" ref="ae2a076bf152add89e510bca3428f469ba09c901a81e700c77bcd7886584f1c443" args="" -->flamme_pointe_bas</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469ba62944c1454be834def9f3dd83c71bfe1"></a><!-- doxytag: member="flamme_pointe_droite" ref="ae2a076bf152add89e510bca3428f469ba62944c1454be834def9f3dd83c71bfe1" args="" -->flamme_pointe_droite</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469ba08c81a1be9eb74cd270ee9aba56122a7"></a><!-- doxytag: member="flamme_pointe_gauche" ref="ae2a076bf152add89e510bca3428f469ba08c81a1be9eb74cd270ee9aba56122a7" args="" -->flamme_pointe_gauche</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469ba00a358d27f9818438d9bd9b8e882fb2d"></a><!-- doxytag: member="bombe_poser" ref="ae2a076bf152add89e510bca3428f469ba00a358d27f9818438d9bd9b8e882fb2d" args="" -->bombe_poser</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469ba5bb1e9e4730d4ba08f3dab2921bfce00"></a><!-- doxytag: member="bonus" ref="ae2a076bf152add89e510bca3428f469ba5bb1e9e4730d4ba08f3dab2921bfce00" args="" -->bonus</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469ba4829d7f791fe2537aaa05edf28cc6630"></a><!-- doxytag: member="UN_joueur" ref="ae2a076bf152add89e510bca3428f469ba4829d7f791fe2537aaa05edf28cc6630" args="" -->UN_joueur</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469baa94a2d9d84a636b26e656df3e5ae16b8"></a><!-- doxytag: member="plusieurs_joueurs" ref="ae2a076bf152add89e510bca3428f469baa94a2d9d84a636b26e656df3e5ae16b8" args="" -->plusieurs_joueurs</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469ba278e9245c0e1cfb455511d27114dc830"></a><!-- doxytag: member="bombe_poser_AVEC_UN_joueur" ref="ae2a076bf152add89e510bca3428f469ba278e9245c0e1cfb455511d27114dc830" args="" -->bombe_poser_AVEC_UN_joueur</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ae2a076bf152add89e510bca3428f469ba7eeb793973ee8e2ce702d82fbcd9d759"></a><!-- doxytag: member="bombe_poser_AVEC_plusieurs_joueurs" ref="ae2a076bf152add89e510bca3428f469ba7eeb793973ee8e2ce702d82fbcd9d759" args="" -->bombe_poser_AVEC_plusieurs_joueurs</em>&nbsp;</td><td>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="map_8h_source.html#l00026">26</a> du fichier <a class="el" href="map_8h_source.html">map.h</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="abedfe6722ad83929739afd899c88fea4"></a><!-- doxytag: member="map::map" ref="abedfe6722ad83929739afd899c88fea4" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">map::map </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructeur :: Initialise juste les variables. NE Créer PAS de map ! </p>
+<p>Taille de la map = 0<br/>
+ Pas de points de départ<br/>
+ </p>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00014">14</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00099">c_block</a>, <a class="el" href="map_8h_source.html#l00101">c_nb_PointDeDepartJoueur</a>, <a class="el" href="map_8h_source.html#l00100">c_PointDeDepartJoueur</a>, <a class="el" href="map_8h_source.html#l00098">c_taille</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af136234b2c37dec366f2ee328d3c8732"></a><!-- doxytag: member="map::map" ref="af136234b2c37dec366f2ee328d3c8732" args="(unsigned int tailleX, unsigned int tailleY)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">map::map </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>tailleX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>tailleY</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructeur :: Créer une map vide ! </p>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00028">28</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00099">c_block</a>, <a class="el" href="map_8h_source.html#l00101">c_nb_PointDeDepartJoueur</a>, <a class="el" href="map_8h_source.html#l00100">c_PointDeDepartJoueur</a>, <a class="el" href="map_8h_source.html#l00098">c_taille</a>, <a class="el" href="map_8h_source.html#l00090">map::s_Case::element</a>, <a class="el" href="map_8h_source.html#l00089">map::s_Case::joueur</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0cc22df7b44f7835fa10ed241848b041"></a><!-- doxytag: member="map::~map" ref="a0cc22df7b44f7835fa10ed241848b041" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">map::~map </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Désinitialise la class map. </p>
+<ul>
+<li>Supprime la map chargé</li>
+<li>Supprime toutes les Info Joueurs (meta données)</li>
+<li>Supprime les points de départ</li>
+<li>Met toutes les variables à 0 </li>
+</ul>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00057">57</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00099">c_block</a>, <a class="el" href="map_8h_source.html#l00101">c_nb_PointDeDepartJoueur</a>, <a class="el" href="map_8h_source.html#l00100">c_PointDeDepartJoueur</a>, <a class="el" href="map_8h_source.html#l00098">c_taille</a>, <a class="el" href="map_8h_source.html#l00089">map::s_Case::joueur</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="ac7e126e8c0555f9f2e9c86cc81865b9f"></a><!-- doxytag: member="map::ajouterInfoJoueur" ref="ac7e126e8c0555f9f2e9c86cc81865b9f" args="(unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierePosition=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void map::ajouterInfoJoueur </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>X</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>Y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>id_Joueur</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>premierePosition</em> = <code>0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Ajoute des meta donnée ( ou info joueurs ) dans le block (X, Y). </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>X</em>&nbsp;</td><td>Coordonnée </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>Y</em>&nbsp;</td><td>Coordonnée </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>id_Joueur</em>&nbsp;</td><td>L'id du joueur a ajouter au block (meta-info) </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>premierePosition</em>&nbsp;</td><td>Placer l'id du joueur en 1ère position ?</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>NOTE: Pour certain map::type comme bombe_poser, le 1er element représente l'id du joueur qui a posé l'objet </p>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00113">113</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00099">c_block</a>, <a class="el" href="map_8h_source.html#l00097">c_listDesChangement</a>, <a class="el" href="map_8h_source.html#l00098">c_taille</a>, <a class="el" href="coordonnees_8h_source.html#l00021">coordonneeConvert()</a>, <a class="el" href="map_8h_source.html#l00089">map::s_Case::joueur</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01761">partie::actionSurLesElements()</a>, <a class="el" href="partie_8cpp_source.html#l01590">partie::checkInternalEvent()</a>, <a class="el" href="partie_8cpp_source.html#l01475">partie::checkInternalEventPousseBombe()</a>, <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>, <a class="el" href="partie_8cpp_source.html#l01363">partie::placer_perso_position_initial()</a>, et <a class="el" href="partie_8cpp_source.html#l02158">partie::unPackIt()</a>.</p>
+
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_ac7e126e8c0555f9f2e9c86cc81865b9f_cgraph.png" border="0" usemap="#classmap_ac7e126e8c0555f9f2e9c86cc81865b9f_cgraph" alt=""/></div>
+<map name="classmap_ac7e126e8c0555f9f2e9c86cc81865b9f_cgraph" id="classmap_ac7e126e8c0555f9f2e9c86cc81865b9f_cgraph">
+<area shape="rect" id="node3" href="coordonnees_8h.html#a6672966a8002c5f5e0a711f7029b0e7d" title="Permet de créer facillement une stucture s_Coordonnees initialisée." alt="" coords="223,5,369,35"/></map>
+</div>
+</p>
+
+<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_ac7e126e8c0555f9f2e9c86cc81865b9f_icgraph.png" border="0" usemap="#classmap_ac7e126e8c0555f9f2e9c86cc81865b9f_icgraph" alt=""/></div>
+<map name="classmap_ac7e126e8c0555f9f2e9c86cc81865b9f_icgraph" id="classmap_ac7e126e8c0555f9f2e9c86cc81865b9f_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="860,150,1071,180"/><area shape="rect" id="node5" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="1135,150,1321,180"/><area shape="rect" id="node7" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1371,190,1469,220"/><area shape="rect" id="node12" href="classpartie.html#aa5cca051f9f07d1b267f5a4df8dabd24" title="Scan les event du bonus pousse bombe." alt="" coords="517,48,797,77"/><area shape="rect" id="node15" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="559,306,756,336"/><area shape="rect" id="node19" href="classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="223,202,468,232"/><area shape="rect" id="node29" href="classpartie.html#a690624a8847be8257bd1d89e23018614" title="Désempaquette le buffer et met les données dans le tableau." alt="" coords="285,306,405,336"/><area shape="rect" id="node9" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1519,190,1572,220"/><area shape="rect" id="node21" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="847,254,1084,284"/><area shape="rect" id="node25" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="593,202,721,232"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a5aec3f3890ccd081364731383bbb77c3"></a><!-- doxytag: member="map::chargerMap" ref="a5aec3f3890ccd081364731383bbb77c3" args="(const char fichier[]=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int map::chargerMap </td>
+          <td>(</td>
+          <td class="paramtype">const char&nbsp;</td>
+          <td class="paramname"> <em>fichier</em>[] = <code>0</code></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Charge une map en mémoire. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>fichier</em>&nbsp;</td><td>Si = 0 =&gt; map aléatoire </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie le nombre de joueur maximum pour cette carte</dd></dl>
+<p>Si la map existe déjà =&gt; ancienne map out<br/>
+ Un fichier de map a une forme :<br/>
+ X Y NB_Joueur<br/>
+<br/>
+ #...#<br/>
+<br/>
+ </p>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00230">230</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00099">c_block</a>, <a class="el" href="map_8h_source.html#l00101">c_nb_PointDeDepartJoueur</a>, <a class="el" href="map_8h_source.html#l00100">c_PointDeDepartJoueur</a>, <a class="el" href="map_8h_source.html#l00098">c_taille</a>, <a class="el" href="map_8h_source.html#l00090">map::s_Case::element</a>, <a class="el" href="map_8h_source.html#l00089">map::s_Case::joueur</a>, <a class="el" href="outils_8cpp_source.html#l00007">myRand()</a>, <a class="el" href="map_8cpp_source.html#l00332">readDir()</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l00062">partie::genMap()</a>.</p>
+
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_a5aec3f3890ccd081364731383bbb77c3_cgraph.png" border="0" usemap="#classmap_a5aec3f3890ccd081364731383bbb77c3_cgraph" alt=""/></div>
+<map name="classmap_a5aec3f3890ccd081364731383bbb77c3_cgraph" id="classmap_a5aec3f3890ccd081364731383bbb77c3_cgraph">
+<area shape="rect" id="node3" href="outils_8cpp.html#a5ee0533ff07a519f3fce335a2f57f157" title="Créer un nombre aléatoire compris entre a et b." alt="" coords="205,5,280,35"/><area shape="rect" id="node5" href="classmap.html#a2580f0c7145597fb4dc54632a4f90e0b" title="Lit le dossier ./map et retourne ( par files ) les fichiers (.map) qu&#39;il contient." alt="" coords="189,59,296,88"/></map>
+</div>
+</p>
+
+<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_a5aec3f3890ccd081364731383bbb77c3_icgraph.png" border="0" usemap="#classmap_a5aec3f3890ccd081364731383bbb77c3_icgraph" alt=""/></div>
+<map name="classmap_a5aec3f3890ccd081364731383bbb77c3_icgraph" id="classmap_a5aec3f3890ccd081364731383bbb77c3_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#adea76917bafe42b34b4fefae60c965d8" title="Charge une map." alt="" coords="191,5,308,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="357,5,456,35"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="505,5,559,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a42565c1df7cd77962409dffcb24e60b9"></a><!-- doxytag: member="map::cleanModifications" ref="a42565c1df7cd77962409dffcb24e60b9" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void map::cleanModifications </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Vide la liste des modifications. </p>
+<dl class="see"><dt><b>Voir également:</b></dt><dd>std::vector&lt;s_Coordonnees&gt;* <a class="el" href="classmap.html#a3453f2495334983df3bbf1737908e25e" title="Retourne les positions X,Y des case modifiées depuis le dernier cycle.">getModifications()</a> </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="map_8inl_source.html#l00082">82</a> du fichier <a class="el" href="map_8inl_source.html">map.inl</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00097">c_listDesChangement</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5ab949cacaad5148299aa70f55bb0c93"></a><!-- doxytag: member="map::getBlock" ref="a5ab949cacaad5148299aa70f55bb0c93" args="(unsigned int X, unsigned int Y) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structmap_1_1s___case.html">map::s_Case</a> * map::getBlock </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>X</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>Y</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Retourn le block qui est à la position X, Y. </p>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00388">388</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00099">c_block</a>, <a class="el" href="map_8h_source.html#l00098">c_taille</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01761">partie::actionSurLesElements()</a>, <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">moteur_ncurses::afficherMapEtEvent()</a>, <a class="el" href="partie_8cpp_source.html#l02360">partie::ajouterNouvelleConnection()</a>, <a class="el" href="partie_8cpp_source.html#l01590">partie::checkInternalEvent()</a>, <a class="el" href="partie_8cpp_source.html#l01475">partie::checkInternalEventPousseBombe()</a>, <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, <a class="el" href="map_8inl_source.html#l00028">getBlock()</a>, <a class="el" href="partie_8cpp_source.html#l01826">partie::killPlayers()</a>, <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>, et <a class="el" href="partie_8cpp_source.html#l01363">partie::placer_perso_position_initial()</a>.</p>
+
+<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_a5ab949cacaad5148299aa70f55bb0c93_icgraph.png" border="0" usemap="#classmap_a5ab949cacaad5148299aa70f55bb0c93_icgraph" alt=""/></div>
+<map name="classmap_a5ab949cacaad5148299aa70f55bb0c93_icgraph" id="classmap_a5ab949cacaad5148299aa70f55bb0c93_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="797,166,1008,195"/><area shape="rect" id="node5" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="1092,166,1279,195"/><area shape="rect" id="node7" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1328,218,1427,247"/><area shape="rect" id="node11" href="classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="185,422,409,451"/><area shape="rect" id="node13" href="classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="169,475,425,505"/><area shape="rect" id="node15" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="476,270,713,299"/><area shape="rect" id="node19" href="classpartie.html#aa5cca051f9f07d1b267f5a4df8dabd24" title="Scan les event du bonus pousse bombe." alt="" coords="763,62,1043,91"/><area shape="rect" id="node22" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="496,323,693,353"/><area shape="rect" id="node25" href="classmap.html#ab0dd18578b1ea7cbc5fdfe4cf1299b7d" title="Retourn le block qui est à la position X, Y." alt="" coords="240,529,355,558"/><area shape="rect" id="node27" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="531,217,659,246"/><area shape="rect" id="node32" href="classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="175,267,420,297"/><area shape="rect" id="node9" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1476,218,1529,247"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ab0dd18578b1ea7cbc5fdfe4cf1299b7d"></a><!-- doxytag: member="map::getBlock" ref="ab0dd18578b1ea7cbc5fdfe4cf1299b7d" args="(s_Coordonnees &amp;pos) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structmap_1_1s___case.html">map::s_Case</a> * map::getBlock </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>pos</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Retourn le block qui est à la position X, Y. </p>
+<dl class="note"><dt><b>Note:</b></dt><dd>Alias de map::getBlock( unsigned int X, unsigned int Y ) </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="map_8inl_source.html#l00028">28</a> du fichier <a class="el" href="map_8inl_source.html">map.inl</a>.</p>
+
+<p>Références <a class="el" href="map_8cpp_source.html#l00388">getBlock()</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_ab0dd18578b1ea7cbc5fdfe4cf1299b7d_cgraph.png" border="0" usemap="#classmap_ab0dd18578b1ea7cbc5fdfe4cf1299b7d_cgraph" alt=""/></div>
+<map name="classmap_ab0dd18578b1ea7cbc5fdfe4cf1299b7d_cgraph" id="classmap_ab0dd18578b1ea7cbc5fdfe4cf1299b7d_cgraph">
+<area shape="rect" id="node3" href="classmap.html#a5ab949cacaad5148299aa70f55bb0c93" title="Retourn le block qui est à la position X, Y." alt="" coords="168,5,283,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a37db5c6e03a1245a8c461d56d7f011ef"></a><!-- doxytag: member="map::getModifications" ref="a37db5c6e03a1245a8c461d56d7f011ef" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &gt; * map::getModifications </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="map_8inl_source.html#l00071">71</a> du fichier <a class="el" href="map_8inl_source.html">map.inl</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00097">c_listDesChangement</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3453f2495334983df3bbf1737908e25e"></a><!-- doxytag: member="map::getModifications" ref="a3453f2495334983df3bbf1737908e25e" args="(s_Coordonnees &amp;pos)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool map::getModifications </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>pos</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Retourne les positions X,Y des case modifiées depuis le dernier cycle. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[out]</tt>&nbsp;</td><td valign="top"><em>pos</em>&nbsp;</td><td>La variables où sera stockée les données de retour </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>True s'il y a eu des modifications</dd></dl>
+<p>Utilisation: </p>
+<div class="fragment"><pre class="fragment"> <a class="code" href="classmap.html" title="Gère une map.">map</a> myMap;
+ <a class="code" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a> pos={0,0};
+ <span class="comment">// Charger une map ici + traitement divers</span>
+ <span class="comment">// ...</span>
+ <span class="keywordflow">while</span>( myMap.<a class="code" href="classmap.html#a3453f2495334983df3bbf1737908e25e" title="Retourne les positions X,Y des case modifiées depuis le dernier cycle.">getModifications</a>(pos) )
+ {
+    <span class="comment">// pos contient les coodonnées d&#39;un block modifié</span>
+    printf(<span class="stringliteral">&quot;Le block a l&#39;adresse: X=%u, Y=%u a été modifié.\n&quot;</span>, pos.<a class="code" href="structs___coordonnees.html#a58e4c6bec574940d228bf0a1b8b6b308">x</a>, pos.<a class="code" href="structs___coordonnees.html#aaf8eb7cb396be8207c9c3c63a806de51">y</a>);
+ }
+ <span class="comment">// Fin des block modifié</span>
+</pre></div> <dl class="note"><dt><b>Note:</b></dt><dd>A chaque appel de la fonction l'element qui est envoyé a pos est enlevé de la liste des modification (First In Last Out) </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00458">458</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00097">c_listDesChangement</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">moteur_ncurses::afficherMapEtEvent()</a>, et <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_a3453f2495334983df3bbf1737908e25e_icgraph.png" border="0" usemap="#classmap_a3453f2495334983df3bbf1737908e25e_icgraph" alt=""/></div>
+<map name="classmap_a3453f2495334983df3bbf1737908e25e_icgraph" id="classmap_a3453f2495334983df3bbf1737908e25e_icgraph">
+<area shape="rect" id="node3" href="classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="233,5,457,35"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="217,59,473,88"/><area shape="rect" id="node7" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="296,112,395,141"/><area shape="rect" id="node9" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="524,112,577,141"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a5de5675c9ac5f63b57bf05b355942caa"></a><!-- doxytag: member="map::mettreJoueurA_sa_PositionInitial" ref="a5de5675c9ac5f63b57bf05b355942caa" args="(unsigned char joueur)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a> map::mettreJoueurA_sa_PositionInitial </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>joueur</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Met le perso {joueur} a sa place initial. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>joueur</em>&nbsp;</td><td>Joueur que l'on veut déplacer à sa position initial ( un nombre entre 1 et 255 ) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Renvoie la position initial du joueur.</dd></dl>
+<p><b>Vous devez vous même supprimer le perso de son ancienne position, si il y en avait une</b><br/>
+ Si le joueur n'est pas trouvé =&gt; Erreur FATAL ! </p>
+<dl class="warning"><dt><b>Avertissement:</b></dt><dd>Le positionnement ne tiens pas compte des obstacles, comme le feu, une bombe, ... </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00366">366</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00099">c_block</a>, <a class="el" href="map_8h_source.html#l00101">c_nb_PointDeDepartJoueur</a>, <a class="el" href="map_8h_source.html#l00100">c_PointDeDepartJoueur</a>, <a class="el" href="map_8h_source.html#l00098">c_taille</a>, <a class="el" href="map_8h_source.html#l00090">map::s_Case::element</a>, <a class="el" href="map_8h_source.html#l00089">map::s_Case::joueur</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l00062">partie::genMap()</a>.</p>
+
+<p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_a5de5675c9ac5f63b57bf05b355942caa_icgraph.png" border="0" usemap="#classmap_a5de5675c9ac5f63b57bf05b355942caa_icgraph" alt=""/></div>
+<map name="classmap_a5de5675c9ac5f63b57bf05b355942caa_icgraph" id="classmap_a5de5675c9ac5f63b57bf05b355942caa_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#adea76917bafe42b34b4fefae60c965d8" title="Charge une map." alt="" coords="319,5,436,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="485,5,584,35"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="633,5,687,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ab7ddadf37a30d0f56b8fe9fb5331e67f"></a><!-- doxytag: member="map::nb_InfoJoueur" ref="ab7ddadf37a30d0f56b8fe9fb5331e67f" args="(unsigned int X, unsigned int Y) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int map::nb_InfoJoueur </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>X</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>Y</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie le nombre d'info joueurs dans le block (X, Y) (meta données). </p>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00423">423</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00099">c_block</a>, <a class="el" href="map_8h_source.html#l00098">c_taille</a>, <a class="el" href="map_8h_source.html#l00089">map::s_Case::joueur</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>.</p>
+
+<p><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_ab7ddadf37a30d0f56b8fe9fb5331e67f_icgraph.png" border="0" usemap="#classmap_ab7ddadf37a30d0f56b8fe9fb5331e67f_icgraph" alt=""/></div>
+<map name="classmap_ab7ddadf37a30d0f56b8fe9fb5331e67f_icgraph" id="classmap_ab7ddadf37a30d0f56b8fe9fb5331e67f_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="201,5,399,35"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="448,5,547,35"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="596,5,649,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a27112670bd34ef701a81f727410ed3b4"></a><!-- doxytag: member="map::nb_MAX_Joueur" ref="a27112670bd34ef701a81f727410ed3b4" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char map::nb_MAX_Joueur </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Alias de <a class="el" href="classmap.html#a8d73464b1277da47780e984631039299" title="Renvoie le nombre de joueur maximum sur la carte en cours.">map::nb_PointDeDepartJoueur()</a>. </p>
+
+<p>Définition à la ligne <a class="el" href="map_8inl_source.html#l00059">59</a> du fichier <a class="el" href="map_8inl_source.html">map.inl</a>.</p>
+
+<p>Références <a class="el" href="map_8inl_source.html#l00049">nb_PointDeDepartJoueur()</a>.</p>
+
+<p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_a27112670bd34ef701a81f727410ed3b4_cgraph.png" border="0" usemap="#classmap_a27112670bd34ef701a81f727410ed3b4_cgraph" alt=""/></div>
+<map name="classmap_a27112670bd34ef701a81f727410ed3b4_cgraph" id="classmap_a27112670bd34ef701a81f727410ed3b4_cgraph">
+<area shape="rect" id="node3" href="classmap.html#a8d73464b1277da47780e984631039299" title="Renvoie le nombre de joueur maximum sur la carte en cours." alt="" coords="211,5,427,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a8d73464b1277da47780e984631039299"></a><!-- doxytag: member="map::nb_PointDeDepartJoueur" ref="a8d73464b1277da47780e984631039299" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char map::nb_PointDeDepartJoueur </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie le nombre de joueur maximum sur la carte en cours. </p>
+
+<p>Définition à la ligne <a class="el" href="map_8inl_source.html#l00049">49</a> du fichier <a class="el" href="map_8inl_source.html">map.inl</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00101">c_nb_PointDeDepartJoueur</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01590">partie::checkInternalEvent()</a>, et <a class="el" href="map_8inl_source.html#l00059">nb_MAX_Joueur()</a>.</p>
+
+<p><div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_a8d73464b1277da47780e984631039299_icgraph.png" border="0" usemap="#classmap_a8d73464b1277da47780e984631039299_icgraph" alt=""/></div>
+<map name="classmap_a8d73464b1277da47780e984631039299_icgraph" id="classmap_a8d73464b1277da47780e984631039299_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="271,5,457,35"/><area shape="rect" id="node9" href="classmap.html#a27112670bd34ef701a81f727410ed3b4" title="Alias de map::nb_PointDeDepartJoueur()." alt="" coords="285,59,443,88"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="507,5,605,35"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="655,5,708,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a69a17c9066d0cc1b9cf2f0123db3114e"></a><!-- doxytag: member="map::positionInitialJoueur" ref="a69a17c9066d0cc1b9cf2f0123db3114e" args="(unsigned char joueur) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a> map::positionInitialJoueur </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>joueur</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie la position initial du joueur. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>joueur</em>&nbsp;</td><td>Joueur dont on veut avoir sa position initial ( un nombre entre 1 et 255 )</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Si une position initial n'est pas trouvé pour le joueur =&gt; Erreur FATAL ! </p>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00404">404</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00101">c_nb_PointDeDepartJoueur</a>, et <a class="el" href="map_8h_source.html#l00100">c_PointDeDepartJoueur</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01590">partie::checkInternalEvent()</a>, et <a class="el" href="partie_8cpp_source.html#l01363">partie::placer_perso_position_initial()</a>.</p>
+
+<p><div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_a69a17c9066d0cc1b9cf2f0123db3114e_icgraph.png" border="0" usemap="#classmap_a69a17c9066d0cc1b9cf2f0123db3114e_icgraph" alt=""/></div>
+<map name="classmap_a69a17c9066d0cc1b9cf2f0123db3114e_icgraph" id="classmap_a69a17c9066d0cc1b9cf2f0123db3114e_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="1007,67,1193,97"/><area shape="rect" id="node9" href="classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="239,119,484,149"/><area shape="rect" id="node5" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1248,145,1347,174"/><area shape="rect" id="node7" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1396,145,1449,174"/><area shape="rect" id="node11" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="713,145,951,174"/><area shape="rect" id="node14" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="1001,197,1199,226"/><area shape="rect" id="node17" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="535,93,663,122"/><area shape="rect" id="node19" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="727,41,937,70"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a2580f0c7145597fb4dc54632a4f90e0b"></a><!-- doxytag: member="map::readDir" ref="a2580f0c7145597fb4dc54632a4f90e0b" args="(std::vector&lt; std::string &gt; *files)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void map::readDir </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="partie_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a> &gt; *&nbsp;</td>
+          <td class="paramname"> <em>files</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Lit le dossier ./map et retourne ( par files ) les fichiers (.map) qu'il contient. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in,out]</tt>&nbsp;</td><td valign="top"><em>files</em>&nbsp;</td><td>Dans cette variable sera stocké les nom des fichiers présent dans le dossier ./map </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="attention"><dt><b>Attention:</b></dt><dd>Aucun fichier n'est préfixé du dossier ! </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00332">332</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Référencé par <a class="el" href="map_8cpp_source.html#l00230">chargerMap()</a>.</p>
+
+<p><div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_a2580f0c7145597fb4dc54632a4f90e0b_icgraph.png" border="0" usemap="#classmap_a2580f0c7145597fb4dc54632a4f90e0b_icgraph" alt=""/></div>
+<map name="classmap_a2580f0c7145597fb4dc54632a4f90e0b_icgraph" id="classmap_a2580f0c7145597fb4dc54632a4f90e0b_icgraph">
+<area shape="rect" id="node3" href="classmap.html#a5aec3f3890ccd081364731383bbb77c3" title="Charge une map en mémoire." alt="" coords="161,5,295,35"/><area shape="rect" id="node5" href="classpartie.html#adea76917bafe42b34b4fefae60c965d8" title="Charge une map." alt="" coords="345,5,463,35"/><area shape="rect" id="node7" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="512,5,611,35"/><area shape="rect" id="node9" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="660,5,713,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aaca5b27af4f0a9d46791e9ac88470be3"></a><!-- doxytag: member="map::rmInfoJoueur" ref="aaca5b27af4f0a9d46791e9ac88470be3" args="(unsigned int X, unsigned int Y)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void map::rmInfoJoueur </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>X</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>Y</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Supprime toutes les meta-info du block (X, Y). </p>
+<p>NOTE: Pour certain <a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469b" title="Les types de d&#39;objet sur la map.">map::t_type</a> comme <em>bombe_poser</em>, le 1er element représente l'id du joueur qui a posé l'objet </p>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00171">171</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00099">c_block</a>, <a class="el" href="map_8h_source.html#l00098">c_taille</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a69992d77d390166473f758436777a415"></a><!-- doxytag: member="map::rmInfoJoueur" ref="a69992d77d390166473f758436777a415" args="(unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierEltInclu)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void map::rmInfoJoueur </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>X</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>Y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&nbsp;</td>
+          <td class="paramname"> <em>id_Joueur</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>premierEltInclu</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Supprime les info du joueur du block (X, Y). </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>X</em>&nbsp;</td><td>Coordonnée </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>Y</em>&nbsp;</td><td>Coordonnée </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>id_Joueur</em>&nbsp;</td><td>L'id du joueur a ajouter au block (meta-info) </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>premierEltInclu</em>&nbsp;</td><td>Si le premier element dela liste est l'id du joueur =&gt; SUPPRIMER ?</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>NOTE: Pour certain <a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469b" title="Les types de d&#39;objet sur la map.">map::t_type</a> comme <em>bombe_poser</em>, le 1er element représente l'id du joueur qui a posé l'objet </p>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00144">144</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00099">c_block</a>, <a class="el" href="map_8h_source.html#l00098">c_taille</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01761">partie::actionSurLesElements()</a>, <a class="el" href="partie_8cpp_source.html#l01590">partie::checkInternalEvent()</a>, <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, <a class="el" href="partie_8cpp_source.html#l01826">partie::killPlayers()</a>, <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>, et <a class="el" href="partie_8cpp_source.html#l01363">partie::placer_perso_position_initial()</a>.</p>
+
+<p><div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-14-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_a69992d77d390166473f758436777a415_icgraph.png" border="0" usemap="#classmap_a69992d77d390166473f758436777a415_icgraph" alt=""/></div>
+<map name="classmap_a69992d77d390166473f758436777a415_icgraph" id="classmap_a69992d77d390166473f758436777a415_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="753,93,964,123"/><area shape="rect" id="node5" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="1028,107,1215,136"/><area shape="rect" id="node7" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1264,145,1363,175"/><area shape="rect" id="node12" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="492,249,689,279"/><area shape="rect" id="node15" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="527,145,655,175"/><area shape="rect" id="node20" href="classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="196,197,441,227"/><area shape="rect" id="node9" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1412,145,1465,175"/><area shape="rect" id="node22" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="740,197,977,227"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a9daefd4b8e29eba7b98b734ce4530fea"></a><!-- doxytag: member="map::setBlock" ref="a9daefd4b8e29eba7b98b734ce4530fea" args="(unsigned int X, unsigned int Y, map::t_type what)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void map::setBlock </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>X</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>Y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469b">map::t_type</a>&nbsp;</td>
+          <td class="paramname"> <em>what</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifie le block qui est à la position X, Y. </p>
+<p>Ne modifie en aucun cas les Info joueurs ( meta données )<br/>
+ <b>/!\ATTENTION EXCEPTION: si what = vide =&gt; nétoyage de toutes les meta données /!\</b> </p>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00089">89</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00099">c_block</a>, <a class="el" href="map_8h_source.html#l00097">c_listDesChangement</a>, <a class="el" href="map_8h_source.html#l00098">c_taille</a>, <a class="el" href="coordonnees_8h_source.html#l00021">coordonneeConvert()</a>, <a class="el" href="map_8h_source.html#l00028">vide</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p>Référencé par <a class="el" href="partie_8cpp_source.html#l01761">partie::actionSurLesElements()</a>, <a class="el" href="partie_8cpp_source.html#l01590">partie::checkInternalEvent()</a>, <a class="el" href="partie_8cpp_source.html#l01475">partie::checkInternalEventPousseBombe()</a>, <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>, <a class="el" href="partie_8cpp_source.html#l01363">partie::placer_perso_position_initial()</a>, et <a class="el" href="map_8inl_source.html#l00039">setBlock()</a>.</p>
+
+<p><div id="dynsection-15" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-15-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-15-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_a9daefd4b8e29eba7b98b734ce4530fea_cgraph.png" border="0" usemap="#classmap_a9daefd4b8e29eba7b98b734ce4530fea_cgraph" alt=""/></div>
+<map name="classmap_a9daefd4b8e29eba7b98b734ce4530fea_cgraph" id="classmap_a9daefd4b8e29eba7b98b734ce4530fea_cgraph">
+<area shape="rect" id="node3" href="coordonnees_8h.html#a6672966a8002c5f5e0a711f7029b0e7d" title="Permet de créer facillement une stucture s_Coordonnees initialisée." alt="" coords="169,5,316,35"/></map>
+</div>
+</p>
+
+<p><div id="dynsection-16" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-16-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-16-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_a9daefd4b8e29eba7b98b734ce4530fea_icgraph.png" border="0" usemap="#classmap_a9daefd4b8e29eba7b98b734ce4530fea_icgraph" alt=""/></div>
+<map name="classmap_a9daefd4b8e29eba7b98b734ce4530fea_icgraph" id="classmap_a9daefd4b8e29eba7b98b734ce4530fea_icgraph">
+<area shape="rect" id="node3" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="807,154,1017,183"/><area shape="rect" id="node5" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="1081,154,1268,183"/><area shape="rect" id="node7" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1317,194,1416,223"/><area shape="rect" id="node12" href="classpartie.html#aa5cca051f9f07d1b267f5a4df8dabd24" title="Scan les event du bonus pousse bombe." alt="" coords="464,51,744,81"/><area shape="rect" id="node15" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="505,310,703,339"/><area shape="rect" id="node19" href="classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="169,206,415,235"/><area shape="rect" id="node29" href="classmap.html#a5d865615ead2c9f10768e8504b1adb23" title="Modifie le block qui est à la position X, Y." alt="" coords="236,310,348,339"/><area shape="rect" id="node9" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1465,194,1519,223"/><area shape="rect" id="node21" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="793,258,1031,287"/><area shape="rect" id="node25" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="540,206,668,235"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a5d865615ead2c9f10768e8504b1adb23"></a><!-- doxytag: member="map::setBlock" ref="a5d865615ead2c9f10768e8504b1adb23" args="(s_Coordonnees &amp;pos, map::t_type what)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void map::setBlock </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classmap.html#ae2a076bf152add89e510bca3428f469b">map::t_type</a>&nbsp;</td>
+          <td class="paramname"> <em>what</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifie le block qui est à la position X, Y. </p>
+<dl class="note"><dt><b>Note:</b></dt><dd>Alias de <a class="el" href="classmap.html#a9daefd4b8e29eba7b98b734ce4530fea" title="Modifie le block qui est à la position X, Y.">setBlock( unsigned int X, unsigned int Y, map::t_type what )</a> </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="map_8inl_source.html#l00039">39</a> du fichier <a class="el" href="map_8inl_source.html">map.inl</a>.</p>
+
+<p>Références <a class="el" href="map_8cpp_source.html#l00089">setBlock()</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p><div id="dynsection-17" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-17-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-17-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_a5d865615ead2c9f10768e8504b1adb23_cgraph.png" border="0" usemap="#classmap_a5d865615ead2c9f10768e8504b1adb23_cgraph" alt=""/></div>
+<map name="classmap_a5d865615ead2c9f10768e8504b1adb23_cgraph" id="classmap_a5d865615ead2c9f10768e8504b1adb23_cgraph">
+<area shape="rect" id="node3" href="classmap.html#a9daefd4b8e29eba7b98b734ce4530fea" title="Modifie le block qui est à la position X, Y." alt="" coords="169,5,281,35"/><area shape="rect" id="node5" href="coordonnees_8h.html#a6672966a8002c5f5e0a711f7029b0e7d" title="Permet de créer facillement une stucture s_Coordonnees initialisée." alt="" coords="332,5,479,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a22d57ae0d2336e713c807d92af64ae11"></a><!-- doxytag: member="map::setTaille" ref="a22d57ae0d2336e713c807d92af64ae11" args="(unsigned int tailleX, unsigned int tailleY)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void map::setTaille </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>tailleX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>tailleY</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Modifie la taille de la map. </p>
+<p>Si une map existe déjà =&gt; delete de l'ancienne et delete des points de départ </p>
+
+<p>Définition à la ligne <a class="el" href="map_8cpp_source.html#l00187">187</a> du fichier <a class="el" href="map_8cpp_source.html">map.cpp</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00099">c_block</a>, <a class="el" href="map_8h_source.html#l00101">c_nb_PointDeDepartJoueur</a>, <a class="el" href="map_8h_source.html#l00100">c_PointDeDepartJoueur</a>, <a class="el" href="map_8h_source.html#l00098">c_taille</a>, <a class="el" href="map_8h_source.html#l00090">map::s_Case::element</a>, <a class="el" href="map_8h_source.html#l00089">map::s_Case::joueur</a>, <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abc682d96c6d194b75d2e8a6430b5b076"></a><!-- doxytag: member="map::X" ref="abc682d96c6d194b75d2e8a6430b5b076" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int map::X </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie la taille X de la map. </p>
+
+<p>Définition à la ligne <a class="el" href="map_8inl_source.html#l00007">7</a> du fichier <a class="el" href="map_8inl_source.html">map.inl</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00098">c_taille</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::x</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">moteur_ncurses::afficherMapEtEvent()</a>, <a class="el" href="partie_8cpp_source.html#l02360">partie::ajouterNouvelleConnection()</a>, <a class="el" href="partie_8cpp_source.html#l01590">partie::checkInternalEvent()</a>, <a class="el" href="partie_8cpp_source.html#l01475">partie::checkInternalEventPousseBombe()</a>, <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, et <a class="el" href="partie_8cpp_source.html#l01826">partie::killPlayers()</a>.</p>
+
+<p><div id="dynsection-18" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-18-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-18-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-18-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_abc682d96c6d194b75d2e8a6430b5b076_icgraph.png" border="0" usemap="#classmap_abc682d96c6d194b75d2e8a6430b5b076_icgraph" alt=""/></div>
+<map name="classmap_abc682d96c6d194b75d2e8a6430b5b076_icgraph" id="classmap_abc682d96c6d194b75d2e8a6430b5b076_icgraph">
+<area shape="rect" id="node3" href="classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="137,5,361,35"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="121,59,377,88"/><area shape="rect" id="node7" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="448,109,685,139"/><area shape="rect" id="node13" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="761,263,948,292"/><area shape="rect" id="node16" href="classpartie.html#aa5cca051f9f07d1b267f5a4df8dabd24" title="Scan les event du bonus pousse bombe." alt="" coords="427,368,707,397"/><area shape="rect" id="node19" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="756,161,953,191"/><area shape="rect" id="node22" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="185,264,313,293"/><area shape="rect" id="node9" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1003,161,1101,191"/><area shape="rect" id="node11" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1151,161,1204,191"/><area shape="rect" id="node24" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="461,315,672,344"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="abcb25776d119cd3f2864c67ec05a6a4a"></a><!-- doxytag: member="map::Y" ref="abcb25776d119cd3f2864c67ec05a6a4a" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int map::Y </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Renvoie la taille Y de la map. </p>
+
+<p>Définition à la ligne <a class="el" href="map_8inl_source.html#l00017">17</a> du fichier <a class="el" href="map_8inl_source.html">map.inl</a>.</p>
+
+<p>Références <a class="el" href="map_8h_source.html#l00098">c_taille</a>, et <a class="el" href="coordonnees_8h_source.html#l00009">s_Coordonnees::y</a>.</p>
+
+<p>Référencé par <a class="el" href="moteur__sdl_8cpp_source.html#l01206">moteur_sdl::afficherMapEtEvent()</a>, <a class="el" href="moteur__ncurses_8cpp_source.html#l00841">moteur_ncurses::afficherMapEtEvent()</a>, <a class="el" href="partie_8cpp_source.html#l02360">partie::ajouterNouvelleConnection()</a>, <a class="el" href="partie_8cpp_source.html#l01590">partie::checkInternalEvent()</a>, <a class="el" href="partie_8cpp_source.html#l01475">partie::checkInternalEventPousseBombe()</a>, <a class="el" href="partie_8cpp_source.html#l01065">partie::deplacer_le_Perso_A()</a>, et <a class="el" href="partie_8cpp_source.html#l01826">partie::killPlayers()</a>.</p>
+
+<p><div id="dynsection-19" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-19-trigger" src="closed.png"/> Voici le graphe d'appel pour cette fonction :</div>
+<div id="dynsection-19-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-19-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classmap_abcb25776d119cd3f2864c67ec05a6a4a_icgraph.png" border="0" usemap="#classmap_abcb25776d119cd3f2864c67ec05a6a4a_icgraph" alt=""/></div>
+<map name="classmap_abcb25776d119cd3f2864c67ec05a6a4a_icgraph" id="classmap_abcb25776d119cd3f2864c67ec05a6a4a_icgraph">
+<area shape="rect" id="node3" href="classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map." alt="" coords="137,5,361,35"/><area shape="rect" id="node5" href="classmoteur__ncurses.html#a4befeea46ae3cc1fd4fa76164f02a8c2" title="Affiche une map." alt="" coords="121,59,377,88"/><area shape="rect" id="node7" href="classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="448,109,685,139"/><area shape="rect" id="node13" href="classpartie.html#aee9a20735d2ef1811b44b6b535950189" title="Analyse et traite les Event internes pour une partie F4A." alt="" coords="761,263,948,292"/><area shape="rect" id="node16" href="classpartie.html#aa5cca051f9f07d1b267f5a4df8dabd24" title="Scan les event du bonus pousse bombe." alt="" coords="427,368,707,397"/><area shape="rect" id="node19" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1" title="Test si un personnage peut se déplacer à un endroit. Si on peut déplacer le perso dans la zone demand..." alt="" coords="756,161,953,191"/><area shape="rect" id="node22" href="classpartie.html#a73cfde8c2c40efa5d245892e46fa488b" title="Tue les joueurs et détruit les block destructibles (Mode: F4A)." alt="" coords="185,264,313,293"/><area shape="rect" id="node9" href="classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="1003,161,1101,191"/><area shape="rect" id="node11" href="main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="1151,161,1204,191"/><area shape="rect" id="node24" href="classpartie.html#a1cf470a670f496543252061409f10c4a" title="Positionne les flammes en fonction de l&#39;environement." alt="" coords="461,315,672,344"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="aa8dc3f13b258509bd3ef0572f2d8d26d"></a><!-- doxytag: member="map::c_block" ref="aa8dc3f13b258509bd3ef0572f2d8d26d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmap_1_1s___case.html">s_Case</a>* <a class="el" href="classmap.html#aa8dc3f13b258509bd3ef0572f2d8d26d">map::c_block</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Tableau de case =&gt; la map en entère. </p>
+
+<p>Définition à la ligne <a class="el" href="map_8h_source.html#l00099">99</a> du fichier <a class="el" href="map_8h_source.html">map.h</a>.</p>
+
+<p>Référencé par <a class="el" href="map_8cpp_source.html#l00113">ajouterInfoJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00230">chargerMap()</a>, <a class="el" href="map_8cpp_source.html#l00388">getBlock()</a>, <a class="el" href="map_8cpp_source.html#l00014">map()</a>, <a class="el" href="map_8cpp_source.html#l00366">mettreJoueurA_sa_PositionInitial()</a>, <a class="el" href="map_8cpp_source.html#l00423">nb_InfoJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00144">rmInfoJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00089">setBlock()</a>, <a class="el" href="map_8cpp_source.html#l00187">setTaille()</a>, et <a class="el" href="map_8cpp_source.html#l00057">~map()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2bb86c76f29e21c88014ebbe05769096"></a><!-- doxytag: member="map::c_listDesChangement" ref="a2bb86c76f29e21c88014ebbe05769096" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structs___coordonnees.html">s_Coordonnees</a>&gt; <a class="el" href="classmap.html#a2bb86c76f29e21c88014ebbe05769096">map::c_listDesChangement</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Les changement qui ont eu lieu sur la map. </p>
+
+<p>Définition à la ligne <a class="el" href="map_8h_source.html#l00097">97</a> du fichier <a class="el" href="map_8h_source.html">map.h</a>.</p>
+
+<p>Référencé par <a class="el" href="map_8cpp_source.html#l00113">ajouterInfoJoueur()</a>, <a class="el" href="map_8inl_source.html#l00082">cleanModifications()</a>, <a class="el" href="map_8cpp_source.html#l00458">getModifications()</a>, et <a class="el" href="map_8cpp_source.html#l00089">setBlock()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7b627dce39ed81ebf1bcb398ee4075e3"></a><!-- doxytag: member="map::c_nb_PointDeDepartJoueur" ref="a7b627dce39ed81ebf1bcb398ee4075e3" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char <a class="el" href="classmap.html#a7b627dce39ed81ebf1bcb398ee4075e3">map::c_nb_PointDeDepartJoueur</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Le nombre de points de départ =&gt; le nombre maximum de joueur sur une map. </p>
+
+<p>Définition à la ligne <a class="el" href="map_8h_source.html#l00101">101</a> du fichier <a class="el" href="map_8h_source.html">map.h</a>.</p>
+
+<p>Référencé par <a class="el" href="map_8cpp_source.html#l00230">chargerMap()</a>, <a class="el" href="map_8cpp_source.html#l00014">map()</a>, <a class="el" href="map_8cpp_source.html#l00366">mettreJoueurA_sa_PositionInitial()</a>, <a class="el" href="map_8inl_source.html#l00049">nb_PointDeDepartJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00404">positionInitialJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00187">setTaille()</a>, et <a class="el" href="map_8cpp_source.html#l00057">~map()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0e259cde2ef3b66ab1c06c1c10def1cc"></a><!-- doxytag: member="map::c_PointDeDepartJoueur" ref="a0e259cde2ef3b66ab1c06c1c10def1cc" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a>* <a class="el" href="classmap.html#a0e259cde2ef3b66ab1c06c1c10def1cc">map::c_PointDeDepartJoueur</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Liste des points de départ des joueurs ({point_de_depart_jXXX} numJ). </p>
+
+<p>Définition à la ligne <a class="el" href="map_8h_source.html#l00100">100</a> du fichier <a class="el" href="map_8h_source.html">map.h</a>.</p>
+
+<p>Référencé par <a class="el" href="map_8cpp_source.html#l00230">chargerMap()</a>, <a class="el" href="map_8cpp_source.html#l00014">map()</a>, <a class="el" href="map_8cpp_source.html#l00366">mettreJoueurA_sa_PositionInitial()</a>, <a class="el" href="map_8cpp_source.html#l00404">positionInitialJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00187">setTaille()</a>, et <a class="el" href="map_8cpp_source.html#l00057">~map()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a12febb145e855330c3bfb0dbc3645259"></a><!-- doxytag: member="map::c_taille" ref="a12febb145e855330c3bfb0dbc3645259" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a> <a class="el" href="classmap.html#a12febb145e855330c3bfb0dbc3645259">map::c_taille</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Taille de la map. </p>
+
+<p>Définition à la ligne <a class="el" href="map_8h_source.html#l00098">98</a> du fichier <a class="el" href="map_8h_source.html">map.h</a>.</p>
+
+<p>Référencé par <a class="el" href="map_8cpp_source.html#l00113">ajouterInfoJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00230">chargerMap()</a>, <a class="el" href="map_8cpp_source.html#l00388">getBlock()</a>, <a class="el" href="map_8cpp_source.html#l00014">map()</a>, <a class="el" href="map_8cpp_source.html#l00366">mettreJoueurA_sa_PositionInitial()</a>, <a class="el" href="map_8cpp_source.html#l00423">nb_InfoJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00144">rmInfoJoueur()</a>, <a class="el" href="map_8cpp_source.html#l00089">setBlock()</a>, <a class="el" href="map_8cpp_source.html#l00187">setTaille()</a>, <a class="el" href="map_8inl_source.html#l00007">X()</a>, <a class="el" href="map_8inl_source.html#l00017">Y()</a>, et <a class="el" href="map_8cpp_source.html#l00057">~map()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="map_8h_source.html">map.h</a></li>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="map_8cpp_source.html">map.cpp</a></li>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="map_8inl_source.html">map.inl</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

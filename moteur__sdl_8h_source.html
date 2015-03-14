@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/moteur_sdl.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/moteur_sdl.h</h1>  </div>
+</div>
+<div class="contents">
+<a href="moteur__sdl_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef MOTEUR_SDL_h</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define MOTEUR_SDL_h</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &quot;<a class="code" href="config_8h.html">config.h</a>&quot;</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &quot;<a class="code" href="options_8h.html">options.h</a>&quot;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &quot;<a class="code" href="partie_8h.html">partie.h</a>&quot;</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#include &quot;<a class="code" href="outils_8h.html">outils.h</a>&quot;</span>
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;math.h&quot;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;string.h&gt;</span><span class="comment">// Pour strlen()</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;time.h&gt;</span><span class="comment">// Pour clock() et clock_t</span>
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012 <span class="comment"></span>
+<a name="l00013"></a>00013 <span class="comment">/*!</span>
+<a name="l00014"></a>00014 <span class="comment">* @class moteur_sdl</span>
+<a name="l00015"></a>00015 <span class="comment">* @brief Gère l&#39;affichage via le moteur graphique SDL</span>
+<a name="l00016"></a>00016 <span class="comment">*/</span>
+<a name="l00017"></a>00017 
+<a name="l00018"></a><a class="code" href="classmoteur__sdl.html">00018</a> <span class="keyword">class </span><a class="code" href="classmoteur__sdl.html" title="Gère l&amp;#39;affichage via le moteur graphique SDL.">moteur_sdl</a>
+<a name="l00019"></a>00019 {
+<a name="l00020"></a>00020     <span class="keyword">private</span>:<span class="comment"></span>
+<a name="l00021"></a>00021 <span class="comment">        /*!</span>
+<a name="l00022"></a>00022 <span class="comment">        * @enum t_obj</span>
+<a name="l00023"></a>00023 <span class="comment">        * @brief Liste des images (Utilisé pour le tableau c_Decor)</span>
+<a name="l00024"></a>00024 <span class="comment">        */</span>
+<a name="l00025"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bd">00025</a>         <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00026"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda8ff0b739838b3dc9837137dc54ff317e">00026</a>             <a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda8ff0b739838b3dc9837137dc54ff317e">vide</a>=0,
+<a name="l00027"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdab13b035460df7cbb44935735074954b5">00027</a>             mur_destructible,
+<a name="l00028"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdaa3bb9c2c29cef86f0c2d57fdb5220c71">00028</a>             mur_indestructible,
+<a name="l00029"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda227d2e23b33537a50b44dc58d7dc209e">00029</a>             joueur1_haut,
+<a name="l00030"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda1b943bca339c072718fee3fed38baf23">00030</a>             joueur1_bas,
+<a name="l00031"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda1afa450836e7717442bc543f9cfc7f6d">00031</a>             joueur1_gauche,
+<a name="l00032"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdaae6767550be7fc31173051c916ff1025">00032</a>             joueur1_droite,
+<a name="l00033"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda8588fbdc081ab1ffd8c2d0b0eb308703">00033</a>             joueur2_haut,
+<a name="l00034"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdadb3b294f8cae96771c25b0847344f919">00034</a>             joueur2_bas,
+<a name="l00035"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda5b5e12751b6b3ac8c2389b9a1906159c">00035</a>             joueur2_gauche,
+<a name="l00036"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdab7ad3bfcede56ed20301805d7ec21157">00036</a>             joueur2_droite,
+<a name="l00037"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda175c41635832a9f08f9dfa2c9e5b9fce">00037</a>             joueur3_haut,
+<a name="l00038"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda4efa677592668005badb14bf0c9d7aa2">00038</a>             joueur3_bas,
+<a name="l00039"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdabdcd0755b8261d7a2766d246f3913f41">00039</a>             joueur3_gauche,
+<a name="l00040"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda6a6b4e3b19dc812829b4238cf7dbef4d">00040</a>             joueur3_droite,
+<a name="l00041"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda9756c24e40bc3a312a8c325193016a99">00041</a>             joueur4_haut,
+<a name="l00042"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdab2cba0cd4f66f3924da2416e129d56b9">00042</a>             joueur4_bas,
+<a name="l00043"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda9a0c6c6a7ec3ad41b1afd5bfbbc179e8">00043</a>             joueur4_gauche,
+<a name="l00044"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda00e26c13da97f750b6fbb02f4b50bee8">00044</a>             joueur4_droite,
+<a name="l00045"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda577eb74ece3495763f9b530a2587762e">00045</a>             flamme_origine,
+<a name="l00046"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdac711904be8807563b54913e9fcdf2b94">00046</a>             flamme_horizontal,
+<a name="l00047"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdaf8441cad2ef9b1eac86048fcbbc34ed4">00047</a>             flamme_vertical,
+<a name="l00048"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda0644d1e99ca6e89bc8a5fa60918f14e6">00048</a>             flamme_pointe_haut,
+<a name="l00049"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdab586bdcacba3ed23b40769fdc58d7f33">00049</a>             bout_flamme_bas,
+<a name="l00050"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdae43a0d679705dec4e18f10e4f85922ad">00050</a>             bout_flamme_gauche,
+<a name="l00051"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda3442207d129a37dc6e5094ad5215afad">00051</a>             bout_flamme_droite,
+<a name="l00052"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda71c0ae6cb5d8fbfc4753dd17f00553b0">00052</a>             bombe,
+<a name="l00053"></a>00053             <span class="comment">// Bonus</span>
+<a name="l00054"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdaad1a81a961665d49f2a289876927350b">00054</a>             gain_bombe,
+<a name="l00055"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda7eae80fc248c6773b41a32ec1a2e487c">00055</a>             gain_declancheur,
+<a name="l00056"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdae46b56cdd01f920c6406fa12018dd05d">00056</a>             gain_puissance_flamme,
+<a name="l00057"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdab8ed73786ad735d0aff289ca223f38ba">00057</a>             gain_pousse_bombe,
+<a name="l00058"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bdab46dbadb7c56865c12b644152e3ff2e6">00058</a>             gain_vie,
+<a name="l00059"></a>00059 
+<a name="l00060"></a><a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda75390cc1df98c62d0d011add2fd7c944">00060</a>             <a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bda75390cc1df98c62d0d011add2fd7c944">__nombre_de_decors__</a>
+<a name="l00061"></a>00061         } t_obj;
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064         <span class="comment">// Liste des vitesses des sprites</span>
+<a name="l00065"></a>00065         <span class="keyword">enum</span> {
+<a name="l00066"></a><a class="code" href="classmoteur__sdl.html#a5ca72777768d3588c25697ded2179665a825d66e3ff42878e6a9742f0f23a0ef3">00066</a>             <a class="code" href="classmoteur__sdl.html#a5ca72777768d3588c25697ded2179665a825d66e3ff42878e6a9742f0f23a0ef3">VitesseSpriteBombe</a> = CLOCKS_PER_SEC/6
+<a name="l00067"></a>00067         };
+<a name="l00068"></a>00068 <span class="comment"></span>
+<a name="l00069"></a>00069 <span class="comment">        /*!</span>
+<a name="l00070"></a>00070 <span class="comment">        * @struct Sprite</span>
+<a name="l00071"></a>00071 <span class="comment">        * @brief Contient les données pour faire un Sprite.</span>
+<a name="l00072"></a>00072 <span class="comment">        */</span>
+<a name="l00073"></a><a class="code" href="structmoteur__sdl_1_1_sprite.html">00073</a>         <span class="keyword">typedef</span> <span class="keyword">struct </span>{
+<a name="l00074"></a><a class="code" href="structmoteur__sdl_1_1_sprite.html#a3f5a772212bae4b24f6d7b7f580eaff3">00074</a>             <a class="code" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a>   pos;
+<a name="l00075"></a><a class="code" href="structmoteur__sdl_1_1_sprite.html#ada9443479e923a317f605450502f68aa">00075</a>             <a class="code" href="classmoteur__sdl.html#a5e50a879dde20520d9cca8559ecff4bd" title="Liste des images (Utilisé pour le tableau c_Decor).">t_obj</a>           objet;
+<a name="l00076"></a><a class="code" href="structmoteur__sdl_1_1_sprite.html#aa82cbf2bf9a4c54b61df8304ff3071f5">00076</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>   frame;
+<a name="l00077"></a><a class="code" href="structmoteur__sdl_1_1_sprite.html#ae91b39254b86ca40caf07c2f8d2a024a">00077</a>             clock_t         refresh;
+<a name="l00078"></a>00078         } <a class="code" href="structmoteur__sdl_1_1_sprite.html" title="Contient les données pour faire un Sprite.">Sprite</a>;
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080 
+<a name="l00081"></a><a class="code" href="structmoteur__sdl_1_1s_statistique.html">00081</a>         <span class="keyword">typedef</span> <span class="keyword">struct </span>{
+<a name="l00082"></a><a class="code" href="structmoteur__sdl_1_1s_statistique.html#ad48966929ccfe8363e641ac138ea98d1">00082</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_bombe_ramasser;
+<a name="l00083"></a><a class="code" href="structmoteur__sdl_1_1s_statistique.html#a1fe0bb461d7de77c7b70d227fb3c2806">00083</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_puissance_de_flamme;
+<a name="l00084"></a>00084 
+<a name="l00085"></a><a class="code" href="structmoteur__sdl_1_1s_statistique.html#a78dd385a3c9a4f588a956c8c792ceae0">00085</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_bombe_ramasser_TOTAL;
+<a name="l00086"></a><a class="code" href="structmoteur__sdl_1_1s_statistique.html#acaedaae6cd24b426f9acdd6f39b831e6">00086</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_puissance_de_flamme_TOTAL;
+<a name="l00087"></a>00087 
+<a name="l00088"></a><a class="code" href="structmoteur__sdl_1_1s_statistique.html#a755a643168fc2666e19cf74ee49c1e33">00088</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_de_block_detruit;
+<a name="l00089"></a><a class="code" href="structmoteur__sdl_1_1s_statistique.html#a3a656d09091f858830c27a3b22fff1a9">00089</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_de_fois_tuer_par_J1;
+<a name="l00090"></a><a class="code" href="structmoteur__sdl_1_1s_statistique.html#ad113ed01cedfd1ec6e7f4f4cfc870b6c">00090</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_de_fois_tuer_par_J2;
+<a name="l00091"></a><a class="code" href="structmoteur__sdl_1_1s_statistique.html#a5697d4b84f345cb6ee360bf22e7de92b">00091</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_de_fois_tuer_par_J3;
+<a name="l00092"></a><a class="code" href="structmoteur__sdl_1_1s_statistique.html#a3d850068f5d216ab1038dc4f3bfb33b5">00092</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_de_fois_tuer_par_J4;
+<a name="l00093"></a><a class="code" href="structmoteur__sdl_1_1s_statistique.html#aa95b70b9900e0d5835840bc116b32a5a">00093</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_de_fois_que_vous_avez_tuer_J1;
+<a name="l00094"></a><a class="code" href="structmoteur__sdl_1_1s_statistique.html#a5ad6b114e4592af66f895436d34bafcc">00094</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_de_fois_que_vous_avez_tuer_J2;
+<a name="l00095"></a><a class="code" href="structmoteur__sdl_1_1s_statistique.html#a3db67988c7ca57573b5cd71a5f444b37">00095</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_de_fois_que_vous_avez_tuer_J3;
+<a name="l00096"></a><a class="code" href="structmoteur__sdl_1_1s_statistique.html#a03e1b88d3d77dee9fda49a95b5053c57">00096</a>             <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_de_fois_que_vous_avez_tuer_J4;
+<a name="l00097"></a>00097         } <a class="code" href="structmoteur__sdl_1_1s_statistique.html">sStatistique</a>;
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100     <span class="keyword">private</span>:
+<a name="l00101"></a><a class="code" href="classmoteur__sdl.html#a762cda188b40f7604cff39855db277e2">00101</a>         <span class="keyword">static</span> <a class="code" href="classmoteur__sdl.html" title="Gère l&amp;#39;affichage via le moteur graphique SDL.">moteur_sdl</a>* <a class="code" href="classmoteur__sdl.html#a762cda188b40f7604cff39855db277e2">c_Instance</a>;
+<a name="l00102"></a><a class="code" href="classmoteur__sdl.html#ad4e2a267ddda870bea7e90ef86e0be86">00102</a>         std::vector&lt;sStatistique&gt;   <a class="code" href="classmoteur__sdl.html#ad4e2a267ddda870bea7e90ef86e0be86">c_ListStatistique</a>;
+<a name="l00103"></a><a class="code" href="classmoteur__sdl.html#a7fea8ffd0fac54908c822567a977d154">00103</a>         std::vector&lt;Sprite&gt;         <a class="code" href="classmoteur__sdl.html#a7fea8ffd0fac54908c822567a977d154">c_ListSprite</a>;
+<a name="l00104"></a><a class="code" href="classmoteur__sdl.html#a7563cdec4423e7e70088defba7c0d572">00104</a>         SDL_Surface*                <a class="code" href="classmoteur__sdl.html#a7563cdec4423e7e70088defba7c0d572">c_ecranGeneral</a>;
+<a name="l00105"></a><a class="code" href="classmoteur__sdl.html#a158b583b287bbecba9cf9756206d3c21">00105</a>         SDL_Surface*                <a class="code" href="classmoteur__sdl.html#a158b583b287bbecba9cf9756206d3c21">c_background</a>;
+<a name="l00106"></a><a class="code" href="classmoteur__sdl.html#ab633b5e3c91468fd42127b33c51ec33a">00106</a>         TTF_Font*                   <a class="code" href="classmoteur__sdl.html#ab633b5e3c91468fd42127b33c51ec33a">c_policeGeneral</a>;
+<a name="l00107"></a><a class="code" href="classmoteur__sdl.html#a3832f4140e4be8e9ffd7771479076d44">00107</a>         SDL_Surface**               <a class="code" href="classmoteur__sdl.html#a3832f4140e4be8e9ffd7771479076d44">c_Decor</a>;
+<a name="l00108"></a><a class="code" href="classmoteur__sdl.html#a7c3b329e52e2d9e5369a2f88f9402d40">00108</a>         <span class="keywordtype">bool</span>                        <a class="code" href="classmoteur__sdl.html#a7c3b329e52e2d9e5369a2f88f9402d40">c_premierAffichage</a>;
+<a name="l00109"></a><a class="code" href="classmoteur__sdl.html#a7f0f9cf61c0fd59a9a0d93b53a09ed28">00109</a>         <span class="keywordtype">bool</span>                        <a class="code" href="classmoteur__sdl.html#a7f0f9cf61c0fd59a9a0d93b53a09ed28">c_fenetreOuverte</a>;
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111     <span class="keyword">private</span>:
+<a name="l00112"></a>00112         SDL_Surface* <a class="code" href="classmoteur__sdl.html#ad346180895c9d2bdbffc1823cdeda90c" title="Permet de charger une image.">chargerImage</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> image[] ) <span class="keyword">const</span>;
+<a name="l00113"></a>00113         SDL_Surface* <a class="code" href="classmoteur__sdl.html#ae53d8fca7fc64d23b1c02390bcd3840e" title="Permet d&amp;#39;écrire du texte en NOIR">ecritTexte</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> texte[] ) <span class="keyword">const</span>;
+<a name="l00114"></a>00114         SDL_Surface* <a class="code" href="classmoteur__sdl.html#ae53d8fca7fc64d23b1c02390bcd3840e" title="Permet d&amp;#39;écrire du texte en NOIR">ecritTexte</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> texte[], <span class="keyword">const</span> SDL_Color&amp; couleur ) <span class="keyword">const</span>;
+<a name="l00115"></a>00115         SDL_Surface* <a class="code" href="classmoteur__sdl.html#ae53d8fca7fc64d23b1c02390bcd3840e" title="Permet d&amp;#39;écrire du texte en NOIR">ecritTexte</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> texte[], Uint8 r, Uint8 g, Uint8 b ) <span class="keyword">const</span>;
+<a name="l00116"></a>00116         SDL_Surface* <a class="code" href="classmoteur__sdl.html#ae53d8fca7fc64d23b1c02390bcd3840e" title="Permet d&amp;#39;écrire du texte en NOIR">ecritTexte</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> texte[], <span class="keyword">const</span> SDL_Color&amp; couleur, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> taille ) <span class="keyword">const</span>;
+<a name="l00117"></a>00117         SDL_Surface* <a class="code" href="classmoteur__sdl.html#ae53d8fca7fc64d23b1c02390bcd3840e" title="Permet d&amp;#39;écrire du texte en NOIR">ecritTexte</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> texte[], TTF_Font* police ) <span class="keyword">const</span>;
+<a name="l00118"></a>00118         SDL_Surface* <a class="code" href="classmoteur__sdl.html#ae53d8fca7fc64d23b1c02390bcd3840e" title="Permet d&amp;#39;écrire du texte en NOIR">ecritTexte</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> texte[], TTF_Font* police, <span class="keyword">const</span> SDL_Color&amp; couleur ) <span class="keyword">const</span>;
+<a name="l00119"></a>00119         <span class="keywordtype">void</span> <a class="code" href="classmoteur__sdl.html#a4a1f44d3d69f7cd7341ee2ce21a825b0" title="Blit le joueur {joueur} a la position {pos} avec l&amp;#39;orientation {ori}.">joueur_orientation</a>( <a class="code" href="classperso.html#af25facef489bc105b9fe42132b80cba5">perso::t_Orientation</a> ori, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> joueur, SDL_Rect* pos ) <span class="keyword">const</span>;
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121         <span class="keyword">static</span> <span class="keywordtype">char</span>* <a class="code" href="classmoteur__sdl.html#a93f37dba34220d15eb41eae6175c07fe" title="Complete le texte avec le caractère _ jusqu&amp;#39;a avoir un texte de longueur 20.">completerMot</a>( <span class="keywordtype">char</span> texte[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> taille );
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123         <span class="keywordtype">int</span> <a class="code" href="classmoteur__sdl.html#ab29b0ea5c97c36acbecfe99f39999ea6" title="Complete le texte avec le caractère _ jusqu&amp;#39;a avoir un texte de longueur 20.">isInSpriteList</a>( <a class="code" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a> pos ) <span class="keyword">const</span>;
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125         <a class="code" href="classmoteur__sdl.html#a2831ba756e483f5ce0c4131ce40cc2a4" title="Initialise la class moteur_sdl.">moteur_sdl</a>();
+<a name="l00126"></a>00126 
+<a name="l00127"></a>00127     <span class="keyword">public</span>:
+<a name="l00128"></a>00128         <span class="keyword">static</span> <a class="code" href="classmoteur__sdl.html" title="Gère l&amp;#39;affichage via le moteur graphique SDL.">moteur_sdl</a>&amp; <a class="code" href="classmoteur__sdl.html#a275eb203b7d8d395945c03ba036e1360" title="Renvoie l&amp;#39;instance de la class. Si pas d&amp;#39;instance, alors création d&amp;#39;une instance...">getInstance</a>();
+<a name="l00129"></a>00129         <a class="code" href="classmoteur__sdl.html#a41923c09584f627f694554c49221ab1b" title="Désinitialise la class moteur_sdl.">~moteur_sdl</a>();
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131         <span class="comment">// Fonction d&#39;affichage de menu</span>
+<a name="l00132"></a>00132         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classmoteur__sdl.html#a77fd5ba1595056b2d97f64fcef888d4e" title="Afficher l&amp;#39;image correspondante suivant le menu où on est.">menu</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> titre[], <span class="keyword">const</span> <span class="keywordtype">char</span> *choix[], <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_choix );
+<a name="l00133"></a>00133         <span class="keywordtype">void</span> <a class="code" href="classmoteur__sdl.html#a63cd3702f2f2cc52394465752965d4e8" title="Menu permettant d&amp;#39;afficher et de modifier la configuration du clavier d&amp;#39;un joueur...">afficherConfigurationClavier</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> joueur );
+<a name="l00134"></a>00134         <span class="keywordtype">int</span> <a class="code" href="classmoteur__sdl.html#a8a6ebf2258858708040bffa6f01eb4c6" title="Créer un menu pour récupérer un nombre entré par un utilisateur.">getNombre</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> titre[], <span class="keywordtype">int</span> valeurParDefaut, <span class="keywordtype">int</span> valeurMin, <span class="keywordtype">int</span> valeurMax, <span class="keywordtype">int</span>* valeurRetour );
+<a name="l00135"></a>00135         <span class="keywordtype">int</span> <a class="code" href="classmoteur__sdl.html#a25a38bdd2e51b9184130c3e90d808a8c" title="Permet d&amp;#39;obtenir du texte.">getTexte</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> titre[], <span class="keywordtype">char</span> texteRetour[21] );
+<a name="l00136"></a>00136         <span class="keywordtype">int</span> <a class="code" href="classmoteur__sdl.html#aa29ed0a00c2d35d442c06476811c9cd2">afficherGagnant</a>( <span class="keyword">const</span> <a class="code" href="classpartie.html" title="Permet de gérer une partie offline ou online ( host et client ).">partie</a>* p );
+<a name="l00137"></a><a class="code" href="classmoteur__sdl.html#aa8245993b0709e70fe88c236e37ff469">00137</a>         <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classmoteur__sdl.html#aa8245993b0709e70fe88c236e37ff469">isWindowOpen</a>(){ <span class="keywordflow">return</span> <a class="code" href="classmoteur__sdl.html#a7f0f9cf61c0fd59a9a0d93b53a09ed28">c_fenetreOuverte</a>; }
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139         <span class="comment">// Modificateur</span>
+<a name="l00140"></a><a class="code" href="classmoteur__sdl.html#a282e9df21e2581a2d2ea164be4084494">00140</a>         <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classmoteur__sdl.html#a282e9df21e2581a2d2ea164be4084494">forcerRafraichissement</a>() { <a class="code" href="classmoteur__sdl.html#a7c3b329e52e2d9e5369a2f88f9402d40">c_premierAffichage</a> = 1; <a class="code" href="classmoteur__sdl.html#a7fea8ffd0fac54908c822567a977d154">c_ListSprite</a>.clear(); }
+<a name="l00141"></a>00141 
+<a name="l00142"></a>00142         <span class="comment">// Autre :: Affichage</span>
+<a name="l00143"></a>00143         <span class="keyword">static</span> SYS_CLAVIER <a class="code" href="classmoteur__sdl.html#a030898139d0be5e7c2f47efb68bb55df" title="Affiche une map.">afficherMapEtEvent</a>( <a class="code" href="classpartie.html" title="Permet de gérer une partie offline ou online ( host et client ).">partie</a>* p );
+<a name="l00144"></a>00144 
+<a name="l00145"></a>00145         <span class="comment">// Clavier</span>
+<a name="l00146"></a>00146         <span class="keyword">static</span> SDLKey <a class="code" href="classmoteur__sdl.html#aa5484b45267f4b4cd48e6ad5c120ead5" title="Permet l&amp;#39;utilisation d&amp;#39;un clavier unicode en toute simplicité.">traductionClavier</a>( <span class="keyword">const</span> SDL_KeyboardEvent* touche );
+<a name="l00147"></a>00147 };
+<a name="l00148"></a>00148 
+<a name="l00149"></a>00149 <span class="preprocessor">#endif</span>
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

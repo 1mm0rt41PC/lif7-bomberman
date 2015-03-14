@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Liste des choses à faire</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>Liste des choses à faire </h1>  </div>
+</div>
+<div class="contents">
+<p><a class="anchor" id="_todo000001"></a> </p>
+<dl>
+<dt>Membre <a class="el" href="classclavier.html#aab45e50bd18b825b9a3cb94738ccf098">clavier::chargerConfig</a> (FILE *fp, unsigned int nb_touches) </dt>
+<dd>Faire en sorte que l'on ne soit pas obligé de mettre le nombre de touche<br/>
+ et que cela =&gt; lecture du nombre de touche avant </dd>
+</dl>
+<p><a class="anchor" id="_todo000002"></a> </p>
+<dl>
+<dt>Membre <a class="el" href="classclavier.html#ac7040ae05a9143911e2d1c04181bf7d3">clavier::enregistrerConfig</a> (FILE *fp) </dt>
+<dd>Mettre un champs optionel permettant de laisser le choix quand à l'enregistrement du nombre de touches </dd>
+</dl>
+<p><a class="anchor" id="_todo000003"></a> </p>
+<dl>
+<dt>Classe <a class="el" href="classoptions.html">options</a>  </dt>
+<dd>Prendre en compte le clavier pour SDL, SFML </dd>
+</dl>
+<p><a class="anchor" id="_todo000004"></a> </p>
+<dl>
+<dt>Membre <a class="el" href="classpartie.html#ae53ebc443767800289bf20b4123d6db1">partie::deplacer_le_Perso_A</a> (unsigned int newX, unsigned int newY, unsigned char joueur) </dt>
+<dd>faire tout les cas possibles </dd>
+</dl>
+<p><a class="anchor" id="_todo000005"></a> </p>
+<dl>
+<dt>Membre <a class="el" href="classpartie.html#a54c3b6294fadf3be0949fa19527f5370">partie::placer_perso_position_initial</a> (unsigned char joueur) </dt>
+<dd>faire tout les cas possibles </dd>
+</dl>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

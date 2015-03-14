@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman: Référence de la structure bonus::s_Event</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+  <div class="navpath">
+    <ul>
+      <li><a class="el" href="classbonus.html">bonus</a>      </li>
+      <li><a class="el" href="structbonus_1_1s___event.html">bonus::s_Event</a>      </li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Attributs publics</a>  </div>
+  <div class="headertitle">
+<h1>Référence de la structure bonus::s_Event</h1>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="bonus::s_Event" -->
+<p>Cette sturcture accueil les Events posées.  
+<a href="#_details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="bonus_8h_source.html">bonus.h</a>&gt;</code></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Graphe de collaboration de bonus::s_Event:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="structbonus_1_1s___event__coll__graph.png" border="0" usemap="#bonus_1_1s___event_coll__map" alt="Collaboration graph"/></div>
+<map name="bonus_1_1s___event_coll__map" id="bonus_1_1s___event_coll__map">
+<area shape="rect" id="node2" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )" alt="" coords="5,6,125,109"/></map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">légende</a>]</span></center></div>
+
+<p><a href="structbonus_1_1s___event-members.html">Liste de tous les membres</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbonus_1_1s___event.html#a537a74c981803a9765bbf41dd60301a8">pos</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Position de la bombe posé (8o).  <a href="#a537a74c981803a9765bbf41dd60301a8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">clock_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbonus_1_1s___event.html#aa39a2d33fea691fb375b67d95b187dc3">finEvent</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Temps avant la fin de l'event (4o).  <a href="#aa39a2d33fea691fb375b67d95b187dc3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbonus_1_1s___event.html#a0af6be88afe3e2d6eacbee01f874f1d3">type</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Le bonus (4o).  <a href="#a0af6be88afe3e2d6eacbee01f874f1d3"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Cette sturcture accueil les Events posées. </p>
+<p>Exemple: C'est par elle que l'on sait quand une bombe explose.<br/>
+ Elle fourni, le Où et Quand.<br/>
+ </p>
+<dl class="note"><dt><b>Note:</b></dt><dd>Passe -Wpadded pour 32bit (16o) </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="bonus_8h_source.html#l00087">87</a> du fichier <a class="el" href="bonus_8h_source.html">bonus.h</a>.</p>
+<hr/><h2>Documentation des données membres</h2>
+<a class="anchor" id="aa39a2d33fea691fb375b67d95b187dc3"></a><!-- doxytag: member="bonus::s_Event::finEvent" ref="aa39a2d33fea691fb375b67d95b187dc3" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">clock_t <a class="el" href="structbonus_1_1s___event.html#aa39a2d33fea691fb375b67d95b187dc3">bonus::s_Event::finEvent</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Temps avant la fin de l'event (4o). </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8h_source.html#l00089">89</a> du fichier <a class="el" href="bonus_8h_source.html">bonus.h</a>.</p>
+
+<p>Référencé par <a class="el" href="bonus_8cpp_source.html#l00243">bonus::decQuantiteUtilisable()</a>, et <a class="el" href="bonus_8cpp_source.html#l00540">bonus::kill()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a537a74c981803a9765bbf41dd60301a8"></a><!-- doxytag: member="bonus::s_Event::pos" ref="a537a74c981803a9765bbf41dd60301a8" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structs___coordonnees.html">s_Coordonnees</a> <a class="el" href="structbonus_1_1s___event.html#a537a74c981803a9765bbf41dd60301a8">bonus::s_Event::pos</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Position de la bombe posé (8o). </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8h_source.html#l00088">88</a> du fichier <a class="el" href="bonus_8h_source.html">bonus.h</a>.</p>
+
+<p>Référencé par <a class="el" href="bonus_8cpp_source.html#l00243">bonus::decQuantiteUtilisable()</a>, <a class="el" href="bonus_8cpp_source.html#l00540">bonus::kill()</a>, et <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0af6be88afe3e2d6eacbee01f874f1d3"></a><!-- doxytag: member="bonus::s_Event::type" ref="a0af6be88afe3e2d6eacbee01f874f1d3" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7ef">t_Bonus</a> <a class="el" href="structbonus_1_1s___event.html#a0af6be88afe3e2d6eacbee01f874f1d3">bonus::s_Event::type</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Le bonus (4o). </p>
+
+<p>Définition à la ligne <a class="el" href="bonus_8h_source.html#l00090">90</a> du fichier <a class="el" href="bonus_8h_source.html">bonus.h</a>.</p>
+
+<p>Référencé par <a class="el" href="bonus_8cpp_source.html#l00243">bonus::decQuantiteUtilisable()</a>, <a class="el" href="bonus_8cpp_source.html#l00540">bonus::kill()</a>, et <a class="el" href="partie_8cpp_source.html#l00239">partie::main()</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette structure a été générée à partir du fichier suivant :<ul>
+<li>/home/ph3w/Bureau/lif7-bomberman/<a class="el" href="bonus_8h_source.html">bonus.h</a></li>
+</ul>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:28 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

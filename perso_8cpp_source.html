@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/perso.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/perso.cpp</h1>  </div>
+</div>
+<div class="contents">
+<a href="perso_8cpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#include &quot;<a class="code" href="perso_8h.html">perso.h</a>&quot;</span>
+<a name="l00002"></a>00002 <span class="preprocessor">#include &quot;<a class="code" href="debug_8h.html">debug.h</a>&quot;</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="keyword">using namespace </span>std;
+<a name="l00005"></a>00005 
+<a name="l00006"></a>00006 <span class="comment">/*******************************************************************************</span>
+<a name="l00007"></a>00007 <span class="comment">* Constructeur par defaut</span>
+<a name="l00008"></a>00008 <span class="comment">*/</span>
+<a name="l00009"></a><a class="code" href="classperso.html#af0f49599683fc9a7637ca6e650fbf4aa">00009</a> <a class="code" href="classperso.html#af0f49599683fc9a7637ca6e650fbf4aa">perso::perso</a>()
+<a name="l00010"></a>00010 {
+<a name="l00011"></a>00011     <a class="code" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">c_pos</a>.<a class="code" href="structs___coordonnees.html#a58e4c6bec574940d228bf0a1b8b6b308">x</a> = 0;
+<a name="l00012"></a>00012     <a class="code" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">c_pos</a>.<a class="code" href="structs___coordonnees.html#aaf8eb7cb396be8207c9c3c63a806de51">y</a> = 0;
+<a name="l00013"></a>00013     <a class="code" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">c_armements</a> = 0;
+<a name="l00014"></a>00014     <a class="code" href="classperso.html#aaccc0ac764f0100e8126737ae37e7fc4">c_orientation</a> = ORI_bas;
+<a name="l00015"></a>00015     <a class="code" href="classperso.html#ac590574add82ac2695b0fa29f15b6b29">c_isLocal</a> = <span class="keyword">true</span>;
+<a name="l00016"></a>00016     <a class="code" href="classperso.html#a4bca6631ede313a08e9e6da539079325" title="Socket a utiliser pour le perso. Valeur par defaut: INVALID_SOCKET.">c_MySocket</a> = INVALID_SOCKET;
+<a name="l00017"></a>00017 }
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00021"></a>00021 <span class="comment">* @fn perso::perso( std::string nom, unsigned int Xpos, unsigned int Ypos )</span>
+<a name="l00022"></a>00022 <span class="comment">* @brief Constructeur surchargé</span>
+<a name="l00023"></a>00023 <span class="comment">*/</span>
+<a name="l00024"></a><a class="code" href="classperso.html#a905a1edfdeb0887d41ad1f1a25b021a7">00024</a> <a class="code" href="classperso.html#af0f49599683fc9a7637ca6e650fbf4aa">perso::perso</a>( <a class="code" href="map_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a> nom, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Xpos, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Ypos )
+<a name="l00025"></a>00025 {
+<a name="l00026"></a>00026     <a class="code" href="classperso.html#a2200983133e90ff48ed2abc6a3d2a7aa">c_nom</a> = nom;
+<a name="l00027"></a>00027     <a class="code" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">c_pos</a>.<a class="code" href="structs___coordonnees.html#a58e4c6bec574940d228bf0a1b8b6b308">x</a> = Xpos;
+<a name="l00028"></a>00028     <a class="code" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">c_pos</a>.<a class="code" href="structs___coordonnees.html#aaf8eb7cb396be8207c9c3c63a806de51">y</a> = Ypos;
+<a name="l00029"></a>00029     <a class="code" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">c_armements</a> = 0;
+<a name="l00030"></a>00030     <a class="code" href="classperso.html#aaccc0ac764f0100e8126737ae37e7fc4">c_orientation</a> = ORI_bas;
+<a name="l00031"></a>00031     <a class="code" href="classperso.html#ac590574add82ac2695b0fa29f15b6b29">c_isLocal</a> = <span class="keyword">true</span>;
+<a name="l00032"></a>00032     <a class="code" href="classperso.html#a4bca6631ede313a08e9e6da539079325" title="Socket a utiliser pour le perso. Valeur par defaut: INVALID_SOCKET.">c_MySocket</a> = INVALID_SOCKET;
+<a name="l00033"></a>00033 }
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 <span class="comment">/*******************************************************************************</span>
+<a name="l00037"></a>00037 <span class="comment">* Destructeur</span>
+<a name="l00038"></a>00038 <span class="comment">*/</span>
+<a name="l00039"></a><a class="code" href="classperso.html#a3fe28d7cf2d02fd9607c0538fd799017">00039</a> <a class="code" href="classperso.html#a3fe28d7cf2d02fd9607c0538fd799017">perso::~perso</a>()
+<a name="l00040"></a>00040 {
+<a name="l00041"></a>00041     <span class="keywordflow">if</span>( <a class="code" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">c_armements</a> )
+<a name="l00042"></a>00042         <span class="keyword">delete</span> <a class="code" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">c_armements</a>;
+<a name="l00043"></a>00043 }
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00047"></a>00047 <span class="comment">* @fn void perso::defNom( std::string nom )</span>
+<a name="l00048"></a>00048 <span class="comment">* @brief Modifie le nom du personnage</span>
+<a name="l00049"></a>00049 <span class="comment">*/</span>
+<a name="l00050"></a><a class="code" href="classperso.html#a790e87487c0adb4360d690b2f2f2d05b">00050</a> <span class="keywordtype">void</span> <a class="code" href="classperso.html#a790e87487c0adb4360d690b2f2f2d05b" title="Modifie le nom du personnage.">perso::defNom</a>( <a class="code" href="map_8cpp.html#ad453f9f71ce1f9153fb748d6bb25e454">std::string</a> nom )
+<a name="l00051"></a>00051 {
+<a name="l00052"></a>00052     <a class="code" href="classperso.html#a2200983133e90ff48ed2abc6a3d2a7aa">c_nom</a> = nom;
+<a name="l00053"></a>00053 }
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00057"></a>00057 <span class="comment">* @fn void perso::defPos( unsigned int Xpos, unsigned int Ypos )</span>
+<a name="l00058"></a>00058 <span class="comment">* @brief Modifie la position du personnage</span>
+<a name="l00059"></a>00059 <span class="comment">*/</span>
+<a name="l00060"></a><a class="code" href="classperso.html#a3c273f65aee2b958e0d2b1112762feab">00060</a> <span class="keywordtype">void</span> <a class="code" href="classperso.html#a3c273f65aee2b958e0d2b1112762feab" title="Modifie la position du personnage.">perso::defPos</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Xpos, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Ypos )
+<a name="l00061"></a>00061 {
+<a name="l00062"></a>00062     <span class="comment">//stdError(&quot;Anti-bug SDL&quot;);// Anti-bug SDL</span>
+<a name="l00063"></a>00063     <a class="code" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">c_pos</a>.<a class="code" href="structs___coordonnees.html#a58e4c6bec574940d228bf0a1b8b6b308">x</a> = Xpos;
+<a name="l00064"></a>00064     <a class="code" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">c_pos</a>.<a class="code" href="structs___coordonnees.html#aaf8eb7cb396be8207c9c3c63a806de51">y</a> = Ypos;
+<a name="l00065"></a>00065 }
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00069"></a>00069 <span class="comment">* @fn void perso::defPos( s_Coordonnees pos )</span>
+<a name="l00070"></a>00070 <span class="comment">* @brief Modifie la position du personnage</span>
+<a name="l00071"></a>00071 <span class="comment">*/</span>
+<a name="l00072"></a><a class="code" href="classperso.html#a99d225bebd697687503d2b450ecdda0b">00072</a> <span class="keywordtype">void</span> <a class="code" href="classperso.html#a3c273f65aee2b958e0d2b1112762feab" title="Modifie la position du personnage.">perso::defPos</a>( <a class="code" href="structs___coordonnees.html" title="struct de coordonnées ( x,y )">s_Coordonnees</a> pos )
+<a name="l00073"></a>00073 {
+<a name="l00074"></a>00074     <a class="code" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">c_pos</a> = pos;
+<a name="l00075"></a>00075 }
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00079"></a>00079 <span class="comment">* @fn void perso::defY( unsigned int Ypos )</span>
+<a name="l00080"></a>00080 <span class="comment">* @brief Permet de modifier la position Y du personnage</span>
+<a name="l00081"></a>00081 <span class="comment">*/</span>
+<a name="l00082"></a><a class="code" href="classperso.html#a3e19c82c00755e3ad1a5c65a760b9ad8">00082</a> <span class="keywordtype">void</span> <a class="code" href="classperso.html#a3e19c82c00755e3ad1a5c65a760b9ad8" title="Permet de modifier la position Y du personnage.">perso::defY</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Ypos )
+<a name="l00083"></a>00083 {
+<a name="l00084"></a>00084     <a class="code" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">c_pos</a>.<a class="code" href="structs___coordonnees.html#aaf8eb7cb396be8207c9c3c63a806de51">y</a> = Ypos;
+<a name="l00085"></a>00085 }
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00089"></a>00089 <span class="comment">* @fn void perso::defX( unsigned int Xpos )</span>
+<a name="l00090"></a>00090 <span class="comment">* @brief Permet de modifier la position X du personnage</span>
+<a name="l00091"></a>00091 <span class="comment">*/</span>
+<a name="l00092"></a><a class="code" href="classperso.html#af4dcf10ad3cd83ccc43e4038273b2d7d">00092</a> <span class="keywordtype">void</span> <a class="code" href="classperso.html#af4dcf10ad3cd83ccc43e4038273b2d7d" title="Permet de modifier la position X du personnage.">perso::defX</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Xpos )
+<a name="l00093"></a>00093 {
+<a name="l00094"></a>00094     <a class="code" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">c_pos</a>.<a class="code" href="structs___coordonnees.html#a58e4c6bec574940d228bf0a1b8b6b308">x</a> = Xpos;
+<a name="l00095"></a>00095 }
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00099"></a>00099 <span class="comment">* @fn void perso::defArmements( bonus* a )</span>
+<a name="l00100"></a>00100 <span class="comment">* @brief Modif l&#39;armement du perso</span>
+<a name="l00101"></a>00101 <span class="comment">*</span>
+<a name="l00102"></a>00102 <span class="comment">* Modifie implicitement l&#39;état : vivant / mort&lt;br /&gt;</span>
+<a name="l00103"></a>00103 <span class="comment">* Armé =&gt; vivant&lt;br /&gt;</span>
+<a name="l00104"></a>00104 <span class="comment">* Désarmé =&gt; mort&lt;br /&gt;</span>
+<a name="l00105"></a>00105 <span class="comment">*/</span>
+<a name="l00106"></a><a class="code" href="classperso.html#aa19fd01c37bed0b375dcc4362be08ed1">00106</a> <span class="keywordtype">void</span> <a class="code" href="classperso.html#aa19fd01c37bed0b375dcc4362be08ed1" title="Modif l&amp;#39;armement du perso.">perso::defArmements</a>( <a class="code" href="classbonus.html" title="Gère les bonus.">bonus</a>* a )
+<a name="l00107"></a>00107 {
+<a name="l00108"></a>00108     <span class="keywordflow">if</span>( <a class="code" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">c_armements</a> )
+<a name="l00109"></a>00109         <span class="keyword">delete</span> <a class="code" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">c_armements</a>;
+<a name="l00110"></a>00110     <a class="code" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">c_armements</a> = a;
+<a name="l00111"></a>00111 }
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113 
+<a name="l00114"></a>00114 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00115"></a>00115 <span class="comment">* @fn void perso::defOrientation( t_Orientation ori )</span>
+<a name="l00116"></a>00116 <span class="comment">* @brief Modif l&#39;orientation du perso</span>
+<a name="l00117"></a>00117 <span class="comment">*/</span>
+<a name="l00118"></a><a class="code" href="classperso.html#a1b34094c6f485175dfe7ddcfc58c3534">00118</a> <span class="keywordtype">void</span> <a class="code" href="classperso.html#a1b34094c6f485175dfe7ddcfc58c3534" title="Modif l&amp;#39;orientation du perso.">perso::defOrientation</a>( <a class="code" href="classperso.html#af25facef489bc105b9fe42132b80cba5">t_Orientation</a> ori )
+<a name="l00119"></a>00119 {
+<a name="l00120"></a>00120     <a class="code" href="classperso.html#aaccc0ac764f0100e8126737ae37e7fc4">c_orientation</a> = ori;
+<a name="l00121"></a>00121 }
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123 
+<a name="l00124"></a>00124 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00125"></a>00125 <span class="comment">* @fn void perso::defLocal( bool isLocal )</span>
+<a name="l00126"></a>00126 <span class="comment">* @brief Permet de definir si ce perso est local ou distant</span>
+<a name="l00127"></a>00127 <span class="comment">*/</span>
+<a name="l00128"></a><a class="code" href="classperso.html#aabdabe266d21f553cd3814cd3b560c64">00128</a> <span class="keywordtype">void</span> <a class="code" href="classperso.html#aabdabe266d21f553cd3814cd3b560c64" title="Permet de definir si ce perso est local ou distant.">perso::defLocal</a>( <span class="keywordtype">bool</span> isLocal )
+<a name="l00129"></a>00129 {
+<a name="l00130"></a>00130     <a class="code" href="classperso.html#ac590574add82ac2695b0fa29f15b6b29">c_isLocal</a> = isLocal;
+<a name="l00131"></a>00131 }
+<a name="l00132"></a>00132 
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00135"></a>00135 <span class="comment">* @fn void perso::defSocket( SOCKET MySocket )</span>
+<a name="l00136"></a>00136 <span class="comment">* @brief Permet de definir le socket utilisé par le perso</span>
+<a name="l00137"></a>00137 <span class="comment">* @note Valeur par défaut: INVALID_SOCKET</span>
+<a name="l00138"></a>00138 <span class="comment">*/</span>
+<a name="l00139"></a><a class="code" href="classperso.html#ad5afe81f43724128d79b57acfabcda3a">00139</a> <span class="keywordtype">void</span> <a class="code" href="classperso.html#ad5afe81f43724128d79b57acfabcda3a" title="Permet de definir le socket utilisé par le perso.">perso::defSocket</a>( <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> MySocket )
+<a name="l00140"></a>00140 {
+<a name="l00141"></a>00141     <a class="code" href="classperso.html#a4bca6631ede313a08e9e6da539079325" title="Socket a utiliser pour le perso. Valeur par defaut: INVALID_SOCKET.">c_MySocket</a> = MySocket;
+<a name="l00142"></a>00142 }
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144 
+<a name="l00145"></a>00145 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00146"></a>00146 <span class="comment">* @fn const string* perso::nom() const</span>
+<a name="l00147"></a>00147 <span class="comment">* @brief Renvoie le nom du personnage</span>
+<a name="l00148"></a>00148 <span class="comment">*/</span>
+<a name="l00149"></a><a class="code" href="classperso.html#a815c8505a10a43da797e0424a0192f92">00149</a> <span class="keyword">const</span> <span class="keywordtype">string</span>* <a class="code" href="classperso.html#a815c8505a10a43da797e0424a0192f92" title="Renvoie le nom du personnage.">perso::nom</a>()<span class="keyword"> const</span>
+<a name="l00150"></a>00150 <span class="keyword"></span>{
+<a name="l00151"></a>00151     <span class="keywordflow">return</span> &amp;<a class="code" href="classperso.html#a2200983133e90ff48ed2abc6a3d2a7aa">c_nom</a>;
+<a name="l00152"></a>00152 }
+<a name="l00153"></a>00153 
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00156"></a>00156 <span class="comment">* @fn unsigned int perso::X() const</span>
+<a name="l00157"></a>00157 <span class="comment">* @brief Renvoie la position X du perso</span>
+<a name="l00158"></a>00158 <span class="comment">*/</span>
+<a name="l00159"></a><a class="code" href="classperso.html#abdd033a1b14d1e2c8c6a58b7bd28de86">00159</a> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classperso.html#abdd033a1b14d1e2c8c6a58b7bd28de86" title="Renvoie la position X du perso.">perso::X</a>()<span class="keyword"> const</span>
+<a name="l00160"></a>00160 <span class="keyword"></span>{
+<a name="l00161"></a>00161     <span class="keywordflow">return</span> <a class="code" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">c_pos</a>.<a class="code" href="structs___coordonnees.html#a58e4c6bec574940d228bf0a1b8b6b308">x</a>;
+<a name="l00162"></a>00162 }
+<a name="l00163"></a>00163 
+<a name="l00164"></a>00164 
+<a name="l00165"></a>00165 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00166"></a>00166 <span class="comment">* @fn unsigned int perso::Y() const</span>
+<a name="l00167"></a>00167 <span class="comment">* @brief Renvoie la position Y du perso</span>
+<a name="l00168"></a>00168 <span class="comment">*/</span>
+<a name="l00169"></a><a class="code" href="classperso.html#a728c317474ec0e762c2c36c283a1654c">00169</a> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classperso.html#a728c317474ec0e762c2c36c283a1654c" title="Renvoie la position Y du perso.">perso::Y</a>()<span class="keyword"> const</span>
+<a name="l00170"></a>00170 <span class="keyword"></span>{
+<a name="l00171"></a>00171     <span class="keywordflow">return</span> <a class="code" href="classperso.html#a81fed2fa9e0ca30e0f1db3a4b99c9409">c_pos</a>.<a class="code" href="structs___coordonnees.html#aaf8eb7cb396be8207c9c3c63a806de51">y</a>;
+<a name="l00172"></a>00172 }
+<a name="l00173"></a>00173 
+<a name="l00174"></a>00174 
+<a name="l00175"></a>00175 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00176"></a>00176 <span class="comment">* @fn bool perso::estVivant() const</span>
+<a name="l00177"></a>00177 <span class="comment">* @brief Renvoie si le perso est vivant ou pas</span>
+<a name="l00178"></a>00178 <span class="comment">*</span>
+<a name="l00179"></a>00179 <span class="comment">* &lt;b&gt;Info&lt;/b&gt; : Un perso est vivant si il dispose d&#39;un armement et de</span>
+<a name="l00180"></a>00180 <span class="comment">* [ Soit une quantitéRamassable de vie = à 0 ] [ Soit un nombre de vie &gt; 0]</span>
+<a name="l00181"></a>00181 <span class="comment">*/</span>
+<a name="l00182"></a><a class="code" href="classperso.html#a3a8713fdb8d5c58803f29b3b91ae47b6">00182</a> <span class="keywordtype">bool</span> <a class="code" href="classperso.html#a3a8713fdb8d5c58803f29b3b91ae47b6" title="Renvoie si le perso est vivant ou pas.">perso::estVivant</a>()<span class="keyword"> const</span>
+<a name="l00183"></a>00183 <span class="keyword"></span>{
+<a name="l00184"></a>00184     <span class="keywordflow">if</span>( <a class="code" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">c_armements</a> &amp;&amp; (<a class="code" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">c_armements</a>-&gt;<a class="code" href="classbonus.html#a4c2837caa68bfe4b796c7072c6001ca2" title="Renvoie la quantité Max que l&amp;#39;on peut ramasser d&amp;#39;un objet.">quantiteMAX_Ramassable</a>(<a class="code" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7efa1246f4ca553bef6a133a81553cbb9b41">bonus::vie</a>) == 0 || <a class="code" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">c_armements</a>-&gt;<a class="code" href="classbonus.html#a6d080874a788cfacfb23c9a03733709a" title="Renvoie la quantité utilisatble d&amp;#39;un bonus.">quantiteUtilisable</a>(<a class="code" href="classbonus.html#a0d304c6fa948d0cbc4e787d775bcb7efa1246f4ca553bef6a133a81553cbb9b41">bonus::vie</a>) &gt;= 1) )
+<a name="l00185"></a>00185         <span class="keywordflow">return</span> 1;
+<a name="l00186"></a>00186     <span class="keywordflow">return</span> 0;
+<a name="l00187"></a>00187 }
+<a name="l00188"></a>00188 
+<a name="l00189"></a>00189 
+<a name="l00190"></a>00190 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00191"></a>00191 <span class="comment">* @fn bonus* perso::armements() const</span>
+<a name="l00192"></a>00192 <span class="comment">* @brief Renvoie les armes et bonus du personnage</span>
+<a name="l00193"></a>00193 <span class="comment">*/</span>
+<a name="l00194"></a><a class="code" href="classperso.html#add0aebd55226ce05235400c09a529441">00194</a> <a class="code" href="classbonus.html" title="Gère les bonus.">bonus</a>* <a class="code" href="classperso.html#add0aebd55226ce05235400c09a529441" title="Renvoie les armes et bonus du personnage.">perso::armements</a>()<span class="keyword"> const</span>
+<a name="l00195"></a>00195 <span class="keyword"></span>{
+<a name="l00196"></a>00196     <span class="keywordflow">return</span> <a class="code" href="classperso.html#ad19be0ce285dd140a9c1b8afabab52ba">c_armements</a>;
+<a name="l00197"></a>00197 }
+<a name="l00198"></a>00198 
+<a name="l00199"></a>00199 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00200"></a>00200 <span class="comment">* @fn perso::t_Orientation perso::orientation() const</span>
+<a name="l00201"></a>00201 <span class="comment">* @brief Renvoie l&#39;orientation du personnage</span>
+<a name="l00202"></a>00202 <span class="comment">*/</span>
+<a name="l00203"></a><a class="code" href="classperso.html#a5db1bb1382ea2071bd744476542eaee2">00203</a> <a class="code" href="classperso.html#af25facef489bc105b9fe42132b80cba5">perso::t_Orientation</a> <a class="code" href="classperso.html#a5db1bb1382ea2071bd744476542eaee2" title="Renvoie l&amp;#39;orientation du personnage.">perso::orientation</a>()<span class="keyword"> const</span>
+<a name="l00204"></a>00204 <span class="keyword"></span>{
+<a name="l00205"></a>00205     <span class="keywordflow">return</span> <a class="code" href="classperso.html#aaccc0ac764f0100e8126737ae37e7fc4">c_orientation</a>;
+<a name="l00206"></a>00206 }
+<a name="l00207"></a>00207 
+<a name="l00208"></a>00208 
+<a name="l00209"></a>00209 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00210"></a>00210 <span class="comment">* @fn bool perso::isLocal() const</span>
+<a name="l00211"></a>00211 <span class="comment">* @brief Renvoie l&#39;état du personnage vis à vis du reseau. (Local ou non)</span>
+<a name="l00212"></a>00212 <span class="comment">*/</span>
+<a name="l00213"></a><a class="code" href="classperso.html#a73febc8006d08e4414cf6463a3b8ad9d">00213</a> <span class="keywordtype">bool</span> <a class="code" href="classperso.html#a73febc8006d08e4414cf6463a3b8ad9d" title="Renvoie l&amp;#39;état du personnage vis à vis du reseau. (Local ou non).">perso::isLocal</a>()<span class="keyword"> const</span>
+<a name="l00214"></a>00214 <span class="keyword"></span>{
+<a name="l00215"></a>00215     <span class="keywordflow">return</span> <a class="code" href="classperso.html#ac590574add82ac2695b0fa29f15b6b29">c_isLocal</a>;
+<a name="l00216"></a>00216 }
+<a name="l00217"></a>00217 
+<a name="l00218"></a>00218 
+<a name="l00219"></a>00219 <span class="comment">/***************************************************************************/</span><span class="comment">/*!</span>
+<a name="l00220"></a>00220 <span class="comment">* @fn SOCKET perso::socket() const</span>
+<a name="l00221"></a>00221 <span class="comment">* @brief Renvoie le socket utilisé (Par defaut: INVALID_SOCKET)</span>
+<a name="l00222"></a>00222 <span class="comment">*/</span>
+<a name="l00223"></a><a class="code" href="classperso.html#a33ea05f68d9ddf2cf242b9b19c8b1ceb">00223</a> <a class="code" href="class___base_client_server_8h.html#a8dc8083897335125630f1af5dafd5831">SOCKET</a> <a class="code" href="classperso.html#a33ea05f68d9ddf2cf242b9b19c8b1ceb" title="Renvoie le socket utilisé (Par defaut: INVALID_SOCKET).">perso::socket</a>()<span class="keyword"> const</span>
+<a name="l00224"></a>00224 <span class="keyword"></span>{
+<a name="l00225"></a>00225     <span class="keywordflow">return</span> <a class="code" href="classperso.html#a4bca6631ede313a08e9e6da539079325" title="Socket a utiliser pour le perso. Valeur par defaut: INVALID_SOCKET.">c_MySocket</a>;
+<a name="l00226"></a>00226 }
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

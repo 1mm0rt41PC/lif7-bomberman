@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classbase_client_server.html#a94f59ec6bf09f3c90f25e57781632df5" title="baseClientServer::setTCP_NoDelay" alt="" coords="189,5,432,35"/>
+<area shape="rect" id="node5" href="$classclient.html#ad45e388579b8c0ffec6f29ed2c0c4de9" title="Destructeur par défaut." alt="" coords="256,59,365,88"/>
+<area shape="rect" id="node7" href="$classclient.html#a8d1188c4d73c355ca3233bd7efbedc75" title="Permet de se déconnecter au serveur." alt="" coords="480,59,632,88"/>
+</map>

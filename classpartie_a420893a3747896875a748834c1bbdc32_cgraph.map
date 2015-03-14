@@ -1,0 +1,26 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classperso.html#add0aebd55226ce05235400c09a529441" title="Renvoie les armes et bonus du personnage." alt="" coords="636,5,777,35"/>
+<area shape="rect" id="node5" href="$classperso.html#aa19fd01c37bed0b375dcc4362be08ed1" title="Modif l&#39;armement du perso." alt="" coords="336,192,499,221"/>
+<area shape="rect" id="node7" href="$classperso.html#a790e87487c0adb4360d690b2f2f2d05b" title="Modifie le nom du personnage." alt="" coords="359,245,476,275"/>
+<area shape="rect" id="node9" href="$classperso.html#ad5afe81f43724128d79b57acfabcda3a" title="Permet de definir le socket utilisé par le perso." alt="" coords="352,299,483,328"/>
+<area shape="rect" id="node11" href="$classmap.html#a5ab949cacaad5148299aa70f55bb0c93" title="Retourn le block qui est à la position X, Y." alt="" coords="649,59,764,88"/>
+<area shape="rect" id="node13" href="$classbase_client_server.html#a09c15f21a6970e5a5f9103802291c502" title="Permet de savoir si l&#39;on est sur une machine Intel, une machine qui lit les octects en Little End..." alt="" coords="307,352,528,381"/>
+<area shape="rect" id="node15" href="$classpartie.html#addde04ace47d77c95a6426d5a8b169fd" title="Empaquette les variables X, Y, type pour les envoyer sur le réseau." alt="" coords="365,405,469,435"/>
+<area shape="rect" id="node17" href="$classbonus.html#af91e74965a273a977bf3eea41dc19c13" title="Charge en mémoire les paramètres par defaut pour une partie F4A." alt="" coords="324,459,511,488"/>
+<area shape="rect" id="node19" href="$classpartie.html#a54c3b6294fadf3be0949fa19527f5370" title="Place un perso a sa position d&#39;initial Si la case initial, contient :un bonus, =&gt; ramasse le bonusdes flammes &#45;&gt; nétoyage de la case puis on place le perso." alt="" coords="295,139,540,168"/>
+<area shape="rect" id="node38" href="$classserver.html#a3958ab35efdf8daed31591a7c5c4eacb" title="Récupère les données envoyées par un client." alt="" coords="351,512,484,541"/>
+<area shape="rect" id="node40" href="$classserver.html#a5763b1fe8cfe5a31e5217e0a7584d839" title="Supprime le client qui a le socket s." alt="" coords="645,537,768,567"/>
+<area shape="rect" id="node47" href="$classbase_client_server.html#afaeac42db5822c4582e54e51daaa35a8" title="Envoie un message (buffer) au client." alt="" coords="300,616,535,645"/>
+<area shape="rect" id="node49" href="$classperso.html#a33ea05f68d9ddf2cf242b9b19c8b1ceb" title="Renvoie le socket utilisé (Par defaut: INVALID_SOCKET)." alt="" coords="364,669,471,699"/>
+<area shape="rect" id="node51" href="$classmap.html#abc682d96c6d194b75d2e8a6430b5b076" title="Renvoie la taille X de la map." alt="" coords="384,723,451,752"/>
+<area shape="rect" id="node53" href="$classmap.html#abcb25776d119cd3f2864c67ec05a6a4a" title="Renvoie la taille Y de la map." alt="" coords="384,776,451,805"/>
+<area shape="rect" id="node21" href="$classmap.html#ac7e126e8c0555f9f2e9c86cc81865b9f" title="Ajoute des meta donnée ( ou info joueurs ) dans le block (X, Y)." alt="" coords="624,325,789,355"/>
+<area shape="rect" id="node26" href="$classperso.html#a3c273f65aee2b958e0d2b1112762feab" title="Modifie la position du personnage." alt="" coords="652,379,761,408"/>
+<area shape="rect" id="node29" href="$classbonus.html#aab3137a4c074a64f24c1c725fac1fe76" title="Incrémente quantite_MAX_en_stock et quantite_utilisable." alt="" coords="589,112,824,141"/>
+<area shape="rect" id="node31" href="$classmap.html#a69a17c9066d0cc1b9cf2f0123db3114e" title="Renvoie la position initial du joueur." alt="" coords="616,165,797,195"/>
+<area shape="rect" id="node33" href="$classmap.html#a69992d77d390166473f758436777a415" title="Supprime les info du joueur du block (X, Y)." alt="" coords="637,219,776,248"/>
+<area shape="rect" id="node35" href="$classmap.html#a9daefd4b8e29eba7b98b734ce4530fea" title="Modifie le block qui est à la position X, Y." alt="" coords="651,272,763,301"/>
+<area shape="rect" id="node23" href="$coordonnees_8h.html#a6672966a8002c5f5e0a711f7029b0e7d" title="Permet de créer facillement une stucture s_Coordonnees initialisée." alt="" coords="873,299,1020,328"/>
+<area shape="rect" id="node42" href="$classserver.html#af29d65fecf50b8ba68ffee1a21d32f50" title="Retourne l&#39;id du client qui a le socket s." alt="" coords="877,564,1016,593"/>
+<area shape="rect" id="node44" href="$classserver.html#ac0cf2372772a90dbe308c784266939e1" title="Déconnecte le client puis le supprime de la liste." alt="" coords="879,511,1015,540"/>
+</map>

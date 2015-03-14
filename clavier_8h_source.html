@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Bomberman:  Fichier source de /home/ph3w/Bureau/lif7-bomberman/clavier.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div class="header">
+  <div class="headertitle">
+<h1>/home/ph3w/Bureau/lif7-bomberman/clavier.h</h1>  </div>
+</div>
+<div class="contents">
+<a href="clavier_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef CLAVIER_h</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define CLAVIER_h</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;stdio.h&gt;</span> <span class="comment">// Pour fread, fwrite</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &quot;<a class="code" href="config_8h.html">config.h</a>&quot;</span>
+<a name="l00006"></a>00006 <span class="comment"></span>
+<a name="l00007"></a>00007 <span class="comment">/*!</span>
+<a name="l00008"></a>00008 <span class="comment">* @class clavier</span>
+<a name="l00009"></a>00009 <span class="comment">* @brief Gère les claviers.</span>
+<a name="l00010"></a>00010 <span class="comment">*</span>
+<a name="l00011"></a>00011 <span class="comment">* Cette class a été consu pour éviter les problèmes de portablilité vers des systèmes&lt;br /&gt;</span>
+<a name="l00012"></a>00012 <span class="comment">* / des lib qui pourraient gérer les claviers d&#39;une autre façon&lt;br /&gt;</span>
+<a name="l00013"></a>00013 <span class="comment">* La class permet :&lt;br /&gt;</span>
+<a name="l00014"></a>00014 <span class="comment">*   - de définir des touches</span>
+<a name="l00015"></a>00015 <span class="comment">*   - d&#39;enregistrer / de charger la configuration d&#39;un clavier</span>
+<a name="l00016"></a>00016 <span class="comment">*/</span>
+<a name="l00017"></a><a class="code" href="classclavier.html">00017</a> <span class="keyword">class </span><a class="code" href="classclavier.html" title="Gère les claviers.">clavier</a>
+<a name="l00018"></a>00018 {
+<a name="l00019"></a>00019     <span class="keyword">private</span>:
+<a name="l00020"></a>00020         <span class="comment">// struct {</span>
+<a name="l00021"></a><a class="code" href="classclavier.html#ad0c0f0131980b608b0d4f8d821d88b4e">00021</a>         SYS_CLAVIER *<a class="code" href="classclavier.html#ad0c0f0131980b608b0d4f8d821d88b4e" title="Tableau des touches qui sont affecté à une action.">c_touches</a>;<span class="comment">//!&lt; Tableau des touches qui sont affecté à une action</span>
+<a name="l00022"></a><a class="code" href="classclavier.html#a4331e5a7fc85bbb7de0a8ef2b54bf1b5">00022</a> <span class="comment"></span>        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classclavier.html#a4331e5a7fc85bbb7de0a8ef2b54bf1b5" title="Nombre de touche dans notre tableau.">c_nb_touches</a>;<span class="comment">//!&lt; Nombre de touche dans notre tableau</span>
+<a name="l00023"></a>00023 <span class="comment"></span>        <span class="comment">// }</span>
+<a name="l00024"></a>00024 
+<a name="l00025"></a>00025     <span class="keyword">public</span>:<span class="comment"></span>
+<a name="l00026"></a>00026 <span class="comment">        /*!</span>
+<a name="l00027"></a>00027 <span class="comment">        * @enum t_touche</span>
+<a name="l00028"></a>00028 <span class="comment">        * @brief Les actions possibles avec les touches</span>
+<a name="l00029"></a>00029 <span class="comment">        */</span>
+<a name="l00030"></a><a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165">00030</a>         <span class="keyword">enum</span> <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165" title="Les actions possibles avec les touches.">t_touche</a> {
+<a name="l00031"></a><a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a8231b289f48a99aa410bbbeff3bd9b8e">00031</a>             <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a8231b289f48a99aa410bbbeff3bd9b8e">haut</a> = 0,
+<a name="l00032"></a><a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a11ae41a3ad78c2ca0e17684d62ab8a0a">00032</a>             bas,
+<a name="l00033"></a><a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a02c98200c93bcecacd095997b8ae558a">00033</a>             droite,
+<a name="l00034"></a><a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165af13384e0a20ef0b70ff3f04e41879df7">00034</a>             gauche,
+<a name="l00035"></a><a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165ab7a4a8f874823e415ac1fd56e450a4b8">00035</a>             lancerBombe,
+<a name="l00036"></a><a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a25f40f7924d6289a172be3c154768918">00036</a>             declancheur,
+<a name="l00037"></a><a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a6b4d36333878cb8bda9ab4d119cd4e75">00037</a>             <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165a6b4d36333878cb8bda9ab4d119cd4e75" title="En cas de bug.">NUL</a><span class="comment">//!&lt; En cas de bug</span>
+<a name="l00038"></a>00038 <span class="comment"></span>        };
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040         <a class="code" href="classclavier.html#aa81d94deb88ac7d07ca0f16818e76e19" title="Initialisation du système de gestion du clavier.">clavier</a>();
+<a name="l00041"></a><a class="code" href="classclavier.html#a6bd2bedcdf85be315a41722665844e44">00041</a>         <span class="keyword">inline</span> <a class="code" href="classclavier.html#a6bd2bedcdf85be315a41722665844e44" title="Alias de initClavier( nb_touches );.">clavier</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classclavier.html#a8929b689468a574630f32dbb108b5f3a" title="Renvoie le nombre d&amp;#39;actions possibles sur ce clavier.">nb_touches</a> ){ <a class="code" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche.">initClavier</a>( nb_touches ); }<span class="comment">//!&lt; Alias de initClavier( nb_touches );</span>
+<a name="l00042"></a>00042 <span class="comment"></span>        <a class="code" href="classclavier.html#a425a9a84858054a1fbfb059a0490b240" title="Désinitialisation du systeme de gestion du clavier.">~clavier</a>();
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044         <span class="comment">// Modificateurs</span>
+<a name="l00045"></a>00045         <span class="keywordtype">void</span> <a class="code" href="classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche.">initClavier</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classclavier.html#a8929b689468a574630f32dbb108b5f3a" title="Renvoie le nombre d&amp;#39;actions possibles sur ce clavier.">nb_touches</a> );
+<a name="l00046"></a>00046         <span class="keywordtype">void</span> <a class="code" href="classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&amp;#39;une touche.">defTouche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165" title="Les actions possibles avec les touches.">t_touche</a> t, SYS_CLAVIER tsys );
+<a name="l00047"></a>00047         <span class="keywordtype">bool</span> <a class="code" href="classclavier.html#aab45e50bd18b825b9a3cb94738ccf098" title="Charge la configuration du clavier depuis un fichier ( déjà ouvert ! ).">chargerConfig</a>( FILE* fp, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classclavier.html#a8929b689468a574630f32dbb108b5f3a" title="Renvoie le nombre d&amp;#39;actions possibles sur ce clavier.">nb_touches</a> );
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049         <span class="comment">// Accesseurs</span>
+<a name="l00050"></a>00050         <span class="keywordtype">bool</span> <a class="code" href="classclavier.html#a2451eb585b8f31d8fea04791d45e9f50" title="Permet de déterminer si la touche tsys est dans la liste des touches de cette configuration.">estDansClavier</a>( SYS_CLAVIER tsys ) <span class="keyword">const</span>;
+<a name="l00051"></a>00051         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classclavier.html#a8929b689468a574630f32dbb108b5f3a" title="Renvoie le nombre d&amp;#39;actions possibles sur ce clavier.">nb_touches</a>() <span class="keyword">const</span>;
+<a name="l00052"></a>00052         SYS_CLAVIER <a class="code" href="classclavier.html#a64ea9fed59e7a3a07c987a412b96880a" title="Renvoie la touche affecté pour une action.">touche</a>( <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165" title="Les actions possibles avec les touches.">t_touche</a> t ) <span class="keyword">const</span>;
+<a name="l00053"></a>00053         <a class="code" href="classclavier.html#a856f09c9c69488343534494c2e1ed165" title="Les actions possibles avec les touches.">t_touche</a> <a class="code" href="classclavier.html#a8c811ee0dbf6c9aa42d013c0794291ef" title="Détermine si la touche tsys envoyée fait partie des actions de ce clavier.">obtenirTouche</a>( SYS_CLAVIER tsys ) <span class="keyword">const</span>;
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055         <span class="comment">// Autre</span>
+<a name="l00056"></a>00056         <span class="keywordtype">bool</span> <a class="code" href="classclavier.html#ac7040ae05a9143911e2d1c04181bf7d3" title="Charge la configuration du clavier depuis un fichier ( déjà ouvert ! ).">enregistrerConfig</a>( FILE* fp );
+<a name="l00057"></a>00057 };
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059 <span class="preprocessor">#endif</span>
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Fri Jan 21 2011 01:21:27 pour Bomberman par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

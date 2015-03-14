@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classserver.html#a5763b1fe8cfe5a31e5217e0a7584d839" title="Supprime le client qui a le socket s." alt="" coords="193,32,316,61"/>
+<area shape="rect" id="node5" href="$classpartie.html#a420893a3747896875a748834c1bbdc32" title="Permet d&#39;ajouter un nouveau joueur à la partie." alt="" coords="551,5,788,35"/>
+<area shape="rect" id="node11" href="$classserver.html#a3958ab35efdf8daed31591a7c5c4eacb" title="Récupère les données envoyées par un client." alt="" coords="367,57,500,87"/>
+<area shape="rect" id="node7" href="$classpartie.html#a9133cb48f9a3975c089dbc5dba8311c4" title="Lance le jeu." alt="" coords="837,32,936,61"/>
+<area shape="rect" id="node9" href="$main_8cpp.html#ac6fa6d87f0c898f27051d6650896878f" title="main" alt="" coords="985,32,1039,61"/>
+</map>

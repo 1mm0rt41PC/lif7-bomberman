@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classserver.html#a86e0b7cfa19dc5aee949533eb617e41f" title="Met le serveur en activité. Lance l&#39;écoute sur le port demandé." alt="" coords="212,32,337,61"/>
+<area shape="rect" id="node9" href="$classbase_client_server.html#ae24984bbf180c9fe1e75160e108dbaa4" title="Modifier le port d&#39;écoute." alt="" coords="183,85,367,115"/>
+<area shape="rect" id="node5" href="$classbase_client_server.html#a6415a999d34d9969e6b7d7108df74c0f" title="baseClientServer::IF_WINDOWS" alt="" coords="428,5,647,35"/>
+<area shape="rect" id="node7" href="$classbase_client_server.html#a94f59ec6bf09f3c90f25e57781632df5" title="baseClientServer::setTCP_NoDelay" alt="" coords="416,59,659,88"/>
+</map>

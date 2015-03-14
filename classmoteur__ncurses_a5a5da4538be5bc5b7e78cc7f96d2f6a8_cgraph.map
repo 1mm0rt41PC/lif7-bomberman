@@ -1,0 +1,14 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classmoteur__ncurses.html#a4e1ecb3c99e46d3088caff0d4c57e1f3" title="Affiche une touche. Si nécessaire, un affichage spécifique est fait." alt="" coords="364,5,599,35"/>
+<area shape="rect" id="node5" href="$classmoteur__ncurses.html#aa5d8fae6272f29e7fc0981a988b71a49" title="Affiche un cadre au tour (interieur) de la fenêtre." alt="" coords="396,59,567,88"/>
+<area shape="rect" id="node7" href="$classoptions.html#a281d1464d4a4c827bcbac56ab3c9be94" title="Renvoie le clavier numéro {clavier_numero}." alt="" coords="403,112,560,141"/>
+<area shape="rect" id="node9" href="$classmoteur__ncurses.html#a208a8f8e69a8bcfe2fe3b01291195d1c" title="Permet d&#39;effacer une ligne." alt="" coords="387,165,576,195"/>
+<area shape="rect" id="node11" href="$classclavier.html#aea4d1270e56db4551c11b0d9c5079a50" title="Définition d&#39;une touche." alt="" coords="1353,217,1487,247"/>
+<area shape="rect" id="node13" href="$classoptions.html#a3db3c367210272824e13e6bb1260e8c4" title="Initialise la class options." alt="" coords="405,269,557,299"/>
+<area shape="rect" id="node27" href="$classclavier.html#a64ea9fed59e7a3a07c987a412b96880a" title="Renvoie la touche affecté pour une action." alt="" coords="424,323,539,352"/>
+<area shape="rect" id="node15" href="$classoptions.html#a41a256b4ba3b2d68a2d72b9245aa0c4d" title="Initialise la class options." alt="" coords="649,269,772,299"/>
+<area shape="rect" id="node17" href="$classoptions.html#acb1a8837861a00fa69ed734598ee2b07" title="Permet de charger la config par défaut ( port &amp; clavier )." alt="" coords="1083,269,1261,299"/>
+<area shape="rect" id="node22" href="$classoptions.html#ade7f5fcd45bd4a6c56c4064ce5c2f915" title="Remet (et enregistre) les paramètres par défaut." alt="" coords="821,321,992,351"/>
+<area shape="rect" id="node20" href="$classclavier.html#a98470baa36e77af0a31aee3df4095553" title="Définition du nombre de touche." alt="" coords="1353,271,1487,300"/>
+<area shape="rect" id="node25" href="$classoptions.html#a1afbc8baea208c989f8dd96e82a4eef8" title="Supprime le fichier de configuration." alt="" coords="1041,323,1303,352"/>
+</map>
