@@ -13,19 +13,25 @@
 // NOTE: si DEFAULT_PORT < 1024 alors les droits root sont nécéssaire
 #define DEFAULT_PORT 947 // 947 = 'b'+'o'+'m'+'b'+'e'+'r'+'m'+'a'+'n' °(^_^)°
 
+// Permet d'activer le système anti segfault ( UNIX ONLY ! )
+#define NO_SEGFAULT
+
 enum {
 	__BOMBERMAN_VERSION__ = 1
 };
 
 #if defined(_WIN32) || defined(WIN32) || defined(WIN64) || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__BORLANDC__)
 	#define OS_WINDOWS 1
+#elif defined (linux)
+	#define OS_LINUX 1
 #else
+	#warning "Systeme d'exploitation inconnu !"
 #endif
 
 /*******************************************************************************
 * Lib SFML
 */
-#ifdef __LIB_SFML__
+#if defined(__LIB_SFML__)
 	#include <SFML/Window.hpp>
 	#include <SFML/Graphics.hpp>
 	#define SYS_CLAVIER sf::Key::Code
@@ -35,7 +41,7 @@ enum {
 /*******************************************************************************
 * Lib NCruses
 */
-#elif __LIB_ncurses__
+#elif defined(__LIB_ncurses__)
 	#if defined(OS_WINDOWS)
 		#include <Ncurses/curses.h>
 	#else
@@ -65,10 +71,11 @@ enum {
 /*******************************************************************************
 * Lib SDL
 */
-#elif __LIB_SDL__
+#elif defined(__LIB_SDL__)
 	#include <SDL/SDL.h>
 	#include <SDL/SDL_ttf.h>
 	#include <SDL/SDL_image.h>
+	#include <SDL/SDL_rotozoom.h>
 	#define SYS_CLAVIER SDLKey //Uint8 || SDLKey
 	#define RETOUR_MENU_PRECEDENT SDLK_ESCAPE// Permet de faire la liaison pour quitter le menu principal
 

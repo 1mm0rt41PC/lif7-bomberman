@@ -25,8 +25,8 @@
 	#include <netinet/in.h>
 	#include <netinet/tcp.h>		// Pour TCP_NODELAY et SOL_TCP.
 	#include <arpa/inet.h>
-	#include <unistd.h> /* close */
-	#include <netdb.h> /* gethostbyname */
+	#include <unistd.h>				// close
+	#include <netdb.h>				// gethostbyname
 	#include <errno.h>
 	#define INVALID_SOCKET -1
 	#define SOCKET_ERROR -1
@@ -99,7 +99,7 @@ class baseClientServer
 
 		// Compactiblité
 		IF_WINDOWS(
-			inline const char* strerror( int ){ return "?"; }
+			inline const char* strerror( int ) const { return "?"; }
 		)
 
 		static void printAllBuffer( const char buffer[], unsigned int bufferSize, const char file[], unsigned int line );
@@ -108,6 +108,7 @@ class baseClientServer
 		// Conversion Little Endian <-> Big Endian
 		template<class Type> static Type reverseByte( Type var );// Inverse les octets
 		//template<class Type> Type reverseBit( Type var );// Inverse les bits
+		char* getLocalIPv4() const;
 };
 
 #include "class_BaseClientServer.inl"

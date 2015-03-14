@@ -49,35 +49,54 @@ bonus::s_bonus_proprieter* bonus::bonusProp()
 
 	C_bonusProp[bombe].probabiliter_pop = 60;// 60% de pop
 	C_bonusProp[bombe].quantite_MAX_Ramassable = 20;
-	C_bonusProp[bombe].duree = CLOCKS_PER_SEC+CLOCKS_PER_SEC/2;// 1.5secs avant explosion
+	// 1.5secs avant explosion
+	C_bonusProp[bombe].duree.tv_sec = 1;// 1.5secs avant explosion
+	C_bonusProp[bombe].duree.tv_usec = 500000;
 
-	C_bonusProp[puissance_flamme].probabiliter_pop = 60;// 60% de pop
+	C_bonusProp[super_bombe].probabiliter_pop = 5;// 5% de pop
+	C_bonusProp[super_bombe].duree.tv_sec = 1;// 1.5secs avant explosion
+	C_bonusProp[super_bombe].duree.tv_usec = 500000;
+
+	C_bonusProp[puissance_flamme].probabiliter_pop = 80;// 80% de pop
 	C_bonusProp[puissance_flamme].quantite_MAX_Ramassable = 15;
-	C_bonusProp[puissance_flamme].duree = -1;
+	C_bonusProp[puissance_flamme].duree.tv_sec = -1;
+	C_bonusProp[puissance_flamme].duree.tv_usec = -1;
+
+	C_bonusProp[super_puissance_flamme].probabiliter_pop = 10;// 10% de pop
+	C_bonusProp[super_puissance_flamme].quantite_MAX_Ramassable = 1;
+	C_bonusProp[super_puissance_flamme].duree.tv_sec = -1;
+	C_bonusProp[super_puissance_flamme].duree.tv_usec = -1;
 
 	C_bonusProp[declancheur].probabiliter_pop = 30;// 30% de pop
 	C_bonusProp[declancheur].quantite_MAX_Ramassable = 1;
-	C_bonusProp[declancheur].duree = -1;
+	C_bonusProp[declancheur].duree.tv_sec = -1;
+	C_bonusProp[declancheur].duree.tv_usec = -1;
 
 	C_bonusProp[pousse_bombe].probabiliter_pop = 30;// 30% de pop
 	C_bonusProp[pousse_bombe].quantite_MAX_Ramassable = 1;
-	C_bonusProp[pousse_bombe].duree = -1;
+	C_bonusProp[pousse_bombe].duree.tv_sec = -1;
+	C_bonusProp[pousse_bombe].duree.tv_usec = -1;
 
 	C_bonusProp[vie].probabiliter_pop = 5;// 5% de pop
 	C_bonusProp[vie].quantite_MAX_Ramassable = 10;
-	C_bonusProp[vie].duree = -1;
+	C_bonusProp[vie].duree.tv_sec = -1;
+	C_bonusProp[vie].duree.tv_usec = -1;
 
 	C_bonusProp[teleporteur].probabiliter_pop = 30;// 30% de pop
 	C_bonusProp[teleporteur].quantite_MAX_Ramassable = 1;// Au moins 1, sinan pas pop
-	C_bonusProp[teleporteur].duree = -1;
+	C_bonusProp[teleporteur].duree.tv_sec = -1;
+	C_bonusProp[teleporteur].duree.tv_usec = -1;
 
 	C_bonusProp[inversseur_touche].probabiliter_pop = 25;// 25% de pop
 	C_bonusProp[inversseur_touche].quantite_MAX_Ramassable = 1;
-	C_bonusProp[inversseur_touche].duree = CLOCKS_PER_SEC*10;
+	// 10 sec d'inverstion de touche
+	C_bonusProp[force_explosion].duree.tv_sec = 10;
+	C_bonusProp[force_explosion].duree.tv_usec = 0;
 
-	C_bonusProp[force_explosion].probabiliter_pop = 30;// 30% de pop
+	C_bonusProp[force_explosion].probabiliter_pop = 20;// 30% de pop
 	C_bonusProp[force_explosion].quantite_MAX_Ramassable = 1;// Au moins 1, sinan pas pop
-	C_bonusProp[force_explosion].duree = -1;
+	C_bonusProp[force_explosion].duree.tv_sec = -1;
+	C_bonusProp[force_explosion].duree.tv_usec = -1;
 
 	return C_bonusProp;
 }
@@ -111,14 +130,20 @@ void bonus::param_Par_Defaut()// Pour une partie classique ( F4A )
 	c_liste[bombe].quantite_utilisable = 1;// 1 Bombe pour commencer
 	c_liste[bombe].quantite_MAX_en_stock = 1;// 1 Bombe pour commencer
 
+	c_liste[super_bombe].quantite_utilisable = 0;
+	c_liste[super_bombe].quantite_MAX_en_stock = 0;
+
 	c_liste[declancheur].quantite_utilisable = 0;// 0 Déclancheur pour commencer
 	c_liste[declancheur].quantite_MAX_en_stock = 0;// 0 Déclancheur pour commencer
 
 	c_liste[pousse_bombe].quantite_utilisable = 0;// 0 Pousse bombe pour commencer
-	c_liste[pousse_bombe].quantite_MAX_en_stock = 0;// 1 Pousse bombe Maxi
+	c_liste[pousse_bombe].quantite_MAX_en_stock = 0;// 0 Pousse bombe pour commencer
 
 	c_liste[puissance_flamme].quantite_utilisable = 1;
 	c_liste[puissance_flamme].quantite_MAX_en_stock = 1;
+
+	c_liste[super_puissance_flamme].quantite_utilisable = 0;
+	c_liste[super_puissance_flamme].quantite_MAX_en_stock = 0;
 
 	c_liste[vie].quantite_utilisable = 0;
 	c_liste[vie].quantite_MAX_en_stock = 0;
@@ -232,7 +257,16 @@ bool bonus::incQuantiteUtilisable_Event( t_Bonus b )
 		// Création de l'event
 		s_Event e;
 		e.type = b;
-		e.finEvent = clock() + C_bonusProp[b].duree;// Ajustement du temps
+
+		s_timeval now;
+		gettimeofday(&now, 0);
+		e.finEvent.tv_sec = now.tv_sec + C_bonusProp[b].duree.tv_sec;// Ajustement du temps
+		e.finEvent.tv_usec = now.tv_usec + C_bonusProp[b].duree.tv_usec;// Ajustement du temps
+		if( e.finEvent.tv_usec > 999999 ){
+			e.finEvent.tv_sec += e.finEvent.tv_usec/1000000;
+			e.finEvent.tv_usec %= 1000000;
+		}
+
 		c_listEvent.push_back( e );// On ajout l'event à la liste des event
 		return true;
 	}
@@ -284,7 +318,16 @@ bool bonus::incQuantiteMAX_en_stock_Event( t_Bonus b )
 		// Création de l'event
 		s_Event e;
 		e.type = b;
-		e.finEvent = clock() + C_bonusProp[b].duree;// Ajustement du temps
+
+		s_timeval now;
+		gettimeofday(&now, 0);
+		e.finEvent.tv_sec = now.tv_sec + C_bonusProp[b].duree.tv_sec;// Ajustement du temps
+		e.finEvent.tv_usec = now.tv_usec + C_bonusProp[b].duree.tv_usec;// Ajustement du temps
+		if( e.finEvent.tv_usec > 999999 ){
+			e.finEvent.tv_sec += e.finEvent.tv_usec/1000000;
+			e.finEvent.tv_usec %= 1000000;
+		}
+
 		c_listEvent.push_back( e );// On ajout l'event à la liste des event
 		return true;
 	}
@@ -324,8 +367,8 @@ bool bonus::decQuantiteUtilisable( t_Bonus b )
 */
 bool bonus::decQuantiteUtilisable( t_Bonus b, unsigned int x, unsigned int y )
 {
-	if( C_bonusProp[b].duree < 0 ){
-		stdError("Le temps du Bonus ne lui permet pas d'avoir un Event. bonus=%d, C_bonusProp[b].duree=%d", (int)b, (int)C_bonusProp[b].duree);
+	if( C_bonusProp[b].duree.tv_sec < 0 || C_bonusProp[b].duree.tv_usec < 0 ){
+		stdError("Le temps du Bonus ne lui permet pas d'avoir un Event. bonus=%d, C_bonusProp[b].duree={%ld,%ld}", (int)b, C_bonusProp[b].duree.tv_sec, C_bonusProp[b].duree.tv_usec);
 		return decQuantiteUtilisable( b );
 	}
 
@@ -337,7 +380,16 @@ bool bonus::decQuantiteUtilisable( t_Bonus b, unsigned int x, unsigned int y )
 	e.type = b;
 	e.pos.x = x;
 	e.pos.y = y;
-	e.finEvent = clock() + C_bonusProp[b].duree;// Ajustement du temps
+
+	s_timeval now;
+	gettimeofday(&now, 0);
+	e.finEvent.tv_sec = now.tv_sec + C_bonusProp[b].duree.tv_sec;// Ajustement du temps
+	e.finEvent.tv_usec = now.tv_usec + C_bonusProp[b].duree.tv_usec;// Ajustement du temps
+	if( e.finEvent.tv_usec > 999999 ){
+		e.finEvent.tv_sec += e.finEvent.tv_usec/1000000;
+		e.finEvent.tv_usec %= 1000000;
+	}
+
 	c_listEvent.push_back( e );// On ajout l'event à la liste des event
 
 	return true;
@@ -376,7 +428,7 @@ bool bonus::decQuantiteMAX_en_stock( t_Bonus b )
 */
 void bonus::defQuantiteUtilisable( t_Bonus b, unsigned char quantite_utilisable )
 {
-	if( bombe > b || b >= NB_ELEMENT_t_Bonus || C_bonusProp[b].quantite_MAX_Ramassable >= quantite_utilisable ){
+	if( bombe > b || b >= NB_ELEMENT_t_Bonus || C_bonusProp[b].quantite_MAX_Ramassable < quantite_utilisable ){
 		stdError("Bonus non trouvé ou erreur > bonus=%d, C_bonusProp[%d].quantite_MAX_Ramassable=%d, quantite_utilisable=%d", b, b, (int)C_bonusProp[b].quantite_MAX_Ramassable, (int)quantite_utilisable);
 		return ;
 	}
@@ -523,11 +575,14 @@ void bonus::defBonus( t_Bonus b, unsigned char quantite_utilisable, unsigned cha
 */
 bool bonus::isEvent( s_Event* e )
 {
+	s_timeval now;
+	gettimeofday(&now, 0);
+
 	if( C_bonusProp[declancheur].quantite_MAX_Ramassable > 0 ){// Partie avec déclancheur
 		for( unsigned int i=0; i<c_listEvent.size(); i++ )
 		{
-			if( (quantiteUtilisable(declancheur) == 0 && c_listEvent.at(i).finEvent <= clock())// On a pas de déclancheur + timeout
-				|| (quantiteUtilisable(declancheur) > 0 && c_listEvent.at(i).finEvent == 0)// On a un déclancheur + timeout==0 => timeout
+			if( (quantiteUtilisable(declancheur) == 0 && c_listEvent.at(i).finEvent <= now)// On a pas de déclancheur + timeout
+				|| (quantiteUtilisable(declancheur) > 0 && (c_listEvent.at(i).finEvent.tv_sec == 0 || c_listEvent.at(i).finEvent.tv_usec == 0) )// On a un déclancheur + timeout==0 => timeout
 				){// Si timeout
 				*e = c_listEvent.at(i);
 				c_listEvent.erase(c_listEvent.begin()+i);// On supprime la bombe qui était posée
@@ -539,7 +594,7 @@ bool bonus::isEvent( s_Event* e )
 	}else{// Partie SANS déclancheur
 		for( unsigned int i=0; i<c_listEvent.size(); i++ )
 		{
-			if( c_listEvent.at(i).finEvent <= clock() ){// Si timeout
+			if( c_listEvent.at(i).finEvent <= now ){// Si timeout
 				*e = c_listEvent.at(i);
 				c_listEvent.erase(c_listEvent.begin()+i);// On supprime la bombe qui était posée
 				incQuantiteUtilisable( bombe );// On redonne la bombe au joueur
@@ -559,6 +614,7 @@ bool bonus::isEvent( s_Event* e )
 bonus::t_Bonus bonus::getBonusAleatoire()
 {
 	int r;
+	//return  super_bombe;
 
 	do{
 		r = myRand(0, NB_ELEMENT_t_Bonus-1);
@@ -566,6 +622,14 @@ bonus::t_Bonus bonus::getBonusAleatoire()
 
 	if( myRand(0, 100) <= C_bonusProp[r].probabiliter_pop )
 		return (bonus::t_Bonus)r;
+
+	do{
+		r = myRand(0, NB_ELEMENT_t_Bonus-1);
+	}while( !C_bonusProp[r].quantite_MAX_Ramassable );// On ne prend que les bonus dont la quantité MAX ramassable est non null !
+
+	if( myRand(0, 100) <= C_bonusProp[r].probabiliter_pop  )
+		return (bonus::t_Bonus)r;
+
 	return __RIEN__;
 }
 
@@ -593,8 +657,10 @@ bonus::s_Event* bonus::getEvent( unsigned int x, unsigned int y )
 */
 void bonus::forceTimeOut()
 {
-	for( unsigned int i=0; i<c_listEvent.size(); i++ )
-		c_listEvent.at(i).finEvent = 0;
+	for( unsigned int i=0; i<c_listEvent.size(); i++ ){
+		c_listEvent.at(i).finEvent.tv_sec = 0;
+		c_listEvent.at(i).finEvent.tv_usec = 0;
+	}
 }
 
 
@@ -607,8 +673,25 @@ void bonus::forceTimeOut( unsigned int x, unsigned int y )
 	for( unsigned int i=0; i<c_listEvent.size(); i++ )
 	{
 		if( c_listEvent.at(i).pos.x == x && c_listEvent.at(i).pos.y == y ){
-			c_listEvent.at(i).finEvent = 0;
+			c_listEvent.at(i).finEvent.tv_sec = 0;
+			c_listEvent.at(i).finEvent.tv_usec = 0;
 			return ;
+		}
+	}
+}
+
+
+/***************************************************************************//*!
+* @fn void bonus::forceTimeOut( t_Bonus b )
+* @brief Met fin au temps d'attente de tout les event qui sont == à b
+*/
+void bonus::forceTimeOut( t_Bonus b )
+{
+	for( unsigned int i=0; i<c_listEvent.size(); i++ )
+	{
+		if( c_listEvent.at(i).type == b ){
+			c_listEvent.at(i).finEvent.tv_sec = 0;
+			c_listEvent.at(i).finEvent.tv_usec = 0;
 		}
 	}
 }
@@ -621,9 +704,9 @@ void bonus::forceTimeOut( unsigned int x, unsigned int y )
 */
 void bonus::kill()
 {
-	for( unsigned int i=0; i<c_listEvent.size(); i++ )
-	{
-		c_listEvent.at(i).finEvent = 0;
+	for( unsigned int i=0; i<c_listEvent.size(); i++ ){
+		c_listEvent.at(i).finEvent.tv_sec = 0;
+		c_listEvent.at(i).finEvent.tv_usec = 0;
 	}
 
 	// Création de l'event
@@ -631,6 +714,7 @@ void bonus::kill()
 	e.type = SIGNAL_kill;
 	e.pos.x = 0;
 	e.pos.y = 0;
-	e.finEvent = 0;
+	e.finEvent.tv_sec = 0;
+	e.finEvent.tv_usec = 0;
 	c_listEvent.push_back( e );// On ajout l'event à la liste des event
 }

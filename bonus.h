@@ -2,7 +2,6 @@
 #define BONUS_h
 
 #include <vector>
-#include <time.h>
 #include "coordonnees.h"
 #include "outils.h"
 
@@ -39,8 +38,10 @@ class bonus
 		* le define NB_ELEMENT_t_Bonus
 		*/
 		enum t_Bonus {
-			bombe=0,
+			bombe=0,//!< A laisser en 1ere position ! NE PAS TOUCHER !
+			super_bombe,
 			puissance_flamme,
+			super_puissance_flamme,
 			declancheur,
 			pousse_bombe,
 			vie,
@@ -56,8 +57,8 @@ class bonus
 			__RIEN__//!< Sert pour bonus::getBonusAleatoire();
 		};
 		enum {
-			VITESSE_flammes = CLOCKS_PER_SEC/10,// Vitesse de déflagration en milli-sec
-			VITESSE_pousseBombe = CLOCKS_PER_SEC/20
+			VITESSE_flammes = 90*1000,// Vitesse de déflagration en micro-sec ( NOTE 1 000 000 milli-sec = 1 sec, 1 milliseconde = 1000 microsecondes )
+			VITESSE_pousseBombe = 50*1000
 		};
 
 		/*!
@@ -72,7 +73,7 @@ class bonus
 			* - +0 => Callback direct
 			* - >0 => Callback au bout de X secs
 			*/
-			clock_t duree;// Durée d'utilisation
+			s_timeval duree;// Durée d'utilisation
 			//t_Bonus type; // <- Le type est stocké dans le numéro du tableau [0] -> [t_Bonus::bombe]
 			unsigned char probabiliter_pop;//!< Pourcentage q'un bonus pop (valeur: entre 0 et 100 au max)
 			unsigned char quantite_MAX_Ramassable;//!< Quantité max qu'un joueur peut avoir d'un objet
@@ -89,7 +90,7 @@ class bonus
 		*/
 		typedef struct {
 			s_Coordonnees pos;//!< Position de la bombe posé (8o)
-			clock_t finEvent;//!< Temps avant la fin de l'event (4o)
+			s_timeval finEvent;//!< Temps avant la fin de l'event (4o)
 			t_Bonus type;//!< Le bonus (4o)
 		} s_Event;
 
@@ -149,6 +150,7 @@ class bonus
 		s_Event* getEvent( unsigned int x, unsigned int y );
 		void forceTimeOut();
 		void forceTimeOut( unsigned int x, unsigned int y );
+		void forceTimeOut( t_Bonus b );
 		void kill();
 
 		// Autres

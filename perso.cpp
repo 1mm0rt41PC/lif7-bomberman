@@ -46,6 +46,7 @@ perso::~perso()
 {
 	if( c_armements )
 		delete c_armements;
+	c_armements = 0;
 }
 
 
@@ -57,7 +58,7 @@ void perso::defPos( unsigned int Xpos, unsigned int Ypos )
 {
 	//stdError("Anti-bug SDL");// Anti-bug SDL
 
-	stdError("X=%u, Y=%u || OLD_X=%u, OLD_Y=%u", Xpos, Ypos, c_OldPos.x, c_OldPos.y);
+	//stdError("X=%u, Y=%u || OLD_X=%u, OLD_Y=%u", Xpos, Ypos, c_OldPos.x, c_OldPos.y);
 
 	if( c_OldPos.x+1 == Xpos || c_OldPos.x-1 == Xpos || c_OldPos.x == Xpos )// Pour eviter d'avoir des saut de plusieurs blocks
 		c_OldPos.x = c_pos.x;
@@ -69,7 +70,7 @@ void perso::defPos( unsigned int Xpos, unsigned int Ypos )
 	else
 		c_OldPos.y = Ypos;
 
-	stdError("Final OLD_X=%u, OLD_Y=%u", c_OldPos.x, c_OldPos.y);
+	//stdError("Final OLD_X=%u, OLD_Y=%u", c_OldPos.x, c_OldPos.y);
 
 	c_pos.x = Xpos;
 	c_pos.y = Ypos;

@@ -246,3 +246,50 @@ void baseClientServer::printAllBuffer( const char buffer[], unsigned int bufferS
 		fprintf(stderr, "%c", buffer[i]);
 	fprintf(stderr, ">\n");
 }
+
+
+/***************************************************************************//*!
+* @fn char* baseClientServer::getLocalIPv4() const
+* @brief Permet d'obtenir UNE adresse IP local
+* @return L'adresse IP sous forme de chaine de caractères ( terminée par \0 )
+* @note Normalement, on peut récup les adresses IP locales.
+*/
+char* baseClientServer::getLocalIPv4() const
+{
+	// Get host adresses
+	hostent* pHost;
+	char hostname[256]={0};
+	static char IP[17] = {0};// IPv4 !
+	int j, p;
+
+	if( gethostname(hostname, 256) == SOCKET_ERROR )
+		stdError("Erreur(%d) lors de l'obtention du nom de l'ordinateur. Detail: <%s>", SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
+
+
+	if( !(pHost = gethostbyname(hostname)) )
+		stdError("Erreur(%d) lors de la résolution name -> host . Detail: <%s>", SOCKET_REPPORT_ERROR, strerror(SOCKET_REPPORT_ERROR));
+
+	//for( int i=0, j=0, p=0; pHost->h_addr_list[i]!= NULL; i++ )// Renvoie LES adresses IP locales
+	//{
+	// Le For avec le i permet d'obtenir toutes les adresses IP locales de l'ordinateur
+	// Pour cette fonction, on ne veut qu'une seule adresse IP, donc pas de boucle
+	// Pour activer la fonctionnalité multi-IP, décommenter la boucle for + {}, et commenter le enum
+	enum{ i=0 };
+
+		for( j=0, p=0; j <pHost->h_length; j++ )// On obtient une adresse IP
+		{
+			sprintf(IP+p, "%u.", (unsigned int)((unsigned char*)pHost->h_addr_list[i])[j]);
+			if( (unsigned int)((unsigned char*)pHost->h_addr_list[i])[j] < 10 )
+			{
+				p+=2;
+			}else if( (unsigned int)((unsigned char*)pHost->h_addr_list[i])[j] < 100 )
+			{
+				p+=3;
+			}else{
+				p+=4;
+			}
+		}
+		IP[p-1] = 0;// IP contient ici, une adresse IP ( attention ! cette IP sera perdu au prochain tour du for i
+	//}
+	return IP;
+}

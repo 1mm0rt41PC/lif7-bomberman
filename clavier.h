@@ -16,44 +16,45 @@
 */
 class clavier
 {
-	private:
-		// struct {
-		SYS_CLAVIER *c_touches;//!< Tableau des touches qui sont affecté à une action
-		unsigned int c_nb_touches;//!< Nombre de touche dans notre tableau
-		// }
-
 	public:
 		/*!
 		* @enum t_touche
 		* @brief Les actions possibles avec les touches
 		*/
-		enum t_touche {
+		typedef enum {
 			haut = 0,
 			bas,
 			droite,
 			gauche,
 			lancerBombe,
+			lancerSuperBombe,
 			declancheur,
+			NB_ELEMENT_t_touche,
 			NUL//!< En cas de bug
-		};
+		} t_touche;
 
+	private:
+		// struct {
+			SYS_CLAVIER c_touches[NB_ELEMENT_t_touche];//!< Tableau des touches qui sont affecté à une action
+		// }
+
+	public:
 		clavier();
-		inline clavier( unsigned int nb_touches ){ initClavier( nb_touches ); }//!< Alias de initClavier( nb_touches );
 		~clavier();
 
 		// Modificateurs
-		void initClavier( unsigned int nb_touches );
-		void defTouche( t_touche t, SYS_CLAVIER tsys );
+		inline void defTouche( t_touche t, SYS_CLAVIER tsys );
 		bool chargerConfig( FILE* fp, unsigned int nb_touches );
 
 		// Accesseurs
 		bool estDansClavier( SYS_CLAVIER tsys ) const;
-		unsigned int nb_touches() const;
-		SYS_CLAVIER touche( t_touche t ) const;
+		inline SYS_CLAVIER touche( t_touche t ) const;
 		t_touche obtenirTouche( SYS_CLAVIER tsys ) const;
 
 		// Autre
-		bool enregistrerConfig( FILE* fp );
+		bool enregistrerConfig( FILE* fp ) const;
 };
+
+#include "clavier.inl"
 
 #endif

@@ -62,15 +62,15 @@
 		- Class: 1ere lettre en Maj puis tout le reste en min
 		- Struct: DOIT Commencer par "s_"
 		- Enum: DOIT Commencer par "t_"
-	
+
 	Les variables:
-		- dans une class TOUTES les varaibles commencent par "c_" ou "C_" si en mode static
+		- dans une class TOUTES les variables commencent par "c_" ou "C_" si en mode static
 		- les variables globales doivent commencer par "G_" et être écrites en MAJ
 
 
 5. Doxygen format
 	La majorité de la documentation doit être dans les fichier .cpp juste avant la fonction.
-	Sauf pour les struct, enum, class qui sont documenté dans le .h
+	Sauf pour les struct, enum, class qui sont documentés dans le .h
 
 DANS UN .CPP
 /***************************************************************************//*!

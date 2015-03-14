@@ -58,10 +58,10 @@ inline unsigned char partie::getWinnerID() const
 
 
 /***************************************************************************//*!
-* @fn clock_t partie::timeOut() const
+* @fn time_t partie::timeOut() const
 * @brief Renvoie le temps de fin / mort subite. (Ne change pas en cours de partie)
 */
-inline clock_t partie::timeOut() const
+inline time_t partie::timeOut() const
 {
 	return c_timeOut;
 }

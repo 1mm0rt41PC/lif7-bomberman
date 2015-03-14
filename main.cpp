@@ -1,40 +1,75 @@
 #include "options.h"
 #include "partie.h"
+#include <unistd.h>
 
-#ifdef __LIB_ncurses__
+#if defined(__LIB_ncurses__)
 	#include "moteur_ncurses.h"
-#elif __LIB_SDL__
+#elif defined(__LIB_SDL__)
 	#include "moteur_sdl.h"
-#elif __LIB_SFML__
+#elif defined(__LIB_SFML__)
 	#include "moteur_sfml.h"
 #endif
 
 #include "debug.h"
+#include "BackTrace_Log.h"
 
 /*******************************************************************************
 * CONVENTION DE PROGRAMATION !
-* Toutes les variables d'une class doivent commencer par "c_"
+* Toutes les variables d'une class doivent commencer par "c_" (ou "C_" si en mode static)
 * Toutes les variables globales doivent commencer par "G_" et être écrites en MAJ
 *
 * BUG:
-*	- Lors de la colision de 2 flammes
+//	- [RESEAU] Effacement des J2 à J4 incorrect !
+//	- pad entrer non prix en compte dans menu()
+//	- [file partie.cpp, line 1295]: BONUS: Problème de contenu ! c_map->getBlock(6, 19)->joueur->at(0){9} >= {9}NB_ELEMENT_t_Bonus !
+//	- Si le joueur meur => on vire tout les buff négatif
+*	- [RESEAU] Si 3 Players: P2 Déco puis reco => Le nom du player 2 ne réapparait pas chez les clients
+*	- getTexte -> Bug si texte avec espace au millieu
+*	- Bug flamme (Multi bombe)
+*	[0] SDL_main
+	[1] moteur_sdl::afficherGagnant(partie const*, int) <-- Crash Here !
+*	[file partie.cpp, line 128]: joueur_numero(4294967295) >= c_nb_joueurs(2) || !c_joueurs(1026844)
+*	- [file partie.cpp, line 855]: Touche envoyé par le joueur 6 est inconnue : 0
+*	- Joueur (0) a gagné
+//	- Le bug déporté dans la fonction checkInternalEventPousseBombe() a disparu => Suppression de la fonction checkInternalEventPousseBombe()
+*
 *
 * A FAIRE
-*	- Bonus: super flamme
+*	- [file moteur_sdl.cpp, line 707]: Valeur incorrect ! valeurMin(1) <= valeurParDefaut(1) && valeurParDefaut(1) <= valeurMax(-2)
 *	- fin partie
+*	- [MAKEFILE] Ajout variable pour -finstrument-functions et -Wl,--export-all-symbols
 *	- menu mieux agencé
-*	- inverseur de touche sur le client
 *	- perso animer
-*	- Finir de normaliser avec Marge_menu
-*	- faire que les menus réagissent à un seul click au lieu de 2
-*
+*	- SuperBombe
+//	- Background
+*	- Compteurs (score)
+*	- Modifier le packeur pour envoyer les ressources de la SuperBombe
+//	- Finir de normaliser avec Marge_menu
+//	- faire que les menus réagissent à un seul click au lieu de 2
+//	- MOINS D'utilisation du CPU ! => Optimiser l'affichage de l'horloge en SDL
+//	- Optimisations des calculs pour les menu dans le moteur SDL
+//	- Ajout d'un système de survole ( SDL )
+*	- compléter les nouveauté dans ncurses
+//	- Uniffier unix_segfault_system et BackTrace_Log
+*	- Système backtrace pour segfault et exit ------------------> atexit(finalExit);
+//	- Remplacer le système clock() par gettimeofday()
 */
+
 
 
 int main( int argc, char* arvg[] )
 {
 	(void)argc;
 	(void)arvg;
+
+	/***************************************************************************
+	* Système backtrace pour segfault et exit
+	*/
+	// -Wl,--export-all-symbols
+	getBackTraceIfCrash();
+	#if defined(USE_INTERNAL_COUNTER)
+		atexit(printStackTrace);
+	#endif
 
 	//  NE PAS OUBLIER DE CHANGER LE NOM "bug.log" EN BAS DANS LE remove() !
 	freopen("bug.log", "w", stderr);// Redirection du flux d'erreur dans un fichier
@@ -44,11 +79,11 @@ int main( int argc, char* arvg[] )
 	options::getInstance();
 
 	// Init Moteur d'affichage
-	#ifdef __LIB_ncurses__
+	#if defined(__LIB_ncurses__)
 		moteur_ncurses m;
-	#elif __LIB_SDL__
+	#elif defined(__LIB_SDL__)
 		moteur_sdl& m = moteur_sdl::getInstance();
-	#elif __LIB_SFML__
+	#elif defined(__LIB_SFML__)
 		moteur_sfml& m = moteur_sfml::getInstance();
 	#endif
 
@@ -139,7 +174,7 @@ int main( int argc, char* arvg[] )
 										if( tmp == 0 )
 											sprintf(finPartie, "Match nul ! Pas de gagnant !");
 
-									}while( tmp >= 0 && m.isWindowOpen() && m.menu(finPartie, menu_replay, 3) != 3 && m.isWindowOpen() );
+									}while( tmp >= 0 && m.isWindowOpen() && m.afficherGagnant(&jeu, tmp) != 3 && m.isWindowOpen() );
 								}
 								retourMenuAudessus = 0;
 							}

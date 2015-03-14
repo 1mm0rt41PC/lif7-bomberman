@@ -125,7 +125,7 @@ void partie::def_connection( partie::t_Connection cnx )
 perso* partie::joueur( unsigned int joueur_numero ) const
 {
 	if( joueur_numero >= c_nb_joueurs || !c_joueurs ){
-		stdError("joueur_numero(%u) >= c_nb_joueurs(%u) || !c_joueurs(%X)", (unsigned int)joueur_numero, (unsigned int)c_nb_joueurs, (unsigned int)c_joueurs);
+		stdErrorE("joueur_numero(%u) >= c_nb_joueurs(%u) || !c_joueurs(%p)", (unsigned int)joueur_numero, (unsigned int)c_nb_joueurs, c_joueurs);
 		return 0;
 	}
 	return c_joueurs+joueur_numero;
@@ -361,7 +361,7 @@ char partie::main( libAff * afficherMapEtEvent )
 				}
 				case '9': {// Timer
 					sscanf(c_buffer, "9:%ld²", &c_timeOut);
-					c_timeOut += clock();
+					c_timeOut += time(0);
 					break;
 				}
 				default:{
@@ -483,7 +483,7 @@ char partie::main( libAff * afficherMapEtEvent )
 						}
 						case '9': {// Timer
 							sscanf(c_buffer, "9:%ld²", &c_timeOut);
-							c_timeOut += clock();
+							c_timeOut += time(0);
 							break;
 						}
 						default:
@@ -533,7 +533,7 @@ char partie::main( libAff * afficherMapEtEvent )
 			c_server->setWait(0,100000);// 0.1 secondes
 			// Ajout des player
 			while( (s = c_server->lookupNewConnection()) == INVALID_SOCKET && key != RETOUR_MENU_PRECEDENT ){
-				c_timeOut = clock();
+				c_timeOut = time(0);
 				key = afficherMapEtEvent( this );// Pour récup les touches
 			}
 
@@ -548,7 +548,7 @@ char partie::main( libAff * afficherMapEtEvent )
 	//##########################################################################
 	//##########################################################################
 
-	c_timeOut = clock() + 2*60*CLOCKS_PER_SEC+30*CLOCKS_PER_SEC;// 2min:30
+	c_timeOut = time(0)+2*60+30;// 2min:30
 
 	if( c_connection == CNX_Host ){// Si on est en mode serveur alors on connecte le serveur
 		// Envoie du timer à tout les players !
@@ -556,7 +556,7 @@ char partie::main( libAff * afficherMapEtEvent )
 		{
 			if( !c_joueurs[i].isLocal() && c_joueurs[i].socket() != INVALID_SOCKET ){
 				// Envoie du timer
-				sprintf(c_buffer, "9:%ld²", c_timeOut-clock());
+				sprintf(c_buffer, "9:%ld²", c_timeOut-time(0));
 				c_server->send_message( c_joueurs[i].socket(), c_buffer, PACK_bufferSize);
 				strcpy(c_buffer, "0:end");
 				c_server->send_message( s, c_buffer, PACK_bufferSize);// Fin de transmition
@@ -568,6 +568,7 @@ char partie::main( libAff * afficherMapEtEvent )
 	do{
 		// Affichage de la map et récéption des Event
 		key = afficherMapEtEvent( this );
+		usleep(10);
 
 		/***********************************************************************
 		* On parcours les joueurs
@@ -592,7 +593,8 @@ char partie::main( libAff * afficherMapEtEvent )
 					case bonus::bombe: {
 						e.joueur = i+1;
 						e.pos = bonusEvent.pos;
-						e.repetionSuivante = 0;
+						e.repetionSuivante.tv_sec = 0;
+						e.repetionSuivante.tv_usec = 0;
 						e.Nb_Repetition = 0;
 						e.Nb_Repetition_MAX = c_joueurs[i].armements()->quantiteUtilisable(bonus::puissance_flamme);
 						e.continue_X = true;
@@ -612,8 +614,10 @@ char partie::main( libAff * afficherMapEtEvent )
 				}
 			}
 			// On a reçut le signal kill => On kill le perso
-			if( killPlayer )
+			if( killPlayer ){
 				c_joueurs[i].defArmements(0);
+				continue;
+			}
 
 			/*******************************************************************
 			* Scan du clavier pour les joueurs
@@ -699,18 +703,54 @@ char partie::main( libAff * afficherMapEtEvent )
 					switch( c_map->getBlock( c_joueurs[i].X(), c_joueurs[i].Y())->element )// Utilisation d'un switch pour la rapidité ( en asm ebx modifié une fois => plus rapide )
 					{
 						case map::UN_joueur: {
-							c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_UN_joueur );
+							c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_UN_joueur, bonus::bombe );
 							c_map->ajouterInfoJoueur( c_joueurs[i].X(), c_joueurs[i].Y(), i+1, 1 );// Ajout de l'info > Mais qui a donc posé la bombe ...
 							c_joueurs[i].armements()->decQuantiteUtilisable( bonus::bombe, c_joueurs[i].X(), c_joueurs[i].Y() );
 							break;
 						}
 						case map::plusieurs_joueurs: {
-							c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_plusieurs_joueurs );
+							c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_plusieurs_joueurs, bonus::bombe );
 							c_map->ajouterInfoJoueur( c_joueurs[i].X(), c_joueurs[i].Y(), i+1, 1 );// Ajout de l'info > Mais qui a donc posé la bombe ...
 							c_joueurs[i].armements()->decQuantiteUtilisable( bonus::bombe, c_joueurs[i].X(), c_joueurs[i].Y() );
 							break;
 						}
 						default: {// On ne pose pas la bombe ! On a pas les conditions réuni
+							break;
+						}
+					}
+					continuerScanClavier = 0;
+					break;
+				}
+				/***************************************************************
+				* On veux poser une Superbombe
+				*/
+				case clavier::lancerSuperBombe: {
+					/***********************************************************
+					* IL NE RESTE PAS DE BOMBE EN STOCK
+					*/
+					if( !c_joueurs[i].armements()->quantiteUtilisable(bonus::super_bombe) )
+						break;
+					/***********************************************************
+					* Il reste des bombes à poser ->
+					* 2 Posibilités:
+					* 1) Il n'y a que le joueur qui veut poser la bombe
+					* 2) Il y a plusieurs joueurs
+					*/
+					switch( c_map->getBlock( c_joueurs[i].X(), c_joueurs[i].Y())->element )// Utilisation d'un switch pour la rapidité ( en asm ebx modifié une fois => plus rapide )
+					{
+						case map::UN_joueur: {
+							c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_UN_joueur, bonus::super_bombe );
+							c_map->ajouterInfoJoueur( c_joueurs[i].X(), c_joueurs[i].Y(), i+1, 1 );// Ajout de l'info > Mais qui a donc posé la bombe ...
+							c_joueurs[i].armements()->decQuantiteUtilisable( bonus::super_bombe, c_joueurs[i].X(), c_joueurs[i].Y() );
+							break;
+						}
+						case map::plusieurs_joueurs: {
+							c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_plusieurs_joueurs, bonus::super_bombe );
+							c_map->ajouterInfoJoueur( c_joueurs[i].X(), c_joueurs[i].Y(), i+1, 1 );// Ajout de l'info > Mais qui a donc posé la bombe ...
+							c_joueurs[i].armements()->decQuantiteUtilisable( bonus::super_bombe, c_joueurs[i].X(), c_joueurs[i].Y() );
+							break;
+						}
+						default: {// On ne pose pas la bombe ! On a pas les conditions réunies
 							break;
 						}
 					}
@@ -749,87 +789,148 @@ char partie::main( libAff * afficherMapEtEvent )
 					if( c_server->readClient(c_joueurs[i].socket(), c_buffer, PACK_bufferSize) ){
 
 						// Traitement du clavier des joueurs online
-						if( c_joueurs[i].armements() ){
+						if( !c_joueurs[i].armements() )
+							continue;
 
-							// On récup la touche
-							unPackIt( &onlineClavier );
+						// On récup la touche
+						unPackIt( &onlineClavier );
 
-							switch( onlineClavier )
-							{
-								case clavier::haut: {
-									c_joueurs[i].defOrientation(perso::ORI_haut);
-									deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()-1, i );
-									c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
-									envoyerInfoJoueur = 1;
-									break;
-								}
-								case clavier::bas: {
+						switch( onlineClavier )
+						{
+							case clavier::haut: {
+								if( c_joueurs[i].armements()->quantiteUtilisable(bonus::inversseur_touche) ){
 									c_joueurs[i].defOrientation(perso::ORI_bas);
 									deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()+1, i );
-									c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
-									envoyerInfoJoueur = 1;
-									break;
+								}else{
+									c_joueurs[i].defOrientation(perso::ORI_haut);
+									deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()-1, i );
 								}
-								case clavier::droite: {
-									c_joueurs[i].defOrientation(perso::ORI_droite);
-									deplacer_le_Perso_A( c_joueurs[i].X()+1, c_joueurs[i].Y(), i );
-									c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
-									envoyerInfoJoueur = 1;
-									break;
+								// Suplace pour afficher les mouvement de rotation lorsque le perso ne bouge pas vraiment
+								c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
+								envoyerInfoJoueur = 1;
+								break;
+							}
+							case clavier::bas: {
+								if( c_joueurs[i].armements()->quantiteUtilisable(bonus::inversseur_touche) ){
+									c_joueurs[i].defOrientation(perso::ORI_haut);
+									deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()-1, i );
+								}else{
+									c_joueurs[i].defOrientation(perso::ORI_bas);
+									deplacer_le_Perso_A( c_joueurs[i].X(), c_joueurs[i].Y()+1, i );
 								}
-								case clavier::gauche: {
+								// Suplace pour afficher les mouvement de rotation lorsque le perso ne bouge pas vraiment
+								c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
+								envoyerInfoJoueur = 1;
+								break;
+							}
+							case clavier::droite: {
+								if( c_joueurs[i].armements()->quantiteUtilisable(bonus::inversseur_touche) ){
 									c_joueurs[i].defOrientation(perso::ORI_gauche);
 									deplacer_le_Perso_A( c_joueurs[i].X()-1, c_joueurs[i].Y(), i );
-									c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
-									envoyerInfoJoueur = 1;
-									break;
+								}else{
+									c_joueurs[i].defOrientation(perso::ORI_droite);
+									deplacer_le_Perso_A( c_joueurs[i].X()+1, c_joueurs[i].Y(), i );
 								}
-								/***************************************************************
-								* On veux poser une bombe
+								// Suplace pour afficher les mouvement de rotation lorsque le perso ne bouge pas vraiment
+								c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
+								envoyerInfoJoueur = 1;
+								break;
+							}
+							case clavier::gauche: {
+								if( c_joueurs[i].armements()->quantiteUtilisable(bonus::inversseur_touche) ){
+									c_joueurs[i].defOrientation(perso::ORI_droite);
+									deplacer_le_Perso_A( c_joueurs[i].X()+1, c_joueurs[i].Y(), i );
+								}else{
+									c_joueurs[i].defOrientation(perso::ORI_gauche);
+									deplacer_le_Perso_A( c_joueurs[i].X()-1, c_joueurs[i].Y(), i );
+								}
+								// Suplace pour afficher les mouvement de rotation lorsque le perso ne bouge pas vraiment
+								c_map->setBlock(c_joueurs[i].X(), c_joueurs[i].Y(), c_map->getBlock(c_joueurs[i].X(), c_joueurs[i].Y())->element);
+								envoyerInfoJoueur = 1;
+								break;
+							}
+							/***************************************************************
+							* On veux poser une bombe
+							*/
+							case clavier::lancerBombe: {
+								/***********************************************************
+								* IL NE RESTE PAS DE BOMBE EN STOCK
 								*/
-								case clavier::lancerBombe: {
-									/***********************************************************
-									* IL NE RESTE PAS DE BOMBE EN STOCK
-									*/
-									if( !c_joueurs[i].armements()->quantiteUtilisable(bonus::bombe) )
+								if( !c_joueurs[i].armements()->quantiteUtilisable(bonus::bombe) )
+									break;
+								/***********************************************************
+								* Il reste des bombes à poser ->
+								* 2 Posibilités:
+								* 1) Il n'y a que le joueur qui veut poser la bombe
+								* 2) Il y a plusieurs joueurs
+								*/
+								switch( c_map->getBlock( c_joueurs[i].X(), c_joueurs[i].Y())->element )// Utilisation d'un switch pour la rapidité ( en asm ebx modifié une fois => plus rapide )
+								{
+									case map::UN_joueur:{
+										c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_UN_joueur, bonus::bombe );
+										c_map->ajouterInfoJoueur( c_joueurs[i].X(), c_joueurs[i].Y(), i+1, 1 );// Ajout de l'info > Mais qui a donc posé la bombe ...
+										c_joueurs[i].armements()->decQuantiteUtilisable( bonus::bombe, c_joueurs[i].X(), c_joueurs[i].Y() );
 										break;
-									/***********************************************************
-									* Il reste des bombes à poser ->
-									* 2 Posibilités:
-									* 1) Il n'y a que le joueur qui veut poser la bombe
-									* 2) Il y a plusieurs joueurs
-									*/
-									switch( c_map->getBlock( c_joueurs[i].X(), c_joueurs[i].Y())->element )// Utilisation d'un switch pour la rapidité ( en asm ebx modifié une fois => plus rapide )
-									{
-										case map::UN_joueur:{
-											c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_UN_joueur );
-											c_map->ajouterInfoJoueur( c_joueurs[i].X(), c_joueurs[i].Y(), i+1, 1 );// Ajout de l'info > Mais qui a donc posé la bombe ...
-											c_joueurs[i].armements()->decQuantiteUtilisable( bonus::bombe, c_joueurs[i].X(), c_joueurs[i].Y() );
-											break;
-										}
-										case map::plusieurs_joueurs: {
-											c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_plusieurs_joueurs );
-											c_map->ajouterInfoJoueur( c_joueurs[i].X(), c_joueurs[i].Y(), i+1, 1 );// Ajout de l'info > Mais qui a donc posé la bombe ...
-											c_joueurs[i].armements()->decQuantiteUtilisable( bonus::bombe, c_joueurs[i].X(), c_joueurs[i].Y() );
-											break;
-										}
-										default: {// On ne pose pas la bombe ! On a pas les conditions réuni
-											break;
-										}
 									}
-									break;
+									case map::plusieurs_joueurs: {
+										c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_plusieurs_joueurs, bonus::bombe );
+										c_map->ajouterInfoJoueur( c_joueurs[i].X(), c_joueurs[i].Y(), i+1, 1 );// Ajout de l'info > Mais qui a donc posé la bombe ...
+										c_joueurs[i].armements()->decQuantiteUtilisable( bonus::bombe, c_joueurs[i].X(), c_joueurs[i].Y() );
+										break;
+									}
+									default: {// On ne pose pas la bombe ! On a pas les conditions réuni
+										break;
+									}
 								}
-								case clavier::declancheur: {
-									if( c_joueurs[i].armements()->quantiteUtilisable(bonus::declancheur) )
-										c_joueurs[i].armements()->forceTimeOut();
+								break;
+							}
+							/***************************************************************
+							* On veux poser une Superbombe
+							*/
+							case clavier::lancerSuperBombe: {
+								/***********************************************************
+								* IL NE RESTE PAS DE BOMBE EN STOCK
+								*/
+								if( !c_joueurs[i].armements()->quantiteUtilisable(bonus::super_bombe) )
 									break;
+								/***********************************************************
+								* Il reste des bombes à poser ->
+								* 2 Posibilités:
+								* 1) Il n'y a que le joueur qui veut poser la bombe
+								* 2) Il y a plusieurs joueurs
+								*/
+								switch( c_map->getBlock( c_joueurs[i].X(), c_joueurs[i].Y())->element )// Utilisation d'un switch pour la rapidité ( en asm ebx modifié une fois => plus rapide )
+								{
+									case map::UN_joueur: {
+										c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_UN_joueur, bonus::super_bombe );
+										c_map->ajouterInfoJoueur( c_joueurs[i].X(), c_joueurs[i].Y(), i+1, 1 );// Ajout de l'info > Mais qui a donc posé la bombe ...
+										c_joueurs[i].armements()->decQuantiteUtilisable( bonus::super_bombe, c_joueurs[i].X(), c_joueurs[i].Y() );
+										break;
+									}
+									case map::plusieurs_joueurs: {
+										c_map->setBlock( c_joueurs[i].X(), c_joueurs[i].Y(), map::bombe_poser_AVEC_plusieurs_joueurs, bonus::super_bombe );
+										c_map->ajouterInfoJoueur( c_joueurs[i].X(), c_joueurs[i].Y(), i+1, 1 );// Ajout de l'info > Mais qui a donc posé la bombe ...
+										c_joueurs[i].armements()->decQuantiteUtilisable( bonus::super_bombe, c_joueurs[i].X(), c_joueurs[i].Y() );
+										break;
+									}
+									default: {// On ne pose pas la bombe ! On a pas les conditions réunies
+										break;
+									}
 								}
-								default: {
-									stdErrorE("Touche envoyé par le joueur %d est inconnue : %d", (int)opt->clavierJoueur(i)->obtenirTouche(key), (int)key);
-									break;
-								}
+								continuerScanClavier = 0;
+								break;
+							}
+							case clavier::declancheur: {
+								if( c_joueurs[i].armements()->quantiteUtilisable(bonus::declancheur) )
+									c_joueurs[i].armements()->forceTimeOut();
+								break;
+							}
+							default: {
+								stdError("Touche envoyé par le joueur %d est inconnue : %d", (int)opt->clavierJoueur(i)->obtenirTouche(key), (int)key);
+								break;
 							}
 						}
+
 					}else{
 						/*******************************************************
 						* Le joueur s'est déco. => Place propre
@@ -1069,13 +1170,13 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 {
 	map::t_type elementNouvellePosition;
 
+	if( joueur >= c_nb_joueurs )
+		stdErrorE("Le joueur %d n'existe pas ! Impossible de déplacer le joueur !", joueur);
+
 	if( !c_joueurs[joueur].armements() ){
 		stdError("Le joueur %d n'a pas d'armements ! Impossible de déplacer le joueur !", joueur);
 		return ;
 	}
-
-	if( joueur >= c_nb_joueurs )
-		stdErrorE("Le joueur %d n'existe pas ! Impossible de déplacer le joueur !", joueur);
 
 	/***********************************************************************
 	* On check les dim avant tout !
@@ -1252,6 +1353,7 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 				// On supprime une vie
 				c_joueurs[joueur].armements()->decQuantiteUtilisable(bonus::vie);
 				c_joueurs[joueur].armements()->decQuantiteMAX_en_stock(bonus::vie);
+				c_joueurs[joueur].armements()->forceTimeOut(bonus::inversseur_touche);
 				placer_perso_position_initial(joueur);
 			}
 			break;
@@ -1321,6 +1423,17 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 						c_joueurs[j].armements()->forceTimeOut();
 				}
 
+			}else if( b == bonus::super_puissance_flamme ){
+				/***************************************************************
+				* Bonus Super puissance de flamme
+				*/
+				//c_joueurs[joueur].armements()->defQuantiteUtilisable(bonus::puissance_flamme, c_joueurs[joueur].armements()->quantiteMAX_Ramassable(bonus::puissance_flamme));
+				c_joueurs[joueur].armements()->incQuantiteMAX_en_stock(bonus::puissance_flamme);
+				c_joueurs[joueur].armements()->incQuantiteMAX_en_stock(bonus::puissance_flamme);
+				c_joueurs[joueur].armements()->incQuantiteMAX_en_stock(bonus::puissance_flamme);
+				c_joueurs[joueur].armements()->incQuantiteMAX_en_stock(bonus::puissance_flamme);
+				c_joueurs[joueur].armements()->incQuantiteMAX_en_stock(bonus::puissance_flamme);
+
 			}else{
 				/***************************************************************
 				* Bonus classique
@@ -1344,7 +1457,9 @@ void partie::deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned
 			s_EventPousseBombe e;
 			e.direction = c_joueurs[joueur].orientation();
 			e.joueur = c_map->getBlock(newX, newY)->joueur->at(0)-1;
-			e.repetionSuivante = clock() + bonus::VITESSE_pousseBombe;
+			gettimeofday(&e.repetionSuivante, 0);
+			e.repetionSuivante.tv_sec += bonus::VITESSE_pousseBombe/1000000;
+			e.repetionSuivante.tv_usec += bonus::VITESSE_pousseBombe%1000000;
 
 			if( !c_joueurs[e.joueur].armements() )
 				stdErrorE("Attention ! Le joueur %u est mort !", e.joueur);
@@ -1501,19 +1616,18 @@ void partie::placer_perso_position_initial( unsigned char joueur )
 			break;
 		}
 		case map::bonus: {
-			if( !c_map->getBlock(newX, newY)->joueur )
-				stdErrorE("BONUS: Problème de pointeur ! c_map->getBlock(%u, %u)->joueur = 0 !", newX, newY);
-			if( !c_map->getBlock(newX, newY)->joueur->size() )
-				stdErrorE("BONUS: Problème de contenu ! c_map->getBlock(%u, %u)->joueur->size() = 0 !", newX, newY);
-			if( c_map->getBlock(newX, newY)->joueur->at(0) >= bonus::NB_ELEMENT_t_Bonus )
-				stdErrorE("BONUS: Problème de contenu ! c_map->getBlock(%u, %u)->joueur->at(0){%u} >= {%d}NB_ELEMENT_t_Bonus !", newX, newY, (unsigned int)c_map->getBlock(newX, newY)->joueur->at(0), bonus::NB_ELEMENT_t_Bonus);
-			// Ajout de l'armement
-			if( !c_joueurs[joueur].armements() )
-				stdErrorE("Le joueur %d n'a pas d'armement ! Erreur lors du déplacement sur le bonus !", joueur);
-			c_joueurs[joueur].armements()->incQuantiteMAX_en_stock((bonus::t_Bonus)c_map->getBlock(newX, newY)->joueur->at(0));
-			c_map->rmInfoJoueur(newX, newY);// On surrpime tout ce qui avait avant
-			// Placement du perso
-			c_map->setBlock(newX, newY, map::UN_joueur);
+			stdErrorE("La position initial du joueur %u ([0-..]) est occupé par un bonus ! IMPOSSIBLE > Bonus => case destructible !", joueur);
+			break;
+		}
+		case map::bombe_poser: {
+			c_map->setBlock(newX, newY, map::bombe_poser_AVEC_UN_joueur);
+			c_map->ajouterInfoJoueur(newX, newY, joueur+1);
+			c_joueurs[joueur].defPos(newX, newY);
+			break;
+		}
+		case map::bombe_poser_AVEC_UN_joueur:
+		case map::bombe_poser_AVEC_plusieurs_joueurs: {
+			c_map->setBlock(newX, newY, map::bombe_poser_AVEC_plusieurs_joueurs);
 			c_map->ajouterInfoJoueur(newX, newY, joueur+1);
 			c_joueurs[joueur].defPos(newX, newY);
 			break;
@@ -1526,31 +1640,75 @@ void partie::placer_perso_position_initial( unsigned char joueur )
 
 
 /***************************************************************************//*!
-* @fn void partie::checkInternalEventPousseBombe()
-* @brief Scan les event du bonus pousse bombe
-*
-* @bug Date du bug: 2011/01/20<br />
-* Le code contenu dans cette fonction devrait normalement aller directement dans la fonction
-* partie::checkInternalEvent(). Or sous SDL, le code contenu dans cette fonction provoque un bug
-* d'accélération des personnages. Ce bug ne touche que les joueurs qui ont des touches comprises
-* entre a et z. Même si le code n'est jamais traité, le bug ce produit quand même. De plus si
-* l'on essaye de tracer le bug avec stdError(...) au niveau du clavier ou même au niveau de
-* perso::defPos( unsigned int Xpos, unsigned int Ypos ) alors le bug n'existe plus...<br />
-* Pour info, ce bug existe UNIQUEMENT depuis la création du bonus "Pousse Bombe"<br />
-* De plus le bug en question n'existe que sous windows. Le même code compilé sur GNU/UNIX marche parfaitement.<br />
-* A première vu, ce bout de code a lui seul fait apparaitre le bug, alors que le code
-* en lui même ne fait que lire des infos : (Cette ligne n'a pas besoin d'être traitée, pour que le bug apparaisse)
-* @code
-* // Le i provient du for( unsigned int i=0; i<c_listEventPouseBombe.size(); i++ )
-* c_joueurs[c_listEventPouseBombe.at(i).joueur].armements()->getEvent(c_listEventPouseBombe.at(i).pos.x, c_listEventPouseBombe.at(i).pos.y);
-* @endcode
+* @fn void partie::checkInternalEvent()
+* @brief Analyse et traite les Events internes pour une partie F4A
 */
-void partie::checkInternalEventPousseBombe()
+void partie::checkInternalEvent()
 {
-	for( unsigned int i=0; i<c_listEventPouseBombe.size(); i++ )
+	static unsigned int i;
+
+	/***************************************************************************
+	* Horloge
+	*/
+	// Vague 1: On enlève tout les blocks Mur_destructible
+	// Vague >1: On met 2 Mur_INdestructible
+	if( time(0) >= c_timeOut && c_timeOut != 0 ){
+		if( c_timerAttak == 0 ){
+			for( unsigned x=0, y=0; y<c_map->Y(); y++ )
+			{
+				for( x=0; x<c_map->X(); x++ )
+				{
+					if( c_map->getBlock(x, y)->element == map::Mur_destructible ){
+						c_map->setBlock(x, y, map::vide);
+						c_timerAttak++;// On compte le nombre d'emplacement vide
+					}else{
+						if( c_map->getBlock(x, y)->element == map::vide )
+							c_timerAttak++;// On compte le nombre d'emplacement vide
+					}
+				}
+			}
+			c_timeOut = time(0)+5;// 5secs avant l'attaque final
+		}else{
+			unsigned x=0, y=0;
+			if( c_timerAttak > 5 ){
+				bool positionInitial = 0;
+				do{
+					y = myRand(0, c_map->Y()-1);
+					x = myRand(0, c_map->X()-1);
+					for( i=0; i<c_map->nb_PointDeDepartJoueur(); i++ )
+					{
+						if( c_map->positionInitialJoueur(i+1).x == x && c_map->positionInitialJoueur(i+1).y == y ){
+							positionInitial = 1;
+							break;
+						}else{
+							positionInitial = 0;
+						}
+					}
+
+				}while( c_map->getBlock(x, y)->element != map::vide || positionInitial == true );
+				c_map->setBlock(x, y, map::Mur_INdestructible);
+
+				c_timeOut = time(0)+1;
+				c_timerAttak--;// On a une case vide en moins
+			}else{
+				c_timeOut = 0;
+			}
+		}
+	}
+
+
+	s_timeval now;
+	gettimeofday(&now, 0);
+
+
+	/***************************************************************************
+	* Events Pousse Bombe
+	*/
+	//checkInternalEventPousseBombe();
+	for( i=0; i<c_listEventPouseBombe.size(); i++ )
 	{
 		// Tant que l'on a pas atteint le temps
-		if( c_listEventPouseBombe.at(i).repetionSuivante > clock() ) continue;
+		if( c_listEventPouseBombe.at(i).repetionSuivante >= now ) continue;
 
 		c_joueurs[c_listEventPouseBombe.at(i).joueur].armements();
 		c_listEventPouseBombe.at(i).pos.x;
@@ -1579,7 +1737,9 @@ void partie::checkInternalEventPousseBombe()
 							c_listEventPouseBombe.remove(i);
 							i--;
 						}else{
-							c_listEventPouseBombe.at(i).repetionSuivante = clock() + bonus::VITESSE_pousseBombe;
+							gettimeofday(&c_listEventPouseBombe.at(i).repetionSuivante, 0);
+							c_listEventPouseBombe.at(i).repetionSuivante.tv_sec += bonus::VITESSE_pousseBombe/1000000;
+							c_listEventPouseBombe.at(i).repetionSuivante.tv_usec += bonus::VITESSE_pousseBombe%1000000;
 						}
 					}else{
 						c_listEventPouseBombe.remove(i);
@@ -1599,7 +1759,9 @@ void partie::checkInternalEventPousseBombe()
 							c_listEventPouseBombe.remove(i);
 							i--;
 						}else{
-							c_listEventPouseBombe.at(i).repetionSuivante = clock() + bonus::VITESSE_pousseBombe;
+							gettimeofday(&c_listEventPouseBombe.at(i).repetionSuivante, 0);
+							c_listEventPouseBombe.at(i).repetionSuivante.tv_sec += bonus::VITESSE_pousseBombe/1000000;
+							c_listEventPouseBombe.at(i).repetionSuivante.tv_usec += bonus::VITESSE_pousseBombe%1000000;
 						}
 					}else{
 						c_listEventPouseBombe.remove(i);
@@ -1619,7 +1781,9 @@ void partie::checkInternalEventPousseBombe()
 							c_listEventPouseBombe.remove(i);
 							i--;
 						}else{
-							c_listEventPouseBombe.at(i).repetionSuivante = clock() + bonus::VITESSE_pousseBombe;
+							gettimeofday(&c_listEventPouseBombe.at(i).repetionSuivante, 0);
+							c_listEventPouseBombe.at(i).repetionSuivante.tv_sec += bonus::VITESSE_pousseBombe/1000000;
+							c_listEventPouseBombe.at(i).repetionSuivante.tv_usec += bonus::VITESSE_pousseBombe%1000;
 						}
 					}else{
 						c_listEventPouseBombe.remove(i);
@@ -1639,7 +1803,9 @@ void partie::checkInternalEventPousseBombe()
 							c_listEventPouseBombe.remove(i);
 							i--;
 						}else{
-							c_listEventPouseBombe.at(i).repetionSuivante = clock() + bonus::VITESSE_pousseBombe;
+							gettimeofday(&c_listEventPouseBombe.at(i).repetionSuivante, 0);
+							c_listEventPouseBombe.at(i).repetionSuivante.tv_sec += bonus::VITESSE_pousseBombe/1000000;
+							c_listEventPouseBombe.at(i).repetionSuivante.tv_usec += bonus::VITESSE_pousseBombe%1000000;
 						}
 					}else{
 						c_listEventPouseBombe.remove(i);
@@ -1650,73 +1816,9 @@ void partie::checkInternalEventPousseBombe()
 				default:{
 					stdErrorE("Erreur, orientation incorrect ! %d", c_listEventPouseBombe.at(i).direction);
 				}
-			}
+			}// end switch
 		}
 	}
-}
-
-
-/***************************************************************************//*!
-* @fn void partie::checkInternalEvent()
-* @brief Analyse et traite les Event internes pour une partie F4A
-*/
-void partie::checkInternalEvent()
-{
-	static unsigned int i;
-
-	/***************************************************************************
-	* Horloge
-	*/
-	// Vague 1: On enlève tout les blocks Mur_destructible
-	// Vague >1: On met 2 Mur_INdestructible
-	if( clock() >= c_timeOut && c_timeOut != 0 ){
-		if( c_timerAttak == 0 ){
-			for( unsigned x=0, y=0; y<c_map->Y(); y++ )
-			{
-				for( x=0; x<c_map->X(); x++ )
-				{
-					if( c_map->getBlock(x, y)->element == map::Mur_destructible ){
-						c_map->setBlock(x, y, map::vide);
-						c_timerAttak++;// On compte le nombre d'emplacement vide
-					}else{
-						if( c_map->getBlock(x, y)->element == map::vide )
-							c_timerAttak++;// On compte le nombre d'emplacement vide
-					}
-				}
-			}
-			c_timeOut = clock()+ 5*CLOCKS_PER_SEC;// 5secs avant l'attaque final
-		}else{
-			unsigned x=0, y=0;
-			if( c_timerAttak > 5 ){
-				bool positionInitial = 0;
-				do{
-					y = myRand(0, c_map->Y()-1);
-					x = myRand(0, c_map->X()-1);
-					for( i=0; i<c_map->nb_PointDeDepartJoueur(); i++ )
-					{
-						if( c_map->positionInitialJoueur(i+1).x == x && c_map->positionInitialJoueur(i+1).y == y ){
-							positionInitial = 1;
-							break;
-						}else{
-							positionInitial = 0;
-						}
-					}
-
-				}while( c_map->getBlock(x, y)->element != map::vide || positionInitial == true );
-				c_map->setBlock(x, y, map::Mur_INdestructible);
-
-				c_timeOut = clock()+ CLOCKS_PER_SEC;
-				c_timerAttak--;// On a une case vide en moins
-			}else{
-				c_timeOut = 0;
-			}
-		}
-	}
-
-	/***************************************************************************
-	* Events Pousse Bombe
-	*/
-	checkInternalEventPousseBombe();
 
 	/***************************************************************************
 	* Events Bombe
@@ -1724,7 +1826,7 @@ void partie::checkInternalEvent()
 	for( i=0; i<c_listEventBombe.size(); i++ )
 	{
 		// Tant que l'on a pas atteint le temps
-		if( c_listEventBombe.at(i).repetionSuivante > clock() ) continue;
+		if( c_listEventBombe.at(i).repetionSuivante >= now ) continue;
 
 		s_EventBombe& e = c_listEventBombe.at(i);
 
@@ -1737,7 +1839,7 @@ void partie::checkInternalEvent()
 			for( unsigned int j=0; j<e.deflagration.size(); j++ )
 			{
 				c_map->rmInfoJoueur(e.deflagration.at(j).x, e.deflagration.at(j).y, e.joueur, true);
-				if( !c_map->getBlock(e.deflagration.at(j))->joueur->size() )
+				if( !c_map->getBlock(e.deflagration.at(j))->joueur->size() || c_listEventBombe.size() == 1 /*Si c'est la dernière bombe a explosé => vide*/ )
 					c_map->setBlock(e.deflagration.at(j), map::vide);
 			}
 
@@ -1768,7 +1870,9 @@ void partie::checkInternalEvent()
 				e.deflagration.push_back( coordonneeConvert(e.pos.x, e.pos.y) );
 
 				c_listEventBombe.at(i).Nb_Repetition++;
-				c_listEventBombe.at(i).repetionSuivante = clock() + bonus::VITESSE_flammes;// Ajustement du temps
+				gettimeofday(&c_listEventBombe.at(i).repetionSuivante, 0);
+				c_listEventBombe.at(i).repetionSuivante.tv_sec += bonus::VITESSE_flammes/1000000;
+				c_listEventBombe.at(i).repetionSuivante.tv_usec += bonus::VITESSE_flammes%1000000;
 
 				continue;
 			}
@@ -1813,7 +1917,9 @@ void partie::checkInternalEvent()
 				e.Nb_Repetition = e.Nb_Repetition_MAX;
 
 			c_listEventBombe.at(i).Nb_Repetition++;
-			c_listEventBombe.at(i).repetionSuivante = clock() + bonus::VITESSE_flammes;// * CLOCKS_PER_SEC;// Ajustement du temps
+			gettimeofday(&c_listEventBombe.at(i).repetionSuivante, 0);
+			c_listEventBombe.at(i).repetionSuivante.tv_sec += bonus::VITESSE_flammes/1000000;
+			c_listEventBombe.at(i).repetionSuivante.tv_usec += bonus::VITESSE_flammes%1000000;
 		}
 
 	}
@@ -1925,6 +2031,7 @@ char partie::killPlayers( s_EventBombe* e, unsigned int x, unsigned int y )
 				// On supprime une vie
 				c_joueurs[idJoueur].armements()->decQuantiteUtilisable(bonus::vie);
 				c_joueurs[idJoueur].armements()->decQuantiteMAX_en_stock(bonus::vie);
+				c_joueurs[idJoueur].armements()->forceTimeOut(bonus::inversseur_touche);
 				placer_perso_position_initial(idJoueur);
 			}
 			c_map->rmInfoJoueur(x, y);
@@ -1946,6 +2053,7 @@ char partie::killPlayers( s_EventBombe* e, unsigned int x, unsigned int y )
 					// On supprime une vie
 					c_joueurs[idJoueur].armements()->decQuantiteUtilisable(bonus::vie);
 					c_joueurs[idJoueur].armements()->decQuantiteMAX_en_stock(bonus::vie);
+					c_joueurs[idJoueur].armements()->forceTimeOut(bonus::inversseur_touche);
 					placer_perso_position_initial(idJoueur);
 				}
 			}
@@ -1973,6 +2081,7 @@ char partie::killPlayers( s_EventBombe* e, unsigned int x, unsigned int y )
 				// On supprime une vie
 				c_joueurs[idJoueur].armements()->decQuantiteUtilisable(bonus::vie);
 				c_joueurs[idJoueur].armements()->decQuantiteMAX_en_stock(bonus::vie);
+				c_joueurs[idJoueur].armements()->forceTimeOut(bonus::inversseur_touche);
 				placer_perso_position_initial(idJoueur);
 			}
 			c_map->rmInfoJoueur(x, y, idJoueur+1, 0);
@@ -2007,6 +2116,7 @@ char partie::killPlayers( s_EventBombe* e, unsigned int x, unsigned int y )
 						// On supprime une vie
 						c_joueurs[idJoueur].armements()->decQuantiteUtilisable(bonus::vie);
 						c_joueurs[idJoueur].armements()->decQuantiteMAX_en_stock(bonus::vie);
+						c_joueurs[idJoueur].armements()->forceTimeOut(bonus::inversseur_touche);
 						placer_perso_position_initial(idJoueur);
 					}
 					c_map->rmInfoJoueur(x, y, idJoueur+1, 0);
@@ -2419,6 +2529,8 @@ void partie::unPackIt()
 			}
 		}
 		i++;// Pour virer la,
+		if( c_joueurs[idJoueur].armements()->quantiteMAX(bonus::vie) != tmpBonusValue )
+			c_joueurs[idJoueur].armements()->forceTimeOut(bonus::inversseur_touche);
 		c_joueurs[idJoueur].armements()->defQuantiteMAX(bonus::vie, tmpBonusValue);
 	}
 
@@ -2529,7 +2641,7 @@ void partie::ajouterNouvelleConnection( SOCKET s )
 			}
 
 			// Envoie du timer
-			sprintf(c_buffer, "9:%ld²", c_timeOut-clock());
+			sprintf(c_buffer, "9:%ld²", c_timeOut-time(0));
 			c_server->send_message( c_joueurs[i].socket(), c_buffer, PACK_bufferSize);// Fin de transmition de map
 		}
 	}

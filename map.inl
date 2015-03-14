@@ -32,13 +32,13 @@ inline const map::s_Case* map::getBlock( s_Coordonnees& pos ) const
 
 
 /***************************************************************************//*!
-* @fn void map::setBlock( s_Coordonnees& pos, map::t_type what )
+* @fn void map::setBlock( s_Coordonnees& pos, map::t_type what, bonus::t_Bonus typeBonus=bonus::__RIEN__ )
 * @brief Modifie le block qui est à la position X, Y
 * @note Alias de setBlock( unsigned int X, unsigned int Y, map::t_type what )
 */
-inline void map::setBlock( s_Coordonnees& pos, map::t_type what )
+inline void map::setBlock( s_Coordonnees& pos, map::t_type what, bonus::t_Bonus typeBonus )
 {
-	setBlock(pos.x, pos.y, what);
+	setBlock(pos.x, pos.y, what, typeBonus);
 }
 
 

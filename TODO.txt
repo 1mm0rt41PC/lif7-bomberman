@@ -2,6 +2,6 @@
 
 - Faire un WikiCodingStyle
 
-- SDL: Ajouter le clique sourie sur les menu
+/- SDL: Ajouter le clique sourie sur les menu
 
-- Si affichage graphique, Ajouter une variable qui permet detester si on veux fermet la window ou pas
+/- Si affichage graphique, Ajouter une variable qui permet detester si on veux fermet la window ou pas

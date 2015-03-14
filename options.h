@@ -5,11 +5,11 @@
 #include "clavier.h"
 #include "config.h"
 
-#ifdef __LIB_ncurses__
+#if defined(__LIB_ncurses__)
 	#define CONFIG_FILE "config_ncurses.conf"
-#elif __LIB_SDL__
+#elif defined(__LIB_SDL__)
 	#define CONFIG_FILE "config_sdl.conf"
-#elif __LIB_SFML__
+#elif defined(__LIB_SFML__)
 	#define CONFIG_FILE "config_sfml.conf"
 #endif
 

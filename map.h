@@ -23,7 +23,7 @@ class map
 		* Aller voir la def dans le .h
 		*/
 		// A quoi correspond un block
-		enum t_type {
+		typedef enum {
 			inconnu,// BUG
 			vide,
 			// MUR
@@ -47,21 +47,21 @@ class map
 			// Combinaison
 			bombe_poser_AVEC_UN_joueur,
 			bombe_poser_AVEC_plusieurs_joueurs
-		};
+		} t_type;
 
 
 		/*!
 		* @enum t_direction
 		* @brief Les directions posssibles pour un personnages ou une flamme
 		*/
-		enum t_direction {
+		typedef enum {
 			DIRECT_haut,
 			DIRECT_bas,
 			DIRECT_droite,
 			DIRECT_gauche,
 			DIRECT_vertical,
 			DIRECT_sans_direction
-		};
+		} t_direction;
 
 		/*!
 		* @struct s_Case
@@ -78,19 +78,20 @@ class map
 		*		2 à ...) Les num des joueurs qui sont à cette position.<br />
 		*/
 		typedef struct {
-			std::vector<unsigned char>* joueur;//!< La liste est ici pour obtenir des info sur le perso à l'origine du type t.
-			t_type element;//!< type d'element.
+			std::vector<unsigned char>*	joueur;//!< La liste est ici pour obtenir des info sur le perso à l'origine du type t.
+			t_type						element;//!< Le type d'element.
+			bonus::t_Bonus				typeBonus;//!< Le type de bonus ( bonus::__RIEN__, si rien )
 		} s_Case;
 
 
 	// Variables
 	private:
 		// struct map {
-		std::vector<s_Coordonnees> c_listDesChangement;//!< Les changement qui ont eu lieu sur la map
-		s_Coordonnees c_taille;//!< Taille de la map
-		s_Case *c_block;//!< Tableau de case => la map en entère
-		s_Coordonnees *c_PointDeDepartJoueur;//!< Liste des points de départ des joueurs ({point_de_depart_jXXX} numJ)
-		unsigned char c_nb_PointDeDepartJoueur;//!< Le nombre de points de départ => le nombre maximum de joueur sur une map
+			std::vector<s_Coordonnees>	c_listDesChangement;//!< Les changement qui ont eu lieu sur la map
+			s_Coordonnees				c_taille;//!< Taille de la map
+			s_Case*						c_block;//!< Tableau de case => la map en entère
+			s_Coordonnees*				c_PointDeDepartJoueur;//!< Liste des points de départ des joueurs ({point_de_depart_jXXX} numJ)
+			unsigned char				c_nb_PointDeDepartJoueur;//!< Le nombre de points de départ => le nombre maximum de joueur sur une map
 		//}
 
 
@@ -100,8 +101,8 @@ class map
 		map();
 		map( unsigned int tailleX, unsigned int tailleY );
 		~map();
-		void setBlock( unsigned int X, unsigned int Y, map::t_type what );
-		inline void setBlock( s_Coordonnees& pos, map::t_type what );
+		void setBlock( unsigned int X, unsigned int Y, map::t_type what, bonus::t_Bonus typeBonus=bonus::__RIEN__ );
+		inline void setBlock( s_Coordonnees& pos, map::t_type what, bonus::t_Bonus typeBonus=bonus::__RIEN__ );
 		void ajouterInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierePosition=0 );
 		void rmInfoJoueur( unsigned int X, unsigned int Y, unsigned char id_Joueur, bool premierEltInclu );
 		void rmInfoJoueur( unsigned int X, unsigned int Y );

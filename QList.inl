@@ -1,5 +1,5 @@
 template<class Type>
-inline unsigned int QList<Type>::size()
+inline unsigned int QList<Type>::size() const
 {
 	return c_nb_ojb;
 }

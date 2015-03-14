@@ -10,6 +10,10 @@
 #include "debug.h"
 #include "config.h"
 
+// A VOIR: http://stackoverflow.com/questions/7194127/how-should-i-write-iso-c-standard-conformant-custom-new-and-delete-operators#7194137
+// pour appeler le new classic (std) -> ::new
+// pour appeler le delete classic (std) -> ::delete
+
 
 // Rapport complet ? ( defined or not )
 //#define MEMORY_FULL_REPORT
@@ -81,6 +85,10 @@ class CMemoryManager
 
 		#ifdef __LIB_SDL__
 		SDL_Surface* IMG_Load_Debug( const char fileImg[], const char fileName[], unsigned int line );
+		SDL_Surface* SDL_CreateRGBSurface_Debug( Uint32 flags, int width, int height, int depth, Uint32 Rmask, Uint32 Gmask, Uint32 Bmask, Uint32 Amask, const char fileName[], unsigned int line );
+		#ifdef _SDL_rotozoom_h
+			SDL_Surface* rotozoomSurface_Debug( SDL_Surface * src, double angle, double zoom, int smooth, const char fileName[], unsigned int line );
+		#endif
 		void SDL_FreeSurface_Debug( SDL_Surface* ptr, const char fileName[], unsigned int line );
 		SDL_Surface* TTF_RenderText_Blended_Debug( TTF_Font *font, const char text[], SDL_Color color, const char fileName[], unsigned int line );
 		TTF_Font* TTF_OpenFont_Debug( const char file[], int size, const char fileName[], unsigned int line );
@@ -123,6 +131,8 @@ inline void operator delete[]( void* ptr, const char fileName[], unsigned int li
 */
 #ifdef __LIB_SDL__
 	#define IMG_Load( img ) CMemoryManager::getInstance().IMG_Load_Debug(img, __FILE__, __LINE__)
+	#define rotozoomSurface( src, angle, zoom, smooth ) CMemoryManager::getInstance().rotozoomSurface_Debug(src, angle, zoom, smooth, __FILE__, __LINE__)
+	#define SDL_CreateRGBSurface( flags, width, height, depth, Rmask, Gmask, Bmask, Amask ) CMemoryManager::getInstance().SDL_CreateRGBSurface_Debug(flags, width, height, depth, Rmask, Gmask, Bmask, Amask, __FILE__, __LINE__)
 	#define SDL_FreeSurface( surface ) CMemoryManager::getInstance().SDL_FreeSurface_Debug(surface, __FILE__, __LINE__)
 	#define TTF_RenderText_Blended( police, texte, couleur ) CMemoryManager::getInstance().TTF_RenderText_Blended_Debug(police, texte, couleur, __FILE__, __LINE__)
 	#define TTF_OpenFont( strPolice, taille ) CMemoryManager::getInstance().TTF_OpenFont_Debug(strPolice, taille, __FILE__, __LINE__)

@@ -83,9 +83,8 @@ void server::rmClientID( unsigned int client )
 	closesocket(c_listClient[client].listenSocket);
 
 	for( unsigned int i=client+1; i<c_nb_clientConnecter; i++ )// -1 pour contrer le ++
-	{
 		memcpy( c_listClient+i-1, c_listClient+i, sizeof(sClient) );
-	}
+
 	c_nb_clientConnecter--;
 }
 

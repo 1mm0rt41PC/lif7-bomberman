@@ -31,7 +31,7 @@ class QList
 		QList();
 		QList( unsigned int nb, Type& fill );
 		~QList();
-		inline unsigned int size();
+		inline unsigned int size() const;
 		void resize( unsigned int size, Type& fill );
 		inline Type& operator[](unsigned int n);
 		Type& at(unsigned int n);

@@ -11,6 +11,8 @@ int myRand( int a, int b )
 	r = (double) rand() / RAND_MAX;
 	r *= (double) b+1.-a;
 	r += (double) a;
+	if( (int)r > b )
+		return b;
 	return (int) r;
 }
 
@@ -75,4 +77,38 @@ char* trimString( char texte[] )
 
 	// On déplace les caractères
 	return strcpy(texte, texte+posDebut);
+}
+
+
+#if defined(OS_WINDOWS)
+/***************************************************************************//*!
+* @fn int gettimeofday( struct timeval* tp, void* tz )
+* @brief Renvoie l'heure actuel
+* @param[in,out]	tp Un pointeur sur une structure timeval existante. tp va être
+* modifié et contiendra l'heure actuel.
+* @param			tz Paramètre inutilisé ! METTRE NULL !
+* @return Renvoie toujours 0
+*/
+int gettimeofday( struct timeval* tp, void* tz )
+{
+	(void)tz;
+	struct _timeb timebuffer;
+	_ftime(&timebuffer);
+	tp->tv_sec = timebuffer.time;
+	tp->tv_usec = timebuffer.millitm * 1000;
+	return 0;
+}
+#endif
+
+
+/***************************************************************************//*!
+* @fn int getSeconde()
+* @brief Renvoie l'heure actuel en seconde
+* @return Renvoie l'heure actuel en seconde
+*/
+int getSeconde()
+{
+	timeval tmp = {0,0};
+	gettimeofday(&tmp, 0);
+	return tmp.tv_sec;
 }

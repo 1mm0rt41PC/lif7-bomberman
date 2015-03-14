@@ -7,7 +7,6 @@
 #include "outils.h"
 #include "math.h"
 #include <string.h>// Pour strlen()
-#include <time.h>// Pour clock() et clock_t
 
 
 /*!
@@ -52,8 +51,10 @@ class moteur_sdl
 			bombe,
 			// Bonus
 			gain_bombe,
+			gain_super_bombe,
 			gain_declancheur,
 			gain_puissance_flamme,
+			gain_super_puissance_flamme,
 			gain_pousse_bombe,
 			gain_vie,
 			bonus_teleporteur,
@@ -66,8 +67,8 @@ class moteur_sdl
 
 		// Liste des vitesses des sprites
 		enum {
-			VitesseSpriteBombe	= CLOCKS_PER_SEC/6,
-			VitessePerso		= CLOCKS_PER_SEC/10000
+			VitesseSpriteBombe	= 200*1000,
+			VitessePerso		= 500*1000
 		};
 		// Divers
 		enum {
@@ -82,43 +83,29 @@ class moteur_sdl
 			s_Coordonnees	pos;
 			t_obj			objet;
 			unsigned char	frame;
-			clock_t			refresh;
+			s_timeval		refresh;
 		} Sprite;
-
-
-		typedef struct {
-			unsigned int nb_bombe_ramasser;
-			unsigned int nb_puissance_de_flamme;
-
-			unsigned int nb_bombe_ramasser_TOTAL;
-			unsigned int nb_puissance_de_flamme_TOTAL;
-
-			unsigned int nb_de_block_detruit;
-			unsigned int nb_de_fois_tuer_par_J1;
-			unsigned int nb_de_fois_tuer_par_J2;
-			unsigned int nb_de_fois_tuer_par_J3;
-			unsigned int nb_de_fois_tuer_par_J4;
-			unsigned int nb_de_fois_que_vous_avez_tuer_J1;
-			unsigned int nb_de_fois_que_vous_avez_tuer_J2;
-			unsigned int nb_de_fois_que_vous_avez_tuer_J3;
-			unsigned int nb_de_fois_que_vous_avez_tuer_J4;
-		} sStatistique;
 
 
 	private:
 		//struct {
 			static moteur_sdl* c_Instance;
-			std::vector<sStatistique>	c_ListStatistique;
 			std::vector<Sprite>			c_ListSprite;
 			QList<Sprite>				c_ListSpriteJoueur;
 			SDL_Surface*				c_ecranGeneral;
 			SDL_Surface*				c_background;
+			SDL_Surface*				c_backgroundLayer;
+			SDL_Surface*				c_clock[12];
 			TTF_Font*					c_policeTitre;
 			TTF_Font*					c_policeGeneral;
-			SDL_Surface**				c_Decor;
+			SDL_Surface*				c_Decor[__nombre_de_decors__];
 			bool						c_premierAffichage;
 			bool						c_fenetreOuverte;
 			static SDL_Color			c_mainColor;
+			static const SDL_Color			couleurBlanche;
+			static const SDL_Color			couleurNoir;
+			static const SDL_Color			couleurRouge;
+			static const SDL_Color			couleurOrange;
 		// }
 
 	private:
@@ -146,7 +133,7 @@ class moteur_sdl
 		void afficherConfigurationClavier( unsigned char joueur );
 		int getNombre( const char titre[], int valeurParDefaut, int valeurMin, int valeurMax, int* valeurRetour );
 		int getTexte( const char titre[], char texteRetour[21] );
-		int afficherGagnant( const partie* p );
+		int afficherGagnant( const partie* p, int retourPartie );
 		inline bool isWindowOpen(){ return c_fenetreOuverte; }
 
 		// Modificateur

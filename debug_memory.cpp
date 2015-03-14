@@ -183,6 +183,8 @@ CMemoryManager& CMemoryManager::getInstance()
 #ifdef __LIB_SDL__
 	// On vire les define
 	#undef IMG_Load
+	#undef SDL_CreateRGBSurface
+	#undef rotozoomSurface
 	#undef SDL_FreeSurface
 	#undef TTF_RenderText_Blended
 	#undef TTF_OpenFont
@@ -213,6 +215,59 @@ SDL_Surface* CMemoryManager::IMG_Load_Debug( const char fileImg[], const char fi
 	return (SDL_Surface*)newBlock.ptr;
 }
 
+
+/***************************************************************************//*!
+* @fn SDL_Surface* CMemoryManager::SDL_CreateRGBSurface_Debug( Uint32 flags, int width, int height, int depth, Uint32 Rmask, Uint32 Gmask, Uint32 Bmask, Uint32 Amask, const char fileName[], unsigned int line )
+* @brief Récolte les informations sur les allocations des Surfaces SDL
+*
+* Permet grace aux surchages de compter et d'identifier les allocations
+*/
+SDL_Surface* CMemoryManager::SDL_CreateRGBSurface_Debug( Uint32 flags, int width, int height, int depth, Uint32 Rmask, Uint32 Gmask, Uint32 Bmask, Uint32 Amask, const char fileName[], unsigned int line )
+{
+	// Ajout du bloc à la liste des blocs alloués
+	s_AllocatatedBlock newBlock;
+	newBlock.ptr		= (void*)SDL_CreateRGBSurface(flags, width, height, depth, Rmask, Gmask, Bmask, Amask);
+	newBlock.size		= 0;
+	newBlock.fileName	= fileName;
+	newBlock.line		= line;
+	newBlock.type		= __SDL_Surface__;
+	newBlock.is_array	= false;
+	c_Blocks.push_back(newBlock);
+
+	#ifdef MEMORY_FULL_REPORT
+		fprintf(c_fp, "++ Allocation Surface		| 0x%08X | %15c octets | <%15s>:%u\n", (unsigned int)newBlock.ptr, '?', fileName, line);
+	#endif
+
+	return (SDL_Surface*)newBlock.ptr;
+}
+
+
+/***************************************************************************//*!
+* @fn SDL_Surface* CMemoryManager::rotozoomSurface_Debug( SDL_Surface * src, double angle, double zoom, int smooth, const char fileName[], unsigned int line )
+* @brief Récolte les informations sur les allocations des Surfaces SDL
+*
+* Permet grace aux surchages de compter et d'identifier les allocations
+*/
+#ifdef _SDL_rotozoom_h
+SDL_Surface* CMemoryManager::rotozoomSurface_Debug( SDL_Surface * src, double angle, double zoom, int smooth, const char fileName[], unsigned int line )
+{
+	// Ajout du bloc à la liste des blocs alloués
+	s_AllocatatedBlock newBlock;
+	newBlock.ptr		= (void*)rotozoomSurface(src, angle, zoom, smooth);
+	newBlock.size		= 0;
+	newBlock.fileName	= fileName;
+	newBlock.line		= line;
+	newBlock.type		= __SDL_Surface__;
+	newBlock.is_array	= false;
+	c_Blocks.push_back(newBlock);
+
+	#ifdef MEMORY_FULL_REPORT
+		fprintf(c_fp, "++ Allocation Surface		| 0x%08X | %15c octets | <%15s>:%u\n", (unsigned int)newBlock.ptr, '?', fileName, line);
+	#endif
+
+	return (SDL_Surface*)newBlock.ptr;
+}
+#endif
 
 /***************************************************************************//*!
 * @fn void CMemoryManager::SDL_FreeSurface_Debug( SDL_Surface* ptr, const char fileName[], unsigned int line )

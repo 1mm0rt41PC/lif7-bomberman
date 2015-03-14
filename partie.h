@@ -8,6 +8,8 @@
 #include "ClientServer/Server/class_server.h"
 #include "metaProg.inl"
 #include "QList.h"
+#include "outils.h"
+#include <unistd.h>
 
 
 /*!
@@ -17,6 +19,24 @@
 class partie
 {
 	private:
+		typedef struct {
+			unsigned int nb_bombe_ramasser;
+			unsigned int nb_puissance_de_flamme;
+
+			unsigned int nb_bombe_ramasser_TOTAL;
+			unsigned int nb_puissance_de_flamme_TOTAL;
+
+			unsigned int nb_de_block_detruit;
+			unsigned int nb_de_fois_tuer_par_J1;
+			unsigned int nb_de_fois_tuer_par_J2;
+			unsigned int nb_de_fois_tuer_par_J3;
+			unsigned int nb_de_fois_tuer_par_J4;
+			unsigned int nb_de_fois_que_vous_avez_tuer_J1;
+			unsigned int nb_de_fois_que_vous_avez_tuer_J2;
+			unsigned int nb_de_fois_que_vous_avez_tuer_J3;
+			unsigned int nb_de_fois_que_vous_avez_tuer_J4;
+		} sStatistique;
+
 		/*!
 		* @struct s_EventBombe
 		* @brief Permet de gérer les event des bombes.
@@ -25,7 +45,7 @@ class partie
 			std::vector<s_Coordonnees>	listBlockDetruit;//!< Contient la liste des block qui ont été détruit => Bonus a la clef ^^
 			std::vector<s_Coordonnees>	deflagration;//!< Contient la position de tous block qui ont été touchés par la déflagration
 			s_Coordonnees				pos;//!< Position Originel de l'event
-			clock_t						repetionSuivante;//!< Time de la prochaine répétion
+			s_timeval					repetionSuivante;//!< Time de la prochaine répétion
 			unsigned char				joueur;//!< Le joueur qui est la cause de l'event
 			unsigned char				Nb_Repetition;//!< Nombre de répétition actuel pour l'event
 			unsigned char				Nb_Repetition_MAX;//!< Nombre de répétition MAX pour l'event
@@ -42,7 +62,7 @@ class partie
 		typedef struct {
 			perso::t_Orientation		direction;//!< Direction de la bombe
 			s_Coordonnees				pos;//!< Position de l'event
-			clock_t						repetionSuivante;//!< Time de la prochaine répétion
+			s_timeval					repetionSuivante;//!< Time de la prochaine répétion
 			unsigned char				joueur;//!< Le joueur a qui appartient la bombe [0-...[
 		} s_EventPousseBombe;
 
@@ -78,6 +98,7 @@ class partie
 	private:
 		// struct {
 			std::vector<s_EventBombe>		c_listEventBombe;
+			//std::vector<sStatistique>		c_ListStatistique;
 			QList<s_EventPousseBombe>		c_listEventPouseBombe;
 			map*							c_map;//!< SIMPLE POINTEUR !
 			perso*							c_joueurs;//!< Tableau de joueur (utilisé si offline ou si host)
@@ -90,7 +111,7 @@ class partie
 			};
 			char							c_buffer[PACK_bufferSize+1];//!< Buffer pour communiquer sur le réseau
 			unsigned char					c_winnerID;
-			clock_t							c_timeOut;
+			time_t							c_timeOut;
 			unsigned int					c_timerAttak;
 			unsigned char					c_uniqueJoueurID;//!< Si connection client -> ID du joueur (correspond au numéro dans le tableau c_joueur)
 		// }
@@ -98,7 +119,6 @@ class partie
 		void placer_perso_position_initial( unsigned char joueur );
 		void deplacer_le_Perso_A( unsigned int newX, unsigned int newY, unsigned char joueur );
 		void checkInternalEvent();
-		void checkInternalEventPousseBombe();
 		char actionSurLesElements( s_EventBombe* e, unsigned int x, unsigned int y, char direction );
 		char killPlayers( s_EventBombe* e, unsigned int x, unsigned int y );
 
@@ -135,7 +155,7 @@ class partie
 		server* getServeur() const;
 		client* getClient() const;
 		inline unsigned char getWinnerID() const;
-		inline clock_t timeOut() const;
+		inline time_t timeOut() const;
 		inline unsigned char getUniqueJoueurID() const;
 
 		// Autres

@@ -8,8 +8,8 @@
 */
 clavier::clavier()
 {
-	c_touches = 0;
-	c_nb_touches = 0;
+	for( unsigned int i=0; i<NB_ELEMENT_t_touche; i++ )
+		c_touches[i] = (SYS_CLAVIER)0;
 }
 
 
@@ -19,40 +19,8 @@ clavier::clavier()
 */
 clavier::~clavier()
 {
-	if( !c_touches || !c_nb_touches )
-		return ;
-	delete[] c_touches;
-	c_touches = 0;
-	c_nb_touches = 0;
-}
-
-
-/***************************************************************************//*!
-* @fn void clavier::initClavier( unsigned int nb_touches )
-* @brief Définition du nombre de touche
-* @param[in] nb_touches Le nombre d'actions a gérer (Haut + bas + droit + gauche => 4 actions soit 4 touches)
-*/
-void clavier::initClavier( unsigned int nb_touches )
-{
-	// On supprime les anciennes touches si elles existaient
-	if( c_touches && c_nb_touches )
-		delete[] c_touches;
-
-	// Création des nouvelles touches
-	c_nb_touches = nb_touches;
-	c_touches = new SYS_CLAVIER[nb_touches];
-}
-
-
-/***************************************************************************//*!
-* @fn void clavier::defTouche( clavier::t_touche t, SYS_CLAVIER tsys )
-* @brief Définition d'une touche
-* @param[in] t		L'actions que l'on veut affecté a la touche tsys
-* @param[in] tsys	Touche qui sera affecté à l'action t
-*/
-void clavier::defTouche( clavier::t_touche t, SYS_CLAVIER tsys )
-{
-	c_touches[t] = tsys;
+	for( unsigned int i=0; i<NB_ELEMENT_t_touche; i++ )
+		c_touches[i] = (SYS_CLAVIER)0;
 }
 
 
@@ -67,22 +35,18 @@ void clavier::defTouche( clavier::t_touche t, SYS_CLAVIER tsys )
 */
 bool clavier::chargerConfig( FILE* fp, unsigned int nb_touches )
 {
-	if( !fp || !nb_touches ){
-		stdError("Erreur lors du chargement de la configuration du clavier ! {fp=%X; nb_touches=%u}\n", (unsigned int)fp, nb_touches);
+	if( !fp || !nb_touches || nb_touches != NB_ELEMENT_t_touche ){
+		stdError("Erreur lors du chargement de la configuration du clavier ! {fp=%X; nb_touches=%u, NB_ELEMENT_t_touche=%us}", (unsigned int)fp, nb_touches, NB_ELEMENT_t_touche);
 		return 0;
 	}
 
 	// Création des nouvelles touches
-	c_nb_touches = nb_touches;
-	c_touches = new SYS_CLAVIER[nb_touches];
-
-	if( fread(c_touches, sizeof(SYS_CLAVIER), nb_touches, fp) != nb_touches ){
+	if( fread(c_touches, sizeof(SYS_CLAVIER), NB_ELEMENT_t_touche, fp) != NB_ELEMENT_t_touche ){
 		// Remise à 0 des varriables
-		c_nb_touches = 0;
-		delete[] c_touches;
-		c_touches = 0;
+		for( unsigned int i=0; i<NB_ELEMENT_t_touche; i++ )
+			c_touches[i] = (SYS_CLAVIER)0;
 
-		stdError("Erreur lors de la lecture du fichier de configuration pour {clavier[i]}\n");
+		stdError("Erreur lors de la lecture du fichier de configuration pour {clavier[i]}");
 		return 0;
 	}
 	return 1;
@@ -97,25 +61,12 @@ bool clavier::chargerConfig( FILE* fp, unsigned int nb_touches )
 */
 clavier::t_touche clavier::obtenirTouche( SYS_CLAVIER tsys ) const
 {
-	for( unsigned int i=0; i<c_nb_touches; i++ )
+	for( unsigned int i=0; i<NB_ELEMENT_t_touche; i++ )
 	{
 		if( c_touches[(clavier::t_touche)i] == tsys )
 			return (clavier::t_touche)i;
 	}
 	return clavier::NUL;
-}
-
-
-/***************************************************************************//*!
-* @fn unsigned int clavier::nb_touches() const
-* @brief Renvoie le nombre d'actions possibles sur ce clavier.
-* @return Renvoie le nombre d'actions possibles sur ce clavier.
-*
-* Renvoie donc aussi le nombre de touches gérées par ce clavier.
-*/
-unsigned int clavier::nb_touches() const
-{
-	return c_nb_touches;
 }
 
 
@@ -127,7 +78,7 @@ unsigned int clavier::nb_touches() const
 */
 bool clavier::estDansClavier( SYS_CLAVIER tsys ) const
 {
-	for( unsigned int i=0; i<c_nb_touches; i++ )
+	for( unsigned int i=0; i<NB_ELEMENT_t_touche; i++ )
 		if( c_touches[i] == tsys )
 			return true;
 
@@ -136,32 +87,20 @@ bool clavier::estDansClavier( SYS_CLAVIER tsys ) const
 
 
 /***************************************************************************//*!
-* @fn SYS_CLAVIER clavier::touche( t_touche t ) const
-* @brief Renvoie la touche affecté pour une action
-* @param[in] t L'action dont on veut déterminer la touche affectée.
-* @return Touche affecté à l'action
-*/
-SYS_CLAVIER clavier::touche( t_touche t ) const
-{
-	return c_touches[t];
-}
-
-
-/***************************************************************************//*!
-* @fn bool clavier::enregistrerConfig( FILE* fp )
+* @fn bool clavier::enregistrerConfig( FILE* fp ) const
 * @brief Charge la configuration du clavier depuis un fichier ( déjà ouvert ! )
 * @param[in,out] fp Un pointeur sur un fichier déjà ouvert ( mode binaire )
 * @return true si l'enregistrement de la configuation s'est bien passé
 * @todo Mettre un champs optionel permettant de laisser le choix quand à l'enregistrement du nombre de touches
 */
-bool clavier::enregistrerConfig( FILE* fp )
+bool clavier::enregistrerConfig( FILE* fp ) const
 {
-	if( !c_touches || !c_nb_touches ){
-		stdError("Erreur lors de l'enregistrement de la configuration du clavier ! {c_touches=%X; c_nb_touches=%u}\n", (unsigned int)c_touches, c_nb_touches);
+	if( !fp ){
+		stdError("Erreur lors de l'enregistrement de la configuration du clavier ! {fp=0}");
 		return 0;
 	}
-	if( fwrite(c_touches, sizeof(SYS_CLAVIER), c_nb_touches, fp) != c_nb_touches ){
-		stdError("Erreur lors de l'écriture du fichier de configuration pour {clavier[i]}\n");
+	if( fwrite(c_touches, sizeof(SYS_CLAVIER), NB_ELEMENT_t_touche, fp) != NB_ELEMENT_t_touche ){
+		stdError("Erreur lors de l'écriture du fichier de configuration pour {clavier[i]}");
 		return 0;
 	}
 	return 1;

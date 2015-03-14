@@ -80,18 +80,19 @@ map::~map()
 
 
 /***************************************************************************//*!
-* @fn void map::setBlock( unsigned int X, unsigned int Y, map::t_type what )
+* @fn void map::setBlock( unsigned int X, unsigned int Y, map::t_type what, , bonus::t_Bonus typeBonus=bonus::__RIEN__ )
 * @brief Modifie le block qui est à la position X, Y
 *
 * Ne modifie en aucun cas les Info joueurs ( meta données )<br />
 * <b>/!\\ATTENTION EXCEPTION: si what = vide => nétoyage de toutes les meta données /!\\</b>
 */
-void map::setBlock( unsigned int X, unsigned int Y, map::t_type what )
+void map::setBlock( unsigned int X, unsigned int Y, map::t_type what, bonus::t_Bonus typeBonus )
 {
 	if( !c_block || X >= c_taille.x || Y >= c_taille.y )
 		stdErrorE("Impossible d'accèder au block demandé ! c_block=%X, c_taille=(%u,%u), X=%u, Y=%u, what=%d", (unsigned int)c_block, c_taille.x, c_taille.y, X, Y, what);
 
 	c_block[X * c_taille.x + Y].element = what;
+	c_block[X * c_taille.x + Y].typeBonus = typeBonus;
 
 	if( c_listDesChangement.size() ){
 		if( c_listDesChangement.back().x != X && c_listDesChangement.back().y != Y )
